@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+/ProjectBlueSky/Debug
+/ProjectBlueSky/Log.txt
+/ProjectBlueSky/ProjectBlueSky.vcxproj.user
+/ProjectBlueSky/.vs
