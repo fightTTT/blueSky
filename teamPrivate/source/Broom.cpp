@@ -1,0 +1,228 @@
+#include "DxLib.h"
+#include "SceneMng.h"
+#include "Broom.h"
+#include "Collision.h"
+#include "SoundMng.h"
+
+#define JUMP_CNT_MAX	(3)
+
+Broom::Broom()
+{
+}
+
+Broom::Broom(sharedListFloor floorList, VECTOR2 pos, int padNum)
+{
+	Obj::floorList = floorList;
+	Obj::pos = pos;
+	Obj::padNum = padNum;
+
+	Obj::init("í|ïî‚¥");
+}
+
+
+Broom::~Broom()
+{
+}
+
+const int Broom::GetPadNum(void)
+{
+	return Obj::padNum;
+}
+
+bool Broom::initAnim(void)
+{
+	// ∫◊≤¿ﬁ∞Ç∆âÊëúÇÃ€∞ƒﬁ
+	auto loadImageAndCol = [=](std::string animName, std::string dataName, int inv, bool loop, ANIM_TYPE animType)
+	{
+		lpImageMng.LoadContinueImageId(GetCharName() + "/" + animName, dataName);
+		lpColMng.ColLoad(GetCharName(), animName);
+		AddAnim(animName, inv, loop, dataName);
+		animPtnTbl[animName] = animType;
+	};
+
+	//				±∆“∞ºÆ›ñº			√ﬁ∞¿ñº				∫œêî	Ÿ∞Ãﬂ	±∆“∞ºÆ›¿≤Ãﬂ
+	loadImageAndCol("ÉWÉÉÉìÉvénÇ‹ÇË", "jumpStart", 6, false, ANIM_TYPE_NO_ATTACK);
+	loadImageAndCol("ÉWÉÉÉìÉvíÜ", "jump", 6, true, ANIM_TYPE_NO_ATTACK);
+	loadImageAndCol("ë“ã@", "wait", 8, true, ANIM_TYPE_NO_ATTACK);
+	loadImageAndCol("ï‡Ç≠", "walk", 6, true, ANIM_TYPE_NO_ATTACK);
+	loadImageAndCol("ëñÇÈ", "dash", 6, true, ANIM_TYPE_NO_ATTACK);
+	loadImageAndCol("ÉKÅ[Éh", "guard", 6, true, ANIM_TYPE_NO_ATTACK);
+	loadImageAndCol("éPïÇóV", "fly", 6, true, ANIM_TYPE_NO_ATTACK);
+	loadImageAndCol("éÄñS", "death", 120, false, ANIM_TYPE_NO_ATTACK);
+
+	loadImageAndCol("í èÌçUåÇ1", "attack", 4, false, ANIM_TYPE_MULTI_HIT);
+	loadImageAndCol("í èÌçUåÇ2", "attackSecond", 4, false, ANIM_TYPE_MULTI_HIT);
+	loadImageAndCol("í èÌçUåÇ3", "attackThird", 6, false, ANIM_TYPE_MULTI_HIT);
+
+	loadImageAndCol("í èÌçUåÇ_è„", "attackUp", 8, false, ANIM_TYPE_ATTACK);
+	loadImageAndCol("í èÌçUåÇ_â∫énÇ‹ÇË", "attackDownStart", 6, false, ANIM_TYPE_ATTACK);
+	loadImageAndCol("í èÌçUåÇ_â∫íÜ_ínè„", "attackDown", 6, false, ANIM_TYPE_ATTACK);
+	loadImageAndCol("í èÌçUåÇ_â∫íÜ_ãÛíÜ", "attackDown", 3, true, ANIM_TYPE_ATTACK);
+	loadImageAndCol("É_ÉÅÅ[ÉW", "damage", 45, false, ANIM_TYPE_ATTACK);
+	loadImageAndCol("ïKéEãZ", "specialAttack", 8, false, ANIM_TYPE_ATTACK);
+	loadImageAndCol("ó≠ÇﬂçUåÇ", "chargeAttack", 5, false, ANIM_TYPE_ATTACK);
+	loadImageAndCol("ó≠ÇﬂénÇ‹ÇË", "chargeStart", 6, false, ANIM_TYPE_ATTACK);
+	loadImageAndCol("ó≠ÇﬂíÜ", "charge", 6, true, ANIM_TYPE_ATTACK);
+	loadImageAndCol("ì{ÇËÉQÅ[ÉWó≠Çﬂ", "angryCharge", 1, true, ANIM_TYPE_ATTACK);
+	loadImageAndCol("âÒî", "avoid", 10, false, ANIM_TYPE_ATTACK);
+
+	SetAnim("ë“ã@");
+
+	lpSoundMng.SoundInit("sound/SEóﬁ/Chicken1.mp3", "∫π∫Ø∫∞");
+
+	spSeCnt = 0;
+
+	return true;
+}
+
+void Broom::Draw(void)
+{
+}
+
+bool Broom::CheckObjType(OBJ_TYPE type)
+{
+	return OBJ_TYPE_PLAYER == type;
+}
+
+void Broom::SetMove(const GameController & controller, weakListObj objList, weakListChicken chickenList, bool entryFlag)
+{
+}
+
+void Broom::PosUpDate(VECTOR2 & tmpPos, int maxEndPosY)
+{
+	if (GetAnim() != "ïKéEãZ" && !spAttackHitFlag && GetAnim() != "í èÌçUåÇ_è„")
+	{
+		// ç¿ïWï‚ê≥
+		PosAdjust(tmpPos, maxEndPosY);
+
+		// é©óRóéâ∫
+		if (vY > 0.0 && locate == LOCATE::NON)
+		{
+			param = PARAM::FALLING;
+		}
+
+		vY += gravity;
+
+		// ë¨ìxï™posÇâ¡éZ
+		tmpPos.y += static_cast<int>(vY) * (static_cast<int>(fallFlag && param == PARAM::FALLING) + 1);
+		tmpPos.x += static_cast<int>(vX);
+	}
+}
+
+void Broom::UniqueAttack(VECTOR2 & tmpPos)
+{
+	if (GetAnim() == "í èÌçUåÇ_è„")
+	{
+		vY = 0.0;
+		vX = 0.0;
+		tmpPos.x += 5 * (static_cast<int>(dir) * -2 + 1) * ((angryFlag || spAttackCnt) + 1);
+		tmpPos.y -= 5;
+	}
+}
+
+void Broom::SetNextAnim(bool animEndFlag)
+{
+	if (!animEndFlag)
+	{
+		return;
+	}
+	if (GetAnim() == "ÉWÉÉÉìÉvénÇ‹ÇË")
+	{
+		SetAnim("ÉWÉÉÉìÉvíÜ");
+	}
+
+	// çUåÇån±∆“∞ºÆ›Ç™èIóπÇµÇΩéû
+	if (animPtnTbl[GetAnim()] != ANIM_TYPE_NO_ATTACK)
+	{
+		// ó≠ÇﬂénÇ‹ÇË±∆“∞ºÆ›Ç™èIóπÇµÇΩÇÁó≠ÇﬂíÜ±∆“∞ºÆ›Ç÷à⁄çs
+		if (GetAnim() == "ó≠ÇﬂénÇ‹ÇË")
+		{
+			SetAnim("ó≠ÇﬂíÜ");
+		}
+		else if (GetAnim() == "í èÌçUåÇ_â∫énÇ‹ÇË")
+		{
+			(locate == LOCATE::NON) ? SetAnim("í èÌçUåÇ_â∫íÜ_ãÛíÜ") : SetAnim("í èÌçUåÇ_â∫íÜ_ínè„");
+		}
+		// í èÌçUåÇån±∆“∞ºÆ›Ç™èIóπÇµÇΩÇÁë“ã@±∆“∞ºÆ›Ç÷à⁄çs
+		else
+		{
+			if (!jumpCnt && deri == DERI_UP)
+			{
+				deri = DERI_NOMAL;	// jumpCntÇ™0Ç»ÇÁNOMALÇÃîhê∂çUåÇÇçsÇ§
+			}
+			fixCtrlCnt = FIX_TIME;
+
+			std::string str;
+			switch (deri)
+			{
+			case DERI_NOMAL:
+				deri = DERI_NON;
+				fixCtrlCnt = 0;
+				multiAttackNum++;
+				str = "í èÌçUåÇ" + std::to_string(multiAttackNum + 1);
+				SetAnim(str);
+				break;
+
+			case DERI_UP:
+				deri = DERI_NON;
+				fixCtrlCnt = 0;
+				downFlag = false;
+				param = PARAM::JUMPING;
+				floorCheckFlag = false;
+				jumpCnt--;
+				locate = LOCATE::NON;
+				SetAnim("í èÌçUåÇ_è„");
+				multiAttackNum = 0;
+				break;
+
+			case DERI_DOWN:
+				deri = DERI_NON;
+				fixCtrlCnt = 0;
+				SetAnim("í èÌçUåÇ_â∫énÇ‹ÇË");
+				multiAttackNum = 0;
+				break;
+
+			case DERI_NON:
+			default:
+				deri = DERI_NON;
+				if (GetAnim() == "É_ÉÅÅ[ÉW")
+				{
+					fixCtrlCnt = 0;
+					if (!spAttackHitFlag)
+					{
+						SetAnim("ë“ã@");
+					}
+				}
+				else
+				{
+					SetAnim("ë“ã@");
+				}
+				multiAttackNum = 0;
+				break;
+			}
+
+			if (multiAttackNum > 2)
+			{
+				fixCtrlCnt = 0;
+				multiAttackNum = 0;	// 3òAåÇÇ≈èIóπ
+				SetAnim("ë“ã@");
+			}
+
+			chargeStage = CHARGE_NON;
+			gravity = 0.4f;
+		}
+	}
+}
+
+void Broom::PlaySPSe(void)
+{
+	if (spSeCnt == 70)
+	{
+		lpSoundMng.SetSound("∫π∫Ø∫∞");
+	}
+}
+
+int Broom::GetJumpCntMax(void)
+{
+	return JUMP_CNT_MAX;
+}
