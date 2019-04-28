@@ -65,13 +65,13 @@ int main(int argc, char* argv[])
 
 				imagePath = filePath;
 
-				auto findNum = imagePath.rfind("image");
+				auto findNum = imagePath.rfind("\\");
 
-				imagePath = imagePath.substr(findNum);
+				imagePath = imagePath.substr(findNum + 1);
 
-				auto i = imagePath.find("\\");
-				std::string replace = "/";
-				imagePath.replace(i, 1, replace);
+				//auto i = imagePath.find("\\");
+				//std::string replace = "/";
+				//imagePath.replace(i, 1, replace);
 
 				inputFlag = true;
 
