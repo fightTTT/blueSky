@@ -19,6 +19,12 @@
     <Filter Include="ヘッダー ファイル\scene">
       <UniqueIdentifier>{4394d6a7-8049-416c-b83a-bd9111cea5ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\character">
+      <UniqueIdentifier>{e137ddbd-e8ab-4ea0-9aec-e7bef64e55f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\character">
+      <UniqueIdentifier>{6cac8b46-bc34-42ff-bb23-80d50000296f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -39,6 +45,18 @@
     <ClCompile Include="GameScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageMng.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>ソース ファイル\character</Filter>
+    </ClCompile>
+    <ClCompile Include="Ryu.cpp">
+      <Filter>ソース ファイル\character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VECTOR2.h">
@@ -55,6 +73,21 @@
     </ClInclude>
     <ClInclude Include="SceneMng.h">
       <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjList.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageMng.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>ヘッダー ファイル\character</Filter>
+    </ClInclude>
+    <ClInclude Include="Ryu.h">
+      <Filter>ヘッダー ファイル\character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

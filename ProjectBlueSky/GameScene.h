@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseScene.h"
 
+#include"ObjList.h"
+
 class GameScene :
 	public BaseScene
 {
@@ -12,5 +14,9 @@ public:
 
 private:
 	int Init(void);
+
+	bool GameDraw(void);		// •`‰æˆ—
+
+	sharedListObj objList;
 };
 
