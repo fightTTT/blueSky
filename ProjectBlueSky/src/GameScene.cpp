@@ -4,6 +4,7 @@
 #include "Ryu.h"
 //#include "SceneMng.h"
 #include "GameScene.h"
+#include "GameCtrl.h"
 
 
 GameScene::GameScene()
@@ -18,6 +19,10 @@ GameScene::~GameScene()
 
 unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
+	for (auto& data : *objList)
+	{
+		data->UpDate(controller);
+	}
 	//•`‰æˆ—
 	GameDraw();
 

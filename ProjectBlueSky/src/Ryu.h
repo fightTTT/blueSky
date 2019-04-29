@@ -7,4 +7,6 @@ class Ryu :
 public:
 	Ryu();
 	~Ryu();
+
+	void SetMove(const GameCtrl &ctl) override;
 };

@@ -1,4 +1,5 @@
 #include "Ryu.h"
+#include "GameCtrl.h"
 
 Ryu::Ryu()
 {
@@ -10,4 +11,17 @@ Ryu::Ryu()
 
 Ryu::~Ryu()
 {
+}
+
+void Ryu::SetMove(const GameCtrl & ctl)
+{
+	if (ctl.GetPadData(PAD_1, THUMB_L_RIGHT))
+	{
+		pos.x += 4;
+	}
+
+	if (ctl.GetPadData(PAD_1, THUMB_L_LEFT))
+	{
+		pos.x -= 4;
+	}
 }

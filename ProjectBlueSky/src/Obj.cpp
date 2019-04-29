@@ -33,12 +33,12 @@ bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 po
 	return true;
 }
 
-void Obj::UpDate(const GameCtl &ctl)
+void Obj::UpDate(const GameCtrl &ctl)
 {
 	SetMove(ctl);
 }
 
-void Obj::UpDate(const GameCtl & ctl, weekListObj objList)
+void Obj::UpDate(const GameCtrl & ctl, weekListObj objList)
 {
 	SetMove(ctl, objList);
 }
@@ -143,10 +143,10 @@ void Obj::SetPos(VECTOR2 pos)
 	this->pos = pos;
 }
 
-void Obj::SetMove(const GameCtl & ctl)
+void Obj::SetMove(const GameCtrl & ctl)
 {
 }
 
-void Obj::SetMove(const GameCtl & ctl, weekListObj objList)
+void Obj::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 }

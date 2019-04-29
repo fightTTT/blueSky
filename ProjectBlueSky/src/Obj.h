@@ -18,7 +18,7 @@ enum OBJ_TYPE
 	OBJ_TYPE_MAX
 };
 
-class GameCtl;
+class GameCtrl;
 
 class Obj
 {
@@ -31,8 +31,8 @@ public:
 	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標
 
 	// 情報更新
-	void UpDate(const GameCtl &ctl);
-	void UpDate(const GameCtl &ctl, weekListObj objList);
+	void UpDate(const GameCtrl &ctl);
+	void UpDate(const GameCtrl &ctl, weekListObj objList);
 
 	virtual bool InitAnim(void) { return true; };		// ｱﾆﾒｰｼｮﾝ初期化
 
@@ -56,8 +56,8 @@ public:
 
 private:
 	//移動処理
-	virtual void SetMove(const GameCtl &ctl);
-	virtual void SetMove(const GameCtl &ctl, weekListObj objList);
+	virtual void SetMove(const GameCtrl &ctl);
+	virtual void SetMove(const GameCtrl &ctl, weekListObj objList);
 
 protected:
 	VECTOR2 pos;					// 座標
