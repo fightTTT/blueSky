@@ -1,0 +1,25 @@
+	//ƒpƒ“ƒ`
+	CreateAction(ds_right,bs_punch,Sequence(Position2(360,0),10));//³Œ“Ë‚«A
+	CreateAction(ds_left, bs_punch, Sequence(Position2(320, 0), 10));//Šç–Ê‘_‚¢
+	CreateAction(ds_rightdown, bs_punch, Sequence(Position2(0, 40), 10));//³Œ“Ë‚«B
+	CreateAction(ds_leftdown, bs_punch, Sequence(Position2(200, 40), 10));//ŠJ‹r“Ë‚«
+	CreateAction(ds_down, bs_punch, Sequence(Position2(40, 40), 10));//‘«ñ‘_‚¢
+
+	CreateAction(ds_up, bs_punch, Sequence(Position2(240, 40), 10));//ƒWƒƒƒ“ƒv“Ë‚«
+	CreateAction(ds_rightup, bs_punch, Sequence(Position2(80, 0), 12,-3.0f));//“ªã“Ë‚«-1
+	CreateAction(ds_rightup, bs_punch, Sequence(Position2(160, 40), 8));//“ªã“Ë‚«-2
+	CreateAction(ds_leftup, bs_punch, Sequence(Position2(80, 40), 8));//‚Ü‚í‚µ“Ë‚«-1
+	CreateAction(ds_leftup, bs_punch, Sequence(Position2(120, 40), 10));//‚Ü‚í‚µ“Ë‚«-2
+
+	//ƒLƒbƒN
+	CreateAction(ds_right, bs_kick, Sequence(Position2(80, 80), 15));//‚Ü‚í‚µR‚è
+	CreateAction(ds_left, bs_kick, Sequence(Position2(40, 80), 15));//Î‚ßã’i‘_‚¢
+	CreateAction(ds_rightdown, bs_kick, Sequence(Position2(120, 80), 15));//‘«•¥‚¢
+	CreateAction(ds_leftdown, bs_kick, Sequence(Position2(280, 80), 15));//Q‹ZR‚è
+	CreateAction(ds_down, bs_kick, Sequence(Position2(240, 80), 15));//‘«ñ‘_‚¢
+
+	CreateAction(ds_up, bs_kick, Sequence(Position2(240, 40), 15));//ƒWƒƒƒ“ƒvR‚è
+	CreateAction(ds_rightup, bs_kick, Sequence(Position2(160, 0), 5,-2.2f));//R‚èã‚°-1
+	CreateAction(ds_rightup, bs_kick, Sequence(Position2(280, 40), 15));//R‚èã‚°-2
+	CreateAction(ds_leftup, bs_kick, Sequence(Position2(0, 80), 12,-2.2f));//ù•—‹r-1
+	CreateAction(ds_leftup, bs_kick, Sequence(Position2(160, 80), 15));//ù•—‹r-2
