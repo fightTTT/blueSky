@@ -38,10 +38,10 @@ bool GameCtrl::UpDate(void)
 
 	for (int i = 0; i < PAD_MAX; ++i)
 	{
-		padData[i][THUMB_L_UP] = pad[i].ThumbLY > 20000;
-		padData[i][THUMB_L_DOWN] = pad[i].ThumbLY < -20000;
-		padData[i][THUMB_L_RIGHT] = pad[i].ThumbLX > 20000;
-		padData[i][THUMB_L_LEFT] = pad[i].ThumbLX < -20000;
+		padData[i][THUMB_L_UP] = pad[i].ThumbLY > 20000 || data[KEY_INPUT_W];
+		padData[i][THUMB_L_DOWN] = pad[i].ThumbLY < -20000 || data[KEY_INPUT_S];
+		padData[i][THUMB_L_RIGHT] = pad[i].ThumbLX > 20000 || data[KEY_INPUT_D];
+		padData[i][THUMB_L_LEFT] = pad[i].ThumbLX < -20000 || data[KEY_INPUT_A];
 	}
 
 

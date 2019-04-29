@@ -9,4 +9,9 @@ public:
 	~Ryu();
 
 	void SetMove(const GameCtrl &ctl) override;
+
+private:
+
+	bool jumpFlag;
+	VECTOR2 jumpSpeed;
 };
