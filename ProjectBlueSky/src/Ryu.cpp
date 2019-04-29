@@ -29,33 +29,33 @@ void Ryu::SetMove(const GameCtrl & ctl)
 		{
 			pos.x += 4;
 		}
-
 		if (ctl.GetPadData(PAD_1, THUMB_L_LEFT))
 		{
 			pos.x -= 4;
 		}
 
+		// 斜め左上ジャンプ
 		if (ctl.GetPadData(PAD_1, THUMB_L_UP) && ctl.GetPadData(PAD_1, THUMB_L_LEFT))
 		{
-			jumpSpeed.y = -30;
-			jumpSpeed.x = -2;
+			jumpSpeed = { -2, -30 };
 			jumpFlag = true;
 		}
+		// 斜め右上ジャンプ
 		else if (ctl.GetPadData(PAD_1, THUMB_L_UP) && ctl.GetPadData(PAD_1, THUMB_L_RIGHT))
 		{
-			jumpSpeed.y = -30;
-			jumpSpeed.x = 2;
+			jumpSpeed = { 2, -30 };
 			jumpFlag = true;
 		}
+		// 上ジャンプ
 		else if (ctl.GetPadData(PAD_1, THUMB_L_UP))
 		{
-			jumpSpeed.y = -30;
-			jumpSpeed.x = 0;
+			jumpSpeed = { 0, -30 };
 			jumpFlag = true;
 		}
 	}
 	else
 	{
+		// ジャンプ中
 		jumpSpeed.y += 1;
 		pos += jumpSpeed;
 	}
