@@ -9,7 +9,7 @@ FrameMng::~FrameMng()
 
 void FrameMng::FrameStart()
 {
-	if (frameCount == 1)
+	if (frameCount == 0)
 	{
 		startTime = static_cast<double>(GetNowCount());
 	}
