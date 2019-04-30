@@ -45,14 +45,11 @@ int GameScene::Init(void)
 
 bool GameScene::GameDraw(void)
 {
-	ClsDrawScreen();		// 画面消去
-
 	//objListに登録されているｸﾗｽの描画処理を行う
 	for (auto &data : (*objList))
 	{
 		(*data).Draw();
 	}
 
-	ScreenFlip();		// ｹﾞｰﾑﾙｰﾌﾟの最後に必ず必要
 	return true;
 }

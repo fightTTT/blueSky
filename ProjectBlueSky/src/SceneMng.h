@@ -4,6 +4,7 @@
 #include "BaseScene.h"
 
 class GameCtrl;
+class FrameMng;
 
 #define lpSceneMng SceneMng::GetInstance()
 
@@ -25,6 +26,8 @@ private:
 	std::shared_ptr<GameCtrl> gameCtl;		// GameControllerｸﾗｽのﾎﾟｲﾝﾀ格納用変数
 
 	unique_Base activeScene;	// 各ｼｰﾝにｱｸｾｽするためのﾕﾆｰｸﾎﾟｲﾝﾀｰ
+
+	std::unique_ptr<FrameMng> frame;
 
 	bool SysInit(void);			// ｼｽﾃﾑ的な変数の初期化を行う
 };

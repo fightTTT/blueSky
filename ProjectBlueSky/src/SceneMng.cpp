@@ -2,6 +2,7 @@
 #include "GameCtrl.h"
 #include "GameScene.h"
 #include "SceneMng.h"
+#include "FrameMng.h"
 
 #define SCREEN_SIZE_X (1440)
 #define SCREEN_SIZE_Y (810)
@@ -23,8 +24,17 @@ void SceneMng::Run(void)
 	// ---------- ¹Ş°ÑÙ°Ìß
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
+		frame->FrameStart();
 		gameCtl->UpDate();
+
+		ClsDrawScreen();
+
 		activeScene = activeScene->UpDate(std::move(activeScene), *gameCtl);
+		frame->FrameEnd();
+
+		frame->Draw();
+
+		ScreenFlip();
 	}
 }
 
@@ -42,5 +52,6 @@ bool SceneMng::SysInit(void)
 	if (DxLib_Init() == -1) return false;	// DX×²ÌŞ×Ø‰Šú‰»ˆ—
 	SetDrawScreen(DX_SCREEN_BACK);		// ‚Ğ‚Æ‚Ü‚¸ÊŞ¯¸ÊŞ¯Ì§‚É•`‰æ
 	gameCtl = std::make_unique<GameCtrl>();
+	frame = std::make_unique<FrameMng>();
 	return true;
 }
