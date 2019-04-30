@@ -15,7 +15,8 @@ bool Character::InitAnim(void)
 {
 	AddAnim("‘Ò‹@", 0, 0, 10, 5, true);		// stand
 	AddAnim("‘OˆÚ“®", 0, 0, 11, 5, true);	// move_front
-	SetAnim("‘Ò‹@");
+	AddAnim("Œã‚ëˆÚ“®", 0, 0, 11, 5, true);	// move_back
+	SetAnim("Œã‚ëˆÚ“®");
 	return true;
 }
 
@@ -45,7 +46,7 @@ void Character::Draw(void)
 		}
 	}
 
-	imageName = ("image/" + characterName + "/" + GetAnim() + "/stand_" + std::to_string(id) + ".png");
+	imageName = ("image/" + characterName + "/" + GetAnim() + "/move_back_" + std::to_string(id) + ".png");
 
 	if (visible)
 	{
