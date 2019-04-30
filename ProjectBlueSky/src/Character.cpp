@@ -13,7 +13,8 @@ Character::~Character()
 
 bool Character::InitAnim(void)
 {
-	AddAnim("待機", 0, 0, 10, 5, true);
+	AddAnim("待機", 0, 0, 10, 5, true);		// stand
+	AddAnim("前移動", 0, 0, 11, 5, true);	// move_front
 	SetAnim("待機");
 	return true;
 }
