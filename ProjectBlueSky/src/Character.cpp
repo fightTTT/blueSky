@@ -13,10 +13,13 @@ Character::~Character()
 
 bool Character::InitAnim(void)
 {
-	AddAnim("待機", 0, 0, 10, 5, true);		// stand
-	AddAnim("前移動", 0, 0, 11, 5, true);	// move_front
-	AddAnim("後ろ移動", 0, 0, 11, 5, true);	// move_back
-	SetAnim("後ろ移動");
+	AddAnim("待機", 0, 0, 10, 5, true);				// stand
+	AddAnim("前移動", 0, 0, 11, 5, true);			// move_front
+	AddAnim("後ろ移動", 0, 0, 11, 5, true);			// move_back
+	AddAnim("ジャンプ_上", 0, 0, 12, 5, true);		// jump
+	AddAnim("ジャンプ_前", 0, 0, 14, 5, true);		// jump_front
+	AddAnim("ジャンプ_後ろ", 0, 0, 14, 5, true);	// jump_back
+	SetAnim("待機");
 	return true;
 }
 
@@ -46,7 +49,7 @@ void Character::Draw(void)
 		}
 	}
 
-	imageName = ("image/" + characterName + "/" + GetAnim() + "/move_back_" + std::to_string(id) + ".png");
+	imageName = ("image/" + characterName + "/" + GetAnim() + "/stand_" + std::to_string(id) + ".png");
 
 	if (visible)
 	{
