@@ -1,4 +1,5 @@
-#include"DxLib.h"
+#include <string>
+#include "DxLib.h"
 #include "VECTOR2.h"
 #include "ImageMng.h"
 
@@ -24,16 +25,16 @@ ImageMng::~ImageMng()
 
 const VEC_INT& ImageMng::GetID(std::string f_name)
 {
-	if (imgMap.find(f_name) == imgMap.end())			//imgMap[f_name]が存在するかの判断	true:存在しない　false:存在する
+	if (imgMap.find(f_name) == imgMap.end())			// imgMap[f_name]が存在するかの判断	true:存在しない　false:存在する
 	{
-		imgMap[f_name].resize(1);						//imgMap[f_name]配列をﾘｻｲｽﾞする
-		imgMap[f_name][0] = LoadGraph(f_name.c_str());	//imgMap[f_name][0]にﾌｧｲﾙ名f_nameの画像のﾊﾝﾄﾞﾙを代入
+		imgMap[f_name].resize(1);						// imgMap[f_name]配列をﾘｻｲｽﾞする
+		imgMap[f_name][0] = LoadGraph(f_name.c_str());	// imgMap[f_name][0]にﾌｧｲﾙ名f_nameの画像のﾊﾝﾄﾞﾙを代入
 		if (imgMap[f_name][0] == -1)
 		{
 			AST();
 		}
 	}
-	return imgMap[f_name];								//imgMap[f_name]を返す
+	return imgMap[f_name];								// imgMap[f_name]を返す
 }
 
 const VEC_INT & ImageMng::GetID(std::string f_name, VECTOR2 divSize, VECTOR2 divCut)
@@ -51,4 +52,38 @@ const VEC_INT & ImageMng::GetID(std::string f_name, VECTOR2 divSize, VECTOR2 div
 		}
 	}
 	return imgMap[f_name];
+}
+
+void ImageMng::LoadImageCharacterAll(std::string characterName, std::string animName[], std::map<std::string, std::string> animFileName)
+{
+	bool findFlag;			// ｱﾆﾒｰｼｮﾝの画像が見つかったかどうかのﾌﾗｸﾞ
+	std::string f_name;		// ﾌｧｲﾙ名
+	int frameNum;			// ｱﾆﾒｰｼｮﾝのｺﾏ番号 (0ｽﾀｰﾄ)
+	int tmpHandle;
+
+	for (unsigned int i = 0; i < 6; i++)		// ｱﾆﾒｰｼｮﾝの種類の数だけﾙｰﾌﾟ
+	{
+		findFlag = true;
+		frameNum = 0;
+
+		do
+		{
+			// (ｷｬﾗ名、ｱﾆﾒｰｼｮﾝ名、ｱﾆﾒｰｼｮﾝ名に対応したﾌｧｲﾙ名、ｱﾆﾒｰｼｮﾝのｺﾏ番号)をもとにﾊﾟｽ情報を含んだﾌｧｲﾙ名を作成
+			f_name = ("image/" + characterName + "/" + animName[i] + "/" + animFileName[animName[i]] + "_" + std::to_string(frameNum) + ".png");
+
+			tmpHandle = LoadGraph(f_name.c_str());		// tmpHandleにﾌｧｲﾙ名f_nameの画像のﾊﾝﾄﾞﾙを代入
+
+			if (tmpHandle == -1)
+			{
+				findFlag = false;		// 見つからなかった
+			}
+			else
+			{
+				imgMap[f_name].resize(1);			// imgMap[f_name]配列をﾘｻｲｽﾞする
+				imgMap[f_name][0] = tmpHandle;		// tmpHandleは見つかったときのものなのでimgMap[f_name][0]に代入
+				frameNum++;							// numを進めて次の画像を読み込む準備
+			}
+
+		} while (findFlag);		// findFlagがtrueの時はまだ先があるかもしれないから繰り返す、falseならそれより先はないはずだから抜ける
+	}
 }

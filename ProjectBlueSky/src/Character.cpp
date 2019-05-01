@@ -23,7 +23,14 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	animFileName["ジャンプ_前"] = "jump_front";
 	animFileName["ジャンプ_後ろ"] = "jump_back";
 
-	// ここで一括読み込みの関数を呼び出して処理したい
+	std::string animName[6] = { "待機",
+								"前移動",
+								"後ろ移動",
+								"ジャンプ_上",
+								"ジャンプ_前",
+								"ジャンプ_後ろ"};		// ｱﾆﾒｰｼｮﾝ名を要素として持つ配列
+
+	lpImageMng.LoadImageCharacterAll(characterName, animName, animFileName);
 
 	return true;
 }
