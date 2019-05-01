@@ -5,6 +5,12 @@
 
 Character::Character()
 {
+	animFileName["待機"]		  = "stand";
+	animFileName["前移動"]		  = "move_front";
+	animFileName["後ろ移動"]	  = "move_back";
+	animFileName["ジャンプ_上"]	  = "jump";
+	animFileName["ジャンプ_前"]	  = "jump_front";
+	animFileName["ジャンプ_後ろ"] = "jump_back";
 }
 
 Character::~Character()
@@ -49,7 +55,8 @@ void Character::Draw(void)
 		}
 	}
 
-	imageName = ("image/" + characterName + "/" + GetAnim() + "/stand_" + std::to_string(id) + ".png");
+	std::string nowAnim = GetAnim();
+	imageName = ("image/" + characterName + "/" + nowAnim + "/" + animFileName[nowAnim] + "_" + std::to_string(id) + ".png");
 
 	if (visible)
 	{

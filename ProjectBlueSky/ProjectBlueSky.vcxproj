@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\BaseScene.cpp" />
     <ClCompile Include="src\Character.cpp" />
+    <ClCompile Include="src\FrameMng.cpp" />
     <ClCompile Include="src\GameCtrl.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\ImageMng.cpp" />
@@ -33,6 +34,7 @@
   <ItemGroup>
     <ClInclude Include="src\BaseScene.h" />
     <ClInclude Include="src\Character.h" />
+    <ClInclude Include="src\FrameMng.h" />
     <ClInclude Include="src\GameCtrl.h" />
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\ImageMng.h" />

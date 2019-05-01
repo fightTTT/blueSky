@@ -28,10 +28,16 @@ void Ryu::SetMove(const GameCtrl & ctl)
 		if (ctl.GetPadData(PAD_1, THUMB_L_RIGHT))
 		{
 			pos.x += 4;
+			SetAnim("後ろ移動");
 		}
-		if (ctl.GetPadData(PAD_1, THUMB_L_LEFT))
+		else if (ctl.GetPadData(PAD_1, THUMB_L_LEFT))
 		{
 			pos.x -= 4;
+			SetAnim("前移動");
+		}
+		else
+		{
+			SetAnim("待機");
 		}
 
 		// 斜め左上ジャンプ
@@ -39,18 +45,21 @@ void Ryu::SetMove(const GameCtrl & ctl)
 		{
 			jumpSpeed = { -2, -30 };
 			jumpFlag = true;
+			SetAnim("ジャンプ_前");
 		}
 		// 斜め右上ジャンプ
 		else if (ctl.GetPadData(PAD_1, THUMB_L_UP) && ctl.GetPadData(PAD_1, THUMB_L_RIGHT))
 		{
 			jumpSpeed = { 2, -30 };
 			jumpFlag = true;
+			SetAnim("ジャンプ_後ろ");
 		}
 		// 上ジャンプ
 		else if (ctl.GetPadData(PAD_1, THUMB_L_UP))
 		{
 			jumpSpeed = { 0, -30 };
 			jumpFlag = true;
+			SetAnim("ジャンプ_上");
 		}
 	}
 	else
