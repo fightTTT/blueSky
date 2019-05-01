@@ -9,7 +9,6 @@ Ryu::Ryu()
 	characterName = "ƒŠƒ…ƒE";
 
 	Init("image/ƒŠƒ…ƒE/‘Ò‹@/stand_0.png", VECTOR2(290, 178), VECTOR2(1, 1), VECTOR2(ssize.x - 290, ssize.y - 178));
-	InitAnim();
 
 	jumpSpeed = { 0, 0 };
 	jumpFlag = false;

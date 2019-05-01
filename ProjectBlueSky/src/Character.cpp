@@ -5,26 +5,37 @@
 
 Character::Character()
 {
-	animFileName["待機"]		  = "stand";
-	animFileName["前移動"]		  = "move_front";
-	animFileName["後ろ移動"]	  = "move_back";
-	animFileName["ジャンプ_上"]	  = "jump";
-	animFileName["ジャンプ_前"]	  = "jump_front";
-	animFileName["ジャンプ_後ろ"] = "jump_back";
 }
 
 Character::~Character()
 {
 }
 
+bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos)
+{
+	Obj::Init(fileName, divSize, divCut, pos);
+	InitAnim();
+
+	animFileName["待機"] = "stand";
+	animFileName["前移動"] = "move_front";
+	animFileName["後ろ移動"] = "move_back";
+	animFileName["ジャンプ_上"] = "jump";
+	animFileName["ジャンプ_前"] = "jump_front";
+	animFileName["ジャンプ_後ろ"] = "jump_back";
+
+	// ここで一括読み込みの関数を呼び出して処理したい
+
+	return true;
+}
+
 bool Character::InitAnim(void)
 {
-	AddAnim("待機", 0, 0, 10, 5, true);				// stand
-	AddAnim("前移動", 0, 0, 11, 5, true);			// move_front
-	AddAnim("後ろ移動", 0, 0, 11, 5, true);			// move_back
-	AddAnim("ジャンプ_上", 0, 0, 12, 5, true);		// jump
-	AddAnim("ジャンプ_前", 0, 0, 14, 5, true);		// jump_front
-	AddAnim("ジャンプ_後ろ", 0, 0, 14, 5, true);	// jump_back
+	AddAnim("待機", 0, 0, 10, 5, true);
+	AddAnim("前移動", 0, 0, 11, 5, true);
+	AddAnim("後ろ移動", 0, 0, 11, 5, true);
+	AddAnim("ジャンプ_上", 0, 0, 12, 5, true);
+	AddAnim("ジャンプ_前", 0, 0, 14, 5, true);
+	AddAnim("ジャンプ_後ろ", 0, 0, 14, 5, true);
 	SetAnim("待機");
 	return true;
 }
