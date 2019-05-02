@@ -20,7 +20,7 @@ bool CollisionMng::ColLoad(std::string charaName, std::string animName)
 	data.resize(header.animNum);
 	for (int i = 0; i < data.size(); ++i)
 	{
-		data.data()->hitBox.resize(header.hitBoxNum[i]);
+		data[i].hitBox.resize(header.hitBoxNum[i]);
 		// read
 	}
 
