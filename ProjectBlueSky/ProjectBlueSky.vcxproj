@@ -18,6 +18,36 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\CollisionMng.cpp" />
+    <ClCompile Include="src\Collision.cpp" />
+    <ClCompile Include="src\BaseScene.cpp" />
+    <ClCompile Include="src\Character.cpp" />
+    <ClCompile Include="src\FrameMng.cpp" />
+    <ClCompile Include="src\GameCtrl.cpp" />
+    <ClCompile Include="src\GameScene.cpp" />
+    <ClCompile Include="src\ImageMng.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Obj.cpp" />
+    <ClCompile Include="src\Ryu.cpp" />
+    <ClCompile Include="src\SceneMng.cpp" />
+    <ClCompile Include="src\VECTOR2.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CollisionMng.h" />
+    <ClInclude Include="src\Collision.h" />
+    <ClInclude Include="src\BaseScene.h" />
+    <ClInclude Include="src\Character.h" />
+    <ClInclude Include="src\FrameMng.h" />
+    <ClInclude Include="src\GameCtrl.h" />
+    <ClInclude Include="src\GameScene.h" />
+    <ClInclude Include="src\ImageMng.h" />
+    <ClInclude Include="src\Obj.h" />
+    <ClInclude Include="src\ObjList.h" />
+    <ClInclude Include="src\Ryu.h" />
+    <ClInclude Include="src\SceneMng.h" />
+    <ClInclude Include="src\VECTOR2.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{009E26E6-25AC-4B6B-A3A9-6FAC814ACE0D}</ProjectGuid>
@@ -89,11 +119,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\1816019\Desktop\DxLib\dxlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\tonki\Desktop\開発\DX_lib;C:\DxLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\1816019\Desktop\DxLib\dxlib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\tonki\Desktop\開発\DX_lib;C:\DxLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,27 +148,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\DxLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\DxLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="BaseScene.cpp" />
-    <ClCompile Include="GameCtrl.cpp" />
-    <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="SceneMng.cpp" />
-    <ClCompile Include="VECTOR2.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BaseScene.h" />
-    <ClInclude Include="GameCtrl.h" />
-    <ClInclude Include="GameScene.h" />
-    <ClInclude Include="SceneMng.h" />
-    <ClInclude Include="VECTOR2.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
