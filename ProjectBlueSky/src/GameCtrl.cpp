@@ -42,6 +42,7 @@ bool GameCtrl::UpDate(void)
 		padData[i][THUMB_L_DOWN] = pad[i].ThumbLY < -20000 || data[KEY_INPUT_S];
 		padData[i][THUMB_L_RIGHT] = pad[i].ThumbLX > 20000 || data[KEY_INPUT_D];
 		padData[i][THUMB_L_LEFT] = pad[i].ThumbLX < -20000 || data[KEY_INPUT_A];
+		padData[i][BUTTON_X] = pad[i].Buttons[XINPUT_BUTTON_X] > 0;
 	}
 
 
