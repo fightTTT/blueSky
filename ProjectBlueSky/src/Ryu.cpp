@@ -50,7 +50,7 @@ void Ryu::SetMove(const GameCtrl & ctl)
 			pos.x -= 4;
 			SetAnim("‘OˆÚ“®");
 		}
-		else
+		else if(animEndFlag)
 		{
 			SetAnim("‘Ò‹@");
 		}
@@ -80,6 +80,7 @@ void Ryu::SetMove(const GameCtrl & ctl)
 		{
 			longAttackFlag = true;
 			longAttackPos = pos;
+			SetAnim("”g“®Œ");
 		}
 	}
 	else

@@ -100,6 +100,6 @@ void Character::Draw(void)
 
 	if (longAttackFlag)
 	{
-		DrawBox(longAttackPos.x, longAttackPos.y - 178 / 2, longAttackPos.x + 50, longAttackPos.y + 30, 0xffffff, true);
+		//DrawBox(longAttackPos.x, longAttackPos.y - 178 / 2, longAttackPos.x + 50, longAttackPos.y + 30, 0xffffff, true);
 	}
 }
