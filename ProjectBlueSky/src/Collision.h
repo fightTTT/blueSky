@@ -14,11 +14,7 @@ enum ColType
 struct HitBox
 {
 	ColType type;
-
-	bool rectFlag;	// “–‚½‚è”»’è‚ª‹éŒ`‚©‰~‚©
-
 	Rect rect;
-	Circle circle;
 };
 
 struct ColInfo
