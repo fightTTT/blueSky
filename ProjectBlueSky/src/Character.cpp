@@ -3,7 +3,7 @@
 #include "Character.h"
 
 
-Character::Character()
+Character::Character(VECTOR2 offset) : Obj(offset)
 {
 }
 
@@ -78,7 +78,13 @@ void Character::Draw(void)
 
 	if (visible)
 	{
-		DrawGraph(drawOffset.x + pos.x, drawOffset.y + pos.y, IMAGE_ID(imageName)[0], true);
+		//DrawGraph(drawOffset.x + pos.x, drawOffset.y + pos.y, IMAGE_ID(imageName)[0], true);
+		DrawRotaGraph(pos.x, pos.y - 178 / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, dir == DIR_RIGHT);
 	}
 	animCnt++;
+
+	if (longAttackFlag)
+	{
+		DrawBox(longAttackPos.x, longAttackPos.y - 178 / 2, longAttackPos.x + 50, longAttackPos.y + 30, 0xffffff, true);
+	}
 }

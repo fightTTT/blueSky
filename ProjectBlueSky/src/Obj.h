@@ -18,6 +18,13 @@ enum OBJ_TYPE
 	OBJ_TYPE_MAX
 };
 
+enum DIR
+{
+	DIR_RIGHT,
+	DIR_LEFT,
+	DIR_MAX
+};
+
 class GameCtrl;
 
 class Obj
@@ -54,6 +61,8 @@ public:
 	bool SetAnim(std::string animName);															// ｱﾆﾒｰｼｮﾝをｾｯﾄする
 	std::string GetAnim(void);																	// ｱﾆﾒｰｼｮﾝの情報を取得する
 
+	void SetDir(DIR d);
+
 private:
 	//移動処理
 	virtual void SetMove(const GameCtrl &ctl);
@@ -69,6 +78,8 @@ protected:
 	unsigned int animCnt;			// ｱﾆﾒｰｼｮﾝｶｳﾝﾀｰ
 	bool animEndFlag;				// ｱﾆﾒｰｼｮﾝ最終ｺﾏ到達ﾌﾗｸﾞ
 	bool visible;					// 表示・非表示ﾌﾗｸﾞ
+	DIR dir;						// 向いている方向
+	DIR tmpDir;						// 向いている方向(一時的に保存)
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;		// ｱﾆﾒｰｼｮﾝ情報
 	std::string animName;									// 表示ｱﾆﾒｰｼｮﾝ名

@@ -23,6 +23,33 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 	{
 		data->UpDate(controller);
 	}
+
+	sharedObj sObj[2];
+	int charaCount = 0;
+
+	for (auto& data : *objList)
+	{
+		if (data->CheckObjType(OBJ_TYPE_CHARACTER))
+		{
+			sObj[charaCount] = data;
+			charaCount++;
+		}
+
+		if (charaCount == 2)
+		{
+			if (sObj[0]->GetPos().x > sObj[1]->GetPos().x)
+			{
+				sObj[0]->SetDir(DIR_LEFT);
+				sObj[1]->SetDir(DIR_RIGHT);
+			}
+			else
+			{
+				sObj[0]->SetDir(DIR_RIGHT);
+				sObj[1]->SetDir(DIR_LEFT);
+			}
+		}
+	}
+
 	//ï`âÊèàóù
 	GameDraw();
 
@@ -37,7 +64,8 @@ int GameScene::Init(void)
 	}
 	objList->clear();		// objListÇëSçÌèúÇ∑ÇÈ
 
-	AddObjList()(objList, std::make_unique<Ryu>());
+	AddObjList()(objList, std::make_unique<Ryu>(VECTOR2(1440 - (290 / 2), 810), VECTOR2(-(290 / 2), -178), PAD_1, DIR_RIGHT));
+	AddObjList()(objList, std::make_unique<Ryu>(VECTOR2((290 / 2), 810), VECTOR2(-(290 / 2), -178), PAD_2, DIR_LEFT));
 
 	//AddObjList()(objList, std::make_unique<Ryu>(lpSceneMng.GetDrawOffset(), popNo));
 	return 0;

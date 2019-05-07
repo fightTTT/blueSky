@@ -7,7 +7,7 @@ class Character :
 	public Obj
 {
 public:
-	Character();
+	Character(VECTOR2 offset);
 	~Character();
 
 	bool CheckObjType(OBJ_TYPE type);
@@ -23,5 +23,8 @@ protected:
 	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標
 
 	std::string characterName;
+
+	bool longAttackFlag;		// 遠距離攻撃フラグ
+	VECTOR2 longAttackPos;		// 遠距離攻撃座標
 };
 
