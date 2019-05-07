@@ -7,7 +7,6 @@ class Ryu :
 	public Character
 {
 public:
-	//Ryu();
 	Ryu(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir);
 	~Ryu();
 
@@ -20,6 +19,4 @@ private:
 	PAD_ID padNum;
 	bool jumpFlag;
 	VECTOR2 jumpSpeed;
-
-
 };

@@ -2,18 +2,6 @@
 #include "GameCtrl.h"
 #include "SceneMng.h"
 
-//Ryu::Ryu()
-//{
-//	auto ssize = lpSceneMng.GetScreenSize();
-//	
-//	characterName = "ƒŠƒ…ƒE";
-//
-//	Init("image/ƒŠƒ…ƒE/‘Ò‹@/stand_0.png", VECTOR2(290, 178), VECTOR2(1, 1), VECTOR2(ssize.x - 290, ssize.y - 178));
-//
-//	jumpSpeed = { 0, 0 };
-//	jumpFlag = false;
-//}
-
 Ryu::Ryu(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : Character(offset)
 {
 	auto ssize = lpSceneMng.GetScreenSize();
