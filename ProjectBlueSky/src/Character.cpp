@@ -55,7 +55,7 @@ bool Character::InitAnim(void)
 	AddAnim("ジャンプ_後ろ", 0, 0, 14, 5, true);
 	AddAnim("パンチ_小", 0, 0, 4, 5, false);
 	AddAnim("パンチ_大", 0, 0, 7, 5, false);
-	AddAnim("波動拳", 0, 0, 12, 5, false);
+	AddAnim("波動拳", 0, 0, 11, 5, false);
 	AddAnim("竜巻旋風脚", 0, 0, 13, 5, false);
 	AddAnim("昇竜拳", 0, 0, 14, 5, false);
 	SetAnim("待機");
