@@ -97,7 +97,16 @@ void Ryu::SetMove(const GameCtrl & ctl)
 
 	if (longAttackFlag)
 	{
-		longAttackPos += VECTOR2(-4, 0);
+		VECTOR2 speed;
+		if (dir == DIR_LEFT)
+		{
+			speed = { -4, 0 };
+		}
+		else
+		{
+			speed = { 4, 0 };
+		}
+		longAttackPos += speed;
 	}
 }
 
