@@ -54,14 +54,14 @@ const VEC_INT & ImageMng::GetID(std::string f_name, VECTOR2 divSize, VECTOR2 div
 	return imgMap[f_name];
 }
 
-void ImageMng::LoadImageCharacterAll(std::string characterName, std::string animName[], std::map<std::string, std::string> animFileName)
+void ImageMng::LoadImageCharacterAll(std::string characterName, std::vector<std::string> animName, std::map<std::string, std::string> animFileName)
 {
 	bool findFlag;			// ±ÆÒ°¼®İ‚Ì‰æ‘œ‚ªŒ©‚Â‚©‚Á‚½‚©‚Ç‚¤‚©‚ÌÌ×¸Ş
 	std::string f_name;		// Ì§²Ù–¼
 	int frameNum;			// ±ÆÒ°¼®İ‚ÌºÏ”Ô† (0½À°Ä)
 	int tmpHandle;
 
-	for (unsigned int i = 0; i < 6; i++)		// ±ÆÒ°¼®İ‚Ìí—Ş‚Ì”‚¾‚¯Ù°Ìß
+	for (unsigned int i = 0; i < animName.size(); i++)		// ±ÆÒ°¼®İ‚Ìí—Ş‚Ì”‚¾‚¯Ù°Ìß
 	{
 		findFlag = true;
 		frameNum = 0;

@@ -23,12 +23,12 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	animFileName["ジャンプ_前"] = "jump_front";
 	animFileName["ジャンプ_後ろ"] = "jump_back";
 
-	std::string animName[6] = { "待機",
-								"前移動",
-								"後ろ移動",
-								"ジャンプ_上",
-								"ジャンプ_前",
-								"ジャンプ_後ろ"};		// ｱﾆﾒｰｼｮﾝ名を要素として持つ配列
+	std::vector<std::string> animName = { "待機",
+										  "前移動",
+										  "後ろ移動",
+										  "ジャンプ_上",
+										  "ジャンプ_前",
+										  "ジャンプ_後ろ" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
 
 	lpImageMng.LoadImageCharacterAll(characterName, animName, animFileName);
 
