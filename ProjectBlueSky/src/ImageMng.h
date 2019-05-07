@@ -22,7 +22,7 @@ public:
 	const VEC_INT& GetID(std::string f_name, VECTOR2 divSize, VECTOR2 divCut);		// ‰æ‘œ‚ÌÊİÄŞÙ‚ğQÆ‚·‚é‚½‚ß‚ÌŠÖ” ( LoadDivGraph—p )
 
 	// ˆø”‚Ì·¬×¸À°‚Ì±ÆÒ°¼®İ‚ğ‘S‚Ä“Ç‚İ‚ŞŠÖ”
-	void LoadImageCharacterAll(std::string characterName, std::string animName[], std::map<std::string, std::string> animFileName);
+	void LoadImageCharacterAll(std::string characterName, std::vector<std::string> animName, std::map<std::string, std::string> animFileName);
 
 private:
 	ImageMng();

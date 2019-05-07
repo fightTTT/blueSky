@@ -138,6 +138,11 @@ std::string Obj::GetAnim(void)
 	return animName;
 }
 
+void Obj::SetDir(DIR d)
+{
+	tmpDir = d;
+}
+
 void Obj::SetPos(VECTOR2 pos)
 {
 	this->pos = pos;
