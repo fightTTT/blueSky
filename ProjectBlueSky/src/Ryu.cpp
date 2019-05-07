@@ -40,47 +40,81 @@ void Ryu::SetMove(const GameCtrl & ctl)
 	{
 		dir = tmpDir;
 
-		if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
+		if (animTable[GetAnim()][ANIM_TBL_LOOP] || animEndFlag)
 		{
-			pos.x += 4;
-			SetAnim("後ろ移動");
-		}
-		else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
-		{
-			pos.x -= 4;
-			SetAnim("前移動");
-		}
-		else if(animEndFlag)
-		{
-			SetAnim("待機");
-		}
+			if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
+			{
+				pos.x += 4;
+				if (dir == DIR_LEFT)
+				{
+					SetAnim("後ろ移動");
+				}
+				else
+				{
+					SetAnim("前移動");
+				}
+			}
+			else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
+			{
+				pos.x -= 4;
+				if (dir == DIR_LEFT)
+				{
+					SetAnim("前移動");
+				}
+				else
+				{
+					SetAnim("後ろ移動");
+				}
 
-		// 斜め左上ジャンプ
-		if (ctl.GetPadData(padNum, THUMB_L_UP) && ctl.GetPadData(padNum, THUMB_L_LEFT))
-		{
-			jumpSpeed = { -2, -30 };
-			jumpFlag = true;
-			SetAnim("ジャンプ_前");
-		}
-		// 斜め右上ジャンプ
-		else if (ctl.GetPadData(padNum, THUMB_L_UP) && ctl.GetPadData(padNum, THUMB_L_RIGHT))
-		{
-			jumpSpeed = { 2, -30 };
-			jumpFlag = true;
-			SetAnim("ジャンプ_後ろ");
-		}
-		// 上ジャンプ
-		else if (ctl.GetPadData(padNum, THUMB_L_UP))
-		{
-			jumpSpeed = { 0, -30 };
-			jumpFlag = true;
-			SetAnim("ジャンプ_上");
-		}
-		else if (ctl.GetPadData(padNum, BUTTON_X))
-		{
-			longAttackFlag = true;
-			longAttackPos = pos;
-			SetAnim("波動拳");
+			}
+			else
+			{
+				SetAnim("待機");
+			}
+
+			// 斜め左上ジャンプ
+			if (ctl.GetPadData(padNum, THUMB_L_UP) && ctl.GetPadData(padNum, THUMB_L_LEFT))
+			{
+				jumpSpeed = { -2, -30 };
+				jumpFlag = true;
+
+				if (dir == DIR_LEFT)
+				{
+					SetAnim("ジャンプ_前");
+				}
+				else
+				{
+					SetAnim("ジャンプ_後ろ");
+				}
+			}
+			// 斜め右上ジャンプ
+			else if (ctl.GetPadData(padNum, THUMB_L_UP) && ctl.GetPadData(padNum, THUMB_L_RIGHT))
+			{
+				jumpSpeed = { 2, -30 };
+				jumpFlag = true;
+
+				if (dir == DIR_LEFT)
+				{
+					SetAnim("ジャンプ_後ろ");
+				}
+				else
+				{
+					SetAnim("ジャンプ_前");
+				}
+			}
+			// 上ジャンプ
+			else if (ctl.GetPadData(padNum, THUMB_L_UP))
+			{
+				jumpSpeed = { 0, -30 };
+				jumpFlag = true;
+				SetAnim("ジャンプ_上");
+			}
+			else if (ctl.GetPadData(padNum, BUTTON_X))
+			{
+				longAttackFlag = true;
+				longAttackPos = pos;
+				SetAnim("波動拳");
+			}
 		}
 	}
 	else
