@@ -17,18 +17,19 @@ Obj::~Obj()
 {
 }
 
-bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut)
+bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, bool turn)
 {
 	lpImageMng.GetID(fileName, divSize, divCut);
 	imageName = fileName;
 	this->divSize = divSize;
 	this->divCut = divCut;
+	turnFlag = turn;
 	return true;
 }
 
-bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos)
+bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn)
 {
-	Init(fileName, divSize, divCut);
+	Init(fileName, divSize, divCut, turn);
 	SetPos(pos);
 	return true;
 }
@@ -70,7 +71,7 @@ void Obj::Draw(void)
 	{
 		if (visible)
 		{
-			DrawGraph(drawOffset.x + pos.x, drawOffset.y + pos.y, IMAGE_ID(imageName)[id], true);
+			DrawRotaGraph(drawOffset.x + pos.x - (divSize.x / 2), drawOffset.y + pos.y - (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
 		}
 	}
 	animCnt++;
@@ -86,7 +87,7 @@ void Obj::Draw(unsigned int id)
 	{
 		if (visible)
 		{
-			DrawGraph(drawOffset.x + pos.x, drawOffset.y + pos.y, IMAGE_ID(imageName)[id], true);
+			DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
 		}
 	}
 }
@@ -129,8 +130,8 @@ bool Obj::SetAnim(std::string animName)
 	Obj::animName = animName;
 	Obj::animCnt = 0;
 	Obj::animEndFlag = false;
-	return true;
 
+	return true;
 }
 
 std::string Obj::GetAnim(void)

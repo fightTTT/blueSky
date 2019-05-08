@@ -1,6 +1,7 @@
 #include "Ryu.h"
 #include "GameCtrl.h"
 #include "SceneMng.h"
+#include "Shot.h"
 
 Ryu::Ryu(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : Character(offset)
 {
@@ -8,7 +9,7 @@ Ryu::Ryu(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : Character(offse
 
 	characterName = "リュウ";
 
-	Init("image/リュウ/待機/stand_0.png", VECTOR2(290, 178), VECTOR2(1, 1), VECTOR2(pos.x, pos.y));
+	Init("image/リュウ/待機/stand_0.png", VECTOR2(290, 178), VECTOR2(1, 1), VECTOR2(pos.x, pos.y), false);
 
 	jumpSpeed = { 0, 0 };
 	jumpFlag = false;
@@ -20,7 +21,7 @@ Ryu::~Ryu()
 {
 }
 
-void Ryu::SetMove(const GameCtrl & ctl)
+void Ryu::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	auto ssize = lpSceneMng.GetScreenSize();
 
@@ -99,8 +100,7 @@ void Ryu::SetMove(const GameCtrl & ctl)
 			}
 			else if (ctl.GetPadData(padNum, BUTTON_X))
 			{
-				longAttackFlag = true;
-				longAttackPos = pos;
+				AddObjList()(objList, std::make_unique<Shot>(pos, dir));
 				SetAnim("波動拳");
 			}
 		}
@@ -118,21 +118,17 @@ void Ryu::SetMove(const GameCtrl & ctl)
 		jumpFlag = false;
 	}
 
-	if (longAttackFlag)
-	{
-		VECTOR2 speed;
-		if (dir == DIR_LEFT)
-		{
-			speed = { -4, 0 };
-		}
-		else
-		{
-			speed = { 4, 0 };
-		}
-		longAttackPos += speed;
-	}
-}
-
-void Ryu::LongAttack()
-{
+	//if (longAttackFlag)
+	//{
+	//	VECTOR2 speed;
+	//	if (dir == DIR_LEFT)
+	//	{
+	//		speed = { -4, 0 };
+	//	}
+	//	else
+	//	{
+	//		speed = { 4, 0 };
+	//	}
+	//	longAttackPos += speed;
+	//}
 }

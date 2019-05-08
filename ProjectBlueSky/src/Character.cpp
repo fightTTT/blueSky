@@ -11,9 +11,9 @@ Character::~Character()
 {
 }
 
-bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos)
+bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn)
 {
-	Obj::Init(fileName, divSize, divCut, pos);
+	Obj::Init(fileName, divSize, divCut, pos, turn);
 	InitAnim();
 
 	animFileName["ë“ã@"] = "stand";
@@ -91,15 +91,19 @@ void Character::Draw(void)
 	std::string nowAnim = GetAnim();
 	imageName = ("image/" + characterName + "/" + nowAnim + "/" + animFileName[nowAnim] + "_" + std::to_string(id) + ".png");
 
+	// DIRÇ™RIGHTÇÃèÍçáâÊëúÇîΩì]
+	if (dir == DIR_RIGHT)
+	{
+		turnFlag = true;
+	}
+	else
+	{
+		turnFlag = false;
+	}
+
 	if (visible)
 	{
-		//DrawGraph(drawOffset.x + pos.x, drawOffset.y + pos.y, IMAGE_ID(imageName)[0], true);
-		DrawRotaGraph(pos.x, pos.y - 178 / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, dir == DIR_RIGHT);
+		DrawRotaGraph(pos.x, pos.y - 178 / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 	animCnt++;
-
-	if (longAttackFlag)
-	{
-		//DrawBox(longAttackPos.x, longAttackPos.y - 178 / 2, longAttackPos.x + 50, longAttackPos.y + 30, 0xffffff, true);
-	}
 }
