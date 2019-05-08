@@ -7,11 +7,11 @@ Shot::Shot(VECTOR2 pos, DIR dir)
 
 	if (dir == DIR_RIGHT)
 	{
-		speed = 4;
+		speed = 6;
 	}
 	else
 	{
-		speed = -4;
+		speed = -6;
 	}
 
 	deleteFlag = false;
