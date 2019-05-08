@@ -43,34 +43,73 @@ void Ryu::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 		if (animTable[GetAnim()][ANIM_TBL_LOOP] || animEndFlag)
 		{
-			if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
+			if (ctl.GetPadData(padNum, THUMB_L_DOWN))
 			{
-				pos.x += 4;
-				if (dir == DIR_LEFT)
+				if ((GetAnim() == "しゃがみ始め") || (GetAnim() == "しゃがみ") || ((GetAnim() == "しゃがみ_後ろ")))
 				{
-					SetAnim("後ろ移動");
+					if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
+					{
+						if (dir == DIR_LEFT)
+						{
+							SetAnim("しゃがみ_後ろ");
+						}
+						else
+						{
+							SetAnim("しゃがみ");
+						}
+					}
+					else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
+					{
+						if (dir == DIR_LEFT)
+						{
+							SetAnim("しゃがみ");
+						}
+						else
+						{
+							SetAnim("しゃがみ_後ろ");
+						}
+					}
+					else
+					{
+						SetAnim("しゃがみ");
+					}
 				}
 				else
 				{
-					SetAnim("前移動");
+					SetAnim("しゃがみ始め");
 				}
-			}
-			else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
-			{
-				pos.x -= 4;
-				if (dir == DIR_LEFT)
-				{
-					SetAnim("前移動");
-				}
-				else
-				{
-					SetAnim("後ろ移動");
-				}
-
 			}
 			else
 			{
-				SetAnim("待機");
+				if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
+				{
+					pos.x += 4;
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("後ろ移動");
+					}
+					else
+					{
+						SetAnim("前移動");
+					}
+				}
+				else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
+				{
+					pos.x -= 4;
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("前移動");
+					}
+					else
+					{
+						SetAnim("後ろ移動");
+					}
+
+				}
+				else
+				{
+					SetAnim("待機");
+				}
 			}
 
 			// 斜め左上ジャンプ
@@ -114,6 +153,14 @@ void Ryu::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				AddObjList()(objList, std::make_unique<Shot>(pos, dir));
 				SetAnim("波動拳");
+			}
+			else if (ctl.GetPadData(padNum, BUTTON_A))
+			{
+				SetAnim("パンチ_小");
+			}
+			else if (ctl.GetPadData(padNum, BUTTON_B))
+			{
+				SetAnim("パンチ_大");
 			}
 		}
 	}
