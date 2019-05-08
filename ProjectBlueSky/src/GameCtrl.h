@@ -26,6 +26,9 @@ enum BUTTON_TYPE
 	BUTTON_A,
 	BUTTON_B,
 
+	// スタートボタン
+	BUTTON_START,
+
 	BUTTON_TYPE_MAX
 };
 
@@ -54,6 +57,7 @@ public:
 
 	const KEY_ARRAY &GetCtrl(KEY_TYPE type) const;		// 引数に対応したﾀｲﾐﾝｸﾞのｷｰ入力情報を取得する
 	bool GetPadData(PAD_ID padNum, BUTTON_TYPE button) const;
+	bool GetPadDataTrg(PAD_ID padNum, BUTTON_TYPE button) const;
 
 	bool UpDate(void);		// ｷｰの入力情報の更新をする
 

@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\SelectScene.cpp" />
+    <ClCompile Include="src\Shot.cpp" />
     <ClCompile Include="src\CollisionMng.cpp" />
     <ClCompile Include="src\Collision.cpp" />
     <ClCompile Include="src\BaseScene.cpp" />
@@ -32,8 +34,11 @@
     <ClCompile Include="src\Ryu.cpp" />
     <ClCompile Include="src\SceneMng.cpp" />
     <ClCompile Include="src\VECTOR2.cpp" />
+    <ClCompile Include="src\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SelectScene.h" />
+    <ClInclude Include="src\Shot.h" />
     <ClInclude Include="src\CollisionMng.h" />
     <ClInclude Include="src\Collision.h" />
     <ClInclude Include="src\BaseScene.h" />
@@ -47,6 +52,7 @@
     <ClInclude Include="src\Ryu.h" />
     <ClInclude Include="src\SceneMng.h" />
     <ClInclude Include="src\VECTOR2.h" />
+    <ClInclude Include="src\TitleScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
