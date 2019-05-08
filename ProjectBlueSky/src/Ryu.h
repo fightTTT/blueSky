@@ -10,13 +10,11 @@ public:
 	Ryu(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir);
 	~Ryu();
 
-	void SetMove(const GameCtrl &ctl);
-
-	void LongAttack();
+	void SetMove(const GameCtrl &ctl, weekListObj objList);
 
 private:
 
-	PAD_ID padNum;
+	PAD_ID padNum;		// 使用しているコントローラー番号
 	bool jumpFlag;
 	VECTOR2 jumpSpeed;
 };

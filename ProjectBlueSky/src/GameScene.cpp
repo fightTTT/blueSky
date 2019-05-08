@@ -21,7 +21,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
 	for (auto& data : *objList)
 	{
-		data->UpDate(controller);
+		data->UpDate(controller, objList);
 	}
 
 	sharedObj sObj[2];
@@ -33,6 +33,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		{
 			sObj[charaCount] = data;
 			charaCount++;
+
 		}
 
 		if (charaCount == 2)

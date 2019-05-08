@@ -15,6 +15,7 @@ enum ANIM_TBL {
 enum OBJ_TYPE
 {
 	OBJ_TYPE_CHARACTER,
+	OBJ_TYPE_SHOT,
 	OBJ_TYPE_MAX
 };
 
@@ -34,8 +35,8 @@ public:
 	Obj(VECTOR2 drawOffset);
 	virtual ~Obj();
 
-	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut);					// 初期化
-	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標
+	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, bool turn);					// 初期化
+	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標
 
 	// 情報更新
 	void UpDate(const GameCtrl &ctl);
@@ -80,6 +81,7 @@ protected:
 	bool visible;					// 表示・非表示ﾌﾗｸﾞ
 	DIR dir;						// 向いている方向
 	DIR tmpDir;						// 向いている方向(一時的に保存)
+	bool turnFlag;					// 画像反転フラグ
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;		// ｱﾆﾒｰｼｮﾝ情報
 	std::string animName;									// 表示ｱﾆﾒｰｼｮﾝ名
