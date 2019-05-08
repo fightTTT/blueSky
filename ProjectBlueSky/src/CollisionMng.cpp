@@ -33,7 +33,6 @@ CollisionMng::CollisionMng()
 {
 }
 
-
 CollisionMng::~CollisionMng()
 {
 }
