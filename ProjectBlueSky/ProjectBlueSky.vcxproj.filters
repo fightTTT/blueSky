@@ -69,12 +69,15 @@
     <ClCompile Include="src\Shot.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="src\TitleScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="src\SelectScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
+=======
+>>>>>>> 227c2ea31ef1dcabc9efb0d987feabbbee83f5c7
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameCtrl.h">
@@ -119,11 +122,14 @@
     <ClInclude Include="src\Shot.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="src\TitleScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="src\SelectScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
+=======
+>>>>>>> 227c2ea31ef1dcabc9efb0d987feabbbee83f5c7
   </ItemGroup>
 </Project>
