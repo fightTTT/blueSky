@@ -1,8 +1,11 @@
+#include "SceneMng.h"
 #include "Shot.h"
 
 
 Shot::Shot(VECTOR2 pos, DIR dir)
 {
+	ssize = lpSceneMng.GetScreenSize();
+
 	Init("image/Shot2.png", VECTOR2(120, 120), VECTOR2(1, 1), pos, dir == DIR_RIGHT);
 
 	if (dir == DIR_RIGHT)
@@ -24,6 +27,10 @@ Shot::~Shot()
 void Shot::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	pos.x += speed;
+	if ((pos.x < (0 - divSize.x)) || (pos.x > ssize.x))
+	{
+		deleteFlag = true;
+	}
 }
 
 bool Shot::CheckDeth()

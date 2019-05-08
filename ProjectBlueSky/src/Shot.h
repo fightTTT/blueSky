@@ -15,7 +15,7 @@ public:
 	bool CheckObjType(OBJ_TYPE type);
 
 private:
-
+	VECTOR2 ssize;
 	int speed;
 
 	bool deleteFlag;			// íœƒtƒ‰ƒO

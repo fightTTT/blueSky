@@ -1,5 +1,8 @@
 #include "Dxlib.h"
+#include "GameCtrl.h"
+#include "SceneMng.h"
 #include "ImageMng.h"
+#include "Shot.h"
 #include "Character.h"
 
 
@@ -11,10 +14,14 @@ Character::~Character()
 {
 }
 
-bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn)
+bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn, PAD_ID id)
 {
 	Obj::Init(fileName, divSize, divCut, pos, turn);
 	InitAnim();
+
+	jumpSpeed = { 0, 0 };
+	jumpFlag = false;
+	padNum = id;
 
 	// 通常のアクション
 	animFileName["待機"] = "stand";
@@ -89,6 +96,151 @@ bool Character::InitAnim(void)
 bool Character::CheckObjType(OBJ_TYPE type)
 {
 	return (type == OBJ_TYPE_CHARACTER);
+}
+
+void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
+{
+	auto ssize = lpSceneMng.GetScreenSize();
+
+	if (!jumpFlag)
+	{
+		dir = tmpDir;
+
+		if (animTable[GetAnim()][ANIM_TBL_LOOP] || animEndFlag)
+		{
+			if (ctl.GetPadData(padNum, THUMB_L_DOWN))
+			{
+				if ((GetAnim() == "しゃがみ始め") || (GetAnim() == "しゃがみ") || ((GetAnim() == "しゃがみ_後ろ")))
+				{
+					if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
+					{
+						if (dir == DIR_LEFT)
+						{
+							SetAnim("しゃがみ_後ろ");
+						}
+						else
+						{
+							SetAnim("しゃがみ");
+						}
+					}
+					else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
+					{
+						if (dir == DIR_LEFT)
+						{
+							SetAnim("しゃがみ");
+						}
+						else
+						{
+							SetAnim("しゃがみ_後ろ");
+						}
+					}
+					else
+					{
+						SetAnim("しゃがみ");
+					}
+				}
+				else
+				{
+					SetAnim("しゃがみ始め");
+				}
+			}
+			else
+			{
+				if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
+				{
+					pos.x += 4;
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("後ろ移動");
+					}
+					else
+					{
+						SetAnim("前移動");
+					}
+				}
+				else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
+				{
+					pos.x -= 4;
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("前移動");
+					}
+					else
+					{
+						SetAnim("後ろ移動");
+					}
+
+				}
+				else
+				{
+					SetAnim("待機");
+				}
+			}
+
+			// 斜め左上ジャンプ
+			if (ctl.GetPadData(padNum, THUMB_L_UP) && ctl.GetPadData(padNum, THUMB_L_LEFT))
+			{
+				jumpSpeed = { -2, -30 };
+				jumpFlag = true;
+
+				if (dir == DIR_LEFT)
+				{
+					SetAnim("ジャンプ_前");
+				}
+				else
+				{
+					SetAnim("ジャンプ_後ろ");
+				}
+			}
+			// 斜め右上ジャンプ
+			else if (ctl.GetPadData(padNum, THUMB_L_UP) && ctl.GetPadData(padNum, THUMB_L_RIGHT))
+			{
+				jumpSpeed = { 2, -30 };
+				jumpFlag = true;
+
+				if (dir == DIR_LEFT)
+				{
+					SetAnim("ジャンプ_後ろ");
+				}
+				else
+				{
+					SetAnim("ジャンプ_前");
+				}
+			}
+			// 上ジャンプ
+			else if (ctl.GetPadData(padNum, THUMB_L_UP))
+			{
+				jumpSpeed = { 0, -30 };
+				jumpFlag = true;
+				SetAnim("ジャンプ_上");
+			}
+			else if (ctl.GetPadData(padNum, BUTTON_X))
+			{
+				AddObjList()(objList, std::make_unique<Shot>(pos, dir));
+				SetAnim(spAttackAnimName[0]);
+			}
+			else if (ctl.GetPadData(padNum, BUTTON_A))
+			{
+				SetAnim("パンチ_小");
+			}
+			else if (ctl.GetPadData(padNum, BUTTON_B))
+			{
+				SetAnim("パンチ_大");
+			}
+		}
+	}
+	else
+	{
+		// ジャンプ中
+		jumpSpeed.y += 1;
+		pos += jumpSpeed;
+	}
+
+	if (pos.y > ssize.y)
+	{
+		pos.y = ssize.y;
+		jumpFlag = false;
+	}
 }
 
 void Character::Draw(void)

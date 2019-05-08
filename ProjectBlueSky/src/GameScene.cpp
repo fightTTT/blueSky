@@ -24,6 +24,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		data->UpDate(controller, objList);
 	}
 
+	auto deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
+	objList->erase(deth_itr, objList->end());
+
 	sharedObj sObj[2];
 	int charaCount = 0;
 
