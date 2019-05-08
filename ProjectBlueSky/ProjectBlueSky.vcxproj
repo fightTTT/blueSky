@@ -31,6 +31,7 @@
     <ClCompile Include="src\Obj.cpp" />
     <ClCompile Include="src\Ryu.cpp" />
     <ClCompile Include="src\SceneMng.cpp" />
+    <ClCompile Include="src\Shot.cpp" />
     <ClCompile Include="src\VECTOR2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +47,7 @@
     <ClInclude Include="src\ObjList.h" />
     <ClInclude Include="src\Ryu.h" />
     <ClInclude Include="src\SceneMng.h" />
+    <ClInclude Include="src\Shot.h" />
     <ClInclude Include="src\VECTOR2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
