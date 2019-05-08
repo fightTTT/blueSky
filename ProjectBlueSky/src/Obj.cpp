@@ -71,7 +71,7 @@ void Obj::Draw(void)
 	{
 		if (visible)
 		{
-			DrawRotaGraph(drawOffset.x + pos.x, drawOffset.y + pos.y - (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
+			DrawRotaGraph(drawOffset.x + pos.x - (divSize.x / 2), drawOffset.y + pos.y - (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
 		}
 	}
 	animCnt++;
