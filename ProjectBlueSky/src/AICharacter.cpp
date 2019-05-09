@@ -1,10 +1,13 @@
 #include "AICharacter.h"
 #include "ImageMng.h"
+#include "Shot.h"
 
 #include "DxLib.h"
 
 AICharacter::AICharacter()
 {
+	AIStateTime = 0;
+	LongAttackFlag = false;
 }
 
 AICharacter::~AICharacter()
@@ -19,16 +22,22 @@ bool AICharacter::CheckObjType(OBJ_TYPE type)
 void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	dir = tmpDir;
-	AIStateType = AI_STATE_MOVE;
 
 	switch (AIStateType)
 	{
 	case AI_STATE_NONE:
+		SetAnim("‘Ò‹@");
 		break;
 	case AI_STATE_MOVE:
 		Move();
 		break;
 	case AI_STATE_ATTACK:
+		if (!(LongAttackFlag) && (animTable[GetAnim()][ANIM_TBL_LOOP] || animEndFlag))
+		{
+			AddObjList()(objList, std::make_unique<Shot>(pos, dir));
+			SetAnim(spAttackAnimName[0]);
+			LongAttackFlag = true;
+		}
 		break;
 	case AI_STATE_JUMP:
 		break;
@@ -37,6 +46,22 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 	default:
 		break;
 	}
+
+	if (LongAttackFlag && animEndFlag)
+	{
+		AIStateType = AI_STATE_MOVE;
+		LongAttackFlag = false;
+		AIStateTime = 0;
+	}
+
+	if (AIStateTime > 100 && AIStateType == AI_STATE_MOVE)
+	{
+		AIStateType = AI_STATE_ATTACK;
+		
+		AIStateTime = 0;
+	}
+
+	AIStateTime++;
 }
 
 void AICharacter::Draw()

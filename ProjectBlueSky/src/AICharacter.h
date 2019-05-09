@@ -38,6 +38,9 @@ protected:
 	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標, 反転ﾌﾗｸﾞ, パッド番号
 
 	AI_STATE_TYPE AIStateType;		// 現在実行中の状態
+	int AIStateTime;				// 実行中の状態がどのくらい続いているか
+
+	bool LongAttackFlag;
 
 	bool jumpFlag;
 	VECTOR2 jumpSpeed;
