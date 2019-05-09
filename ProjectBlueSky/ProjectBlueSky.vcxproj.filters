@@ -78,6 +78,9 @@
     <ClCompile Include="src\AICharacter.cpp">
       <Filter>ソース ファイル\character</Filter>
     </ClCompile>
+    <ClCompile Include="src\AIRyu.cpp">
+      <Filter>ソース ファイル\character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameCtrl.h">
@@ -129,6 +132,9 @@
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="src\AICharacter.h">
+      <Filter>ヘッダー ファイル\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIRyu.h">
       <Filter>ヘッダー ファイル\character</Filter>
     </ClInclude>
   </ItemGroup>
