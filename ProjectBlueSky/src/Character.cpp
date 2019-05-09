@@ -82,7 +82,6 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 
 	comDir = COM_DIR_CENTER;
 	comDirOld = COM_DIR_CENTER;
-	centerFlag = false;
 	comClearCnt = DEF_COM_CLEAR_CNT;
 
 	return true;
@@ -107,16 +106,9 @@ bool Character::InitAnim(void)
 	return true;
 }
 
-bool Character::CheckObjType(OBJ_TYPE type)
+void Character::CommandUpDate(const GameCtrl & ctl)
 {
-	return (type == OBJ_TYPE_CHARACTER);
-}
-
-void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
-{
-	auto ssize = lpSceneMng.GetScreenSize();
-
-	// コマンドの格納処理
+	// 入力方向の情報を更新
 	comDirOld = comDir;
 
 	if (ctl.GetPadData(padNum, THUMB_L_UP))
@@ -162,25 +154,79 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		else
 		{
 			comDir = COM_DIR_CENTER;
-			centerFlag = true;
 		}
 	}
 
+	// リストに入れる
 	if (comDir != COM_DIR_CENTER)
 	{
-		if ((comDir != comDirOld) || centerFlag)
+		if (comDir != comDirOld)
 		{
 			comList.push_back(comDir);
-			centerFlag = false;
 			comClearCnt = DEF_COM_CLEAR_CNT;
 		}
 	}
 
+	// 入力受付時間の処理
 	comClearCnt--;
 	if ((!comList.empty()) && (comClearCnt < 0))
 	{
 		comList.clear();
 	}
+}
+
+bool Character::CheckCommand(int skillNum)
+{
+	if (comList.size() < spAttackCommand[skillNum][dir].size())
+	{
+		return false;
+	}
+	else
+	{
+		auto itr = comList.end();
+		int comNum = 0;
+
+		// コマンド数分だけ戻す
+		for (unsigned int buckCnt = 0; buckCnt < spAttackCommand[skillNum][dir].size(); buckCnt++)
+		{
+			itr--;
+		}
+
+		// 順番に比較
+		while (itr != comList.end())
+		{
+			if ((*itr) != spAttackCommand[skillNum][dir][comNum])
+			{
+				break;
+			}
+			else
+			{
+				itr++;
+				comNum++;
+
+				// コマンド数分ループを抜けなかったら成功
+				if (comNum == spAttackCommand[skillNum][dir].size())
+				{
+					comList.clear();
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+bool Character::CheckObjType(OBJ_TYPE type)
+{
+	return (type == OBJ_TYPE_CHARACTER);
+}
+
+void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
+{
+	auto ssize = lpSceneMng.GetScreenSize();
+
+	CommandUpDate(ctl);
 
 	// キャラクター操作
 	if (!jumpFlag)
@@ -304,7 +350,15 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			}
 			else if (ctl.GetPadData(padNum, BUTTON_A))
 			{
-				SetAnim("パンチ_小");
+				if (CheckCommand(0))
+				{
+					AddObjList()(objList, std::make_unique<Shot>(pos, dir));
+					SetAnim(spAttackAnimName[0]);
+				}
+				else
+				{
+					SetAnim("パンチ_小");
+				}
 			}
 			else if (ctl.GetPadData(padNum, BUTTON_B))
 			{

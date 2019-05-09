@@ -2,7 +2,9 @@
 #include "Obj.h"
 
 #include <map>
-#include<list>
+#include <list>
+#include <array>
+#include <vector>
 
 enum PAD_ID;
 
@@ -35,13 +37,14 @@ public:
 
 private:
 	bool InitAnim(void);
+	void CommandUpDate(const GameCtrl & ctl);
+	bool CheckCommand(int skillNum);
 
 	std::map<std::string, std::string> animFileName;		// ｱﾆﾒｰｼｮﾝの画像ﾌｧｲﾙ名 (ｷｰ: ｱﾆﾒｰｼｮﾝ名)
 
 	std::list<COM_DIR> comList;
 	COM_DIR comDir;
 	COM_DIR comDirOld;
-	bool centerFlag;
 	int comClearCnt;
 
 	PAD_ID padNum;		// 使用しているコントローラー番号
@@ -54,5 +57,6 @@ protected:
 	std::string characterName;
 	std::string spAttackAnimName[3] = {"技1", "技2" , "技3" };
 	std::string spAttackAnimFileName[3] = { "waza_1", "waza_2" , "waza_3" };
+	std::array<std::array<std::vector<COM_DIR>, DIR_MAX>, 3> spAttackCommand;		// spAttackCommand[技番号][自分の方向][コマンド]
 };
 
