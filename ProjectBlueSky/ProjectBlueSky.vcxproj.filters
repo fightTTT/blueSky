@@ -102,6 +102,12 @@
     <ClCompile Include="src\JumpState.cpp">
       <Filter>ソース ファイル\character\AIState</Filter>
     </ClCompile>
+    <ClCompile Include="src\LongAttackState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AttackState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameCtrl.h">
@@ -171,6 +177,12 @@
       <Filter>ヘッダー ファイル\character\AIState</Filter>
     </ClInclude>
     <ClInclude Include="src\JumpState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AttackState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LongAttackState.h">
       <Filter>ヘッダー ファイル\character\AIState</Filter>
     </ClInclude>
   </ItemGroup>
