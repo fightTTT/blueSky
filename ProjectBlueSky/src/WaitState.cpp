@@ -11,6 +11,7 @@ WaitState::~WaitState()
 
 void WaitState::Init(AICharacter * chara)
 {
+	stateTime = 0;
 }
 
 void WaitState::Update(AICharacter * character)

@@ -99,6 +99,9 @@
     <ClCompile Include="src\WaitState.cpp">
       <Filter>ソース ファイル\character\AIState</Filter>
     </ClCompile>
+    <ClCompile Include="src\JumpState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameCtrl.h">
@@ -165,6 +168,9 @@
       <Filter>ヘッダー ファイル\character\AIState</Filter>
     </ClInclude>
     <ClInclude Include="src\WaitState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JumpState.h">
       <Filter>ヘッダー ファイル\character\AIState</Filter>
     </ClInclude>
   </ItemGroup>

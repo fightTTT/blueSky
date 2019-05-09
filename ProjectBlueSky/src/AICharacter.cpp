@@ -10,7 +10,7 @@
 
 AICharacter::AICharacter()
 {
-	LongAttackFlag = false;
+	longAttackFlag = false;
 
 	ChangeState(MoveState::GetInstance());
 }
@@ -31,6 +31,12 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 	if (state)
 	{
 		state->Update(this);
+	}
+
+	if (longAttackFlag)
+	{
+		AddObjList()(objList, std::make_unique<Shot>(pos, dir));
+		longAttackFlag = false;
 	}
 }
 
@@ -105,9 +111,6 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 {
 	Obj::Init(fileName, divSize, divCut, pos, turn);
 	InitAnim();
-
-	jumpSpeed = { 0, 0 };
-	jumpFlag = false;
 
 	// 通常のアクション
 	animFileName["待機"] = "stand";

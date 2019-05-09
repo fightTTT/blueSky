@@ -1,6 +1,7 @@
 #include "MoveState.h"
 #include "AICharacter.h"
 #include "SceneMng.h"
+#include "JumpState.h"
 
 #include "DxLib.h"
 
@@ -15,6 +16,7 @@ MoveState::~MoveState()
 void MoveState::Init(AICharacter * chara)
 {
 	moveDirFlag = true;
+	stateTime = 0;
 }
 
 void MoveState::Update(AICharacter * character)
@@ -22,6 +24,12 @@ void MoveState::Update(AICharacter * character)
 	auto enemy = character->GetEnemyState();
 	auto pos = character->GetPos();
 	auto charaDir = character->GetDir();
+
+	if (enemy.longAttackFlag)
+	{
+		character->ChangeState(JumpState::GetInstance());
+		return;
+	}
 
 	VECTOR2 vec = enemy.enemyPos - pos;
 
@@ -38,6 +46,8 @@ void MoveState::Update(AICharacter * character)
 		{
 			moveDirFlag = !moveDirFlag;
 			stateTime = 0;
+
+			character->SetLongAttackFrag(true);
 		}
 	}
 

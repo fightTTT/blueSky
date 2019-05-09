@@ -19,6 +19,8 @@ public:
 
 	void ChangeState(AIState* s);
 
+	void SetLongAttackFrag(bool flag) { longAttackFlag = flag; }
+
 private:
 
 	bool InitAnim(void);
@@ -29,11 +31,6 @@ private:
 protected:
 
 	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標, 反転ﾌﾗｸﾞ, パッド番号
-
-	bool LongAttackFlag;
-
-	bool jumpFlag;
-	VECTOR2 jumpSpeed;
 
 	AIState* state;
 
