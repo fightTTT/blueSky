@@ -5,6 +5,8 @@
 #include "Shot.h"
 #include "Character.h"
 
+#define DEF_COM_CLEAR_CNT (60)
+
 
 Character::Character(VECTOR2 offset) : Obj(offset)
 {
@@ -69,7 +71,19 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 		animName.push_back(spAttackAnimName[2]);
 	}
 
+	// 一括読み込み
 	lpImageMng.LoadImageCharacterAll(characterName, animName, animFileName);
+
+	// comListの初期化
+	if (!comList.empty())
+	{
+		comList.clear();
+	}
+
+	comDir = COM_DIR_CENTER;
+	comDirOld = COM_DIR_CENTER;
+	centerFlag = false;
+	comClearCnt = DEF_COM_CLEAR_CNT;
 
 	return true;
 }
@@ -102,13 +116,117 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	auto ssize = lpSceneMng.GetScreenSize();
 
+	// コマンドの格納処理
+	comDirOld = comDir;
+
+	if (ctl.GetPadData(padNum, THUMB_L_UP))
+	{
+		if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
+		{
+			comDir = COM_DIR_RIGHT_UP;
+		}
+		else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
+		{
+			comDir = COM_DIR_LEFT_UP;
+		}
+		else
+		{
+			comDir = COM_DIR_UP;
+		}
+	}
+	else if (ctl.GetPadData(padNum, THUMB_L_DOWN))
+	{
+		if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
+		{
+			comDir = COM_DIR_RIGHT_DOWN;
+		}
+		else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
+		{
+			comDir = COM_DIR_LEFT_DOWN;
+		}
+		else
+		{
+			comDir = COM_DIR_DOWN;
+		}
+	}
+	else
+	{
+		if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
+		{
+			comDir = COM_DIR_RIGHT;
+		}
+		else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
+		{
+			comDir = COM_DIR_LEFT;
+		}
+		else
+		{
+			comDir = COM_DIR_CENTER;
+			centerFlag = true;
+		}
+	}
+
+	if (comDir != COM_DIR_CENTER)
+	{
+		if ((comDir != comDirOld) || centerFlag)
+		{
+			comList.push_back(comDir);
+			centerFlag = false;
+			comClearCnt = DEF_COM_CLEAR_CNT;
+		}
+	}
+
+	comClearCnt--;
+	if ((!comList.empty()) && (comClearCnt < 0))
+	{
+		comList.clear();
+	}
+
+	// キャラクター操作
 	if (!jumpFlag)
 	{
 		dir = tmpDir;
 
 		if (animTable[GetAnim()][ANIM_TBL_LOOP] || animEndFlag)
 		{
-			if (ctl.GetPadData(padNum, THUMB_L_DOWN))
+			if (ctl.GetPadData(padNum, THUMB_L_UP))		// ジャンプ
+			{
+				if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
+				{
+					jumpSpeed = { 2, -30 };
+					jumpFlag = true;
+
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("ジャンプ_後ろ");
+					}
+					else
+					{
+						SetAnim("ジャンプ_前");
+					}
+				}
+				else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
+				{
+					jumpSpeed = { -2, -30 };
+					jumpFlag = true;
+
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("ジャンプ_前");
+					}
+					else
+					{
+						SetAnim("ジャンプ_後ろ");
+					}
+				}
+				else
+				{
+					jumpSpeed = { 0, -30 };
+					jumpFlag = true;
+					SetAnim("ジャンプ_上");
+				}
+			}
+			else if (ctl.GetPadData(padNum, THUMB_L_DOWN))		// しゃがみ
 			{
 				if ((GetAnim() == "しゃがみ始め") || (GetAnim() == "しゃがみ") || ((GetAnim() == "しゃがみ_後ろ")))
 				{
@@ -146,6 +264,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			}
 			else
 			{
+				// 移動
 				if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
 				{
 					pos.x += 4;
@@ -176,45 +295,9 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					SetAnim("待機");
 				}
 			}
-
-			// 斜め左上ジャンプ
-			if (ctl.GetPadData(padNum, THUMB_L_UP) && ctl.GetPadData(padNum, THUMB_L_LEFT))
-			{
-				jumpSpeed = { -2, -30 };
-				jumpFlag = true;
-
-				if (dir == DIR_LEFT)
-				{
-					SetAnim("ジャンプ_前");
-				}
-				else
-				{
-					SetAnim("ジャンプ_後ろ");
-				}
-			}
-			// 斜め右上ジャンプ
-			else if (ctl.GetPadData(padNum, THUMB_L_UP) && ctl.GetPadData(padNum, THUMB_L_RIGHT))
-			{
-				jumpSpeed = { 2, -30 };
-				jumpFlag = true;
-
-				if (dir == DIR_LEFT)
-				{
-					SetAnim("ジャンプ_後ろ");
-				}
-				else
-				{
-					SetAnim("ジャンプ_前");
-				}
-			}
-			// 上ジャンプ
-			else if (ctl.GetPadData(padNum, THUMB_L_UP))
-			{
-				jumpSpeed = { 0, -30 };
-				jumpFlag = true;
-				SetAnim("ジャンプ_上");
-			}
-			else if (ctl.GetPadData(padNum, BUTTON_X))
+			
+			// 攻撃
+			if (ctl.GetPadData(padNum, BUTTON_X))
 			{
 				AddObjList()(objList, std::make_unique<Shot>(pos, dir));
 				SetAnim(spAttackAnimName[0]);
@@ -282,4 +365,40 @@ void Character::Draw(void)
 		DrawRotaGraph(pos.x, pos.y - 178 / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 	animCnt++;
+
+	int i = 0;
+	for (auto& data : comList)
+	{
+		switch (data)
+		{
+		case COM_DIR_UP:
+			DrawString((i * 40) + 15, 200, "上", 0xffffff);
+			break;
+		case COM_DIR_RIGHT_UP:
+			DrawString((i * 40) + 15, 200, "右上", 0xffffff);
+			break;
+		case COM_DIR_RIGHT:
+			DrawString((i * 40) + 15, 200, "右", 0xffffff);
+			break;
+		case COM_DIR_RIGHT_DOWN:
+			DrawString((i * 40) + 15, 200, "右下", 0xffffff);
+			break;
+		case COM_DIR_DOWN:
+			DrawString((i * 40) + 15, 200, "下", 0xffffff);
+			break;
+		case COM_DIR_LEFT_DOWN:
+			DrawString((i * 40) + 15, 200, "左下", 0xffffff);
+			break;
+		case COM_DIR_LEFT:
+			DrawString((i * 40) + 15, 200, "左", 0xffffff);
+			break;
+		case COM_DIR_LEFT_UP:
+			DrawString((i * 40) + 15, 200, "左上", 0xffffff);
+			break;
+		default:
+			break;
+		}
+
+		i++;
+	}
 }

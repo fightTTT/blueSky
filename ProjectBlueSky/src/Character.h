@@ -2,8 +2,23 @@
 #include "Obj.h"
 
 #include <map>
+#include<list>
 
 enum PAD_ID;
+
+enum COM_DIR
+{
+	COM_DIR_CENTER,
+	COM_DIR_UP,
+	COM_DIR_RIGHT_UP,
+	COM_DIR_RIGHT,
+	COM_DIR_RIGHT_DOWN,
+	COM_DIR_DOWN,
+	COM_DIR_LEFT_DOWN,
+	COM_DIR_LEFT,
+	COM_DIR_LEFT_UP,
+	COM_DIR_MAX
+};
 
 class Character :
 	public Obj
@@ -22,6 +37,12 @@ private:
 	bool InitAnim(void);
 
 	std::map<std::string, std::string> animFileName;		// ｱﾆﾒｰｼｮﾝの画像ﾌｧｲﾙ名 (ｷｰ: ｱﾆﾒｰｼｮﾝ名)
+
+	std::list<COM_DIR> comList;
+	COM_DIR comDir;
+	COM_DIR comDirOld;
+	bool centerFlag;
+	int comClearCnt;
 
 	PAD_ID padNum;		// 使用しているコントローラー番号
 	bool jumpFlag;
