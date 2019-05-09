@@ -3,6 +3,7 @@
 #include "GameScene.h"
 #include "SceneMng.h"
 #include "FrameMng.h"
+#include "SelectScene.h"
 
 #define SCREEN_SIZE_X (1440)
 #define SCREEN_SIZE_Y (810)

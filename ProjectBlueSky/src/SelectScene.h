@@ -1,5 +1,5 @@
 #pragma once
-
+#include "VECTOR2.h"
 #include "BaseScene.h"
 
 class SelectScene :
@@ -12,8 +12,9 @@ public:
 	unique_Base UpDate(unique_Base own, const GameCtrl &controller);
 
 private:
+	VECTOR2 scSize;
 
-	int Init();
-	void Draw();
+	int Init(void);
+	void SelectDraw(void);
 };
 
