@@ -24,6 +24,8 @@ public:
 
 	void Draw();
 
+	virtual void Move();
+
 private:
 
 	bool InitAnim(void);
@@ -35,7 +37,7 @@ protected:
 
 	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標, 反転ﾌﾗｸﾞ, パッド番号
 
-	AI_STATE_TYPE type;		// 現在実行中の状態
+	AI_STATE_TYPE AIStateType;		// 現在実行中の状態
 
 	bool jumpFlag;
 	VECTOR2 jumpSpeed;

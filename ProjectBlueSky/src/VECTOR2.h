@@ -19,6 +19,7 @@ public:
 	// ”äŠr‰‰ŽZŽq
 	bool operator==(const VECTOR2& vec) const;
 	bool operator!=(const VECTOR2& vec) const;
+	bool operator<(int k) const;
 
 	// ’P€‰‰ŽZŽq
 	VECTOR2& operator += (const VECTOR2& vec);
@@ -67,14 +68,5 @@ struct Rect
 
 	VECTOR2 startPos;
 	VECTOR2 endPos;
-};
-
-struct Circle
-{
-	Circle() : center({0, 0}), r(0) {}
-	Circle(VECTOR2 in_center, int in_r) : center(in_center), r(in_r) {}
-
-	VECTOR2 center;
-	int r;
 };
 

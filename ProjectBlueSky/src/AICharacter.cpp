@@ -19,6 +19,24 @@ bool AICharacter::CheckObjType(OBJ_TYPE type)
 void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	dir = tmpDir;
+	AIStateType = AI_STATE_MOVE;
+
+	switch (AIStateType)
+	{
+	case AI_STATE_NONE:
+		break;
+	case AI_STATE_MOVE:
+		Move();
+		break;
+	case AI_STATE_ATTACK:
+		break;
+	case AI_STATE_JUMP:
+		break;
+	case AI_STATE_MAX:
+		break;
+	default:
+		break;
+	}
 }
 
 void AICharacter::Draw()
@@ -60,6 +78,43 @@ void AICharacter::Draw()
 		DrawRotaGraph(pos.x, pos.y - 178 / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 	animCnt++;
+}
+
+void AICharacter::Move()
+{
+	if (enemyState.enemyPos < 0)
+	{
+		return;
+	}
+
+	VECTOR2 vec = enemyState.enemyPos - pos;
+	if (vec.x < 0)
+	{
+		pos.x -= 2;
+
+		if (dir == DIR_RIGHT)
+		{
+			SetAnim("Œã‚ëˆÚ“®");
+		}
+		else
+		{
+			SetAnim("‘OˆÚ“®");
+		}
+	}
+	else
+	{
+		pos.x += 2;
+
+		if (dir == DIR_RIGHT)
+		{
+			SetAnim("‘OˆÚ“®");
+		}
+		else
+		{
+			SetAnim("Œã‚ëˆÚ“®");
+		}
+
+	}
 }
 
 bool AICharacter::InitAnim(void)

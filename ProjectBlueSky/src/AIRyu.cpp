@@ -19,6 +19,8 @@ AIRyu::AIRyu(VECTOR2 pos, VECTOR2 offset, DIR charaDir)
 	Init("image/ƒŠƒ…ƒE/‘Ò‹@/stand_0.png", VECTOR2(290, 178), VECTOR2(1, 1), VECTOR2(pos.x, pos.y), false);
 
 	dir = charaDir;
+
+	AIStateType = AI_STATE_NONE;
 }
 
 AIRyu::~AIRyu()

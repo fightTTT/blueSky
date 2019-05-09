@@ -48,6 +48,11 @@ bool VECTOR2::operator!=(const VECTOR2 & vec) const
 	return !((this->x == vec.x) && (this->y == vec.y));
 }
 
+bool VECTOR2::operator<(int k) const
+{
+	return (this->x < k) && (this->y < k);
+}
+
 VECTOR2 & VECTOR2::operator+=(const VECTOR2 & vec)
 {
 	this->x += vec.x;
