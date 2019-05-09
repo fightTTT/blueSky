@@ -108,6 +108,9 @@
     <ClCompile Include="src\AttackState.cpp">
       <Filter>ソース ファイル\character\AIState</Filter>
     </ClCompile>
+    <ClCompile Include="src\StickHuman.cpp">
+      <Filter>ソース ファイル\character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameCtrl.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="src\LongAttackState.h">
       <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StickHuman.h">
+      <Filter>ヘッダー ファイル\character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

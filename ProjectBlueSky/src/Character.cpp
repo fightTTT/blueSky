@@ -90,18 +90,18 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 
 bool Character::InitAnim(void)
 {
-	AddAnim("待機", 0, 0, 10, 5, true);
-	AddAnim("前移動", 0, 0, 11, 5, true);
-	AddAnim("後ろ移動", 0, 0, 11, 5, true);
-	AddAnim("ジャンプ_上", 0, 0, 12, 5, true);
-	AddAnim("ジャンプ_前", 0, 0, 14, 5, true);
-	AddAnim("ジャンプ_後ろ", 0, 0, 14, 5, true);
-	AddAnim("しゃがみ", 0, 0, 4, 5, true);
+	AddAnim("待機", 0, 0, 6, 5, true);
+	AddAnim("前移動", 0, 0, 8, 5, true);
+	AddAnim("後ろ移動", 0, 0, 8, 5, true);
+	AddAnim("ジャンプ_上", 0, 0, 10, 5, true);
+	AddAnim("ジャンプ_前", 0, 0, 6, 5, true);
+	AddAnim("ジャンプ_後ろ", 0, 0, 20, 5, true);
+	AddAnim("しゃがみ", 0, 0, 6, 5, true);
 	AddAnim("しゃがみ_後ろ", 0, 0, 1, 5, true);
-	AddAnim("しゃがみ始め", 0, 0, 2, 5, false);
-	AddAnim("立ち始め", 0, 0, 2, 5, false);
-	AddAnim("パンチ_小", 0, 0, 4, 5, false);
-	AddAnim("パンチ_大", 0, 0, 7, 5, false);
+	AddAnim("しゃがみ始め", 0, 0, 3, 5, false);
+	AddAnim("立ち始め", 0, 0, 3, 5, false);
+	AddAnim("パンチ_小", 0, 0, 7, 5, false);
+	AddAnim("パンチ_大", 0, 0, 11, 5, false);
 	AddAnim("ガード_しゃがみ", 0, 0, 1, 5, true);
 	SetAnim("待機");
 	return true;
