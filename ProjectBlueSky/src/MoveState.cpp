@@ -2,8 +2,11 @@
 #include "AICharacter.h"
 #include "SceneMng.h"
 #include "JumpState.h"
+#include "LongAttackState.h"
 
 #include "DxLib.h"
+
+#define MOVE_SPEED (2)
 
 MoveState::MoveState()
 {
@@ -46,8 +49,7 @@ void MoveState::Update(AICharacter * character)
 		{
 			moveDirFlag = !moveDirFlag;
 			stateTime = 0;
-
-			character->SetLongAttackFrag(true);
+			character->ChangeState(LongAttackState::GetInstance());
 		}
 	}
 
@@ -56,7 +58,7 @@ void MoveState::Update(AICharacter * character)
 		// ‘O‚Éi‚Ş
 		if (vec.x < 0)
 		{
-			pos.x -= 2;
+			pos.x -= MOVE_SPEED;
 
 			if (charaDir == DIR_RIGHT)
 			{
@@ -69,7 +71,7 @@ void MoveState::Update(AICharacter * character)
 		}
 		else
 		{
-			pos.x += 2;
+			pos.x += MOVE_SPEED;
 
 			if (charaDir == DIR_RIGHT)
 			{
@@ -88,7 +90,7 @@ void MoveState::Update(AICharacter * character)
 
 		if (vec.x < 0)
 		{
-			pos.x += 2;
+			pos.x += MOVE_SPEED;
 
 			if (charaDir == DIR_RIGHT)
 			{
@@ -101,7 +103,7 @@ void MoveState::Update(AICharacter * character)
 		}
 		else
 		{
-			pos.x -= 2;
+			pos.x -= MOVE_SPEED;
 
 			if (charaDir == DIR_RIGHT)
 			{
@@ -114,7 +116,12 @@ void MoveState::Update(AICharacter * character)
 		}
 	}
 
-	//auto ssize = lpSceneMng.GetScreenSize();
+	auto ssize = lpSceneMng.GetScreenSize();
+
+	if (pos.x > ssize.x - character->GetDivSize().x / 4)
+	{
+		pos.x -= MOVE_SPEED;
+	}
 
 	character->SetPos(pos);
 	stateTime++;

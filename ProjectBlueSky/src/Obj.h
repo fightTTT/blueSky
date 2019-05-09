@@ -71,7 +71,10 @@ public:
 
 	bool AddAnim(std::string animName, int id_x, int id_y, int frame, int inv, bool loop);		// ｱﾆﾒｰｼｮﾝを追加する
 	bool SetAnim(std::string animName);															// ｱﾆﾒｰｼｮﾝをｾｯﾄする
-	std::string GetAnim(void);																	// ｱﾆﾒｰｼｮﾝの情報を取得する
+	std::string GetAnim(void);			// ｱﾆﾒｰｼｮﾝの情報を取得する
+
+	// サイズ取得
+	VECTOR2 GetDivSize() const { return divSize; }
 
 	// 向いている方向セット
 	void SetDir(DIR d);
@@ -85,6 +88,9 @@ public:
 	void SetEnemyState(EnemyState state);
 	// 敵の情報取得
 	EnemyState GetEnemyState() const { return enemyState; }
+
+	// アニメーションが終了しているか
+	bool GetAnimEndFlag() const { return animEndFlag; }
 
 private:
 	//移動処理
