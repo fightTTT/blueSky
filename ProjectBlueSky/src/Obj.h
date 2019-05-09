@@ -15,6 +15,7 @@ enum ANIM_TBL {
 enum OBJ_TYPE
 {
 	OBJ_TYPE_CHARACTER,
+	OBJ_TYPE_AICHARACTER,
 	OBJ_TYPE_SHOT,
 	OBJ_TYPE_MAX
 };
@@ -24,6 +25,15 @@ enum DIR
 	DIR_RIGHT,
 	DIR_LEFT,
 	DIR_MAX
+};
+
+struct EnemyState
+{
+	EnemyState() : enemyPos(VECTOR2(0, 0)), enemyAnimName("none") {}
+	EnemyState(VECTOR2 pos, std::string animName) : enemyPos(pos), enemyAnimName(animName) {}
+
+	VECTOR2 enemyPos;
+	std::string enemyAnimName;
 };
 
 class GameCtrl;
@@ -64,6 +74,8 @@ public:
 
 	void SetDir(DIR d);
 
+	void SetEnemyState(EnemyState state);
+
 private:
 	//移動処理
 	virtual void SetMove(const GameCtrl &ctl);
@@ -82,6 +94,7 @@ protected:
 	DIR dir;						// 向いている方向
 	DIR tmpDir;						// 向いている方向(一時的に保存)
 	bool turnFlag;					// 画像反転フラグ
+	EnemyState enemyState;	// 敵の現在の座標, 状態
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;		// ｱﾆﾒｰｼｮﾝ情報
 	std::string animName;									// 表示ｱﾆﾒｰｼｮﾝ名

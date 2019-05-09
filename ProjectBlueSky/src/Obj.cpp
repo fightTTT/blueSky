@@ -144,6 +144,11 @@ void Obj::SetDir(DIR d)
 	tmpDir = d;
 }
 
+void Obj::SetEnemyState(EnemyState state)
+{
+	enemyState = state;
+}
+
 void Obj::SetPos(VECTOR2 pos)
 {
 	this->pos = pos;
