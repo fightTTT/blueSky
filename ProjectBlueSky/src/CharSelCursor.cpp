@@ -42,7 +42,18 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 	{
 		pos.x = (sSize.x / 2) - (BOX_SIZE_X * 2);
 	}
-
+	if (pos.x > (sSize.x / 2) + BOX_SIZE_X)
+	{
+		pos.x = (sSize.x / 2) + BOX_SIZE_X;
+	}
+	if (pos.y < (sSize.y * 3 / 5))
+	{
+		pos.y = (sSize.y * 3 / 5);
+	}
+	if (pos.y > (sSize.y * 3 / 5)+BOX_SIZE_Y)
+	{
+		pos.y = (sSize.y * 3 / 5) + BOX_SIZE_Y;
+	}
 
 }
 
