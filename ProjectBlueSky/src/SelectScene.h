@@ -1,6 +1,7 @@
 #pragma once
 #include "VECTOR2.h"
 #include "BaseScene.h"
+#include "ObjList.h"
 
 class SelectScene :
 	public BaseScene
@@ -16,5 +17,7 @@ private:
 
 	int Init(void);
 	void SelectDraw(void);
+
+	sharedListObj objList;
 };
 
