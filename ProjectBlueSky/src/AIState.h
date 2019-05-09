@@ -10,5 +10,9 @@ public:
 
 	virtual void Init(AICharacter* chara) = 0;
 	virtual void Update(AICharacter* chara) = 0;
+
+protected:
+
+	int stateTime;		// 現在のステートの実行状態カウント
 };
 

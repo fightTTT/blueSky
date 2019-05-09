@@ -40,6 +40,7 @@
     <ClCompile Include="src\Shot.cpp" />
     <ClCompile Include="src\TitleScene.cpp" />
     <ClCompile Include="src\VECTOR2.cpp" />
+    <ClCompile Include="src\WaitState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AIState.h" />
@@ -63,6 +64,7 @@
     <ClInclude Include="src\Shot.h" />
     <ClInclude Include="src\TitleScene.h" />
     <ClInclude Include="src\VECTOR2.h" />
+    <ClInclude Include="src\WaitState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

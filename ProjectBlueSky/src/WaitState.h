@@ -2,25 +2,23 @@
 
 #include "AIState.h"
 
-class MoveState :
+class WaitState :
 	public AIState
 {
 public:
 
-	static MoveState *GetInstance()
+	static WaitState *GetInstance()
 	{
-		static MoveState s_Instance;
+		static WaitState s_Instance;
 		return &s_Instance;
 	}
 
 private:
 
-	MoveState();
-	~MoveState();
+	WaitState();
+	~WaitState();
 
 	void Init(AICharacter* chara);
 	void Update(AICharacter* character);
-
-	bool moveDirFlag;				// true : ‘OˆÚ“® false : Œã‚ëˆÚ“®
 };
 

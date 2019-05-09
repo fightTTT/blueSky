@@ -2,6 +2,7 @@
 
 AIState::AIState()
 {
+	stateTime = 0;
 }
 
 AIState::~AIState()

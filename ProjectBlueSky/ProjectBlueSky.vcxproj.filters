@@ -96,6 +96,9 @@
     <ClCompile Include="src\MoveState.cpp">
       <Filter>ソース ファイル\character\AIState</Filter>
     </ClCompile>
+    <ClCompile Include="src\WaitState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameCtrl.h">
@@ -159,6 +162,9 @@
       <Filter>ヘッダー ファイル\character\AIState</Filter>
     </ClInclude>
     <ClInclude Include="src\MoveState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WaitState.h">
       <Filter>ヘッダー ファイル\character\AIState</Filter>
     </ClInclude>
   </ItemGroup>

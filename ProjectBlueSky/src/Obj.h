@@ -73,8 +73,10 @@ public:
 	std::string GetAnim(void);																	// ±ÆÒ°¼®İ‚Ìî•ñ‚ğæ“¾‚·‚é
 
 	void SetDir(DIR d);
+	DIR GetDir() const { return dir; }
 
 	void SetEnemyState(EnemyState state);
+	EnemyState GetEnemyState() const { return enemyState; }
 
 private:
 	//ˆÚ“®ˆ—
