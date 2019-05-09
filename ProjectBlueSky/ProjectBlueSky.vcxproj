@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AIState.cpp" />
+    <ClCompile Include="src\MoveState.cpp" />
     <ClCompile Include="src\AIRyu.cpp" />
     <ClCompile Include="src\AICharacter.cpp" />
     <ClCompile Include="src\CharSelCursor.cpp" />
@@ -40,6 +42,8 @@
     <ClCompile Include="src\VECTOR2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AIState.h" />
+    <ClInclude Include="src\MoveState.h" />
     <ClInclude Include="src\AIRyu.h" />
     <ClInclude Include="src\AICharacter.h" />
     <ClInclude Include="src\CharSelCursor.h" />

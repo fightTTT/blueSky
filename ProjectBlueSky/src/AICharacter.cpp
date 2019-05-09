@@ -1,6 +1,8 @@
 #include "AICharacter.h"
 #include "ImageMng.h"
 #include "Shot.h"
+#include "AIState.h"
+#include "MoveState.h"
 
 #include "DxLib.h"
 
@@ -24,6 +26,13 @@ bool AICharacter::CheckObjType(OBJ_TYPE type)
 void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	dir = tmpDir;
+
+	if (state)
+	{
+		state->Update(this);
+	}
+
+	ChangeState(MoveState::GetInstance());
 
 	switch (AIStateType)
 	{
@@ -105,6 +114,12 @@ void AICharacter::Draw()
 		DrawRotaGraph(pos.x, pos.y - 178 / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 	animCnt++;
+}
+
+void AICharacter::ChangeState(AIState * s)
+{
+	state = s;
+	state->Init(this);
 }
 
 void AICharacter::Move()

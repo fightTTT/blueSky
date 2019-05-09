@@ -11,6 +11,8 @@ enum AI_STATE_TYPE
 	AI_STATE_MAX
 };
 
+class AIState;
+
 class AICharacter :
 	public Obj
 {
@@ -23,6 +25,8 @@ public:
 	void SetMove(const GameCtrl &ctl, weekListObj objList);
 
 	void Draw();
+
+	void ChangeState(AIState* s);
 
 	virtual void Move();
 
@@ -46,6 +50,8 @@ protected:
 
 	bool jumpFlag;
 	VECTOR2 jumpSpeed;
+
+	AIState* state;
 
 	std::string characterName;
 	std::string spAttackAnimName[3] = { "‹Z1", "‹Z2" , "‹Z3" };
