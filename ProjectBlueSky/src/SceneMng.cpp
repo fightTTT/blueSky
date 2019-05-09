@@ -20,7 +20,7 @@ SceneMng::~SceneMng()
 
 void SceneMng::Run(void)
 {
-	activeScene = std::make_unique<GameScene>();
+	activeScene = std::make_unique<SelectScene>();
 
 	// ---------- ¹Þ°ÑÙ°Ìß
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
