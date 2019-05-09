@@ -20,7 +20,7 @@ AIRyu::AIRyu(VECTOR2 pos, VECTOR2 offset, DIR charaDir)
 
 	dir = charaDir;
 
-	AIStateType = AI_STATE_NONE;
+	AIStateType = AI_STATE_MOVE;
 }
 
 AIRyu::~AIRyu()

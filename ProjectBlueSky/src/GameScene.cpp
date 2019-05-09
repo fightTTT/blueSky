@@ -2,10 +2,13 @@
 #include "ObjList.h"
 #include "Obj.h"
 #include "Ryu.h"
-//#include "SceneMng.h"
+#include "SceneMng.h"
 #include "GameScene.h"
 #include "GameCtrl.h"
 #include "AIRyu.h"
+
+#define RYU_IMAGE_SIZE_X (290)
+#define RYU_IMAGE_SIZE_Y (178)
 
 
 GameScene::GameScene()
@@ -84,17 +87,18 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 int GameScene::Init(void)
 {
+	auto ssize = lpSceneMng.GetScreenSize();
+	
 	if (!objList)
 	{
 		objList = std::make_shared<sharedObjList>();
 	}
 	objList->clear();		// objListÇëSçÌèúÇ∑ÇÈ
 
-	//AddObjList()(objList, std::make_unique<Ryu>(VECTOR2(1440 - (290 / 2), 810), VECTOR2(-(290 / 2), -178), PAD_2, DIR_RIGHT));
-	AddObjList()(objList, std::make_unique<Ryu>(VECTOR2((290 / 2), 810), VECTOR2(-(290 / 2), -178), PAD_1, DIR_RIGHT));
-	AddObjList()(objList, std::make_unique<AIRyu>(VECTOR2(1440 - (290 / 2), 810), VECTOR2(-(290 / 2), -178), DIR_LEFT));
+	//AddObjList()(objList, std::make_unique<Ryu>(VECTOR2(1440 - (290 / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_2, DIR_RIGHT));
+	AddObjList()(objList, std::make_unique<Ryu>(VECTOR2((RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_1, DIR_RIGHT));
+	AddObjList()(objList, std::make_unique<AIRyu>(VECTOR2(ssize.x - (RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), DIR_LEFT));
 
-	//AddObjList()(objList, std::make_unique<Ryu>(lpSceneMng.GetDrawOffset(), popNo));
 	return 0;
 }
 

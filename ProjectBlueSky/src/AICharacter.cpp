@@ -1,10 +1,15 @@
 #include "AICharacter.h"
 #include "ImageMng.h"
+#include "Shot.h"
 
 #include "DxLib.h"
 
 AICharacter::AICharacter()
 {
+	AIStateTime = 0;
+	moveStateTime = 0;
+	LongAttackFlag = false;
+	moveDirFlag = true;
 }
 
 AICharacter::~AICharacter()
@@ -19,16 +24,22 @@ bool AICharacter::CheckObjType(OBJ_TYPE type)
 void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	dir = tmpDir;
-	AIStateType = AI_STATE_MOVE;
 
 	switch (AIStateType)
 	{
 	case AI_STATE_NONE:
+		SetAnim("待機");
 		break;
 	case AI_STATE_MOVE:
 		Move();
 		break;
 	case AI_STATE_ATTACK:
+		if (!(LongAttackFlag) && (animTable[GetAnim()][ANIM_TBL_LOOP] || animEndFlag))
+		{
+			AddObjList()(objList, std::make_unique<Shot>(pos, dir));
+			SetAnim(spAttackAnimName[0]);
+			LongAttackFlag = true;
+		}
 		break;
 	case AI_STATE_JUMP:
 		break;
@@ -37,6 +48,22 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 	default:
 		break;
 	}
+
+	if (LongAttackFlag && animEndFlag)
+	{
+		AIStateType = AI_STATE_MOVE;
+		LongAttackFlag = false;
+		AIStateTime = 0;
+	}
+
+	if (AIStateTime > 100 && AIStateType == AI_STATE_MOVE)
+	{
+		AIStateType = AI_STATE_ATTACK;
+		
+		AIStateTime = 0;
+	}
+
+	AIStateTime++;
 }
 
 void AICharacter::Draw()
@@ -88,33 +115,88 @@ void AICharacter::Move()
 	}
 
 	VECTOR2 vec = enemyState.enemyPos - pos;
-	if (vec.x < 0)
-	{
-		pos.x -= 2;
 
-		if (dir == DIR_RIGHT)
+	int rand = GetRand(10);
+
+	if (abs(vec.x) < 100)
+	{
+		moveDirFlag = !(abs(vec.x) < 100);
+		moveStateTime = 0;
+	}
+	else if (moveStateTime > 150)
+	{
+
+		if (rand == 0)
 		{
-			SetAnim("後ろ移動");
+			moveDirFlag = !moveDirFlag;
+			moveStateTime = 0;
+		}
+	}
+
+	if (moveDirFlag)
+	{
+		// 前に進む
+		if (vec.x < 0)
+		{
+			pos.x -= 2;
+
+			if (dir == DIR_RIGHT)
+			{
+				SetAnim("後ろ移動");
+			}
+			else
+			{
+				SetAnim("前移動");
+			}
 		}
 		else
 		{
-			SetAnim("前移動");
+			pos.x += 2;
+
+			if (dir == DIR_RIGHT)
+			{
+				SetAnim("前移動");
+			}
+			else
+			{
+				SetAnim("後ろ移動");
+			}
+
 		}
 	}
 	else
 	{
-		pos.x += 2;
+		// 後ろに下がる
 
-		if (dir == DIR_RIGHT)
+		if (vec.x < 0)
 		{
-			SetAnim("前移動");
+			pos.x += 2;
+
+			if (dir == DIR_RIGHT)
+			{
+				SetAnim("前移動");
+			}
+			else
+			{
+				SetAnim("後ろ移動");
+			}
 		}
 		else
 		{
-			SetAnim("後ろ移動");
-		}
+			pos.x -= 2;
 
+			if (dir == DIR_RIGHT)
+			{
+				SetAnim("後ろ移動");
+			}
+			else
+			{
+				SetAnim("前移動");
+			}
+		}
 	}
+
+	moveStateTime++;
 }
 
 bool AICharacter::InitAnim(void)

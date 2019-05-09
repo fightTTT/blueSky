@@ -416,7 +416,7 @@ void Character::Draw(void)
 
 	if (visible)
 	{
-		DrawRotaGraph(pos.x, pos.y - 178 / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
+		DrawRotaGraph(pos.x, pos.y - divSize.y / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 	animCnt++;
 
