@@ -98,8 +98,8 @@ int GameScene::Init(void)
 
 	//AddObjList()(objList, std::make_unique<Ryu>(VECTOR2(1440 - (290 / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_2, DIR_RIGHT));
 	AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2(1440 - (290 / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_1, DIR_RIGHT));
-	/*AddObjList()(objList, std::make_unique<Ryu>(VECTOR2((RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_1, DIR_RIGHT));
-	AddObjList()(objList, std::make_unique<AIRyu>(VECTOR2(ssize.x - (RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), DIR_LEFT));*/
+	AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_2, DIR_LEFT));
+	//AddObjList()(objList, std::make_unique<AIRyu>(VECTOR2(ssize.x - (RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), DIR_LEFT));
 
 	return 0;
 }

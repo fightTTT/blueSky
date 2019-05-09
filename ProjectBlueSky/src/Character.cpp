@@ -411,11 +411,11 @@ void Character::Draw(void)
 	// DIR‚ªRIGHT‚Ìê‡‰æ‘œ‚ğ”½“]
 	if (dir == DIR_RIGHT)
 	{
-		turnFlag = true;
+		turnFlag = false;
 	}
 	else
 	{
-		turnFlag = false;
+		turnFlag = true;
 	}
 
 	if (visible)
