@@ -7,7 +7,9 @@
 AICharacter::AICharacter()
 {
 	AIStateTime = 0;
+	moveStateTime = 0;
 	LongAttackFlag = false;
+	moveDirFlag = true;
 }
 
 AICharacter::~AICharacter()
@@ -113,33 +115,88 @@ void AICharacter::Move()
 	}
 
 	VECTOR2 vec = enemyState.enemyPos - pos;
-	if (vec.x < 0)
-	{
-		pos.x -= 2;
 
-		if (dir == DIR_RIGHT)
+	int rand = GetRand(10);
+
+	if (abs(vec.x) < 100)
+	{
+		moveDirFlag = !(abs(vec.x) < 100);
+		moveStateTime = 0;
+	}
+	else if (moveStateTime > 150)
+	{
+
+		if (rand == 0)
 		{
-			SetAnim("後ろ移動");
+			moveDirFlag = !moveDirFlag;
+			moveStateTime = 0;
+		}
+	}
+
+	if (moveDirFlag)
+	{
+		// 前に進む
+		if (vec.x < 0)
+		{
+			pos.x -= 2;
+
+			if (dir == DIR_RIGHT)
+			{
+				SetAnim("後ろ移動");
+			}
+			else
+			{
+				SetAnim("前移動");
+			}
 		}
 		else
 		{
-			SetAnim("前移動");
+			pos.x += 2;
+
+			if (dir == DIR_RIGHT)
+			{
+				SetAnim("前移動");
+			}
+			else
+			{
+				SetAnim("後ろ移動");
+			}
+
 		}
 	}
 	else
 	{
-		pos.x += 2;
+		// 後ろに下がる
 
-		if (dir == DIR_RIGHT)
+		if (vec.x < 0)
 		{
-			SetAnim("前移動");
+			pos.x += 2;
+
+			if (dir == DIR_RIGHT)
+			{
+				SetAnim("前移動");
+			}
+			else
+			{
+				SetAnim("後ろ移動");
+			}
 		}
 		else
 		{
-			SetAnim("後ろ移動");
-		}
+			pos.x -= 2;
 
+			if (dir == DIR_RIGHT)
+			{
+				SetAnim("後ろ移動");
+			}
+			else
+			{
+				SetAnim("前移動");
+			}
+		}
 	}
+
+	moveStateTime++;
 }
 
 bool AICharacter::InitAnim(void)

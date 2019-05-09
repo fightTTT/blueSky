@@ -39,6 +39,8 @@ protected:
 
 	AI_STATE_TYPE AIStateType;		// Œ»İÀs’†‚Ìó‘Ô
 	int AIStateTime;				// Às’†‚Ìó‘Ô‚ª‚Ç‚Ì‚­‚ç‚¢‘±‚¢‚Ä‚¢‚é‚©
+	int moveStateTime;				// ˆÚ“®ó‘Ô‚ª‚Ç‚Ì‚­‚ç‚¢‘±‚¢‚Ä‚¢‚é‚©
+	bool moveDirFlag;				// true : ‘OˆÚ“® false : Œã‚ëˆÚ“®
 
 	bool LongAttackFlag;
 
