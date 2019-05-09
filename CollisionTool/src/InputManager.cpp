@@ -1,6 +1,6 @@
-
-#include "InputManager.h"
 #include <DxLib.h>
+#include "InputManager.h"
+
 
 InputManager::InputManager()
 {

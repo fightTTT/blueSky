@@ -1,7 +1,7 @@
 #pragma once
 
 #include <array>
-#include "Vector.h"
+#include "VECTOR2.h"
 
 class InputManager
 {
@@ -11,7 +11,7 @@ public:
 
 	void Update();
 
-	const Vector2& MousePos() const { return mousePos; }
+	const VECTOR2& MousePos() const { return mousePos; }
 
 	// 押されたキー情報取得
 	bool KeyStateDown(int keyCode);
@@ -23,7 +23,7 @@ public:
 private:
 
 	// マウス情報
-	Vector2 mousePos;
+	VECTOR2 mousePos;
 	int mouseData;
 	int mouseDataOld;
 
