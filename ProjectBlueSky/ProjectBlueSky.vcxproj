@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\AIRyu.cpp" />
     <ClCompile Include="src\AICharacter.cpp" />
+    <ClCompile Include="src\CharSelCursor.cpp" />
     <ClCompile Include="src\CollisionMng.cpp" />
     <ClCompile Include="src\Collision.cpp" />
     <ClCompile Include="src\BaseScene.cpp" />
@@ -41,6 +42,7 @@
   <ItemGroup>
     <ClInclude Include="src\AIRyu.h" />
     <ClInclude Include="src\AICharacter.h" />
+    <ClInclude Include="src\CharSelCursor.h" />
     <ClInclude Include="src\CollisionMng.h" />
     <ClInclude Include="src\Collision.h" />
     <ClInclude Include="src\BaseScene.h" />
