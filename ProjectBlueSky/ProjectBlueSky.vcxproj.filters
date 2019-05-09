@@ -25,6 +25,12 @@
     <Filter Include="ソース ファイル\character">
       <UniqueIdentifier>{6cac8b46-bc34-42ff-bb23-80d50000296f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\character\AIState">
+      <UniqueIdentifier>{9c984362-b5a0-43e9-9664-3ca546cba5fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\character\AIState">
+      <UniqueIdentifier>{fbbdde41-8c25-4962-a2aa-f8eca5b8a664}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameCtrl.cpp">
@@ -84,6 +90,18 @@
     <ClCompile Include="src\CharSelCursor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\AIState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MoveState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WaitState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JumpState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameCtrl.h">
@@ -142,6 +160,18 @@
     </ClInclude>
     <ClInclude Include="src\CharSelCursor.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MoveState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WaitState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JumpState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

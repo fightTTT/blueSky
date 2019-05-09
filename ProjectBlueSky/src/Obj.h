@@ -30,9 +30,10 @@ enum DIR
 struct EnemyState
 {
 	EnemyState() : enemyPos(VECTOR2(0, 0)), enemyAnimName("none") {}
-	EnemyState(VECTOR2 pos, std::string animName) : enemyPos(pos), enemyAnimName(animName) {}
+	EnemyState(VECTOR2 pos, bool longAttack, std::string animName) : enemyPos(pos), longAttackFlag(longAttack), enemyAnimName(animName) {}
 
 	VECTOR2 enemyPos;
+	bool longAttackFlag;
 	std::string enemyAnimName;
 };
 
@@ -72,9 +73,18 @@ public:
 	bool SetAnim(std::string animName);															// ｱﾆﾒｰｼｮﾝをｾｯﾄする
 	std::string GetAnim(void);																	// ｱﾆﾒｰｼｮﾝの情報を取得する
 
+	// 向いている方向セット
 	void SetDir(DIR d);
+	// 向いている方向取得
+	DIR GetDir() const { return dir; }
 
+	// 遠距離攻撃フラグ取得
+	bool GetLongAttackFlag() const { return longAttackFlag; }
+
+	// 敵の情報セット
 	void SetEnemyState(EnemyState state);
+	// 敵の情報取得
+	EnemyState GetEnemyState() const { return enemyState; }
 
 private:
 	//移動処理
@@ -94,7 +104,8 @@ protected:
 	DIR dir;						// 向いている方向
 	DIR tmpDir;						// 向いている方向(一時的に保存)
 	bool turnFlag;					// 画像反転フラグ
-	EnemyState enemyState;	// 敵の現在の座標, 状態
+	EnemyState enemyState;			// 敵の現在の座標, 状態
+	bool longAttackFlag;			// 遠距離攻撃フラグ
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;		// ｱﾆﾒｰｼｮﾝ情報
 	std::string animName;									// 表示ｱﾆﾒｰｼｮﾝ名

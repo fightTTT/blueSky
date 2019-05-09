@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\JumpState.cpp" />
+    <ClCompile Include="src\AIState.cpp" />
+    <ClCompile Include="src\MoveState.cpp" />
     <ClCompile Include="src\AIRyu.cpp" />
     <ClCompile Include="src\AICharacter.cpp" />
     <ClCompile Include="src\CharSelCursor.cpp" />
@@ -38,8 +41,12 @@
     <ClCompile Include="src\Shot.cpp" />
     <ClCompile Include="src\TitleScene.cpp" />
     <ClCompile Include="src\VECTOR2.cpp" />
+    <ClCompile Include="src\WaitState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\JumpState.h" />
+    <ClInclude Include="src\AIState.h" />
+    <ClInclude Include="src\MoveState.h" />
     <ClInclude Include="src\AIRyu.h" />
     <ClInclude Include="src\AICharacter.h" />
     <ClInclude Include="src\CharSelCursor.h" />
@@ -59,6 +66,7 @@
     <ClInclude Include="src\Shot.h" />
     <ClInclude Include="src\TitleScene.h" />
     <ClInclude Include="src\VECTOR2.h" />
+    <ClInclude Include="src\WaitState.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -2,14 +2,17 @@
 #include "ImageMng.h"
 #include "Shot.h"
 
+#include "AIState.h"
+#include "MoveState.h"
+#include "WaitState.h"
+
 #include "DxLib.h"
 
 AICharacter::AICharacter()
 {
-	AIStateTime = 0;
-	moveStateTime = 0;
-	LongAttackFlag = false;
-	moveDirFlag = true;
+	longAttackFlag = false;
+
+	ChangeState(MoveState::GetInstance());
 }
 
 AICharacter::~AICharacter()
@@ -25,45 +28,16 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	dir = tmpDir;
 
-	switch (AIStateType)
+	if (state)
 	{
-	case AI_STATE_NONE:
-		SetAnim("待機");
-		break;
-	case AI_STATE_MOVE:
-		Move();
-		break;
-	case AI_STATE_ATTACK:
-		if (!(LongAttackFlag) && (animTable[GetAnim()][ANIM_TBL_LOOP] || animEndFlag))
-		{
-			AddObjList()(objList, std::make_unique<Shot>(pos, dir));
-			SetAnim(spAttackAnimName[0]);
-			LongAttackFlag = true;
-		}
-		break;
-	case AI_STATE_JUMP:
-		break;
-	case AI_STATE_MAX:
-		break;
-	default:
-		break;
+		state->Update(this);
 	}
 
-	if (LongAttackFlag && animEndFlag)
+	if (longAttackFlag)
 	{
-		AIStateType = AI_STATE_MOVE;
-		LongAttackFlag = false;
-		AIStateTime = 0;
+		AddObjList()(objList, std::make_unique<Shot>(pos, dir));
+		longAttackFlag = false;
 	}
-
-	if (AIStateTime > 100 && AIStateType == AI_STATE_MOVE)
-	{
-		AIStateType = AI_STATE_ATTACK;
-		
-		AIStateTime = 0;
-	}
-
-	AIStateTime++;
 }
 
 void AICharacter::Draw()
@@ -107,96 +81,10 @@ void AICharacter::Draw()
 	animCnt++;
 }
 
-void AICharacter::Move()
+void AICharacter::ChangeState(AIState * s)
 {
-	if (enemyState.enemyPos < 0)
-	{
-		return;
-	}
-
-	VECTOR2 vec = enemyState.enemyPos - pos;
-
-	int rand = GetRand(10);
-
-	if (abs(vec.x) < 100)
-	{
-		moveDirFlag = !(abs(vec.x) < 100);
-		moveStateTime = 0;
-	}
-	else if (moveStateTime > 150)
-	{
-
-		if (rand == 0)
-		{
-			moveDirFlag = !moveDirFlag;
-			moveStateTime = 0;
-		}
-	}
-
-	if (moveDirFlag)
-	{
-		// 前に進む
-		if (vec.x < 0)
-		{
-			pos.x -= 2;
-
-			if (dir == DIR_RIGHT)
-			{
-				SetAnim("後ろ移動");
-			}
-			else
-			{
-				SetAnim("前移動");
-			}
-		}
-		else
-		{
-			pos.x += 2;
-
-			if (dir == DIR_RIGHT)
-			{
-				SetAnim("前移動");
-			}
-			else
-			{
-				SetAnim("後ろ移動");
-			}
-
-		}
-	}
-	else
-	{
-		// 後ろに下がる
-
-		if (vec.x < 0)
-		{
-			pos.x += 2;
-
-			if (dir == DIR_RIGHT)
-			{
-				SetAnim("前移動");
-			}
-			else
-			{
-				SetAnim("後ろ移動");
-			}
-		}
-		else
-		{
-			pos.x -= 2;
-
-			if (dir == DIR_RIGHT)
-			{
-				SetAnim("後ろ移動");
-			}
-			else
-			{
-				SetAnim("前移動");
-			}
-		}
-	}
-
-	moveStateTime++;
+	state = s;
+	state->Init(this);
 }
 
 bool AICharacter::InitAnim(void)
@@ -223,9 +111,6 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 {
 	Obj::Init(fileName, divSize, divCut, pos, turn);
 	InitAnim();
-
-	jumpSpeed = { 0, 0 };
-	jumpFlag = false;
 
 	// 通常のアクション
 	animFileName["待機"] = "stand";

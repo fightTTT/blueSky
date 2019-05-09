@@ -24,6 +24,7 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	jumpSpeed = { 0, 0 };
 	jumpFlag = false;
 	padNum = id;
+	longAttackFlag = false;
 
 	// 通常のアクション
 	animFileName["待機"] = "stand";
@@ -227,6 +228,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 	auto ssize = lpSceneMng.GetScreenSize();
 
 	CommandUpDate(ctl);
+	longAttackFlag = false;
 
 	// キャラクター操作
 	if (!jumpFlag)
@@ -347,6 +349,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				AddObjList()(objList, std::make_unique<Shot>(pos, dir));
 				SetAnim(spAttackAnimName[0]);
+				longAttackFlag = true;
 			}
 			else if (ctl.GetPadData(padNum, BUTTON_A))
 			{
@@ -354,6 +357,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				{
 					AddObjList()(objList, std::make_unique<Shot>(pos, dir));
 					SetAnim(spAttackAnimName[0]);
+					longAttackFlag = true;
 				}
 				else
 				{
