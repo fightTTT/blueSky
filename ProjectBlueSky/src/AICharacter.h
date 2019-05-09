@@ -19,7 +19,7 @@ public:
 
 	void ChangeState(AIState* s);
 
-	void SetLongAttackFrag(bool flag) { longAttackFlag = flag; }
+	void SetLongAttackFlag(bool flag) { longAttackFlag = flag; }
 
 private:
 

@@ -2,6 +2,7 @@
 #include "AICharacter.h"
 #include "SceneMng.h"
 #include "JumpState.h"
+#include "LongAttackState.h"
 
 #include "DxLib.h"
 
@@ -48,8 +49,7 @@ void MoveState::Update(AICharacter * character)
 		{
 			moveDirFlag = !moveDirFlag;
 			stateTime = 0;
-
-			character->SetLongAttackFrag(true);
+			character->ChangeState(LongAttackState::GetInstance());
 		}
 	}
 

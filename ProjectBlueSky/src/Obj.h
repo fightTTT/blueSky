@@ -89,6 +89,9 @@ public:
 	// 敵の情報取得
 	EnemyState GetEnemyState() const { return enemyState; }
 
+	// アニメーションが終了しているか
+	bool GetAnimEndFlag() const { return animEndFlag; }
+
 private:
 	//移動処理
 	virtual void SetMove(const GameCtrl &ctl);
