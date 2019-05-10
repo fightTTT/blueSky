@@ -28,6 +28,13 @@ void JumpState::Update(AICharacter * character)
 	auto pos = character->GetPos();
 	auto charaDir = character->GetDir();
 
+	bool shotJumpLeft = false;
+	bool shotJumpRight = false;
+	if (charaDir == DIR_LEFT)
+	{
+		shotJumpLeft = !character->GetShotJumpFlag();
+	}
+
 	if (!jumpFlag)
 	{
 		int rand = GetRand(3);
@@ -75,6 +82,8 @@ void JumpState::Update(AICharacter * character)
 		jumpSpeed.y += 1;
 		pos += jumpSpeed;
 	}
+
+	character->SetShotJumpFlag(false);
 
 	auto ssize = lpSceneMng.GetScreenSize();
 
