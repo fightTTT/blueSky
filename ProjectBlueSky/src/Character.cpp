@@ -345,7 +345,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			}
 			
 			// çUåÇ
-			if (ctl.GetPadData(padNum, BUTTON_X))
+			if (ctl.GetPadDataTrg(padNum, BUTTON_X))
 			{
 				AddObjList()(objList, std::make_unique<Shot>(pos, dir));
 				SetAnim(spAttackAnimName[0]);
