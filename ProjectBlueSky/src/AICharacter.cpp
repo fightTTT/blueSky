@@ -79,7 +79,9 @@ void AICharacter::Draw()
 
 	if (visible)
 	{
+		SetDrawBright(100, 255, 100);// 赤以外を暗くする
 		DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
+		SetDrawBright(255, 255, 255);// 全色暗くしない（デフォルト）
 	}
 	animCnt++;
 }
@@ -111,7 +113,7 @@ bool AICharacter::InitAnim(void)
 	AddAnim("キック_小", 0, 0, 9, 5, false);
 	AddAnim("キック_大", 0, 0, 11, 5, false);
 	AddAnim("キック_小_空中", 0, 0, 10, 5, false);
-	AddAnim("キック_大_空中", 0, 0, 11, 5, false);
+	AddAnim("キック_大_空中", 0, 0, 13, 5, false);
 	AddAnim("キック_小_しゃがみ", 0, 0, 7, 5, false);
 	AddAnim("キック_大_しゃがみ", 0, 0, 10, 5, false);
 	AddAnim("ガード_立ち", 0, 0, 1, 5, true);
