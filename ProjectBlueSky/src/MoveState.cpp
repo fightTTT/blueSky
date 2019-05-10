@@ -28,7 +28,7 @@ void MoveState::Update(AICharacter * character)
 	auto pos = character->GetPos();
 	auto charaDir = character->GetDir();
 
-	if (enemy.longAttackFlag)
+	if (enemy.enemyAnimName == "”g“®")
 	{
 		character->ChangeState(JumpState::GetInstance());
 		return;

@@ -67,12 +67,12 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			{
 				if (type[0] == OBJ_TYPE_CHARACTER)
 				{
-					EnemyState state(sObj[0]->GetPos(), sObj[0]->GetLongAttackFlag(), sObj[0]->GetAnim());
+					EnemyState state(sObj[0]->GetPos(), sObj[0]->GetAnim());
 					sObj[1]->SetEnemyState(state);
 				}
 				else
 				{
-					EnemyState state(sObj[1]->GetPos(), sObj[1]->GetLongAttackFlag(), sObj[1]->GetAnim());
+					EnemyState state(sObj[1]->GetPos(), sObj[1]->GetAnim());
 					sObj[0]->SetEnemyState(state);
 				}
 			}

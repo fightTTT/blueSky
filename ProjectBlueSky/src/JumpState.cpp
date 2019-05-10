@@ -32,7 +32,7 @@ void JumpState::Update(AICharacter * character)
 		if (rand == 0)
 		{
 			// âEè„
-			jumpSpeed = { 2, -30 };
+			jumpSpeed = { 4, -30 };
 			jumpFlag = true;
 
 			if (charaDir == DIR_LEFT)
@@ -47,7 +47,7 @@ void JumpState::Update(AICharacter * character)
 		else if (rand == 1)
 		{
 			// ç∂è„
-			jumpSpeed = { -2, -30 };
+			jumpSpeed = { -4, -30 };
 			jumpFlag = true;
 
 			if (charaDir == DIR_LEFT)
