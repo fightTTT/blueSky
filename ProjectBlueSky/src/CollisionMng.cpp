@@ -2,7 +2,7 @@
 
 
 
-bool CollisionMng::ColLoad(std::string charaName, std::string animName)
+bool CollisionMng::ColLoad(std::string charaName, std::string animName, int animFrame)
 {
 	if (colMap[charaName].isLoad(animName))
 	{
@@ -13,16 +13,53 @@ bool CollisionMng::ColLoad(std::string charaName, std::string animName)
 	// ファイルパス作成
 
 	DataHeader header;
-	// animNum read
-	// hitBoxNumをanimNumでresize
 
-	std::vector<ColInfo> data;
+
+	header.animNum = animFrame;
+
+
+	// ファイルパス作成
+	std::string loadPass = "colData/" + charaName + "/" + animName + ".map";		//読み込み先のファイルパスを作成
+
+	// hitBoxNumをanimNumでresize
+	header.hitBoxNum.resize(header.animNum);
+
+	//data.resize(header.animNum);
+
+	HitBox oneTimeData;
+
+	FILE* file;
+
+	fopen_s(&file, loadPass.c_str(), "rb");
+
+	if (!file)
+	{
+		return false;
+	}
+
+
+
+	fread(&header.animNum, sizeof(int), 1, file);
+
+	fread(&header.hitBoxNum[0], sizeof(int)*header.hitBoxNum.size(), 1, file);
+
 	data.resize(header.animNum);
+
+
 	for (int i = 0; i < data.size(); ++i)
 	{
 		data[i].hitBox.resize(header.hitBoxNum[i]);
-		// read
+
+		for (int a = 0; a < data[i].hitBox.size(); a++)
+		{
+
+			fread(&oneTimeData, sizeof(oneTimeData), 1, file);
+
+			data[i].hitBox[a] = oneTimeData;
+		}
 	}
+
+	fclose(file);
 
 	colMap[charaName].SetColData(animName, data);
 
