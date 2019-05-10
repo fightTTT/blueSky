@@ -111,6 +111,9 @@
     <ClCompile Include="src\StickHuman.cpp">
       <Filter>ソース ファイル\character</Filter>
     </ClCompile>
+    <ClCompile Include="src\AIStickHuman.cpp">
+      <Filter>ソース ファイル\character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameCtrl.h">
@@ -189,6 +192,9 @@
       <Filter>ヘッダー ファイル\character\AIState</Filter>
     </ClInclude>
     <ClInclude Include="src\StickHuman.h">
+      <Filter>ヘッダー ファイル\character</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIStickHuman.h">
       <Filter>ヘッダー ファイル\character</Filter>
     </ClInclude>
   </ItemGroup>
