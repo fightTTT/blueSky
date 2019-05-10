@@ -3,6 +3,7 @@
 #include "ImageMng.h"
 #include "Shot.h"
 #include "Character.h"
+#include "CollisionMng.h"
 
 #define DEF_COM_CLEAR_CNT (60)
 #define JUMP_SPEED_X (4)
@@ -435,6 +436,8 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		pos.y = ssize.y;
 		jumpFlag = false;
 	}
+
+	lpColMng.ColLoad(characterName, animName, animTable[animName][ANIM_TBL_FRAME]);
 }
 
 void Character::Draw(void)
@@ -475,6 +478,19 @@ void Character::Draw(void)
 	{
 		DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
+
+	ColInfo colData = lpColMng.GetCollisionData(characterName, animName, id);
+
+	int colColor;
+
+	for (int i = 0; i < colData.hitBox.size(); i++)
+	{
+
+		colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
+
+		DrawBox((pos.x) + colData.hitBox[i].rect.startPos.x, pos.y + colData.hitBox[i].rect.startPos.y, (pos.x) + colData.hitBox[i].rect.endPos.x, pos.y + colData.hitBox[i].rect.endPos.y, colColor, false);
+	}
+
 	animCnt++;
 
 	int i = 0;
