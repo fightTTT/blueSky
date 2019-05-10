@@ -12,7 +12,7 @@ AttackState::~AttackState()
 
 void AttackState::Init(AICharacter * chara)
 {
-	chara->SetAnim("ƒpƒ“ƒ`_‘å");
+
 }
 
 void AttackState::Update(AICharacter * character)
