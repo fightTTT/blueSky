@@ -79,9 +79,9 @@ void AICharacter::Draw()
 
 	if (visible)
 	{
-		SetDrawBright(100, 255, 100);// 赤以外を暗くする
+		SetDrawBright(100, 255, 100);
 		DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
-		SetDrawBright(255, 255, 255);// 全色暗くしない（デフォルト）
+		SetDrawBright(255, 255, 255);
 	}
 	animCnt++;
 }
