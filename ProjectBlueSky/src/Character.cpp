@@ -479,17 +479,17 @@ void Character::Draw(void)
 		DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 
-	ColInfo colData = lpColMng.GetCollisionData(characterName, animName, id);
+	//ColInfo colData = lpColMng.GetCollisionData(characterName, animName, id);
 
-	int colColor;
+	//int colColor;
 
-	for (int i = 0; i < colData.hitBox.size(); i++)
-	{
+	//for (int i = 0; i < colData.hitBox.size(); i++)
+	//{
 
-		colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
+	//	colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
 
-		DrawBox((pos.x) + colData.hitBox[i].rect.startPos.x, pos.y + colData.hitBox[i].rect.startPos.y, (pos.x) + colData.hitBox[i].rect.endPos.x, pos.y + colData.hitBox[i].rect.endPos.y, colColor, false);
-	}
+	//	DrawBox((pos.x) + colData.hitBox[i].rect.startPos.x, pos.y + colData.hitBox[i].rect.startPos.y, (pos.x) + colData.hitBox[i].rect.endPos.x, pos.y + colData.hitBox[i].rect.endPos.y, colColor, false);
+	//}
 
 	animCnt++;
 
