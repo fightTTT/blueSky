@@ -28,20 +28,23 @@ void MoveState::Update(AICharacter * character)
 	auto pos = character->GetPos();
 	auto charaDir = character->GetDir();
 
-	//if (enemy.enemyAnimName == "”g“®")
-	//{
-	//	character->ChangeState(JumpState::GetInstance());
-	//	return;
-	//}
-
 	for (auto data : enemy.shotData)
 	{
 		auto distance = pos - data.pos;
-		if (data.pos.x > 0 && abs(distance.x) < 200)
+
+		// ’e‚ªŽ©•ª‚æ‚è‘O‚É‚ ‚éê‡ŽÀs
+		if ((charaDir == DIR_RIGHT && distance.x > 0) || (charaDir == DIR_LEFT && distance.x < 0))
 		{
-			character->SetShotJumpFlag(true);
-			character->ChangeState(JumpState::GetInstance());
-			return;
+			if (data.pos.x > 0 && abs(distance.x) < 200)
+			{
+				character->SetShotJumpFlag(true);
+				character->ChangeState(JumpState::GetInstance());
+				return;
+			}
+		}
+		else
+		{
+			continue;
 		}
 	}
 
