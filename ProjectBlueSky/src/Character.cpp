@@ -235,7 +235,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 		if (animTable[GetAnim()][ANIM_TBL_LOOP] || animEndFlag)
 		{
-			if (ctl.GetPadData(padID, THUMB_L_UP))		// ジャンプ
+			if (ctl.GetPadDataTrg(padID, THUMB_L_UP))		// ジャンプ
 			{
 				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 				{
@@ -348,7 +348,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
 				SetAnim(spAttackAnimName[0]);
 			}
-			else if (ctl.GetPadData(padID, BUTTON_A))
+			else if (ctl.GetPadDataTrg(padID, BUTTON_A))
 			{
 				if (CheckCommand(0))
 				{
@@ -368,7 +368,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					SetAnim("パンチ_小");
 				}
 			}
-			else if (ctl.GetPadData(padID, BUTTON_B))
+			else if (ctl.GetPadDataTrg(padID, BUTTON_B))
 			{
 				if (CheckCommand(0))
 				{
