@@ -1,4 +1,6 @@
 #pragma once
+
+#include <array>
 #include "VECTOR2.h"
 #include "BaseScene.h"
 #include "ObjList.h"

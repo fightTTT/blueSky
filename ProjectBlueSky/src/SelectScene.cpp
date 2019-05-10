@@ -26,10 +26,10 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 	}
 
 	/* ¹Þ°Ñ¼°Ý‚ÖˆÚ“® */
-	//if (controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START))
-	//{
-	//	return std::make_unique<GameScene>();
-	//}
+	if (controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START))
+	{
+		return std::make_unique<GameScene>();
+	}
 
 	SelectDraw();
 
