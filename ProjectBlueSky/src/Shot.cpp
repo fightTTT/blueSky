@@ -1,6 +1,8 @@
 #include "SceneMng.h"
 #include "Shot.h"
 
+#define MOVE_SPPED (7)
+
 Shot::Shot(VECTOR2 pos, VECTOR2 offset, DIR dir, PAD_ID id) : Obj(offset)
 {
 	ssize = lpSceneMng.GetScreenSize();
@@ -9,11 +11,11 @@ Shot::Shot(VECTOR2 pos, VECTOR2 offset, DIR dir, PAD_ID id) : Obj(offset)
 
 	if (dir == DIR_RIGHT)
 	{
-		speed = 6;
+		speed = MOVE_SPPED;
 	}
 	else
 	{
-		speed = -6;
+		speed = -MOVE_SPPED;
 	}
 
 	deleteFlag = false;
