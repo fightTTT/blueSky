@@ -46,18 +46,6 @@ int SelectScene::Init()
 
 	AddObjList()(objList, std::make_unique<CharSelCursor>());		// Ø½Ä‚ÉCursor¸×½‚ð’Ç‰Á
 
-	charID = 0;
-
-	// Ã°ÌÞÙ
-	posTbl = { VECTOR2((scSize.x / 2) - (BOX_SIZE_X * 2),	(scSize.y * 3 / 5)),
-			   VECTOR2((scSize.x / 2) - (BOX_SIZE_X),		(scSize.y * 3 / 5)),
-			   VECTOR2((scSize.x / 2),						(scSize.y * 3 / 5)),
-			   VECTOR2((scSize.x / 2) + BOX_SIZE_X,			(scSize.y * 3 / 5)),
-			   VECTOR2((scSize.x / 2) - (BOX_SIZE_X * 2),	(scSize.y * 3 / 5) + BOX_SIZE_Y),
-			   VECTOR2((scSize.x / 2) - (BOX_SIZE_X),		(scSize.y * 3 / 5) + BOX_SIZE_Y),
-			   VECTOR2((scSize.x / 2),						(scSize.y * 3 / 5) + BOX_SIZE_Y),
-			   VECTOR2((scSize.x / 2) + BOX_SIZE_X,			(scSize.y * 3 / 5) + BOX_SIZE_Y) };
-
 	scSize = lpSceneMng.GetScreenSize();
 	return 0;
 }
