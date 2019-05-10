@@ -6,15 +6,17 @@
 
 enum ColType
 {
-	COLTYPE_ATTACK,
-	COLTYPE_HIT,
+	COLTYPE_ATTACK,		// 攻撃用の当たり判定
+	COLTYPE_HIT,		// ダメージ受ける用の当たり判定
+	COLTYPE_GUARD,		// ガード用の当たり判定
 	COLTYPE_MAX
 };
 
 struct HitBox
 {
-	ColType type;
-	Rect rect;
+	ColType type;		// 当たり判定の種類
+	bool rectFlag;
+	Rect rect;			// 矩形の当たり判定の開始地点と終了地点
 };
 
 struct ColInfo
@@ -42,4 +44,3 @@ private:
 	// キー : アニメーション名
 	std::map<std::string, std::vector<ColInfo>> colData;
 };
-
