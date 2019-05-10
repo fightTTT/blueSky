@@ -47,7 +47,6 @@ private:
 	COM_DIR comDirOld;
 	int comClearCnt;
 
-	PAD_ID padNum;		// 使用しているコントローラー番号
 	bool jumpFlag;
 	VECTOR2 jumpSpeed;
 

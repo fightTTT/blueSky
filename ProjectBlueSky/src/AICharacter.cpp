@@ -12,6 +12,8 @@ AICharacter::AICharacter()
 {
 	longAttackFlag = false;
 
+	padID = PAD_AI;
+
 	ChangeState(MoveState::GetInstance());
 }
 
@@ -65,7 +67,7 @@ void AICharacter::Draw()
 	imageName = ("image/" + characterName + "/" + nowAnim + "/" + animFileName[nowAnim] + "_" + std::to_string(id) + ".png");
 
 	// DIRがRIGHTの場合画像を反転
-	if (dir == DIR_RIGHT)
+	if (dir == DIR_LEFT)
 	{
 		turnFlag = true;
 	}
@@ -76,7 +78,7 @@ void AICharacter::Draw()
 
 	if (visible)
 	{
-		DrawRotaGraph(pos.x, pos.y - 178 / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
+		DrawRotaGraph(pos.x, pos.y - divSize.y / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 	animCnt++;
 }
@@ -89,18 +91,18 @@ void AICharacter::ChangeState(AIState * s)
 
 bool AICharacter::InitAnim(void)
 {
-	AddAnim("待機", 0, 0, 10, 5, true);
-	AddAnim("前移動", 0, 0, 11, 5, true);
-	AddAnim("後ろ移動", 0, 0, 11, 5, true);
-	AddAnim("ジャンプ_上", 0, 0, 12, 5, true);
-	AddAnim("ジャンプ_前", 0, 0, 14, 5, true);
-	AddAnim("ジャンプ_後ろ", 0, 0, 14, 5, true);
-	AddAnim("しゃがみ", 0, 0, 4, 5, true);
+	AddAnim("待機", 0, 0, 6, 5, true);
+	AddAnim("前移動", 0, 0, 8, 5, true);
+	AddAnim("後ろ移動", 0, 0, 8, 5, true);
+	AddAnim("ジャンプ_上", 0, 0, 10, 6, true);
+	AddAnim("ジャンプ_前", 0, 0, 6, 6, true);
+	AddAnim("ジャンプ_後ろ", 0, 0, 6, 6, true);
+	AddAnim("しゃがみ", 0, 0, 6, 5, true);
 	AddAnim("しゃがみ_後ろ", 0, 0, 1, 5, true);
-	AddAnim("しゃがみ始め", 0, 0, 2, 5, false);
-	AddAnim("立ち始め", 0, 0, 2, 5, false);
-	AddAnim("パンチ_小", 0, 0, 4, 5, false);
-	AddAnim("パンチ_大", 0, 0, 7, 5, false);
+	AddAnim("しゃがみ始め", 0, 0, 3, 5, false);
+	AddAnim("立ち始め", 0, 0, 3, 5, false);
+	AddAnim("パンチ_小", 0, 0, 7, 5, false);
+	AddAnim("パンチ_大", 0, 0, 11, 5, false);
 	AddAnim("ガード_しゃがみ", 0, 0, 1, 5, true);
 	SetAnim("待機");
 

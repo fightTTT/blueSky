@@ -28,7 +28,7 @@ void MoveState::Update(AICharacter * character)
 	auto pos = character->GetPos();
 	auto charaDir = character->GetDir();
 
-	if (enemy.longAttackFlag)
+	if (enemy.enemyAnimName == "”g“®")
 	{
 		character->ChangeState(JumpState::GetInstance());
 		return;
@@ -50,6 +50,7 @@ void MoveState::Update(AICharacter * character)
 			moveDirFlag = !moveDirFlag;
 			stateTime = 0;
 			character->ChangeState(LongAttackState::GetInstance());
+			return;
 		}
 	}
 

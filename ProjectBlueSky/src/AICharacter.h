@@ -34,6 +34,8 @@ protected:
 
 	AIState* state;
 
+	bool longAttackFlag;			// ‰“‹——£UŒ‚ƒtƒ‰ƒO
+
 	std::string characterName;
 	std::string spAttackAnimName[3] = { "‹Z1", "‹Z2" , "‹Z3" };
 	std::string spAttackAnimFileName[3] = { "waza_1", "waza_2" , "waza_3" };

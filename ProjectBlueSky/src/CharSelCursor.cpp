@@ -1,7 +1,6 @@
 #include "CharSelCursor.h"
 #include "SceneMng.h"
 #include "DxLib.h"
-#include "GameCtrl.h"
 
 #define BOX_SIZE_X (100)		// ·¬×±²ºÝ‚ÌXŽ²»²½Þ
 #define BOX_SIZE_Y (100)		// ·¬×±²ºÝ‚ÌYŽ²»²½Þ

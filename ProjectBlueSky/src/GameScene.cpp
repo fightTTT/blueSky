@@ -1,15 +1,14 @@
 #include "Dxlib.h"
 #include "ObjList.h"
 #include "Obj.h"
-#include "Ryu.h"
 #include "StickHuman.h"
+#include "AIStickHuman.h"
 #include "SceneMng.h"
 #include "GameScene.h"
 #include "GameCtrl.h"
-#include "AIRyu.h"
 
-#define RYU_IMAGE_SIZE_X (290)
-#define RYU_IMAGE_SIZE_Y (178)
+#define RYU_IMAGE_SIZE_X (256)
+#define RYU_IMAGE_SIZE_Y (256)
 
 
 GameScene::GameScene()
@@ -53,6 +52,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 		if (charaCount == 2)
 		{
+			// キャラクター同士を向い合せる
 			if (sObj[0]->GetPos().x > sObj[1]->GetPos().x)
 			{
 				sObj[0]->SetDir(DIR_LEFT);
@@ -64,16 +64,17 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				sObj[1]->SetDir(DIR_LEFT);
 			}
 
+			// キャラクターの状態を相手に渡す
 			if (!(type[0] == type[1]))
 			{
 				if (type[0] == OBJ_TYPE_CHARACTER)
 				{
-					EnemyState state(sObj[0]->GetPos(), sObj[0]->GetLongAttackFlag(), sObj[0]->GetAnim());
+					EnemyState state(sObj[0]->GetPos(), sObj[0]->GetAnim());
 					sObj[1]->SetEnemyState(state);
 				}
 				else
 				{
-					EnemyState state(sObj[1]->GetPos(), sObj[1]->GetLongAttackFlag(), sObj[1]->GetAnim());
+					EnemyState state(sObj[1]->GetPos(), sObj[1]->GetAnim());
 					sObj[0]->SetEnemyState(state);
 				}
 			}
@@ -96,9 +97,8 @@ int GameScene::Init(void)
 	}
 	objList->clear();		// objListを全削除する
 
-	//AddObjList()(objList, std::make_unique<Ryu>(VECTOR2(1440 - (290 / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_2, DIR_RIGHT));
-	AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2(1440 - (290 / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_1, DIR_RIGHT));
-	AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_2, DIR_LEFT));
+	AddObjList()(objList, std::make_unique<AIStickHuman>(VECTOR2(1440 - (290 / 2), ssize.y), VECTOR2(-(290 / 2), -178), DIR_RIGHT));
+	AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_1, DIR_LEFT));
 	//AddObjList()(objList, std::make_unique<AIRyu>(VECTOR2(ssize.x - (RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), DIR_LEFT));
 
 	return 0;
