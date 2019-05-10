@@ -8,6 +8,8 @@ struct DataHeader
 	std::vector<int> hitBoxNum;	// 画像1枚のHitBoxの数
 };
 
+#define lpColMng CollisionMng::GetInstance()
+
 class CollisionMng
 {
 public:
@@ -17,14 +19,17 @@ public:
 		return s_Instance;
 	}
 
-	bool ColLoad(std::string charaName, std::string animName);
+	bool ColLoad(std::string charaName, std::string animName, int animFrame);
+
+	ColInfo GetCollisionData(std::string charName, std::string animName, int animIdx) { return colMap[charName].GetColData(animName, animIdx); }
 
 private:
 
 	CollisionMng();
 	~CollisionMng();
 
+	std::vector<ColInfo> data;
+
 	// キー : キャラクター名
 	std::map<std::string, Collision> colMap;
 };
-

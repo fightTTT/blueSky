@@ -148,6 +148,7 @@ void MoveState::Update(AICharacter * character)
 		{
 			character->ChangeState(AttackState::GetInstance());
 			changeAttackFlag = false;
+			character->SetAnim("ƒpƒ“ƒ`_‘å");
 			return;
 		}
 

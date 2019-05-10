@@ -25,7 +25,6 @@
     <ClCompile Include="src\JumpState.cpp" />
     <ClCompile Include="src\AIState.cpp" />
     <ClCompile Include="src\MoveState.cpp" />
-    <ClCompile Include="src\AIRyu.cpp" />
     <ClCompile Include="src\AICharacter.cpp" />
     <ClCompile Include="src\CharSelCursor.cpp" />
     <ClCompile Include="src\CollisionMng.cpp" />
@@ -38,7 +37,6 @@
     <ClCompile Include="src\ImageMng.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Obj.cpp" />
-    <ClCompile Include="src\Ryu.cpp" />
     <ClCompile Include="src\SceneMng.cpp" />
     <ClCompile Include="src\SelectScene.cpp" />
     <ClCompile Include="src\Shot.cpp" />
@@ -54,7 +52,6 @@
     <ClInclude Include="src\JumpState.h" />
     <ClInclude Include="src\AIState.h" />
     <ClInclude Include="src\MoveState.h" />
-    <ClInclude Include="src\AIRyu.h" />
     <ClInclude Include="src\AICharacter.h" />
     <ClInclude Include="src\CharSelCursor.h" />
     <ClInclude Include="src\CollisionMng.h" />
@@ -67,7 +64,6 @@
     <ClInclude Include="src\ImageMng.h" />
     <ClInclude Include="src\Obj.h" />
     <ClInclude Include="src\ObjList.h" />
-    <ClInclude Include="src\Ryu.h" />
     <ClInclude Include="src\SceneMng.h" />
     <ClInclude Include="src\SelectScene.h" />
     <ClInclude Include="src\Shot.h" />

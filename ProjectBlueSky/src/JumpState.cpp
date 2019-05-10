@@ -27,6 +27,7 @@ void JumpState::Update(AICharacter * character)
 {
 	auto pos = character->GetPos();
 	auto charaDir = character->GetDir();
+	auto enemy = character->GetEnemyState();
 
 	bool shotJumpLeft = true;
 	bool shotJumpRight = true;
@@ -34,7 +35,6 @@ void JumpState::Update(AICharacter * character)
 	{
 		shotJumpLeft = !character->GetShotJumpFlag();
 	}
-
 	if (charaDir == DIR_RIGHT)
 	{
 		shotJumpRight = !character->GetShotJumpFlag();
@@ -101,4 +101,11 @@ void JumpState::Update(AICharacter * character)
 	}
 
 	character->SetPos(pos);
+
+	auto distance = enemy.enemyPos - pos;
+
+	if (abs(distance.x) < 200 && jumpSpeed.y > 0)
+	{
+		character->SetAnim("ƒLƒbƒN_‘å_‹ó’†");
+	}
 }

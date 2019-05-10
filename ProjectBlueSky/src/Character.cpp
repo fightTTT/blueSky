@@ -3,6 +3,7 @@
 #include "ImageMng.h"
 #include "Shot.h"
 #include "Character.h"
+#include "CollisionMng.h"
 
 #define DEF_COM_CLEAR_CNT (60)
 #define JUMP_SPEED_X (4)
@@ -38,6 +39,17 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	animFileName["立ち始め"] = "stand_start";
 	animFileName["パンチ_小"] = "punch_small";
 	animFileName["パンチ_大"] = "punch_big";
+	animFileName["パンチ_小_空中"] = "punch_small_air";
+	animFileName["パンチ_大_空中"] = "punch_big_air";
+	animFileName["パンチ_小_しゃがみ"] = "punch_small_squat";
+	animFileName["パンチ_大_しゃがみ"] = "punch_big_squat";
+	animFileName["キック_小"] = "kick_small";
+	animFileName["キック_大"] = "kick_big";
+	animFileName["キック_小_空中"] = "kick_small_air";
+	animFileName["キック_大_空中"] = "kick_big_air";
+	animFileName["キック_小_しゃがみ"] = "kick_small_squat";
+	animFileName["キック_大_しゃがみ"] = "kick_big_squat";
+	animFileName["ガード_立ち"] = "guard";
 	animFileName["ガード_しゃがみ"] = "guard_squat";
 
 	std::vector<std::string> animName = { "待機",
@@ -52,6 +64,17 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 										  "立ち始め",
 										  "パンチ_小", 
 										  "パンチ_大",
+										  "パンチ_小_空中",
+										  "パンチ_大_空中",
+										  "パンチ_小_しゃがみ",
+										  "パンチ_大_しゃがみ",
+										  "キック_小",
+										  "キック_大",
+										  "キック_小_空中",
+										  "キック_大_空中",
+										  "キック_小_しゃがみ",
+										  "キック_大_しゃがみ",
+										  "ガード_立ち",
 										  "ガード_しゃがみ" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
 
 	// 必殺技系
@@ -101,6 +124,17 @@ bool Character::InitAnim(void)
 	AddAnim("立ち始め", 0, 0, 3, 5, false);
 	AddAnim("パンチ_小", 0, 0, 7, 5, false);
 	AddAnim("パンチ_大", 0, 0, 11, 5, false);
+	AddAnim("パンチ_小_空中", 0, 0, 8, 5, false);
+	AddAnim("パンチ_大_空中", 0, 0, 10, 5, false);
+	AddAnim("パンチ_小_しゃがみ", 0, 0, 8, 5, false);
+	AddAnim("パンチ_大_しゃがみ", 0, 0, 10, 5, false);
+	AddAnim("キック_小", 0, 0, 9, 5, false);
+	AddAnim("キック_大", 0, 0, 11, 5, false);
+	AddAnim("キック_小_空中", 0, 0, 10, 5, false);
+	AddAnim("キック_大_空中", 0, 0, 11, 5, false);
+	AddAnim("キック_小_しゃがみ", 0, 0, 7, 5, false);
+	AddAnim("キック_大_しゃがみ", 0, 0, 10, 5, false);
+	AddAnim("ガード_立ち", 0, 0, 1, 5, true);
 	AddAnim("ガード_しゃがみ", 0, 0, 1, 5, true);
 	SetAnim("待機");
 	return true;
@@ -357,11 +391,11 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (CheckCommand(1))
 				{
-					SetAnim("投げ");
+					SetAnim(spAttackAnimName[1]);
 				}
 				else if (CheckCommand(2))
 				{
-					SetAnim("昇竜");
+					SetAnim(spAttackAnimName[2]);
 				}
 				else
 				{
@@ -377,11 +411,11 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (CheckCommand(1))
 				{
-					SetAnim("投げ");
+					SetAnim(spAttackAnimName[1]);
 				}
 				else if (CheckCommand(2))
 				{
-					SetAnim("昇竜");
+					SetAnim(spAttackAnimName[2]);
 				}
 				else
 				{
@@ -402,6 +436,8 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		pos.y = ssize.y;
 		jumpFlag = false;
 	}
+
+	lpColMng.ColLoad(characterName, animName, animTable[animName][ANIM_TBL_FRAME]);
 }
 
 void Character::Draw(void)
@@ -442,6 +478,19 @@ void Character::Draw(void)
 	{
 		DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
+
+	//ColInfo colData = lpColMng.GetCollisionData(characterName, animName, id);
+
+	//int colColor;
+
+	//for (int i = 0; i < colData.hitBox.size(); i++)
+	//{
+
+	//	colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
+
+	//	DrawBox((pos.x) + colData.hitBox[i].rect.startPos.x, pos.y + colData.hitBox[i].rect.startPos.y, (pos.x) + colData.hitBox[i].rect.endPos.x, pos.y + colData.hitBox[i].rect.endPos.y, colColor, false);
+	//}
+
 	animCnt++;
 
 	int i = 0;
