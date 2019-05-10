@@ -8,7 +8,7 @@
 
 #include "DxLib.h"
 
-AICharacter::AICharacter()
+AICharacter::AICharacter(VECTOR2 offset) : Obj(offset)
 {
 	longAttackFlag = false;
 	shotJumpFlag = false;
@@ -38,7 +38,7 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 	if (longAttackFlag)
 	{
-		AddObjList()(objList, std::make_unique<Shot>(pos, dir, padID));
+		AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
 		longAttackFlag = false;
 	}
 }
@@ -79,7 +79,7 @@ void AICharacter::Draw()
 
 	if (visible)
 	{
-		DrawRotaGraph(pos.x, pos.y - divSize.y / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
+		DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 	animCnt++;
 }

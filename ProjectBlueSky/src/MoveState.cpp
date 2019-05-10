@@ -27,13 +27,14 @@ void MoveState::Update(AICharacter * character)
 	auto enemy = character->GetEnemyState();
 	auto pos = character->GetPos();
 	auto charaDir = character->GetDir();
+	auto divSize = character->GetDivSize();
 
 	for (auto data : enemy.shotData)
 	{
 		auto distance = pos - data.pos;
 
 		// 弾が自分より前にある場合実行
-		if ((charaDir == DIR_RIGHT && distance.x > 0) || (charaDir == DIR_LEFT && distance.x < 0))
+		if ((charaDir == DIR_RIGHT && distance.x > -divSize.x) || (charaDir == DIR_LEFT && distance.x < divSize.x))
 		{
 			if (data.pos.x > 0 && abs(distance.x) < 200)
 			{
@@ -50,7 +51,7 @@ void MoveState::Update(AICharacter * character)
 
 	VECTOR2 vec = enemy.enemyPos - pos;
 
-	int rand = GetRand(100);
+	int rand = GetRand(99);
 
 	if (abs(vec.x) < 100)
 	{
@@ -59,6 +60,7 @@ void MoveState::Update(AICharacter * character)
 	}
 	else if (stateTime > 150)
 	{
+		// 150カウントの状態で1/100の確率で方向を切り替える
 		if (rand == 0)
 		{
 			moveDirFlag = !moveDirFlag;
@@ -131,7 +133,7 @@ void MoveState::Update(AICharacter * character)
 
 	auto ssize = lpSceneMng.GetScreenSize();
 
-	if (pos.x > ssize.x - character->GetDivSize().x / 4)
+	if (pos.x > ssize.x - divSize.x / 4)
 	{
 		pos.x -= MOVE_SPEED;
 	}
