@@ -2,7 +2,7 @@
 
 
 
-AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir)
+AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharacter(offset)
 {
 	characterName = "ñ_êlä‘";
 

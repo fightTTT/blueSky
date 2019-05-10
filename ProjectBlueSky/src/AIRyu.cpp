@@ -1,6 +1,6 @@
 #include "AIRyu.h"
 
-AIRyu::AIRyu(VECTOR2 pos, VECTOR2 offset, DIR charaDir)
+AIRyu::AIRyu(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharacter(offset)
 {
 	characterName = "ƒŠƒ…ƒE";
 

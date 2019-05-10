@@ -1,7 +1,7 @@
 #include "SceneMng.h"
 #include "Shot.h"
 
-Shot::Shot(VECTOR2 pos, DIR dir, PAD_ID id)
+Shot::Shot(VECTOR2 pos, VECTOR2 offset, DIR dir, PAD_ID id) : Obj(offset)
 {
 	ssize = lpSceneMng.GetScreenSize();
 

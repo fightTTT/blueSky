@@ -8,7 +8,7 @@ class AICharacter :
 	public Obj
 {
 public:
-	AICharacter();
+	AICharacter(VECTOR2 offset);
 	~AICharacter();
 
 	bool CheckObjType(OBJ_TYPE type);

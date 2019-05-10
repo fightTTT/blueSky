@@ -345,14 +345,14 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			// çUåÇ
 			if (ctl.GetPadDataTrg(padID, BUTTON_X))
 			{
-				AddObjList()(objList, std::make_unique<Shot>(pos, dir, padID));
+				AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
 				SetAnim(spAttackAnimName[0]);
 			}
 			else if (ctl.GetPadData(padID, BUTTON_A))
 			{
 				if (CheckCommand(0))
 				{
-					AddObjList()(objList, std::make_unique<Shot>(pos, dir, padID));
+					AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
 					SetAnim(spAttackAnimName[0]);
 				}
 				else if (CheckCommand(1))
@@ -372,7 +372,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				if (CheckCommand(0))
 				{
-					AddObjList()(objList, std::make_unique<Shot>(pos, dir, padID));
+					AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
 					SetAnim(spAttackAnimName[0]);
 				}
 				else if (CheckCommand(1))
@@ -440,7 +440,7 @@ void Character::Draw(void)
 
 	if (visible)
 	{
-		DrawRotaGraph(pos.x, pos.y - divSize.y / 2, 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
+		DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 	animCnt++;
 

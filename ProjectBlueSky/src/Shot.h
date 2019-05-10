@@ -6,7 +6,7 @@ class Shot :
 	public Obj
 {
 public:
-	Shot(VECTOR2 pos, DIR dir, PAD_ID id);
+	Shot(VECTOR2 pos, VECTOR2 offset, DIR dir, PAD_ID id);
 	~Shot();
 
 	void SetMove(const GameCtrl &ctl, weekListObj objList);
