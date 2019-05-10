@@ -93,9 +93,9 @@ bool Character::InitAnim(void)
 	AddAnim("待機", 0, 0, 6, 5, true);
 	AddAnim("前移動", 0, 0, 8, 5, true);
 	AddAnim("後ろ移動", 0, 0, 8, 5, true);
-	AddAnim("ジャンプ_上", 0, 0, 10, 5, true);
-	AddAnim("ジャンプ_前", 0, 0, 6, 5, true);
-	AddAnim("ジャンプ_後ろ", 0, 0, 20, 5, true);
+	AddAnim("ジャンプ_上", 0, 0, 10, 6, true);
+	AddAnim("ジャンプ_前", 0, 0, 6, 6, true);
+	AddAnim("ジャンプ_後ろ", 0, 0, 6, 6, true);
 	AddAnim("しゃがみ", 0, 0, 6, 5, true);
 	AddAnim("しゃがみ_後ろ", 0, 0, 1, 5, true);
 	AddAnim("しゃがみ始め", 0, 0, 3, 5, false);
@@ -359,6 +359,14 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					SetAnim(spAttackAnimName[0]);
 					longAttackFlag = true;
 				}
+				else if (CheckCommand(1))
+				{
+					SetAnim("投げ");
+				}
+				else if (CheckCommand(2))
+				{
+					SetAnim("昇竜");
+				}
 				else
 				{
 					SetAnim("パンチ_小");
@@ -366,7 +374,24 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			}
 			else if (ctl.GetPadData(padNum, BUTTON_B))
 			{
-				SetAnim("パンチ_大");
+				if (CheckCommand(0))
+				{
+					AddObjList()(objList, std::make_unique<Shot>(pos, dir));
+					SetAnim(spAttackAnimName[0]);
+					longAttackFlag = true;
+				}
+				else if (CheckCommand(1))
+				{
+					SetAnim("投げ");
+				}
+				else if (CheckCommand(2))
+				{
+					SetAnim("昇竜");
+				}
+				else
+				{
+					SetAnim("パンチ_大");
+				}
 			}
 		}
 	}
