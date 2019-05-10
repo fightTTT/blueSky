@@ -19,7 +19,12 @@ public:
 
 	void ChangeState(AIState* s);
 
+	// 遠距離攻撃フラグセット
 	void SetLongAttackFlag(bool flag) { longAttackFlag = flag; }
+
+	// ジャンプ回避フラグ取得
+	bool GetShotJumpFlag() const { return shotJumpFlag; }
+	void SetShotJumpFlag(bool flag) { shotJumpFlag = flag; }
 
 private:
 
@@ -35,6 +40,7 @@ protected:
 	AIState* state;
 
 	bool longAttackFlag;			// 遠距離攻撃フラグ
+	bool shotJumpFlag;				// 弾のジャンプ回避フラグ
 
 	std::string characterName;
 	std::string spAttackAnimName[3] = { "技1", "技2" , "技3" };

@@ -11,6 +11,7 @@
 AICharacter::AICharacter()
 {
 	longAttackFlag = false;
+	shotJumpFlag = false;
 
 	padID = PAD_AI;
 
@@ -37,7 +38,7 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 	if (longAttackFlag)
 	{
-		AddObjList()(objList, std::make_unique<Shot>(pos, dir));
+		AddObjList()(objList, std::make_unique<Shot>(pos, dir, padID));
 		longAttackFlag = false;
 	}
 }

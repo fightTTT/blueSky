@@ -1,8 +1,7 @@
 #include "SceneMng.h"
 #include "Shot.h"
 
-
-Shot::Shot(VECTOR2 pos, DIR dir)
+Shot::Shot(VECTOR2 pos, DIR dir, PAD_ID id)
 {
 	ssize = lpSceneMng.GetScreenSize();
 
@@ -18,6 +17,7 @@ Shot::Shot(VECTOR2 pos, DIR dir)
 	}
 
 	deleteFlag = false;
+	padID = id;
 }
 
 Shot::~Shot()

@@ -34,6 +34,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 	sharedObj sObj[2];	// キャラクターのObj変数保存
 	int charaCount = 0;	// 見つかったキャラクターの数
 	OBJ_TYPE type[2];	// キャラクターのタイプ
+	EnemyState eState;
 
 	for (auto& data : *objList)
 	{
@@ -50,6 +51,14 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			charaCount++;
 		}
 
+		// shotの情報をセット
+		if (data->CheckObjType(OBJ_TYPE_SHOT))
+		{
+			ShotData shot(data->GetPos(), data->GetPadID());
+			eState.pushBackShotData(shot);
+		}
+
+		// キャラクターが2人見つかった場合
 		if (charaCount == 2)
 		{
 			// キャラクター同士を向い合せる
@@ -69,13 +78,15 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			{
 				if (type[0] == OBJ_TYPE_CHARACTER)
 				{
-					EnemyState state(sObj[0]->GetPos(), sObj[0]->GetAnim());
-					sObj[1]->SetEnemyState(state);
+					eState.enemyPos = sObj[0]->GetPos();
+					eState.enemyAnimName = sObj[0]->GetAnim();
+					sObj[1]->SetEnemyState(eState);
 				}
 				else
 				{
-					EnemyState state(sObj[1]->GetPos(), sObj[1]->GetAnim());
-					sObj[0]->SetEnemyState(state);
+					eState.enemyPos = sObj[1]->GetPos();
+					eState.enemyAnimName = sObj[1]->GetAnim();
+					sObj[0]->SetEnemyState(eState);
 				}
 			}
 		}

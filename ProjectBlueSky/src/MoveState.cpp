@@ -28,10 +28,21 @@ void MoveState::Update(AICharacter * character)
 	auto pos = character->GetPos();
 	auto charaDir = character->GetDir();
 
-	if (enemy.enemyAnimName == "”g“®")
+	//if (enemy.enemyAnimName == "”g“®")
+	//{
+	//	character->ChangeState(JumpState::GetInstance());
+	//	return;
+	//}
+
+	for (auto data : enemy.shotData)
 	{
-		character->ChangeState(JumpState::GetInstance());
-		return;
+		auto distance = pos - data.pos;
+		if (data.pos.x > 0 && abs(distance.x) < 200)
+		{
+			character->SetShotJumpFlag(true);
+			character->ChangeState(JumpState::GetInstance());
+			return;
+		}
 	}
 
 	VECTOR2 vec = enemy.enemyPos - pos;
@@ -49,8 +60,6 @@ void MoveState::Update(AICharacter * character)
 		{
 			moveDirFlag = !moveDirFlag;
 			stateTime = 0;
-			character->ChangeState(LongAttackState::GetInstance());
-			return;
 		}
 	}
 

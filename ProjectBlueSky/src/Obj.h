@@ -29,16 +29,23 @@ enum DIR
 	DIR_MAX
 };
 
+struct ShotData
+{
+	ShotData(VECTOR2 p, PAD_ID padID) : pos(p), id(padID) {}
+	VECTOR2 pos;	// 現在のpos
+	PAD_ID id;		// 発射したキャラクターが使用していたPADID
+};
+
 struct EnemyState
 {
 	EnemyState() : enemyPos(VECTOR2(0, 0)), enemyAnimName("none") {}
 	EnemyState(VECTOR2 pos, std::string animName) : enemyPos(pos), enemyAnimName(animName) {}
 
-	//void pushBackShotPos();
+	void pushBackShotData(ShotData data) { shotData.push_back(data); }
 
 	VECTOR2 enemyPos;
 	std::string enemyAnimName;
-	std::vector<VECTOR2> shotPos;
+	std::vector<ShotData> shotData;
 };
 
 class GameCtrl;

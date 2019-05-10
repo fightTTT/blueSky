@@ -5,6 +5,9 @@
 
 #include "DxLib.h"
 
+#define JUMP_SPEED_X (4)
+#define JUMP_SPEED_Y (30)
+
 JumpState::JumpState()
 {
 }
@@ -32,7 +35,7 @@ void JumpState::Update(AICharacter * character)
 		if (rand == 0)
 		{
 			// ‰Eã
-			jumpSpeed = { 4, -30 };
+			jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
 			jumpFlag = true;
 
 			if (charaDir == DIR_LEFT)
@@ -47,7 +50,7 @@ void JumpState::Update(AICharacter * character)
 		else if (rand == 1)
 		{
 			// ¶ã
-			jumpSpeed = { -4, -30 };
+			jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
 			jumpFlag = true;
 
 			if (charaDir == DIR_LEFT)
@@ -62,7 +65,7 @@ void JumpState::Update(AICharacter * character)
 		else
 		{
 			// ã
-			jumpSpeed = { 0, -30 };
+			jumpSpeed = { 0, -JUMP_SPEED_Y };
 			jumpFlag = true;
 			character->SetAnim("ƒWƒƒƒ“ƒv_ã");
 		}

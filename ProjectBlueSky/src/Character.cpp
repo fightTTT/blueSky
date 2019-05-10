@@ -5,7 +5,8 @@
 #include "Character.h"
 
 #define DEF_COM_CLEAR_CNT (60)
-
+#define JUMP_SPEED_X (4)
+#define JUMP_SPEED_Y (30)
 
 Character::Character(VECTOR2 offset) : Obj(offset)
 {
@@ -238,7 +239,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 				{
-					jumpSpeed = { 4, -30 };
+					jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
 					jumpFlag = true;
 
 					if (dir == DIR_LEFT)
@@ -252,7 +253,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
 				{
-					jumpSpeed = { -4, -30 };
+					jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
 					jumpFlag = true;
 
 					if (dir == DIR_LEFT)
@@ -266,7 +267,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else
 				{
-					jumpSpeed = { 0, -30 };
+					jumpSpeed = { 0, -JUMP_SPEED_Y };
 					jumpFlag = true;
 					SetAnim("ÉWÉÉÉìÉv_è„");
 				}
@@ -344,14 +345,14 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			// çUåÇ
 			if (ctl.GetPadDataTrg(padID, BUTTON_X))
 			{
-				AddObjList()(objList, std::make_unique<Shot>(pos, dir));
+				AddObjList()(objList, std::make_unique<Shot>(pos, dir, padID));
 				SetAnim(spAttackAnimName[0]);
 			}
 			else if (ctl.GetPadData(padID, BUTTON_A))
 			{
 				if (CheckCommand(0))
 				{
-					AddObjList()(objList, std::make_unique<Shot>(pos, dir));
+					AddObjList()(objList, std::make_unique<Shot>(pos, dir, padID));
 					SetAnim(spAttackAnimName[0]);
 				}
 				else if (CheckCommand(1))
@@ -371,7 +372,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				if (CheckCommand(0))
 				{
-					AddObjList()(objList, std::make_unique<Shot>(pos, dir));
+					AddObjList()(objList, std::make_unique<Shot>(pos, dir, padID));
 					SetAnim(spAttackAnimName[0]);
 				}
 				else if (CheckCommand(1))
