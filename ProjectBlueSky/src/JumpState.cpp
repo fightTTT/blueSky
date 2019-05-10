@@ -28,18 +28,24 @@ void JumpState::Update(AICharacter * character)
 	auto pos = character->GetPos();
 	auto charaDir = character->GetDir();
 
-	bool shotJumpLeft = false;
-	bool shotJumpRight = false;
+	bool shotJumpLeft = true;
+	bool shotJumpRight = true;
 	if (charaDir == DIR_LEFT)
 	{
 		shotJumpLeft = !character->GetShotJumpFlag();
 	}
 
+	if (charaDir == DIR_RIGHT)
+	{
+		shotJumpRight = !character->GetShotJumpFlag();
+	}
+
 	if (!jumpFlag)
 	{
-		int rand = GetRand(3);
+		int randRight = GetRand(10);
+		int randLeft = GetRand(10);
 
-		if (rand == 0)
+		if (randRight <= 5 && shotJumpLeft)
 		{
 			// 右上
 			jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
@@ -54,7 +60,7 @@ void JumpState::Update(AICharacter * character)
 				character->SetAnim("ジャンプ_前");
 			}
 		}
-		else if (rand == 1)
+		else if (randLeft <= 5 && shotJumpRight)
 		{
 			// 左上
 			jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
