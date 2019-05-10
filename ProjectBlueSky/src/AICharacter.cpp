@@ -113,7 +113,7 @@ bool AICharacter::InitAnim(void)
 	AddAnim("キック_小", 0, 0, 9, 5, false);
 	AddAnim("キック_大", 0, 0, 11, 5, false);
 	AddAnim("キック_小_空中", 0, 0, 10, 5, false);
-	AddAnim("キック_大_空中", 0, 0, 13, 5, false);
+	AddAnim("キック_大_空中", 0, 0, 15, 2, false);
 	AddAnim("キック_小_しゃがみ", 0, 0, 7, 5, false);
 	AddAnim("キック_大_しゃがみ", 0, 0, 10, 5, false);
 	AddAnim("ガード_立ち", 0, 0, 1, 5, true);

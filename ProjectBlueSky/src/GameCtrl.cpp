@@ -51,6 +51,10 @@ bool GameCtrl::UpDate(void)
 		padData[i][BUTTON_B] = pad[i].Buttons[XINPUT_BUTTON_B] > 0;
 		padData[i][BUTTON_X] = pad[i].Buttons[XINPUT_BUTTON_X] > 0;
 		padData[i][BUTTON_Y] = pad[i].Buttons[XINPUT_BUTTON_Y] > 0;
+		padData[i][BUTTON_DOWN] = pad[i].Buttons[XINPUT_BUTTON_DPAD_DOWN] > 0;
+		padData[i][BUTTON_LEFT] = pad[i].Buttons[XINPUT_BUTTON_DPAD_LEFT] > 0;
+		padData[i][BUTTON_RIGHT] = pad[i].Buttons[XINPUT_BUTTON_DPAD_RIGHT] > 0;
+		padData[i][BUTTON_UP] = pad[i].Buttons[XINPUT_BUTTON_DPAD_UP] > 0;
 		padData[i][BUTTON_START] = pad[i].Buttons[XINPUT_BUTTON_START] > 0 || data[KEY_INPUT_SPACE];
 	}
 
