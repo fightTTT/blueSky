@@ -6,7 +6,7 @@ Shot::Shot(VECTOR2 pos, DIR dir)
 {
 	ssize = lpSceneMng.GetScreenSize();
 
-	Init("image/Shot.png", VECTOR2(256, 256), VECTOR2(1, 1), pos, dir == DIR_RIGHT);
+	Init("image/ñ_êlä‘/Shot.png", VECTOR2(256, 256), VECTOR2(1, 1), pos, dir == DIR_RIGHT);
 
 	if (dir == DIR_RIGHT)
 	{
