@@ -8,6 +8,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 	AddAnim("îgìÆ", 0, 0, 11, 5, false);
 	spAttackAnimName[0] = "îgìÆ";
 	spAttackAnimFileName[0] = "hadou";
+	spAttackType[0] = SKILL_TYPE_PUNCH;
+
 	spAttackCommand[0][DIR_RIGHT].resize(3);
 	spAttackCommand[0][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_RIGHT_DOWN, COM_DIR_RIGHT };
 	spAttackCommand[0][DIR_LEFT].resize(3);
@@ -16,6 +18,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 	AddAnim("ìäÇ∞", 0, 0, 13, 5, false);
 	spAttackAnimName[1] = "ìäÇ∞";
 	spAttackAnimFileName[1] = "throw";
+	spAttackType[1] = SKILL_TYPE_PUNCH;
+
 	spAttackCommand[1][DIR_RIGHT].resize(3);
 	spAttackCommand[1][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_LEFT_DOWN, COM_DIR_LEFT };
 	spAttackCommand[1][DIR_LEFT].resize(3);
@@ -24,6 +28,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 	AddAnim("è∏ó≥", 0, 0, 16, 5, false);
 	spAttackAnimName[2] = "è∏ó≥";
 	spAttackAnimFileName[2] = "shoryu";
+	spAttackType[2] = SKILL_TYPE_PUNCH;
+
 	spAttackCommand[2][DIR_RIGHT].resize(3);
 	spAttackCommand[2][DIR_RIGHT] = { COM_DIR_RIGHT, COM_DIR_DOWN, COM_DIR_RIGHT_DOWN };
 	spAttackCommand[2][DIR_LEFT].resize(3);

@@ -23,7 +23,6 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	InitAnim();
 
 	jumpSpeed = { 0, 0 };
-	jumpFlag = false;
 	padID = id;
 
 	// 通常のアクション
@@ -263,18 +262,59 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 	CommandUpDate(ctl);
 
 	// キャラクター操作
-	if (!jumpFlag)
+	if ((GetAnim() == "ジャンプ_上")
+	 || (GetAnim() == "ジャンプ_前")
+	 || (GetAnim() == "ジャンプ_後ろ")
+	 || (GetAnim() == "パンチ_小_空中")
+	 || (GetAnim() == "パンチ_大_空中")
+	 || (GetAnim() == "キック_小_空中")
+	 || (GetAnim() == "キック_大_空中"))
 	{
-		dir = tmpDir;
-
-		if (animTable[GetAnim()][ANIM_TBL_LOOP] || animEndFlag)
+		if (animTable[GetAnim()][ANIM_TBL_LOOP])
 		{
+			if (ctl.GetPadDataTrg(padID, BUTTON_A))
+			{
+				SetAnim("パンチ_小_空中");
+			}
+			else if (ctl.GetPadDataTrg(padID, BUTTON_B))
+			{
+				SetAnim("パンチ_大_空中");
+			}
+			else if (ctl.GetPadDataTrg(padID, BUTTON_X))
+			{
+				SetAnim("キック_小_空中");
+			}
+			else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
+			{
+				SetAnim("キック_大_空中");
+			}
+			else
+			{
+				// 何もしない
+			}
+		}
+
+		// ジャンプ中
+		jumpSpeed.y += 1;
+		pos += jumpSpeed;
+
+		if (pos.y > ssize.y)
+		{
+			pos.y = ssize.y;
+			SetAnim("待機");
+		}
+	}
+	else 
+	{
+		if ((animTable[GetAnim()][ANIM_TBL_LOOP]) || animEndFlag)
+		{
+			dir = tmpDir;
+
 			if (ctl.GetPadDataTrg(padID, THUMB_L_UP))		// ジャンプ
 			{
 				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 				{
 					jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
-					jumpFlag = true;
 
 					if (dir == DIR_LEFT)
 					{
@@ -288,7 +328,6 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
 				{
 					jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
-					jumpFlag = true;
 
 					if (dir == DIR_LEFT)
 					{
@@ -302,13 +341,19 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				else
 				{
 					jumpSpeed = { 0, -JUMP_SPEED_Y };
-					jumpFlag = true;
 					SetAnim("ジャンプ_上");
 				}
 			}
 			else if (ctl.GetPadData(padID, THUMB_L_DOWN))		// しゃがみ
 			{
-				if ((GetAnim() == "しゃがみ始め") || (GetAnim() == "しゃがみ") || ((GetAnim() == "しゃがみ_後ろ")))
+				if ((GetAnim() == "しゃがみ始め")
+				 || (GetAnim() == "しゃがみ")
+				 || (GetAnim() == "しゃがみ_後ろ")
+				 || (GetAnim() == "パンチ_小_しゃがみ")
+				 || (GetAnim() == "パンチ_大_しゃがみ")
+				 || (GetAnim() == "キック_小_しゃがみ")
+				 || (GetAnim() == "キック_大_しゃがみ")
+				 || (GetAnim() == "ガード_しゃがみ"))
 				{
 					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 					{
@@ -375,66 +420,125 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					SetAnim("待機");
 				}
 			}
-			
+
 			// 攻撃
-			if (ctl.GetPadDataTrg(padID, BUTTON_X))
+			if (ctl.GetPadDataTrg(padID, BUTTON_A))
 			{
-				AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
-				SetAnim(spAttackAnimName[0]);
-			}
-			else if (ctl.GetPadDataTrg(padID, BUTTON_A))
-			{
-				if (CheckCommand(0))
+				if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
 				{
-					AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
 					SetAnim(spAttackAnimName[0]);
+					if (spAttackAnimName[0] == "波動")
+					{
+						AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
+					}
 				}
-				else if (CheckCommand(1))
+				else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && CheckCommand(1))
 				{
 					SetAnim(spAttackAnimName[1]);
 				}
-				else if (CheckCommand(2))
+				else if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
 				{
 					SetAnim(spAttackAnimName[2]);
 				}
 				else
 				{
-					SetAnim("パンチ_小");
+					if (ctl.GetPadData(padID, THUMB_L_DOWN))
+					{
+						SetAnim("パンチ_小_しゃがみ");
+					}
+					else
+					{
+						SetAnim("パンチ_小");
+					}
 				}
 			}
 			else if (ctl.GetPadDataTrg(padID, BUTTON_B))
 			{
-				if (CheckCommand(0))
+				if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
 				{
-					AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
 					SetAnim(spAttackAnimName[0]);
+					if (spAttackAnimName[0] == "波動")
+					{
+						AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
+					}
 				}
-				else if (CheckCommand(1))
+				else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && CheckCommand(1))
 				{
 					SetAnim(spAttackAnimName[1]);
 				}
-				else if (CheckCommand(2))
+				else if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
 				{
 					SetAnim(spAttackAnimName[2]);
 				}
 				else
 				{
-					SetAnim("パンチ_大");
+					if (ctl.GetPadData(padID, THUMB_L_DOWN))
+					{
+						SetAnim("パンチ_大_しゃがみ");
+					}
+					else
+					{
+						SetAnim("パンチ_大");
+					}
 				}
 			}
+			else if (ctl.GetPadDataTrg(padID, BUTTON_X))
+			{
+				if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
+				{
+					SetAnim(spAttackAnimName[0]);
+				}
+				else if ((spAttackType[1] == SKILL_TYPE_KICK) && CheckCommand(1))
+				{
+					SetAnim(spAttackAnimName[1]);
+				}
+				else if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
+				{
+					SetAnim(spAttackAnimName[2]);
+				}
+				else
+				{
+					if (ctl.GetPadData(padID, THUMB_L_DOWN))
+					{
+						SetAnim("キック_小_しゃがみ");
+					}
+					else
+					{
+						SetAnim("キック_小");
+					}
+				}
+			}
+			else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
+			{
+				if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
+				{
+					SetAnim(spAttackAnimName[0]);
+				}
+				else if ((spAttackType[1] == SKILL_TYPE_KICK) && CheckCommand(1))
+				{
+					SetAnim(spAttackAnimName[1]);
+				}
+				else if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
+				{
+					SetAnim(spAttackAnimName[2]);
+				}
+				else
+				{
+					if (ctl.GetPadData(padID, THUMB_L_DOWN))
+					{
+						SetAnim("キック_大_しゃがみ");
+					}
+					else
+					{
+						SetAnim("キック_大");
+					}
+				}
+			}
+			else
+			{
+				// 何もしない
+			}
 		}
-	}
-	else
-	{
-		// ジャンプ中
-		jumpSpeed.y += 1;
-		pos += jumpSpeed;
-	}
-
-	if (pos.y > ssize.y)
-	{
-		pos.y = ssize.y;
-		jumpFlag = false;
 	}
 
 	lpColMng.ColLoad(characterName, animName, animTable[animName][ANIM_TBL_FRAME]);

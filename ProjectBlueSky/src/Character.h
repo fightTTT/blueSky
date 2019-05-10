@@ -8,6 +8,13 @@
 
 enum PAD_ID;
 
+enum SKILL_TYPE
+{
+	SKILL_TYPE_PUNCH,
+	SKILL_TYPE_KICK,
+	SKILL_TYPE_MAX
+};
+
 enum COM_DIR
 {
 	COM_DIR_CENTER,
@@ -47,7 +54,6 @@ private:
 	COM_DIR comDirOld;
 	int comClearCnt;
 
-	bool jumpFlag;
 	VECTOR2 jumpSpeed;
 
 protected:
@@ -56,6 +62,7 @@ protected:
 	std::string characterName;
 	std::string spAttackAnimName[3] = {"‹Z1", "‹Z2" , "‹Z3" };
 	std::string spAttackAnimFileName[3] = { "waza_1", "waza_2" , "waza_3" };
+	SKILL_TYPE spAttackType[3] = { SKILL_TYPE_MAX,SKILL_TYPE_MAX,SKILL_TYPE_MAX };
 	std::array<std::array<std::vector<COM_DIR>, DIR_MAX>, 3> spAttackCommand;		// spAttackCommand[‹Z”Ô†][©•ª‚Ì•ûŒü][ƒRƒ}ƒ“ƒh]
 };
 
