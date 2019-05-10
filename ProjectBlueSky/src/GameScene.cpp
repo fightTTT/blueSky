@@ -52,6 +52,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 		if (charaCount == 2)
 		{
+			// キャラクター同士を向い合せる
 			if (sObj[0]->GetPos().x > sObj[1]->GetPos().x)
 			{
 				sObj[0]->SetDir(DIR_LEFT);
@@ -63,6 +64,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				sObj[1]->SetDir(DIR_LEFT);
 			}
 
+			// キャラクターの状態を相手に渡す
 			if (!(type[0] == type[1]))
 			{
 				if (type[0] == OBJ_TYPE_CHARACTER)

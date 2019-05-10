@@ -1,8 +1,10 @@
 #pragma once
-#include<string>
-#include<map>
+#include <string>
+#include <map>
+#include <vector>
 #include"VECTOR2.h"
 #include"ObjList.h"
+#include "GameCtrl.h"
 
 enum ANIM_TBL {
 	ANIM_TBL_START_ID,		//開始位置
@@ -32,8 +34,11 @@ struct EnemyState
 	EnemyState() : enemyPos(VECTOR2(0, 0)), enemyAnimName("none") {}
 	EnemyState(VECTOR2 pos, std::string animName) : enemyPos(pos), enemyAnimName(animName) {}
 
+	//void pushBackShotPos();
+
 	VECTOR2 enemyPos;
 	std::string enemyAnimName;
+	std::vector<VECTOR2> shotPos;
 };
 
 class GameCtrl;
@@ -88,6 +93,8 @@ public:
 	// アニメーションが終了しているか
 	bool GetAnimEndFlag() const { return animEndFlag; }
 
+	PAD_ID GetPadID() const { return padID; }
+
 private:
 	//移動処理
 	virtual void SetMove(const GameCtrl &ctl);
@@ -107,6 +114,7 @@ protected:
 	DIR tmpDir;						// 向いている方向(一時的に保存)
 	bool turnFlag;					// 画像反転フラグ
 	EnemyState enemyState;			// 敵の現在の座標, 状態
+	PAD_ID padID;					// 使用しているPAD番号
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;		// ｱﾆﾒｰｼｮﾝ情報
 	std::string animName;									// 表示ｱﾆﾒｰｼｮﾝ名

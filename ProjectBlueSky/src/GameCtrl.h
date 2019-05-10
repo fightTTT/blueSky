@@ -36,6 +36,7 @@ enum PAD_ID
 {
 	PAD_1,
 	PAD_2,
+	PAD_AI,
 	PAD_MAX
 };
 

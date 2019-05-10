@@ -12,6 +12,8 @@ AICharacter::AICharacter()
 {
 	longAttackFlag = false;
 
+	padID = PAD_AI;
+
 	ChangeState(MoveState::GetInstance());
 }
 

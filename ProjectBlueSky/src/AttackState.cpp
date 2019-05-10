@@ -6,7 +6,6 @@ AttackState::AttackState()
 {
 }
 
-
 AttackState::~AttackState()
 {
 }
