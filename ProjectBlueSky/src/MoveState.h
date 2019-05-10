@@ -22,5 +22,7 @@ private:
 	void Update(AICharacter* character);
 
 	bool moveDirFlag;				// true : 前移動 false : 後ろ移動
+	bool changeAttackFlag;			// ステートをAttackに変更するフラグ
+	bool initFlag;					// 最初の初期化が行われているか
 };
 
