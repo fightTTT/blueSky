@@ -4,6 +4,7 @@
 #include "StickHuman.h"
 #include "AIStickHuman.h"
 #include "SceneMng.h"
+#include "ImageMng.h"
 #include "GameScene.h"
 #include "GameCtrl.h"
 
@@ -117,6 +118,8 @@ int GameScene::Init(void)
 
 bool GameScene::GameDraw(void)
 {
+	DrawGraph(0, 0, IMAGE_ID("image/bluesky_”wŒi.png")[0], true);
+
 	//objList‚É“o˜^‚³‚ê‚Ä‚¢‚é¸×½‚Ì•`‰æˆ—‚ğs‚¤
 	for (auto &data : (*objList))
 	{
