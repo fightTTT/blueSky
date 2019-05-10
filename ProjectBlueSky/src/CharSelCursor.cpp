@@ -1,6 +1,7 @@
 #include "CharSelCursor.h"
 #include "SceneMng.h"
 #include "DxLib.h"
+#include "SelectScene.h"
 
 #define BOX_SIZE_X (100)		// ∑¨◊±≤∫›ÇÃXé≤ª≤Ωﬁ
 #define BOX_SIZE_Y (100)		// ∑¨◊±≤∫›ÇÃYé≤ª≤Ωﬁ
@@ -21,39 +22,32 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 	/* ∂∞øŸÇÃà⁄ìÆ */
 	if (ctl.GetPadDataTrg(PAD_1, THUMB_L_UP))
 	{
-		pos.y -= BOX_SIZE_Y;
+		if (charID >= 4)
+		{
+			charID -= 4;
+		}
 	}
 	if (ctl.GetPadDataTrg(PAD_1, THUMB_L_RIGHT))
 	{
-		pos.x += BOX_SIZE_X;
+		if ( (charID % 4) != 3)
+		{
+			charID += 1;
+		}
 	}
 	if (ctl.GetPadDataTrg(PAD_1, THUMB_L_DOWN))
 	{
-		pos.y += BOX_SIZE_Y;
+		if (charID < 4)
+		{
+			charID += 4;
+		}
 	}
 	if (ctl.GetPadDataTrg(PAD_1, THUMB_L_LEFT))
 	{
-		pos.x -= BOX_SIZE_X;
+		if ((charID % 4) != 0)
+		{
+			charID -= 1;
+		}
 	}
-
-	/* ∂∞øŸÇÃà⁄ìÆêßå‰ */
-	if (pos.x < (sSize.x / 2) - (BOX_SIZE_X * 2))
-	{
-		pos.x = (sSize.x / 2) - (BOX_SIZE_X * 2);
-	}
-	if (pos.x > (sSize.x / 2) + BOX_SIZE_X)
-	{
-		pos.x = (sSize.x / 2) + BOX_SIZE_X;
-	}
-	if (pos.y < (sSize.y * 3 / 5))
-	{
-		pos.y = (sSize.y * 3 / 5);
-	}
-	if (pos.y > (sSize.y * 3 / 5)+BOX_SIZE_Y)
-	{
-		pos.y = (sSize.y * 3 / 5) + BOX_SIZE_Y;
-	}
-
 }
 
 bool CharSelCursor::CheckObjType(OBJ_TYPE type)
@@ -64,14 +58,24 @@ bool CharSelCursor::CheckObjType(OBJ_TYPE type)
 int CharSelCursor::Init(void)
 {
 	sSize = lpSceneMng.GetScreenSize();
-	pos.x = (sSize.x / 2) - (BOX_SIZE_X * 2);		// ∂∞øŸÇÃXé≤èâä˙íl
-	pos.y = (sSize.y * 3 / 5);						// ∂∞øŸÇÃYé≤èâä˙íl
+	charID = 0;
+
+	// √∞ÃﬁŸ
+	posTbl = { VECTOR2((sSize.x / 2) - (BOX_SIZE_X * 2),	(sSize.y * 3 / 5)),
+			   VECTOR2((sSize.x / 2) - (BOX_SIZE_X),		(sSize.y * 3 / 5)),
+			   VECTOR2((sSize.x / 2),						(sSize.y * 3 / 5)),
+			   VECTOR2((sSize.x / 2) + BOX_SIZE_X,			(sSize.y * 3 / 5)),
+			   VECTOR2((sSize.x / 2) - (BOX_SIZE_X * 2),	(sSize.y * 3 / 5) + BOX_SIZE_Y),
+			   VECTOR2((sSize.x / 2) - (BOX_SIZE_X),		(sSize.y * 3 / 5) + BOX_SIZE_Y),
+			   VECTOR2((sSize.x / 2),						(sSize.y * 3 / 5) + BOX_SIZE_Y),
+			   VECTOR2((sSize.x / 2) + BOX_SIZE_X,			(sSize.y * 3 / 5) + BOX_SIZE_Y) };
+
 	return 0;
 }
 
 void CharSelCursor::Draw(void)
 {
 	
-	DrawBox(pos.x, pos.y, pos.x + BOX_SIZE_X, pos.y+ BOX_SIZE_Y, 0xffffff, false);
+	DrawBox(posTbl[charID].x, posTbl[charID].y, posTbl[charID].x + BOX_SIZE_X, posTbl[charID].y+ BOX_SIZE_Y, 0xffffff, false);
 }
 
