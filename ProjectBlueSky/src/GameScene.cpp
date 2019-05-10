@@ -1,15 +1,14 @@
 #include "Dxlib.h"
 #include "ObjList.h"
 #include "Obj.h"
-#include "Ryu.h"
 #include "StickHuman.h"
+#include "AIStickHuman.h"
 #include "SceneMng.h"
 #include "GameScene.h"
 #include "GameCtrl.h"
-#include "AIRyu.h"
 
-#define RYU_IMAGE_SIZE_X (290)
-#define RYU_IMAGE_SIZE_Y (178)
+#define RYU_IMAGE_SIZE_X (256)
+#define RYU_IMAGE_SIZE_Y (256)
 
 
 GameScene::GameScene()
@@ -96,9 +95,8 @@ int GameScene::Init(void)
 	}
 	objList->clear();		// objListÇëSçÌèúÇ∑ÇÈ
 
-	//AddObjList()(objList, std::make_unique<Ryu>(VECTOR2(1440 - (290 / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_2, DIR_RIGHT));
-	AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2(1440 - (290 / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_1, DIR_RIGHT));
-	AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_2, DIR_LEFT));
+	AddObjList()(objList, std::make_unique<AIStickHuman>(VECTOR2(1440 - (290 / 2), ssize.y), VECTOR2(-(290 / 2), -178), DIR_RIGHT));
+	AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), PAD_1, DIR_LEFT));
 	//AddObjList()(objList, std::make_unique<AIRyu>(VECTOR2(ssize.x - (RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), DIR_LEFT));
 
 	return 0;

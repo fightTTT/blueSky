@@ -241,7 +241,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				if (ctl.GetPadData(padNum, THUMB_L_RIGHT))
 				{
-					jumpSpeed = { 2, -30 };
+					jumpSpeed = { 4, -30 };
 					jumpFlag = true;
 
 					if (dir == DIR_LEFT)
@@ -255,7 +255,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadData(padNum, THUMB_L_LEFT))
 				{
-					jumpSpeed = { -2, -30 };
+					jumpSpeed = { -4, -30 };
 					jumpFlag = true;
 
 					if (dir == DIR_LEFT)

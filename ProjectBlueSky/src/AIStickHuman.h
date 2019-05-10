@@ -6,7 +6,7 @@ class AIStickHuman :
 	public AICharacter
 {
 public:
-	AIStickHuman();
+	AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir);
 	~AIStickHuman();
 };
 

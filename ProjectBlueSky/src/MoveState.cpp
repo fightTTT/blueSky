@@ -50,6 +50,7 @@ void MoveState::Update(AICharacter * character)
 			moveDirFlag = !moveDirFlag;
 			stateTime = 0;
 			character->ChangeState(LongAttackState::GetInstance());
+			return;
 		}
 	}
 
