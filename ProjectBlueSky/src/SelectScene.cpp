@@ -6,6 +6,9 @@
 #include "DxLib.h"
 #include "CharSelCursor.h"
 
+#define BOX_SIZE_X (100)
+#define BOX_SIZE_Y (100)
+
 SelectScene::SelectScene()
 {
 	Init();
@@ -43,23 +46,34 @@ int SelectScene::Init()
 
 	AddObjList()(objList, std::make_unique<CharSelCursor>());		// Ø½Ä‚ÉCursor¸×½‚ð’Ç‰Á
 
+	charID = 0;
+
+	// Ã°ÌÞÙ
+	posTbl = { VECTOR2((scSize.x / 2) - (BOX_SIZE_X * 2),	(scSize.y * 3 / 5)),
+			   VECTOR2((scSize.x / 2) - (BOX_SIZE_X),		(scSize.y * 3 / 5)),
+			   VECTOR2((scSize.x / 2),						(scSize.y * 3 / 5)),
+			   VECTOR2((scSize.x / 2) + BOX_SIZE_X,			(scSize.y * 3 / 5)),
+			   VECTOR2((scSize.x / 2) - (BOX_SIZE_X * 2),	(scSize.y * 3 / 5) + BOX_SIZE_Y),
+			   VECTOR2((scSize.x / 2) - (BOX_SIZE_X),		(scSize.y * 3 / 5) + BOX_SIZE_Y),
+			   VECTOR2((scSize.x / 2),						(scSize.y * 3 / 5) + BOX_SIZE_Y),
+			   VECTOR2((scSize.x / 2) + BOX_SIZE_X,			(scSize.y * 3 / 5) + BOX_SIZE_Y) };
+
 	scSize = lpSceneMng.GetScreenSize();
 	return 0;
 }
 
 void SelectScene::SelectDraw()
 {
-	VECTOR2 boxSize(100,100);
 
-	DrawBox((scSize.x/2)-(boxSize.x*2), (scSize.y*3/5), ((scSize.x / 2) - (boxSize.x * 2))+boxSize.x, (scSize.y * 3 / 5) + boxSize.y, 0xff0000, true);
-	DrawBox((scSize.x / 2) - (boxSize.x), (scSize.y * 3 / 5), ((scSize.x / 2) - (boxSize.x)) + boxSize.x, (scSize.y * 3 / 5) + boxSize.y, 0x0000aa, true);
-	DrawBox((scSize.x / 2), (scSize.y * 3 / 5), (scSize.x / 2) + boxSize.x, (scSize.y * 3 / 5) + boxSize.y, 0xffffff, true);
-	DrawBox((scSize.x / 2) + boxSize.x, (scSize.y * 3 / 5), ((scSize.x / 2) + boxSize.x) + boxSize.x, (scSize.y * 3 / 5) + boxSize.y, 0xaaaaaa, true);
+	DrawBox((scSize.x/2)-(BOX_SIZE_X*2), (scSize.y*3/5), ((scSize.x / 2) - (BOX_SIZE_X * 2))+ BOX_SIZE_X, (scSize.y * 3 / 5) + BOX_SIZE_Y, 0xff0000, true);
+	DrawBox((scSize.x / 2) - (BOX_SIZE_X), (scSize.y * 3 / 5), ((scSize.x / 2) - (BOX_SIZE_X)) + BOX_SIZE_X, (scSize.y * 3 / 5) + BOX_SIZE_Y, 0x0000aa, true);
+	DrawBox((scSize.x / 2), (scSize.y * 3 / 5), (scSize.x / 2) + BOX_SIZE_X, (scSize.y * 3 / 5) + BOX_SIZE_Y, 0xffffff, true);
+	DrawBox((scSize.x / 2) + BOX_SIZE_X, (scSize.y * 3 / 5), ((scSize.x / 2) + BOX_SIZE_X) + BOX_SIZE_X, (scSize.y * 3 / 5) + BOX_SIZE_Y, 0xaaaaaa, true);
 	
-	DrawBox((scSize.x / 2) - (boxSize.x * 2), (scSize.y * 3 / 5)+ boxSize.y, ((scSize.x / 2) - (boxSize.x * 2)) + boxSize.x, ((scSize.y * 3 / 5) + boxSize.y) + boxSize.y, 0xaa00aa, true);
-	DrawBox((scSize.x / 2) - (boxSize.x), (scSize.y * 3 / 5) + boxSize.y, ((scSize.x / 2) - (boxSize.x)) + boxSize.x, ((scSize.y * 3 / 5) + boxSize.y) + boxSize.y, 0xff4488, true);
-	DrawBox((scSize.x / 2), (scSize.y * 3 / 5) + boxSize.y, (scSize.x / 2) + boxSize.x, ((scSize.y * 3 / 5) + boxSize.y) + boxSize.y, 0xaaaaaa, true);
-	DrawBox((scSize.x / 2) + boxSize.x, (scSize.y * 3 / 5) + boxSize.y, ((scSize.x / 2) + boxSize.x) + boxSize.x, ((scSize.y * 3 / 5) + boxSize.y) + boxSize.y, 0xff2222, true);
+	DrawBox((scSize.x / 2) - (BOX_SIZE_X * 2), (scSize.y * 3 / 5)+ BOX_SIZE_Y, ((scSize.x / 2) - (BOX_SIZE_X * 2)) + BOX_SIZE_X, ((scSize.y * 3 / 5) + BOX_SIZE_Y) + BOX_SIZE_Y, 0xaa00aa, true);
+	DrawBox((scSize.x / 2) - (BOX_SIZE_X), (scSize.y * 3 / 5) + BOX_SIZE_Y, ((scSize.x / 2) - (BOX_SIZE_X)) + BOX_SIZE_X, ((scSize.y * 3 / 5) + BOX_SIZE_Y) + BOX_SIZE_Y, 0xff4488, true);
+	DrawBox((scSize.x / 2), (scSize.y * 3 / 5) + BOX_SIZE_Y, (scSize.x / 2) + BOX_SIZE_X, ((scSize.y * 3 / 5) + BOX_SIZE_Y) + BOX_SIZE_Y, 0xaaaaaa, true);
+	DrawBox((scSize.x / 2) + BOX_SIZE_X, (scSize.y * 3 / 5) + BOX_SIZE_Y, ((scSize.x / 2) + BOX_SIZE_X) + BOX_SIZE_X, ((scSize.y * 3 / 5) + BOX_SIZE_Y) + BOX_SIZE_Y, 0xff2222, true);
 
 	for (auto &data : (*objList))
 	{
