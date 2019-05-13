@@ -21,9 +21,9 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 	spAttackType[1] = SKILL_TYPE_PUNCH;
 
 	spAttackCommand[1][DIR_RIGHT].resize(3);
-	spAttackCommand[1][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_LEFT_DOWN, COM_DIR_LEFT };
+	spAttackCommand[1][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_ACCUMULATE, COM_DIR_ACCUMULATE };
 	spAttackCommand[1][DIR_LEFT].resize(3);
-	spAttackCommand[1][DIR_LEFT] = { COM_DIR_DOWN, COM_DIR_RIGHT_DOWN, COM_DIR_RIGHT };
+	spAttackCommand[1][DIR_LEFT] = { COM_DIR_DOWN, COM_DIR_ACCUMULATE, COM_DIR_ACCUMULATE };
 
 	AddAnim("è∏ó≥", 0, 0, 16, 5, false, 0, 0);
 	spAttackAnimName[2] = "è∏ó≥";

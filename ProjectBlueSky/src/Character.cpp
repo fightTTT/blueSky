@@ -195,17 +195,28 @@ void Character::CommandUpDate(const GameCtrl & ctl)
 	{
 		if (comDir != comDirOld)
 		{
-			comList.push_back(comDir);
-			comClearCnt = DEF_COM_CLEAR_CNT;
+			if (comDirOld != COM_DIR_ACCUMULATE)
+			{
+				comList.push_back(comDir);
+				comClearCnt = DEF_COM_CLEAR_CNT;
+			}
+		}
+		else
+		{
+			if (comClearCnt <= 0)
+			{
+				comList.push_back(COM_DIR_ACCUMULATE);
+				comClearCnt = DEF_COM_CLEAR_CNT;
+			}
 		}
 	}
 
 	// “ü—ÍŽó•tŽžŠÔ‚Ìˆ—
-	comClearCnt--;
-	if ((!comList.empty()) && (comClearCnt < 0))
+	if ((!comList.empty()) && (comClearCnt <= 0))
 	{
 		comList.clear();
 	}
+	comClearCnt--;
 }
 
 bool Character::CheckCommand(int skillNum)
@@ -628,6 +639,9 @@ void Character::Draw(void)
 			break;
 		case COM_DIR_LEFT_UP:
 			DrawString((i * 40) + 15, 200, "¶ã", 0xffffff);
+			break;
+		case COM_DIR_ACCUMULATE:
+			DrawString((i * 40) + 15, 200, "ƒ^ƒ", 0xffffff);
 			break;
 		default:
 			break;
