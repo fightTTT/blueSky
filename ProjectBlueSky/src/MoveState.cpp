@@ -20,12 +20,12 @@ MoveState::~MoveState()
 {
 }
 
-void MoveState::Init(AICharacter * chara)
+void MoveState::Init(AICharacter * character)
 {
 	if (initFlag)
 	{
-		auto pos = chara->GetPos();
-		auto enemy = chara->GetEnemyState();
+		auto pos = character->GetPos();
+		auto enemy = character->GetEnemyState();
 
 		auto distance = enemy.enemyPos - pos;
 

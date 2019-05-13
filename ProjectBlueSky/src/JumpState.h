@@ -19,7 +19,7 @@ private:
 	JumpState();
 	~JumpState();
 
-	void Init(AICharacter* chara);
+	void Init(AICharacter* character);
 	void Update(AICharacter* character);
 
 
