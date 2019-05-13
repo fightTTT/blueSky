@@ -93,11 +93,17 @@ void JumpState::Update(AICharacter * character)
 
 	auto ssize = lpSceneMng.GetScreenSize();
 
+	// ’…’n
 	if (pos.y > ssize.y)
 	{
 		pos.y = ssize.y;
 		jumpFlag = false;
 		character->ChangeState(MoveState::GetInstance());
+	}
+
+	if (pos.x > ssize.x)
+	{
+		pos.x -= jumpSpeed.x;
 	}
 
 	character->SetPos(pos);
