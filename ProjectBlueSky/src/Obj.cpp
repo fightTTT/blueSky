@@ -51,6 +51,7 @@ void Obj::Draw(void)
 		return;
 	}
 	unsigned int id = 0;
+	VECTOR2 animOffset(0, 0);
 	if (animTable.find(animName) != animTable.end())
 	{
 		int count = animCnt / animTable[animName][ANIM_TBL_INV];
@@ -65,13 +66,14 @@ void Obj::Draw(void)
 		}
 
 		id = animTable[animName][ANIM_TBL_START_ID] + count;
+		animOffset = { animTable[animName][ANIM_TBL_OFFSET_X] , animTable[animName][ANIM_TBL_OFFSET_Y] };
 	}
 
 	if (id < IMAGE_ID(imageName).size())
 	{
 		if (visible)
 		{
-			DrawRotaGraph(drawOffset.x + animTable[animName][ANIM_TBL_OFFSET_X] + pos.x + (divSize.x / 2), drawOffset.y + animTable[animName][ANIM_TBL_OFFSET_Y] + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
+			DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
 		}
 	}
 	animCnt++;
@@ -87,7 +89,7 @@ void Obj::Draw(unsigned int id)
 	{
 		if (visible)
 		{
-			DrawRotaGraph(drawOffset.x + animTable[animName][ANIM_TBL_OFFSET_X] + pos.x + (divSize.x / 2), drawOffset.y + animTable[animName][ANIM_TBL_OFFSET_Y] + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
+			DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
 		}
 	}
 }
