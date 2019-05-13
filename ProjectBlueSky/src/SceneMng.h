@@ -2,6 +2,8 @@
 #include <memory>
 #include "VECTOR2.h"
 #include "BaseScene.h"
+#include "GameCtrl.h"
+#define PLAYER_CNT_MAX (2)
 
 class GameCtrl;
 class FrameMng;
@@ -19,14 +21,14 @@ public:
 	void Run(void);
 	VECTOR2 GetScreenSize(void);						// ½¸Ø°İ»²½Ş‚ğæ“¾‚·‚é
 
-	const int GetCharID(void);
-	void SetCharID(int id);
+	const int GetCharID(PAD_ID padID);
+	void SetCharID(PAD_ID padID, int id);
 
 private:
 	SceneMng();
 	~SceneMng();
 
-	int charID;								// ·¬×‚ÌID
+	int charID[PLAYER_CNT_MAX];								// ·¬×‚ÌID
 
 	std::shared_ptr<GameCtrl> gameCtl;		// GameController¸×½‚ÌÎß²İÀŠi”[—p•Ï”
 

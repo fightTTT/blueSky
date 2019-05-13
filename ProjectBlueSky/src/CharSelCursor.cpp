@@ -7,8 +7,10 @@
 #define BOX_SIZE_Y (100)		// ∑¨◊±≤∫›ÇÃYé≤ª≤Ωﬁ
 
 
-CharSelCursor::CharSelCursor()
+CharSelCursor::CharSelCursor(PAD_ID padId)
 {
+	padID = padId;
+
 	Init();
 }
 
@@ -20,36 +22,38 @@ CharSelCursor::~CharSelCursor()
 void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	/* ∂∞øŸÇÃà⁄ìÆ */
-	if (ctl.GetPadDataTrg(PAD_1, THUMB_L_UP))
+	//PL1
+	if (ctl.GetPadDataTrg(padID, THUMB_L_UP) || ctl.GetPadDataTrg(padID,BUTTON_UP))
 	{
 		if (charID >= 4)
 		{
 			charID -= 4;
 		}
 	}
-	if (ctl.GetPadDataTrg(PAD_1, THUMB_L_RIGHT))
+	if (ctl.GetPadDataTrg(padID, THUMB_L_RIGHT) || ctl.GetPadDataTrg(padID, BUTTON_RIGHT))
 	{
 		if ( (charID % 4) != 3)
 		{
 			charID += 1;
 		}
 	}
-	if (ctl.GetPadDataTrg(PAD_1, THUMB_L_DOWN))
+	if (ctl.GetPadDataTrg(padID, THUMB_L_DOWN) || ctl.GetPadDataTrg(padID, BUTTON_DOWN))
 	{
 		if (charID < 4)
 		{
 			charID += 4;
 		}
 	}
-	if (ctl.GetPadDataTrg(PAD_1, THUMB_L_LEFT))
+	if (ctl.GetPadDataTrg(padID, THUMB_L_LEFT) || ctl.GetPadDataTrg(padID, BUTTON_LEFT))
 	{
 		if ((charID % 4) != 0)
 		{
 			charID -= 1;
 		}
 	}
+	lpSceneMng.SetCharID(padID,charID);
 
-	lpSceneMng.SetCharID(charID);
+	
 }
 
 bool CharSelCursor::CheckObjType(OBJ_TYPE type)
@@ -60,8 +64,16 @@ bool CharSelCursor::CheckObjType(OBJ_TYPE type)
 int CharSelCursor::Init(void)
 {
 	sSize = lpSceneMng.GetScreenSize();
-	charID = 0;
-	lpSceneMng.SetCharID(charID);
+
+	if (padID == PAD_1)
+	{
+		charID = 0;		// PL1ÇÃ∑¨◊ID
+	}
+	else
+	{
+		charID = 3;		// PL2ÇÃ∑¨◊ID
+	}
+	lpSceneMng.SetCharID(padID, charID);
 
 	// √∞ÃﬁŸ
 	posTbl = { VECTOR2((sSize.x / 2) - (BOX_SIZE_X * 2),	(sSize.y * 3 / 5)),
@@ -73,12 +85,13 @@ int CharSelCursor::Init(void)
 			   VECTOR2((sSize.x / 2),						(sSize.y * 3 / 5) + BOX_SIZE_Y),
 			   VECTOR2((sSize.x / 2) + BOX_SIZE_X,			(sSize.y * 3 / 5) + BOX_SIZE_Y) };
 
+	colorTbl = {0xff0000, 0x00ffff};
 	return 0;
 }
 
 void CharSelCursor::Draw(void)
 {
-	DrawBox(posTbl[charID].x, posTbl[charID].y, posTbl[charID].x + BOX_SIZE_X, posTbl[charID].y+ BOX_SIZE_Y, 0xff0000, false);		// ∂∞øŸÇÃï`âÊ
-	DrawBox(posTbl[charID].x+1, posTbl[charID].y+1, posTbl[charID].x + BOX_SIZE_X+1, posTbl[charID].y + BOX_SIZE_Y+1, 0xff0000, false);		// ∂∞øŸÇÃï‚èïï`âÊ
+	DrawBox(posTbl[charID].x, posTbl[charID].y, posTbl[charID].x + BOX_SIZE_X, posTbl[charID].y+ BOX_SIZE_Y, colorTbl[static_cast<int>(padID)], false);		// ∂∞øŸÇÃï`âÊ
+	DrawBox(posTbl[charID].x+1, posTbl[charID].y+1, posTbl[charID].x + BOX_SIZE_X+1, posTbl[charID].y + BOX_SIZE_Y+1, colorTbl[static_cast<int>(padID)], false);		// ∂∞øŸÇÃï‚èïï`âÊ
 }
 
