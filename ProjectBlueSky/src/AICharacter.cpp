@@ -12,6 +12,7 @@ AICharacter::AICharacter(VECTOR2 offset) : Obj(offset)
 {
 	longAttackFlag = false;
 	shotJumpFlag = false;
+	dirChangeFlag = true;
 
 	padID = PAD_AI;
 
@@ -29,7 +30,11 @@ bool AICharacter::CheckObjType(OBJ_TYPE type)
 
 void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
-	dir = tmpDir;
+	if (dirChangeFlag)
+	{
+		// キャラの向き変更
+		dir = tmpDir;
+	}
 
 	if (state)
 	{
@@ -38,6 +43,7 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 	if (longAttackFlag)
 	{
+		// 遠距離攻撃
 		AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
 		longAttackFlag = false;
 	}
@@ -50,6 +56,7 @@ void AICharacter::Draw()
 		return;
 	}
 	int id = 0;
+	VECTOR2 animOffset(0, 0);
 	if (animTable.find(animName) != animTable.end())
 	{
 		id = animCnt / animTable[animName][ANIM_TBL_INV];
@@ -61,6 +68,15 @@ void AICharacter::Draw()
 		{
 			id = animTable[animName][ANIM_TBL_FRAME] - 1;
 			animEndFlag = true;
+		}
+
+		if (dir == DIR_RIGHT)
+		{
+			animOffset = { animTable[animName][ANIM_TBL_OFFSET_X] , animTable[animName][ANIM_TBL_OFFSET_Y] };
+		}
+		else
+		{
+			animOffset = { -animTable[animName][ANIM_TBL_OFFSET_X] , animTable[animName][ANIM_TBL_OFFSET_Y] };
 		}
 	}
 
@@ -80,7 +96,7 @@ void AICharacter::Draw()
 	if (visible)
 	{
 		SetDrawBright(100, 255, 100);
-		DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
+		DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 		SetDrawBright(255, 255, 255);
 	}
 	animCnt++;
@@ -94,30 +110,30 @@ void AICharacter::ChangeState(AIState * s)
 
 bool AICharacter::InitAnim(void)
 {
-	AddAnim("待機", 0, 0, 6, 5, true);
-	AddAnim("前移動", 0, 0, 8, 5, true);
-	AddAnim("後ろ移動", 0, 0, 8, 5, true);
-	AddAnim("ジャンプ_上", 0, 0, 10, 6, true);
-	AddAnim("ジャンプ_前", 0, 0, 6, 6, true);
-	AddAnim("ジャンプ_後ろ", 0, 0, 6, 6, true);
-	AddAnim("しゃがみ", 0, 0, 6, 5, true);
-	AddAnim("しゃがみ_後ろ", 0, 0, 1, 5, true);
-	AddAnim("しゃがみ始め", 0, 0, 3, 5, false);
-	AddAnim("立ち始め", 0, 0, 3, 5, false);
-	AddAnim("パンチ_小", 0, 0, 7, 5, false);
-	AddAnim("パンチ_大", 0, 0, 11, 5, false);
-	AddAnim("パンチ_小_空中", 0, 0, 8, 5, false);
-	AddAnim("パンチ_大_空中", 0, 0, 10, 5, false);
-	AddAnim("パンチ_小_しゃがみ", 0, 0, 8, 5, false);
-	AddAnim("パンチ_大_しゃがみ", 0, 0, 10, 5, false);
-	AddAnim("キック_小", 0, 0, 9, 5, false);
-	AddAnim("キック_大", 0, 0, 11, 5, false);
-	AddAnim("キック_小_空中", 0, 0, 10, 5, false);
-	AddAnim("キック_大_空中", 0, 0, 15, 2, false);
-	AddAnim("キック_小_しゃがみ", 0, 0, 7, 5, false);
-	AddAnim("キック_大_しゃがみ", 0, 0, 10, 5, false);
-	AddAnim("ガード_立ち", 0, 0, 1, 5, true);
-	AddAnim("ガード_しゃがみ", 0, 0, 1, 5, true);
+	AddAnim("待機", 0, 0, 6, 5, true, 0, 0);
+	AddAnim("前移動", 0, 0, 8, 5, true, 0, 0);
+	AddAnim("後ろ移動", 0, 0, 8, 5, true, 0, 0);
+	AddAnim("ジャンプ_上", 0, 0, 10, 6, true, 0, 0);
+	AddAnim("ジャンプ_前", 0, 0, 6, 6, true, 0, 0);
+	AddAnim("ジャンプ_後ろ", 0, 0, 6, 6, true, 0, 0);
+	AddAnim("しゃがみ", 0, 0, 6, 5, true, 0, 0);
+	AddAnim("しゃがみ_後ろ", 0, 0, 1, 5, true, 0, 0);
+	AddAnim("しゃがみ始め", 0, 0, 3, 5, false, 0, 0);
+	AddAnim("立ち始め", 0, 0, 3, 5, false, 0, 0);
+	AddAnim("パンチ_小", 0, 0, 7, 5, false, 0, 0);
+	AddAnim("パンチ_大", 0, 0, 11, 5, false, 0, 0);
+	AddAnim("パンチ_小_空中", 0, 0, 8, 5, false, 0, 0);
+	AddAnim("パンチ_大_空中", 0, 0, 10, 5, false, 0, 0);
+	AddAnim("パンチ_小_しゃがみ", 0, 0, 8, 5, false, 0, 0);
+	AddAnim("パンチ_大_しゃがみ", 0, 0, 10, 5, false, 0, 0);
+	AddAnim("キック_小", 0, 0, 9, 5, false, 64, 0);
+	AddAnim("キック_大", 0, 0, 11, 5, false, 0, 0);
+	AddAnim("キック_小_空中", 0, 0, 5, 5, false, 0, 0);
+	AddAnim("キック_大_空中", 0, 0, 7, 5, false, 0, 0);
+	AddAnim("キック_小_しゃがみ", 0, 0, 7, 5, false, 0, 0);
+	AddAnim("キック_大_しゃがみ", 0, 0, 10, 5, false, 0, 0);
+	AddAnim("ガード_立ち", 0, 0, 1, 5, true, 0, 0);
+	AddAnim("ガード_しゃがみ", 0, 0, 1, 5, true, 0, 0);
 	SetAnim("待機");
 
 	return true;

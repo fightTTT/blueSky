@@ -7,10 +7,12 @@
 #include "GameCtrl.h"
 
 enum ANIM_TBL {
-	ANIM_TBL_START_ID,		//開始位置
-	ANIM_TBL_FRAME,			//ｺﾏ数
-	ANIM_TBL_INV,			//間隔
-	ANIM_TBL_LOOP,			//ﾙｰﾌﾟするかどうか
+	ANIM_TBL_START_ID,		// 開始位置
+	ANIM_TBL_FRAME,			// ｺﾏ数
+	ANIM_TBL_INV,			// 間隔
+	ANIM_TBL_LOOP,			// ﾙｰﾌﾟするかどうか
+	ANIM_TBL_OFFSET_X,		// ｱﾆﾒｰｼｮﾝの横軸のｵﾌｾｯﾄ
+	ANIM_TBL_OFFSET_Y,		// ｱﾆﾒｰｼｮﾝの縦軸のｵﾌｾｯﾄ
 	ANIM_TBL_MAX
 };
 
@@ -80,7 +82,7 @@ public:
 
 	std::string GetImageName(void);		// 画像ﾌｧｲﾙ名を取得する
 
-	bool AddAnim(std::string animName, int id_x, int id_y, int frame, int inv, bool loop);		// ｱﾆﾒｰｼｮﾝを追加する
+	bool AddAnim(std::string animName, int id_x, int id_y, int frame, int inv, bool loop, int offset_x, int offset_y);		// ｱﾆﾒｰｼｮﾝを追加する
 	bool SetAnim(std::string animName);															// ｱﾆﾒｰｼｮﾝをｾｯﾄする
 	std::string GetAnim(void);			// ｱﾆﾒｰｼｮﾝの情報を取得する
 

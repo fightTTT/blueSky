@@ -9,7 +9,7 @@ WaitState::~WaitState()
 {
 }
 
-void WaitState::Init(AICharacter * chara)
+void WaitState::Init(AICharacter * character)
 {
 	stateTime = 0;
 }

@@ -10,10 +10,10 @@ LongAttackState::~LongAttackState()
 {
 }
 
-void LongAttackState::Init(AICharacter * chara)
+void LongAttackState::Init(AICharacter * character)
 {
-	chara->SetLongAttackFlag(true);
-	chara->SetAnim("”g“®");
+	character->SetLongAttackFlag(true);
+	character->SetAnim("”g“®");
 }
 
 void LongAttackState::Update(AICharacter * character)
