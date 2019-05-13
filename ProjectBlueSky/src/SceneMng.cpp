@@ -44,6 +44,16 @@ VECTOR2 SceneMng::GetScreenSize(void)
 	return VECTOR2(SCREEN_SIZE_X, SCREEN_SIZE_Y);
 }
 
+const int SceneMng::GetCharID(void)
+{
+	return charID;
+}
+
+void SceneMng::SetCharID(int id)
+{
+	charID = id;
+}
+
 bool SceneMng::SysInit(void)
 {
 	// ºΩ√—èàóù
@@ -54,5 +64,6 @@ bool SceneMng::SysInit(void)
 	SetDrawScreen(DX_SCREEN_BACK);		// Ç–Ç∆Ç‹Ç∏ ﬁØ∏ ﬁØÃßÇ…ï`âÊ
 	gameCtl = std::make_unique<GameCtrl>();
 	frame = std::make_unique<FrameMng>();
+	charID = -1;
 	return true;
 }

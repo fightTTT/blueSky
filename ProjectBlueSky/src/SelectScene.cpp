@@ -5,6 +5,7 @@
 #include "VECTOR2.h"
 #include "DxLib.h"
 #include "CharSelCursor.h"
+#include "ImageMng.h"
 
 #define BOX_SIZE_X (100)
 #define BOX_SIZE_Y (100)
@@ -47,21 +48,25 @@ int SelectScene::Init()
 	AddObjList()(objList, std::make_unique<CharSelCursor>());		// ﾘｽﾄにCursorｸﾗｽを追加
 
 	scSize = lpSceneMng.GetScreenSize();
+
+	charNameTbl = { "シロ",
+					"クロ",
+					"アカ",
+					"アオ",
+					"ミドリ",
+					"キイロ",
+					"ムラサキ",
+					"チャ" };
+
 	return 0;
 }
 
 void SelectScene::SelectDraw()
 {
-
-	DrawBox((scSize.x/2)-(BOX_SIZE_X*2), (scSize.y*3/5), ((scSize.x / 2) - (BOX_SIZE_X * 2))+ BOX_SIZE_X, (scSize.y * 3 / 5) + BOX_SIZE_Y, 0xff0000, true);
-	DrawBox((scSize.x / 2) - (BOX_SIZE_X), (scSize.y * 3 / 5), ((scSize.x / 2) - (BOX_SIZE_X)) + BOX_SIZE_X, (scSize.y * 3 / 5) + BOX_SIZE_Y, 0x0000aa, true);
-	DrawBox((scSize.x / 2), (scSize.y * 3 / 5), (scSize.x / 2) + BOX_SIZE_X, (scSize.y * 3 / 5) + BOX_SIZE_Y, 0xffffff, true);
-	DrawBox((scSize.x / 2) + BOX_SIZE_X, (scSize.y * 3 / 5), ((scSize.x / 2) + BOX_SIZE_X) + BOX_SIZE_X, (scSize.y * 3 / 5) + BOX_SIZE_Y, 0xaaaaaa, true);
-	
-	DrawBox((scSize.x / 2) - (BOX_SIZE_X * 2), (scSize.y * 3 / 5)+ BOX_SIZE_Y, ((scSize.x / 2) - (BOX_SIZE_X * 2)) + BOX_SIZE_X, ((scSize.y * 3 / 5) + BOX_SIZE_Y) + BOX_SIZE_Y, 0xaa00aa, true);
-	DrawBox((scSize.x / 2) - (BOX_SIZE_X), (scSize.y * 3 / 5) + BOX_SIZE_Y, ((scSize.x / 2) - (BOX_SIZE_X)) + BOX_SIZE_X, ((scSize.y * 3 / 5) + BOX_SIZE_Y) + BOX_SIZE_Y, 0xff4488, true);
-	DrawBox((scSize.x / 2), (scSize.y * 3 / 5) + BOX_SIZE_Y, (scSize.x / 2) + BOX_SIZE_X, ((scSize.y * 3 / 5) + BOX_SIZE_Y) + BOX_SIZE_Y, 0xaaaaaa, true);
-	DrawBox((scSize.x / 2) + BOX_SIZE_X, (scSize.y * 3 / 5) + BOX_SIZE_Y, ((scSize.x / 2) + BOX_SIZE_X) + BOX_SIZE_X, ((scSize.y * 3 / 5) + BOX_SIZE_Y) + BOX_SIZE_Y, 0xff2222, true);
+	DrawGraph((scSize.x / 2) - (BOX_SIZE_X * 2), (scSize.y * 3 / 5), IMAGE_ID("image/charSel.png")[0], true);		// ｷｬﾗ一覧を描画
+			
+	// 名前
+	DrawFormatString(10, (scSize.y /2), 0xffffff, "%s", charNameTbl[lpSceneMng.GetCharID()]);
 
 	for (auto &data : (*objList))
 	{
@@ -70,6 +75,6 @@ void SelectScene::SelectDraw()
 
 	//DrawString(1200, 200, "SelectScene", 0xffffff);
 
-	//DrawString(600, 600, "STARTボタン or SpaceKeyで遷移", 0xffffff);
+	DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
 
 }
