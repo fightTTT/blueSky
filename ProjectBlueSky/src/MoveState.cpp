@@ -134,7 +134,7 @@ void MoveState::Update(AICharacter * character)
 	// 近距離攻撃が当たる距離の場合攻撃
 	if (abs(vec.x) < 100)
 	{
-		int rand = GetRand(5);
+		rand = GetRand(5);
 
 		if (rand == 0)
 		{
@@ -142,12 +142,29 @@ void MoveState::Update(AICharacter * character)
 			character->SetAnim("パンチ_大");
 			return;
 		}
+	}
+	// 距離が遠い場合
+	else/* if(abs(vec.x) > 100)*/
+	{
+		rand = GetRand(500);
 
+		if (rand == 0)
+		{
+			character->ChangeState(LongAttackState::GetInstance());
+			return;
+		}
+		
 	}
 
 	// 弾をジャンプ回避
 	for (auto data : enemy.shotData)
 	{
+		// 自分が撃った弾の場合
+		if (data.id == character->GetPadID())
+		{
+			continue;
+		}
+
 		auto distance = pos - data.pos;
 
 		// 弾が自分より前にある場合実行
@@ -155,6 +172,7 @@ void MoveState::Update(AICharacter * character)
 		{
 			if (data.pos.x > 0 && abs(distance.x) < 200)
 			{
+				character->SetJumpType(JUMP_TYPE_RAND);
 				character->ChangeState(JumpState::GetInstance());
 				return;
 			}
@@ -172,21 +190,5 @@ void MoveState::Update(AICharacter * character)
 		moveDirFlag = !(abs(vec.x) < 100);
 		stateTime = 0;
 	}
-	else if (stateTime > 150)
-	{
-		// 150カウントの状態で1/100の確率で方向を切り替える
-		if (rand == 0)
-		{
-			moveDirFlag = !moveDirFlag;
-			stateTime = 0;
-		}
 
-		// 150カウントの状態で1/100の確率でジャンプ
-		if (rand == 1)
-		{
-			stateTime = 0;
-			character->ChangeState(JumpState::GetInstance());
-			return;
-		}
-	}
 }
