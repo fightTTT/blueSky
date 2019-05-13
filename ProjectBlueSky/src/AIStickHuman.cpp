@@ -6,15 +6,15 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 {
 	characterName = "ñ_êlä‘";
 
-	AddAnim("îgìÆ", 0, 0, 11, 5, false);
+	AddAnim("îgìÆ", 0, 0, 11, 5, false, 0, 0);
 	spAttackAnimName[0] = "îgìÆ";
 	spAttackAnimFileName[0] = "hadou";
 
-	AddAnim("ìäÇ∞", 0, 0, 13, 5, false);
+	AddAnim("ìäÇ∞", 0, 0, 13, 5, false, 0, 0);
 	spAttackAnimName[1] = "ìäÇ∞";
 	spAttackAnimFileName[1] = "throw";
 
-	AddAnim("è∏ó≥", 0, 0, 16, 5, false);
+	AddAnim("è∏ó≥", 0, 0, 16, 5, false, 0, 0);
 	spAttackAnimName[2] = "è∏ó≥";
 	spAttackAnimFileName[2] = "shoryu";
 

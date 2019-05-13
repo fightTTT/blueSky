@@ -71,7 +71,7 @@ void Obj::Draw(void)
 	{
 		if (visible)
 		{
-			DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
+			DrawRotaGraph(drawOffset.x + animTable[animName][ANIM_TBL_OFFSET_X] + pos.x + (divSize.x / 2), drawOffset.y + animTable[animName][ANIM_TBL_OFFSET_Y] + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
 		}
 	}
 	animCnt++;
@@ -87,7 +87,7 @@ void Obj::Draw(unsigned int id)
 	{
 		if (visible)
 		{
-			DrawRotaGraph(drawOffset.x + pos.x + (divSize.x / 2), drawOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
+			DrawRotaGraph(drawOffset.x + animTable[animName][ANIM_TBL_OFFSET_X] + pos.x + (divSize.x / 2), drawOffset.y + animTable[animName][ANIM_TBL_OFFSET_Y] + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
 		}
 	}
 }
@@ -107,12 +107,14 @@ std::string Obj::GetImageName(void)
 	return imageName;
 }
 
-bool Obj::AddAnim(std::string animName, int id_x, int id_y, int frame, int inv, bool loop)
+bool Obj::AddAnim(std::string animName, int id_x, int id_y, int frame, int inv, bool loop, int offset_x, int offset_y)
 {
 	animTable[animName][ANIM_TBL_START_ID] = (id_y * divCut.x) + (id_x);
 	animTable[animName][ANIM_TBL_FRAME] = frame;
 	animTable[animName][ANIM_TBL_INV] = inv;
 	animTable[animName][ANIM_TBL_LOOP] = loop;
+	animTable[animName][ANIM_TBL_OFFSET_X] = offset_x;
+	animTable[animName][ANIM_TBL_OFFSET_Y] = offset_y;
 	return true;
 }
 
