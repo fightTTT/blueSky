@@ -17,7 +17,7 @@ private:
 	AttackState();
 	~AttackState();
 
-	void Init(AICharacter* chara);
+	void Init(AICharacter* character);
 	void Update(AICharacter* character);
 };
 

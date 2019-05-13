@@ -18,7 +18,7 @@ private:
 	WaitState();
 	~WaitState();
 
-	void Init(AICharacter* chara);
+	void Init(AICharacter* character);
 	void Update(AICharacter* character);
 };
 

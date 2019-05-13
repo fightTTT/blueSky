@@ -12,6 +12,7 @@ AICharacter::AICharacter(VECTOR2 offset) : Obj(offset)
 {
 	longAttackFlag = false;
 	shotJumpFlag = false;
+	dirChangeFlag = true;
 
 	padID = PAD_AI;
 
@@ -29,7 +30,11 @@ bool AICharacter::CheckObjType(OBJ_TYPE type)
 
 void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
-	dir = tmpDir;
+	if (dirChangeFlag)
+	{
+		// ƒLƒƒƒ‰‚ÌŒü‚«•ÏX
+		dir = tmpDir;
+	}
 
 	if (state)
 	{
@@ -38,6 +43,7 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 	if (longAttackFlag)
 	{
+		// ‰“‹——£UŒ‚
 		AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
 		longAttackFlag = false;
 	}

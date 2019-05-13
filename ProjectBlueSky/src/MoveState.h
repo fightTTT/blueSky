@@ -18,7 +18,7 @@ private:
 	MoveState();
 	~MoveState();
 
-	void Init(AICharacter* chara);
+	void Init(AICharacter* character);
 	void Update(AICharacter* character);
 
 	bool moveDirFlag;				// true : ‘OˆÚ“® false : Œã‚ëˆÚ“®
