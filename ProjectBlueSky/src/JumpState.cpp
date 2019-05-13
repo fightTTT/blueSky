@@ -70,7 +70,21 @@ void JumpState::Update(AICharacter * character)
 	}
 	else if (jumpType == JUMP_TYPE_BACK)
 	{
+		// Œã‚ë‚ÉƒWƒƒƒ“ƒv‚·‚é‚æ‚¤‚ÉŒü‚¢‚Ä‚¢‚é•ûŒü‚ðtrue
+		if (charaDir == DIR_LEFT)
+		{
+			jumpLeft = true;
+		}
+		else if (charaDir == DIR_RIGHT)
+		{
+			jumpRight = true;
+		}
 
+		rand = 10;
+	}
+	else if (jumpType == JUMP_TYPE_UP)
+	{
+		rand = 0;
 	}
 
 	if (!jumpFlag)

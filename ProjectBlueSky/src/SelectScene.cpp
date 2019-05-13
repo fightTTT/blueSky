@@ -45,7 +45,8 @@ int SelectScene::Init()
 	}
 	objList->clear();		// objList‚ğ‘Síœ‚·‚é
 
-	AddObjList()(objList, std::make_unique<CharSelCursor>());		// Ø½Ä‚ÉCursor¸×½‚ğ’Ç‰Á
+	AddObjList()(objList, std::make_unique<CharSelCursor>(PAD_1));		// Ø½Ä‚ÉCursor¸×½‚ğ’Ç‰Á
+	AddObjList()(objList, std::make_unique<CharSelCursor>(PAD_2));		// Ø½Ä‚ÉCursor¸×½‚ğ’Ç‰Á
 
 	scSize = lpSceneMng.GetScreenSize();
 
@@ -65,8 +66,16 @@ void SelectScene::SelectDraw()
 {
 	DrawGraph((scSize.x / 2) - (BOX_SIZE_X * 2), (scSize.y * 3 / 5), IMAGE_ID("image/charSel.png")[0], true);		// ·¬×ˆê——‚ğ•`‰æ
 			
-	// –¼‘O
-	DrawFormatString(10, (scSize.y /2), 0xffffff, "%s", charNameTbl[lpSceneMng.GetCharID()]);
+	// PL1‚Ì·¬×–¼
+	const int id[2] = { lpSceneMng.GetCharID(PAD_1) , lpSceneMng.GetCharID(PAD_2) };
+	if (id[0] != -1)
+	{
+		DrawFormatString(10, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[0]]);
+	}
+	if (id[1] != -1)
+	{
+		DrawFormatString(1200, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[1]]);
+	}
 
 	for (auto &data : (*objList))
 	{
