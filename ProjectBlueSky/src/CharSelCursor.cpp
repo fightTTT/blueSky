@@ -48,6 +48,8 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			charID -= 1;
 		}
 	}
+
+	lpSceneMng.SetCharID(charID);
 }
 
 bool CharSelCursor::CheckObjType(OBJ_TYPE type)
@@ -59,6 +61,7 @@ int CharSelCursor::Init(void)
 {
 	sSize = lpSceneMng.GetScreenSize();
 	charID = 0;
+	lpSceneMng.SetCharID(charID);
 
 	// √∞ÃﬁŸ
 	posTbl = { VECTOR2((sSize.x / 2) - (BOX_SIZE_X * 2),	(sSize.y * 3 / 5)),
@@ -75,7 +78,7 @@ int CharSelCursor::Init(void)
 
 void CharSelCursor::Draw(void)
 {
-	
-	DrawBox(posTbl[charID].x, posTbl[charID].y, posTbl[charID].x + BOX_SIZE_X, posTbl[charID].y+ BOX_SIZE_Y, 0xffffff, false);
+	DrawBox(posTbl[charID].x, posTbl[charID].y, posTbl[charID].x + BOX_SIZE_X, posTbl[charID].y+ BOX_SIZE_Y, 0xff0000, false);		// ∂∞øŸÇÃï`âÊ
+	DrawBox(posTbl[charID].x+1, posTbl[charID].y+1, posTbl[charID].x + BOX_SIZE_X+1, posTbl[charID].y + BOX_SIZE_Y+1, 0xff0000, false);		// ∂∞øŸÇÃï‚èïï`âÊ
 }
 

@@ -14,12 +14,12 @@ public:
 
 private:
 	VECTOR2 sSize;
-	void SetMove(const GameCtrl &ctl, weekListObj objList);
+	void SetMove(const GameCtrl &ctl, weekListObj objList);		// ¶°¿Ù‚Ì“®‚«
 	bool CheckObjType(OBJ_TYPE type);
-	int charID;
+	int charID;													// ‘I‘ð‚Å‚«‚é·¬×‚ÌID
 	int Init(void);
 	void Draw(void);
 
-	std::array<VECTOR2, CHAR_CNT_MAX> posTbl;			// ·¬×ID‚É‘Î‰ž‚µ‚½ˆÊ’u‚ÌÃ°ÌÞÙ
+	std::array<VECTOR2, CHAR_CNT_MAX> posTbl;					// ·¬×ID‚É‘Î‰ž‚µ‚½ˆÊ’u‚ÌÃ°ÌÞÙ
 
 };

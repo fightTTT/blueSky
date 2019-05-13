@@ -1,9 +1,10 @@
 #pragma once
-
+#include <array>
 #include "VECTOR2.h"
 #include "BaseScene.h"
 #include "ObjList.h"
 
+#define CHAR_CNT_MAX (8)
 
 class SelectScene :
 	public BaseScene
@@ -20,5 +21,6 @@ private:
 	int Init(void);
 	void SelectDraw(void);
 	sharedListObj objList;
-};
 
+	std::array<std::array<char, 12>, CHAR_CNT_MAX> charNameTbl;				// ·¬×ID‚É‘Î‰ž‚µ‚½–¼‘O‚ÌÃ°ÌÞÙ
+};
