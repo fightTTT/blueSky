@@ -11,8 +11,8 @@
 AICharacter::AICharacter(VECTOR2 offset) : Obj(offset)
 {
 	longAttackFlag = false;
-	shotJumpFlag = false;
 	dirChangeFlag = true;
+	jumpType = JUMP_TYPE_RAND;
 
 	padID = PAD_AI;
 

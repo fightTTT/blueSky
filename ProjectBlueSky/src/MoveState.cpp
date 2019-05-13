@@ -12,7 +12,6 @@
 MoveState::MoveState()
 {
 	// Å‰‚¾‚¯‰Šú‰»
-	changeAttackFlag = false;
 	initFlag = false;
 }
 
@@ -119,13 +118,6 @@ void MoveState::Update(AICharacter * character)
 		}
 	}
 
-	if (!changeAttackFlag)
-	{
-		int rand = GetRand(200);
-
-		changeAttackFlag = rand == 0;
-	}
-
 	auto ssize = lpSceneMng.GetScreenSize();
 
 	if (pos.x > ssize.x - divSize.x / 4)
@@ -147,7 +139,6 @@ void MoveState::Update(AICharacter * character)
 		if (rand == 0)
 		{
 			character->ChangeState(AttackState::GetInstance());
-			changeAttackFlag = false;
 			character->SetAnim("ƒpƒ“ƒ`_‘å");
 			return;
 		}
@@ -164,7 +155,6 @@ void MoveState::Update(AICharacter * character)
 		{
 			if (data.pos.x > 0 && abs(distance.x) < 200)
 			{
-				character->SetShotJumpFlag(true);
 				character->ChangeState(JumpState::GetInstance());
 				return;
 			}
