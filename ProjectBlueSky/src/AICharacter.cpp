@@ -50,6 +50,7 @@ void AICharacter::Draw()
 		return;
 	}
 	int id = 0;
+	VECTOR2 animOffset(0, 0);
 	if (animTable.find(animName) != animTable.end())
 	{
 		id = animCnt / animTable[animName][ANIM_TBL_INV];
@@ -62,6 +63,8 @@ void AICharacter::Draw()
 			id = animTable[animName][ANIM_TBL_FRAME] - 1;
 			animEndFlag = true;
 		}
+
+		animOffset = { animTable[animName][ANIM_TBL_OFFSET_X] , animTable[animName][ANIM_TBL_OFFSET_Y] };
 	}
 
 	std::string nowAnim = GetAnim();
@@ -80,7 +83,7 @@ void AICharacter::Draw()
 	if (visible)
 	{
 		SetDrawBright(100, 255, 100);
-		DrawRotaGraph(drawOffset.x + animTable[animName][ANIM_TBL_OFFSET_X] + pos.x + (divSize.x / 2), drawOffset.y + animTable[animName][ANIM_TBL_OFFSET_Y] + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
+		DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 		SetDrawBright(255, 255, 255);
 	}
 	animCnt++;
