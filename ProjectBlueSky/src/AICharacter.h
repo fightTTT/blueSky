@@ -2,6 +2,15 @@
 
 #include "Obj.h"
 
+enum JUMP_TYPE
+{
+	JUMP_TYPE_FRONT,
+	JUMP_TYPE_BACK,
+	JUMP_TYPE_UP,
+	JUMP_TYPE_RAND,
+	JUMP_TYPE_MAX
+};
+
 class AIState;
 
 class AICharacter :
@@ -22,12 +31,11 @@ public:
 	// 遠距離攻撃フラグセット
 	void SetLongAttackFlag(bool flag) { longAttackFlag = flag; }
 
-	// ジャンプ回避フラグ取得
-	bool GetShotJumpFlag() const { return shotJumpFlag; }
-	void SetShotJumpFlag(bool flag) { shotJumpFlag = flag; }
-
 	// 方向変更フラグセット
 	void SetDirChange(bool flag) { dirChangeFlag = flag; }
+
+	void SetJumpType(JUMP_TYPE type) { jumpType = type; }
+	JUMP_TYPE GetJumpType() { return jumpType; }
 
 private:
 
@@ -43,8 +51,8 @@ protected:
 	AIState* state;
 
 	bool longAttackFlag;			// 遠距離攻撃フラグ
-	bool shotJumpFlag;				// 弾のジャンプ回避フラグ
 	bool dirChangeFlag;				// 方向変更フラグ
+	JUMP_TYPE jumpType;				// ジャンプ方向のタイプ
 
 	std::string characterName;
 	std::string spAttackAnimName[3] = { "技1", "技2" , "技3" };

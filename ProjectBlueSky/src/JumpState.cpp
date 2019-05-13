@@ -28,24 +28,54 @@ void JumpState::Update(AICharacter * character)
 	auto pos = character->GetPos();
 	auto charaDir = character->GetDir();
 	auto enemy = character->GetEnemyState();
+	auto jumpType = character->GetJumpType();
 
-	bool shotJumpLeft = true;
-	bool shotJumpRight = true;
-	if (charaDir == DIR_LEFT)
+	// ジャンプ方向フラグ
+	bool jumpLeft = true;
+	bool jumpRight = true;
+
+	// ジャンプタイプフラグ
+	bool jumpTypeLeft = false;
+	bool jumpTypeRight = false;
+
+	int rand = 0;
+
+	if (jumpType == JUMP_TYPE_RAND)
 	{
-		shotJumpLeft = !character->GetShotJumpFlag();
+		rand = GetRand(10);
+
+		// 前にジャンプするように向いている方向以外をfalse
+		if (charaDir == DIR_LEFT)
+		{
+			jumpLeft = false;
+		}
+		else if (charaDir == DIR_RIGHT)
+		{
+			jumpRight = false;
+		}
 	}
-	if (charaDir == DIR_RIGHT)
+	else if (jumpType == JUMP_TYPE_FRONT)
 	{
-		shotJumpRight = !character->GetShotJumpFlag();
+		// 前にジャンプするように向いている方向以外をfalse
+		if (charaDir == DIR_LEFT)
+		{
+			jumpLeft = false;
+		}
+		else if (charaDir == DIR_RIGHT)
+		{
+			jumpRight = false;
+		}
+
+		rand = 10;
+	}
+	else if (jumpType == JUMP_TYPE_BACK)
+	{
+
 	}
 
 	if (!jumpFlag)
 	{
-		int randRight = GetRand(10);
-		int randLeft = GetRand(10);
-
-		if (randRight <= 5 && shotJumpLeft)
+		if (rand >= 5 && jumpLeft)
 		{
 			// 右上
 			jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
@@ -61,7 +91,7 @@ void JumpState::Update(AICharacter * character)
 				character->SetAnim("ジャンプ_前");
 			}
 		}
-		else if (randLeft <= 5 && shotJumpRight)
+		else if (rand >= 5 && jumpRight)
 		{
 			// 左上
 			jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
@@ -91,8 +121,6 @@ void JumpState::Update(AICharacter * character)
 		jumpSpeed.y += 1;
 		pos += jumpSpeed;
 	}
-
-	character->SetShotJumpFlag(false);
 
 	auto ssize = lpSceneMng.GetScreenSize();
 
