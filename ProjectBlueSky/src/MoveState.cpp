@@ -155,7 +155,6 @@ void MoveState::Update(AICharacter * character)
 		{
 			if (data.pos.x > 0 && abs(distance.x) < 200)
 			{
-				character->SetShotJumpFlag(true);
 				character->ChangeState(JumpState::GetInstance());
 				return;
 			}
