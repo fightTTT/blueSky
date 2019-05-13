@@ -66,7 +66,15 @@ void Obj::Draw(void)
 		}
 
 		id = animTable[animName][ANIM_TBL_START_ID] + count;
-		animOffset = { animTable[animName][ANIM_TBL_OFFSET_X] , animTable[animName][ANIM_TBL_OFFSET_Y] };
+
+		if (dir == DIR_RIGHT)
+		{
+			animOffset = { animTable[animName][ANIM_TBL_OFFSET_X] , animTable[animName][ANIM_TBL_OFFSET_Y] };
+		}
+		else
+		{
+			animOffset = { -animTable[animName][ANIM_TBL_OFFSET_X] , animTable[animName][ANIM_TBL_OFFSET_Y] };
+		}
 	}
 
 	if (id < IMAGE_ID(imageName).size())
