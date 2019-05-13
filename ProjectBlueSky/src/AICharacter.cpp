@@ -70,7 +70,14 @@ void AICharacter::Draw()
 			animEndFlag = true;
 		}
 
-		animOffset = { animTable[animName][ANIM_TBL_OFFSET_X] , animTable[animName][ANIM_TBL_OFFSET_Y] };
+		if (dir == DIR_RIGHT)
+		{
+			animOffset = { animTable[animName][ANIM_TBL_OFFSET_X] , animTable[animName][ANIM_TBL_OFFSET_Y] };
+		}
+		else
+		{
+			animOffset = { -animTable[animName][ANIM_TBL_OFFSET_X] , animTable[animName][ANIM_TBL_OFFSET_Y] };
+		}
 	}
 
 	std::string nowAnim = GetAnim();
