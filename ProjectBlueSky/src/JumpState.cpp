@@ -104,7 +104,7 @@ void JumpState::Update(AICharacter * character)
 
 	auto distance = enemy.enemyPos - pos;
 
-	if (abs(distance.x) < 200 && jumpSpeed.y > 0)
+	if (abs(distance.x) < 200 && jumpSpeed.y > -10)
 	{
 		character->SetAnim("ƒLƒbƒN_‘å_‹ó’†");
 	}
