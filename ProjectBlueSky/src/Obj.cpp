@@ -146,6 +146,11 @@ bool Obj::SetAnim(std::string animName)
 	return true;
 }
 
+const int Obj::GetAnimFrame(std::string animName)
+{
+	return animTable[animName][ANIM_TBL_FRAME];
+}
+
 std::string Obj::GetAnim(void)
 {
 	return animName;
@@ -164,6 +169,12 @@ void Obj::SetEnemyState(EnemyState state)
 void Obj::SetPos(VECTOR2 pos)
 {
 	this->pos = pos;
+}
+
+void Obj::SetHitData(bool flag, ColType type)
+{
+	hitData.colType = type;
+	hitData.hitFlag = flag;
 }
 
 void Obj::SetMove(const GameCtrl & ctl)

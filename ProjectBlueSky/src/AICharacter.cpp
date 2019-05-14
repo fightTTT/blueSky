@@ -1,7 +1,7 @@
 #include "AICharacter.h"
 #include "ImageMng.h"
 #include "Shot.h"
-
+#include"CollisionMng.h"
 #include "AIState.h"
 #include "MoveState.h"
 #include "WaitState.h"
@@ -96,9 +96,27 @@ void AICharacter::Draw()
 	if (visible)
 	{
 		SetDrawBright(100, 255, 100);
-		DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
+		DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + +pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 		SetDrawBright(255, 255, 255);
 	}
+
+	if (lpColMng.GetColFlag(animName))
+	{
+		ColInfo colData = lpColMng.GetCollisionData(characterName, animName, id);
+
+		int colColor;
+
+		for (int i = 0; i < colData.hitBox.size(); i++)
+		{
+			colData.hitBox[i].rect.startPos.x *= static_cast<int>(dir) * -2 + 1;
+			colData.hitBox[i].rect.endPos.x *= static_cast<int>(dir) * -2 + 1;
+
+			colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
+
+			DrawBox(drawOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, drawOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
+		}
+	}
+
 	animCnt++;
 }
 
@@ -106,6 +124,11 @@ void AICharacter::ChangeState(AIState * s)
 {
 	state = s;
 	state->Init(this);
+}
+
+HitData AICharacter::GetHitData() const
+{
+	return hitData;
 }
 
 bool AICharacter::InitAnim(void)
@@ -134,6 +157,7 @@ bool AICharacter::InitAnim(void)
 	AddAnim("キック_大_しゃがみ", 0, 0, 10, 5, false, 0, 0);
 	AddAnim("ガード_立ち", 0, 0, 1, 5, true, 0, 0);
 	AddAnim("ガード_しゃがみ", 0, 0, 1, 5, true, 0, 0);
+	AddAnim("ダメージ_立ち", 0, 0, 5, 5, false, 0, 0);
 	SetAnim("待機");
 
 	return true;
@@ -169,6 +193,7 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 	animFileName["キック_大_しゃがみ"] = "kick_big_squat";
 	animFileName["ガード_立ち"] = "guard";
 	animFileName["ガード_しゃがみ"] = "guard_squat";
+	animFileName["ダメージ_立ち"] = "damage";
 
 	std::vector<std::string> animName = { "待機",
 										  "前移動",
@@ -193,7 +218,8 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 										  "キック_小_しゃがみ",
 										  "キック_大_しゃがみ",
 										  "ガード_立ち",
-										  "ガード_しゃがみ" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
+										  "ガード_しゃがみ",
+										  "ダメージ_立ち" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
 
 	// 必殺技系
 	if ((spAttackAnimName[0] != "技1") && (spAttackAnimFileName[0] != "waza_1"))

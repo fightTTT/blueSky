@@ -23,6 +23,8 @@ public:
 
 	ColInfo GetCollisionData(std::string charName, std::string animName, int animIdx) { return colMap[charName].GetColData(animName, animIdx); }
 
+	const bool GetColFlag(std::string animName);
+
 private:
 
 	CollisionMng();
@@ -31,5 +33,6 @@ private:
 	std::vector<ColInfo> data;
 
 	// キー : キャラクター名
+	std::map<std::string, bool> colFlag;
 	std::map<std::string, Collision> colMap;
 };

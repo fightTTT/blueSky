@@ -37,6 +37,8 @@ public:
 	void SetJumpType(JUMP_TYPE type) { jumpType = type; }
 	JUMP_TYPE GetJumpType() { return jumpType; }
 
+	HitData GetHitData() const;
+
 private:
 
 	bool InitAnim(void);

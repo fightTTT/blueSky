@@ -16,6 +16,7 @@ private:
 	int Init(void);
 
 	bool GameDraw(void);		// •`‰æˆ—
+	int id[2];			// “–‚½‚è”»’è‚ÌƒtƒŒ[ƒ€”
 
 	sharedListObj objList;
 };

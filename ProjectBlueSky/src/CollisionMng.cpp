@@ -26,6 +26,8 @@ bool CollisionMng::ColLoad(std::string charaName, std::string animName, int anim
 
 	//data.resize(header.animNum);
 
+	int colNum = header.animNum;
+
 	HitBox oneTimeData;
 
 	FILE* file;
@@ -34,6 +36,7 @@ bool CollisionMng::ColLoad(std::string charaName, std::string animName, int anim
 
 	if (!file)
 	{
+		colFlag[animName] = false;
 		return false;
 	}
 
@@ -42,6 +45,12 @@ bool CollisionMng::ColLoad(std::string charaName, std::string animName, int anim
 	fread(&header.animNum, sizeof(int), 1, file);
 
 	fread(&header.hitBoxNum[0], sizeof(int)*header.hitBoxNum.size(), 1, file);
+
+	if (colNum != header.animNum)
+	{
+		colFlag[animName] = false;
+		return false;
+	}
 
 	data.resize(header.animNum);
 
@@ -58,12 +67,17 @@ bool CollisionMng::ColLoad(std::string charaName, std::string animName, int anim
 			data[i].hitBox[a] = oneTimeData;
 		}
 	}
-
 	fclose(file);
 
+	colFlag[animName] = true;
 	colMap[charaName].SetColData(animName, data);
 
 	return true;
+}
+
+const bool CollisionMng::GetColFlag(std::string animName)
+{
+	return colFlag[animName];
 }
 
 CollisionMng::CollisionMng()
