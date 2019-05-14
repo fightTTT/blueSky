@@ -1,6 +1,9 @@
 #pragma once
-
 #include "BaseScene.h"
+
+#include <array>
+#include "VECTOR2.h"
+#include "SceneMng.h"
 
 class TitleScene :
 	public BaseScene
@@ -14,6 +17,12 @@ public:
 private:
 	
 	int Init();
-	void Draw();
+	void TitleDraw();
+
+	VECTOR2 ssize;
+	bool m_selFlag;
+	MODE mode;
+
+	std::array<VECTOR2, MODE_MAX> posTbl;
 };
 

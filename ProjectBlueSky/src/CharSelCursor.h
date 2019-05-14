@@ -23,4 +23,6 @@ private:
 
 	std::array<VECTOR2, CHAR_CNT_MAX> posTbl;					// ·¬×ID‚É‘Î‰‚µ‚½ˆÊ’u‚ÌÃ°ÌŞÙ
 	std::array<unsigned int, PALYER_CNT_MAX> colorTbl;					// ÌßÚ²±°‚É‘Î‰‚µ‚½F‚ÌÃ°ÌŞÙ
+
+	bool decidFlag;			//‘I‘ğŒˆ’è‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ÌÌ×¸Ş(true:Œˆ’è‚µ‚Ä‚¢‚é, false:Œˆ’è‚µ‚Ä‚¢‚È‚¢)
 };

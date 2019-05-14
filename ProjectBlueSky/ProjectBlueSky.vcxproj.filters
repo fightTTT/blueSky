@@ -120,6 +120,9 @@
     <ClCompile Include="src\SceneMng.cpp">
       <Filter>ソース ファイル\manager</Filter>
     </ClCompile>
+    <ClCompile Include="src\GuardState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameCtrl.h">
@@ -196,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="src\SceneMng.h">
       <Filter>ヘッダー ファイル\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuardState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

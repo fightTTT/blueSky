@@ -1,9 +1,8 @@
 #include "Dxlib.h"	// DxLib◊≤Ãﬁ◊ÿÇégópÇ∑ÇÈ
-#include "GameCtrl.h"
-#include "GameScene.h"
-#include "SceneMng.h"
 #include "FrameMng.h"
-#include "SelectScene.h"
+#include "GameCtrl.h"
+#include "TitleScene.h"
+#include "SceneMng.h"
 
 #define SCREEN_SIZE_X (1280)
 #define SCREEN_SIZE_Y (720)
@@ -20,7 +19,7 @@ SceneMng::~SceneMng()
 
 void SceneMng::Run(void)
 {
-	activeScene = std::make_unique<SelectScene>();
+	activeScene = std::make_unique<TitleScene>();
 
 	// ---------- πﬁ∞—Ÿ∞Ãﬂ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
@@ -54,6 +53,26 @@ void SceneMng::SetCharID(PAD_ID padID,int id)
 	charID[static_cast<int>(padID)] = id;
 }
 
+bool SceneMng::GetDecidFlag(PAD_ID padID)
+{
+	return decidFlag[static_cast<int>(padID)];
+}
+
+void SceneMng::SetDecidFlag(PAD_ID padID, bool decidFlag)
+{
+	SceneMng::decidFlag[static_cast<int>(padID)] = decidFlag;
+}
+
+MODE SceneMng::GetMode(void)
+{
+	return mode;
+}
+
+void SceneMng::SetMode(MODE setMode)
+{
+	mode = setMode;
+}
+
 bool SceneMng::SysInit(void)
 {
 	// ºΩ√—èàóù
@@ -69,6 +88,8 @@ bool SceneMng::SysInit(void)
 	{
 		charID[cnt] = -1;
 	}
+
+	mode = MODE_1PLAYER;
 
 	return true;
 }
