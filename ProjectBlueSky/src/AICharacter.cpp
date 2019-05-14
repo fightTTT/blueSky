@@ -126,6 +126,11 @@ void AICharacter::ChangeState(AIState * s)
 	state->Init(this);
 }
 
+HitData AICharacter::GetHitData() const
+{
+	return hitData;
+}
+
 bool AICharacter::InitAnim(void)
 {
 	AddAnim("待機", 0, 0, 6, 5, true, 0, 0);
@@ -152,6 +157,7 @@ bool AICharacter::InitAnim(void)
 	AddAnim("キック_大_しゃがみ", 0, 0, 10, 5, false, 0, 0);
 	AddAnim("ガード_立ち", 0, 0, 1, 5, true, 0, 0);
 	AddAnim("ガード_しゃがみ", 0, 0, 1, 5, true, 0, 0);
+	AddAnim("ダメージ_立ち", 0, 0, 5, 5, false, 0, 0);
 	SetAnim("待機");
 
 	return true;
@@ -187,6 +193,7 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 	animFileName["キック_大_しゃがみ"] = "kick_big_squat";
 	animFileName["ガード_立ち"] = "guard";
 	animFileName["ガード_しゃがみ"] = "guard_squat";
+	animFileName["ダメージ_立ち"] = "damage";
 
 	std::vector<std::string> animName = { "待機",
 										  "前移動",
@@ -211,7 +218,8 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 										  "キック_小_しゃがみ",
 										  "キック_大_しゃがみ",
 										  "ガード_立ち",
-										  "ガード_しゃがみ" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
+										  "ガード_しゃがみ",
+										  "ダメージ_立ち" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
 
 	// 必殺技系
 	if ((spAttackAnimName[0] != "技1") && (spAttackAnimFileName[0] != "waza_1"))

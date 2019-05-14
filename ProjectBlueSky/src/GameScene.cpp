@@ -102,6 +102,13 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		if (lpColMng.GetColFlag(sObj[0]->GetAnim())
 		  ||lpColMng.GetColFlag(sObj[1]->GetAnim()))
 		{
+			auto tmp0 = sObj[0]->GetAnim();
+			auto tmp1 = sObj[1]->GetAnim();
+
+			if (tmp0 == "ダメージ_立ち" || tmp1 == "ダメージ_立ち")
+			{
+				int a;
+			}
 			ColInfo colData[2];			// 当たり判定の情報を格納する変数(2キャラ分)
 
 			// 当たり判定の情報を取得
