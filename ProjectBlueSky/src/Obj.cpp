@@ -146,6 +146,11 @@ bool Obj::SetAnim(std::string animName)
 	return true;
 }
 
+const int Obj::GetAnimFrame(std::string animName)
+{
+	return animTable[animName][ANIM_TBL_FRAME];;
+}
+
 std::string Obj::GetAnim(void)
 {
 	return animName;

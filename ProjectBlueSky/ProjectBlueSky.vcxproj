@@ -143,11 +143,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DX_lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\1816019\Desktop\DxLib\dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\DX_lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\1816019\Desktop\DxLib\dxlib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

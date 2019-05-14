@@ -84,6 +84,7 @@ public:
 
 	bool AddAnim(std::string animName, int id_x, int id_y, int frame, int inv, bool loop, int offset_x, int offset_y);		// ±ÆÒ°¼®İ‚ğ’Ç‰Á‚·‚é
 	bool SetAnim(std::string animName);															// ±ÆÒ°¼®İ‚ğ¾¯Ä‚·‚é
+	const int GetAnimFrame(std::string animName);
 	std::string GetAnim(void);			// ±ÆÒ°¼®İ‚Ìî•ñ‚ğæ“¾‚·‚é
 
 	// ƒTƒCƒYæ“¾

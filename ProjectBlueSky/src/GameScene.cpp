@@ -7,6 +7,7 @@
 #include "ImageMng.h"
 #include "GameScene.h"
 #include "GameCtrl.h"
+#include "CollisionMng.h"
 
 #define STICK_HUMAN_IMAGE_SIZE_X (256)
 #define STICK_HUMAN_IMAGE_SIZE_Y (256)
@@ -91,6 +92,87 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					eState.enemyPos = sObj[1]->GetPos();
 					eState.enemyAnimName = sObj[1]->GetAnim();
 					sObj[0]->SetEnemyState(eState);
+				}
+			}
+		}
+	}
+
+	// 当たり判定処理
+	{
+		if (lpColMng.GetColFlag(sObj[0]->GetAnim())
+		  ||lpColMng.GetColFlag(sObj[1]->GetAnim()))
+		{
+			ColInfo colData[2];			// 当たり判定の情報を格納する変数(2キャラ分)
+
+			// 当たり判定の情報を取得
+			for (int i = 0; i < 2; i++)
+			{
+				if (id[i] < sObj[i]->GetAnimFrame(sObj[i]->GetAnim()))
+				{
+					colData[i] = lpColMng.GetCollisionData("棒人間", sObj[i]->GetAnim(), id[i]);
+					id[i]++;
+				}
+				else
+				{
+					id[i] = 0;
+				}
+			}
+
+			// 当たり判定のPOSの反転処理
+			for (int i = 0; i < 2; i++)
+			{
+				for (int a = 0; a < colData[i].hitBox.size(); a++)
+				{
+					int b;
+
+					colData[i].hitBox[a].rect.startPos.x *= static_cast<int>(sObj[i]->GetDir()) * -2 + 1;
+					colData[i].hitBox[a].rect.endPos.x *= static_cast<int>(sObj[i]->GetDir()) * -2 + 1;
+
+					// startPosがendPosよりも大きかった場合、座標を交換する
+					if (colData[i].hitBox[a].rect.startPos.x > colData[i].hitBox[a].rect.endPos.x)
+					{
+						b = colData[i].hitBox[a].rect.endPos.x;
+						colData[i].hitBox[a].rect.endPos.x = colData[i].hitBox[a].rect.startPos.x;
+						colData[i].hitBox[a].rect.startPos.x = b;
+					}
+					if (colData[i].hitBox[a].rect.startPos.y > colData[i].hitBox[a].rect.endPos.y)
+					{
+						b = colData[i].hitBox[a].rect.endPos.y;
+						colData[i].hitBox[a].rect.endPos.y = colData[i].hitBox[a].rect.startPos.y;
+						colData[i].hitBox[a].rect.startPos.y = b;
+					}
+
+					// 現在のプレイヤーのpos
+					colData[i].hitBox[a].rect.startPos.x = (sObj[i]->GetPos().x + colData[i].hitBox[a].rect.startPos.x);
+					colData[i].hitBox[a].rect.endPos.x = (sObj[i]->GetPos().x + colData[i].hitBox[a].rect.endPos.x);
+					colData[i].hitBox[a].rect.startPos.y = (sObj[i]->GetPos().y + colData[i].hitBox[a].rect.startPos.y);
+					colData[i].hitBox[a].rect.endPos.y = (sObj[i]->GetPos().y + colData[i].hitBox[a].rect.endPos.y);
+
+				}
+			}
+
+
+			// 攻撃時の当たり判定
+			for (int i = 0; i < 2; i++)
+			{
+				for (int a = 0; a < colData[i].hitBox.size(); a++)
+				{
+					if (colData[i].hitBox[a].type == COLTYPE_ATTACK)
+					{
+						for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
+						{
+							if (colData[(i + 1) % 2].hitBox[b].type != COLTYPE_ATTACK)
+							{
+								if (colData[i].hitBox[a].rect.endPos.x >= colData[(i + 1) % 2].hitBox[b].rect.startPos.x
+									&& colData[i].hitBox[a].rect.startPos.x <= colData[(i + 1) % 2].hitBox[b].rect.endPos.x
+									&& colData[i].hitBox[a].rect.endPos.y >= colData[(i + 1) % 2].hitBox[b].rect.startPos.y
+									&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
+								{
+									sObj[(i + 1) % 2]->SetAnim("後ろ移動");
+								}
+							}
+						}
+					}
 				}
 			}
 		}

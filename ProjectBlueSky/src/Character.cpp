@@ -76,7 +76,14 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 										  "ÉKÅ[Éh_óßÇø",
 										  "ÉKÅ[Éh_ÇµÇ·Ç™Ç›" };		// ±∆“∞ºÆ›ñºÇóvëfÇ∆ÇµÇƒéùÇ¬vector
 
-	// ïKéEãZån
+	for (int i = 0; i < animName.size(); i++)
+	{
+		lpColMng.ColLoad("ñ_êlä‘", animName[i], animTable[animName[i]][ANIM_TBL_FRAME]);
+	}
+	lpColMng.ColLoad("ñ_êlä‘", "îgìÆ", 11);
+	lpColMng.ColLoad("ñ_êlä‘", "ìäÇ∞", 13);
+	lpColMng.ColLoad("ñ_êlä‘", "è∏ó≥", 16);
+															// ïKéEãZån
 	if ((spAttackAnimName[0] != "ãZ1") && (spAttackAnimFileName[0] != "waza_1"))
 	{
 		animFileName[spAttackAnimName[0]] = spAttackAnimFileName[0];
@@ -552,7 +559,6 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		}
 	}
 
-	lpColMng.ColLoad(characterName, animName, animTable[animName][ANIM_TBL_FRAME]);
 }
 
 void Character::Draw(void)
@@ -604,17 +610,20 @@ void Character::Draw(void)
 		DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 
-	//ColInfo colData = lpColMng.GetCollisionData(characterName, animName, id);
+	ColInfo colData = lpColMng.GetCollisionData(characterName, animName, id);
 
-	//int colColor;
+	int colColor;
 
-	//for (int i = 0; i < colData.hitBox.size(); i++)
-	//{
+	for (int i = 0; i < colData.hitBox.size(); i++)
+	{
+		colData.hitBox[i].rect.startPos.x *= static_cast<int>(dir) * -2 + 1;
+		colData.hitBox[i].rect.endPos.x *= static_cast<int>(dir) * -2 + 1;
 
-	//	colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
+		colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
 
-	//	DrawBox((pos.x) + colData.hitBox[i].rect.startPos.x, pos.y + colData.hitBox[i].rect.startPos.y, (pos.x) + colData.hitBox[i].rect.endPos.x, pos.y + colData.hitBox[i].rect.endPos.y, colColor, false);
-	//}
+		DrawBox(drawOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, drawOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
+	}
+
 
 	animCnt++;
 
