@@ -26,7 +26,8 @@ unique_Base TitleScene::UpDate(unique_Base own, const GameCtrl & controller)
 	}
 	else
 	{
-		if (controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START))
+		if (controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_1, BUTTON_A)
+		 || controller.GetPadDataTrg(PAD_2, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_A))
 		{
 			lpSceneMng.SetMode(mode);
 			return std::make_unique<SelectScene>();
