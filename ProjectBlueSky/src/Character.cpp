@@ -303,7 +303,6 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		}
 	}
 
-
 	CommandUpDate(ctl);
 
 	// キャラクター操作
