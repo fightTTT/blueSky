@@ -9,6 +9,12 @@
 class GameCtrl;
 class FrameMng;
 
+enum MODE {
+	MODE_1PLAYER,
+	MODE_2PLAYER,
+	MODE_MAX
+};
+
 #define lpSceneMng SceneMng::GetInstance()
 
 class SceneMng
@@ -31,7 +37,8 @@ public:
 	//decidFlagの情報をｾｯﾄする(引数：decidFlagをｾｯﾄしたいﾌﾟﾚｲﾔｰの番号, ｾｯﾄしたいflag)
 	void SetDecidFlag(PAD_ID padID, bool decidFlag);
 
-	int GetModeFlag(void);
+	MODE GetMode(void);
+	void SetMode(MODE setMode);
 
 private:
 	SceneMng();
@@ -46,7 +53,7 @@ private:
 	std::unique_ptr<FrameMng> frame;
 
 	std::array<bool,PLAYER_CNT_MAX> decidFlag;		// ｷｬﾗ選択を決定しているかどうかのﾌﾗｸﾞ　true:決定している, false:決定してはいない
-	int modeFlag;									// ｹﾞｰﾑﾓｰﾄﾞのﾌﾗｸﾞ
+	MODE mode;										// ｹﾞｰﾑﾓｰﾄﾞ格納用変数
 
 	bool SysInit(void);			// ｼｽﾃﾑ的な変数の初期化を行う
 };

@@ -28,14 +28,17 @@ unique_Base TitleScene::UpDate(unique_Base own, const GameCtrl & controller)
 	{
 		if (controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START))
 		{
+			lpSceneMng.SetMode(mode);
 			return std::make_unique<SelectScene>();
 		}
 
-		if (controller.GetPadDataTrg(PAD_1, BUTTON_UP) || controller.GetPadDataTrg(PAD_2, BUTTON_UP))
+		if (controller.GetPadDataTrg(PAD_1, THUMB_L_UP) || controller.GetPadDataTrg(PAD_1, BUTTON_UP)
+		 || controller.GetPadDataTrg(PAD_2, THUMB_L_UP) || controller.GetPadDataTrg(PAD_2, BUTTON_UP))
 		{
 			mode = MODE_1PLAYER;
 		}
-		else if (controller.GetPadDataTrg(PAD_1, BUTTON_DOWN) || controller.GetPadDataTrg(PAD_2, BUTTON_DOWN))
+		else if (controller.GetPadDataTrg(PAD_1, THUMB_L_DOWN) || controller.GetPadDataTrg(PAD_1, BUTTON_DOWN)
+			  || controller.GetPadDataTrg(PAD_2, THUMB_L_DOWN) || controller.GetPadDataTrg(PAD_2, BUTTON_DOWN))
 		{
 			mode = MODE_2PLAYER;
 		}

@@ -29,20 +29,23 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 	/* ¹Þ°Ñ¼°Ý‚ÖˆÚ“® */
 	if (controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START))
 	{
-		if (lpSceneMng.GetModeFlag() == 0)
+		if (lpSceneMng.GetMode() == MODE_1PLAYER)
 		{
 			if (lpSceneMng.GetDecidFlag(PAD_1))
 			{
 				return std::make_unique<GameScene>();
 			}
 		}
-
-		else
+		else if (lpSceneMng.GetMode() == MODE_2PLAYER)
 		{
 			if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
 			{
 				return std::make_unique<GameScene>();
 			}
+		}
+		else
+		{
+			// ‰½‚à‚µ‚È‚¢
 		}
 	}
 
@@ -61,7 +64,7 @@ int SelectScene::Init()
 
 	AddObjList()(objList, std::make_unique<CharSelCursor>(PAD_1));		// Ø½Ä‚ÉCursor¸×½‚ð’Ç‰Á
 
-	if (lpSceneMng.GetModeFlag() == 1)
+	if (lpSceneMng.GetMode() == MODE_2PLAYER)
 	{
 		AddObjList()(objList, std::make_unique<CharSelCursor>(PAD_2));		// Ø½Ä‚ÉCursor¸×½‚ð’Ç‰Á
 	}
@@ -102,19 +105,22 @@ void SelectScene::SelectDraw()
 
 	//DrawString(1200, 200, "SelectScene", 0xffffff);
 
-	if (lpSceneMng.GetModeFlag() == 0)
+	if (lpSceneMng.GetMode() == MODE_1PLAYER)
 	{
 		if (lpSceneMng.GetDecidFlag(PAD_1))
 		{
 			DrawString(1000, 10, "STARTƒ{ƒ^ƒ“ or SpaceKey‚Å‘JˆÚ", 0xffffff);
 		}
 	}
-
-	else
+	else if (lpSceneMng.GetMode() == MODE_2PLAYER)
 	{
 		if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
 		{
 			DrawString(1000, 10, "STARTƒ{ƒ^ƒ“ or SpaceKey‚Å‘JˆÚ", 0xffffff);
 		}
+	}
+	else
+	{
+		// ‰½‚à‚µ‚È‚¢
 	}
 }
