@@ -175,7 +175,11 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 									&& colData[i].hitBox[a].rect.endPos.y >= colData[(i + 1) % 2].hitBox[b].rect.startPos.y
 									&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
 								{
-									sObj[(i + 1) % 2]->SetHitData(colData[(i + 1) % 2].hitBox[b].type);
+									sObj[(i + 1) % 2]->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
+								}
+								else
+								{
+									sObj[(i + 1) % 2]->SetHitData(false, colData[(i + 1) % 2].hitBox[b].type);
 								}
 							}
 						}

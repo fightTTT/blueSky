@@ -43,7 +43,7 @@ void MoveState::Update(AICharacter * character)
 
 	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大" || enemy.enemyAnimName == "キック_小"))
 	{
-		character->SetAnim("ダメージ_立ち");
+		character->SetAnim("ガード_立ち");
 		return;
 	}
 

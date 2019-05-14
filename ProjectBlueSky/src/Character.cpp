@@ -24,6 +24,8 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 
 	jumpSpeed = { 0, 0 };
 	padID = id;
+	hitData.hitFlag = false;
+	hitAnimFlag = false;
 
 	// 通常のアクション
 	animFileName["待機"] = "stand";
@@ -279,6 +281,28 @@ bool Character::CheckObjType(OBJ_TYPE type)
 void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	auto ssize = lpSceneMng.GetScreenSize();
+
+	if (!hitAnimFlag)
+	{
+		if (hitData.hitFlag && hitData.colType == COLTYPE_HIT)
+		{
+			SetAnim("ダメージ_立ち");
+			hitAnimFlag = true;
+		}
+	}
+	else
+	{
+		if (!animTable[GetAnim()][ANIM_TBL_LOOP] && animEndFlag)
+		{
+			SetAnim("待機");
+			hitAnimFlag = false;
+		}
+		else
+		{
+			pos.x -= 1;
+		}
+	}
+
 
 	CommandUpDate(ctl);
 
