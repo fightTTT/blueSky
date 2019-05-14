@@ -99,6 +99,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 	// 当たり判定処理
 	{
+
 		if (lpColMng.GetColFlag(sObj[0]->GetAnim())
 		   && lpColMng.GetColFlag(sObj[1]->GetAnim()))
 		{
@@ -107,10 +108,10 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			// 当たり判定の情報を取得
 			for (int i = 0; i < 2; i++)
 			{
+				id[i] = sObj[i]->GetCount(sObj[i]->GetAnim());
 				if (id[i] < sObj[i]->GetAnimFrame(sObj[i]->GetAnim()))
 				{
 					colData[i] = lpColMng.GetCollisionData("棒人間", sObj[i]->GetAnim(), id[i]);
-					id[i]++;
 				}
 				else
 				{
@@ -157,7 +158,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			{
 				for (int a = 0; a < colData[i].hitBox.size(); a++)
 				{
-					if (colData[i].hitBox[a].type == COLTYPE_ATTACK)
+					if (colData[i].hitBox[a].type == COLTYPE_ATTACK|| sObj[(i + 1) % 2]->GetAnim() == "ダメージ_立ち")
 					{
 						for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
 						{
@@ -197,6 +198,10 @@ int GameScene::Init(void)
 		objList = std::make_shared<sharedObjList>();
 	}
 	objList->clear();		// objListを全削除する
+	for (int a = 0; a < 2; a++)
+	{
+		id[a] = 0;
+	}
 
 	AddObjList()(objList, std::make_unique<AIStickHuman>(VECTOR2(ssize.x - (STICK_HUMAN_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), DIR_RIGHT));
 	AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((STICK_HUMAN_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_1, DIR_LEFT));

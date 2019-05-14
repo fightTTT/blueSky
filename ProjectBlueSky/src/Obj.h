@@ -115,6 +115,8 @@ public:
 
 	PAD_ID GetPadID() const { return padID; }
 
+	int GetCount(std::string animName);
+
 private:
 	//ˆÚ“®ˆ—
 	virtual void SetMove(const GameCtrl &ctl);

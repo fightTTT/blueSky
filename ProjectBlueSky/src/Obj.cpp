@@ -177,6 +177,13 @@ void Obj::SetHitData(bool flag, ColType type)
 	hitData.hitFlag = flag;
 }
 
+int Obj::GetCount(std::string animName)
+{
+	int a = animCnt / animTable[animName][ANIM_TBL_INV];
+
+	return a % animTable[animName][ANIM_TBL_FRAME];
+}
+
 void Obj::SetMove(const GameCtrl & ctl)
 {
 }
