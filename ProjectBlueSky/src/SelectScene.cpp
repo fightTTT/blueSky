@@ -29,7 +29,21 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 	/* ｹﾞｰﾑｼｰﾝへ移動 */
 	if (controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START))
 	{
-		return std::make_unique<GameScene>();
+		if (lpSceneMng.GetModeFlag() == 0)
+		{
+			if (lpSceneMng.GetDecidFlag(PAD_1))
+			{
+				return std::make_unique<GameScene>();
+			}
+		}
+
+		else
+		{
+			if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
+			{
+				return std::make_unique<GameScene>();
+			}
+		}
 	}
 
 	SelectDraw();
@@ -46,7 +60,11 @@ int SelectScene::Init()
 	objList->clear();		// objListを全削除する
 
 	AddObjList()(objList, std::make_unique<CharSelCursor>(PAD_1));		// ﾘｽﾄにCursorｸﾗｽを追加
-	AddObjList()(objList, std::make_unique<CharSelCursor>(PAD_2));		// ﾘｽﾄにCursorｸﾗｽを追加
+
+	if (lpSceneMng.GetModeFlag() == 1)
+	{
+		AddObjList()(objList, std::make_unique<CharSelCursor>(PAD_2));		// ﾘｽﾄにCursorｸﾗｽを追加
+	}
 
 	scSize = lpSceneMng.GetScreenSize();
 
@@ -84,6 +102,19 @@ void SelectScene::SelectDraw()
 
 	//DrawString(1200, 200, "SelectScene", 0xffffff);
 
-	DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
+	if (lpSceneMng.GetModeFlag() == 0)
+	{
+		if (lpSceneMng.GetDecidFlag(PAD_1))
+		{
+			DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
+		}
+	}
 
+	else
+	{
+		if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
+		{
+			DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
+		}
+	}
 }

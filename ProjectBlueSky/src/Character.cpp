@@ -8,6 +8,7 @@
 #define DEF_COM_CLEAR_CNT (60)
 #define JUMP_SPEED_X (4)
 #define JUMP_SPEED_Y (30)
+#define KNOCK_BACK_SPEED (4)
 
 Character::Character(VECTOR2 offset) : Obj(offset)
 {
@@ -25,7 +26,7 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	jumpSpeed = { 0, 0 };
 	padID = id;
 	hitData.hitFlag = false;
-	hitAnimFlag = false;
+	hitAnimFlag = 0;
 
 	// 通常のアクション
 	animFileName["待機"] = "stand";
@@ -299,7 +300,14 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		}
 		else
 		{
-			pos.x -= 1;
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += -KNOCK_BACK_SPEED;
+			}
+			else
+			{
+				pos.x += KNOCK_BACK_SPEED;
+			}
 		}
 	}
 
