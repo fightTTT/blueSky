@@ -4,6 +4,7 @@
 #include "JumpState.h"
 #include "AttackState.h"
 #include "LongAttackState.h"
+#include "GuardState.h"
 
 #include "DxLib.h"
 
@@ -44,12 +45,14 @@ void MoveState::Update(AICharacter * character)
 	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大" || enemy.enemyAnimName == "キック_小"))
 	{
 		character->SetAnim("ガード_立ち");
+		character->ChangeState(GuardState::GetInstance());
 		return;
 	}
 
 	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大_しゃがみ" || enemy.enemyAnimName == "キック_小_しゃがみ"))
 	{
 		character->SetAnim("ガード_しゃがみ");
+		character->ChangeState(GuardState::GetInstance());
 		return;
 	}
 
@@ -60,15 +63,33 @@ void MoveState::Update(AICharacter * character)
 
 		if (rand == 0)
 		{
-			character->ChangeState(AttackState::GetInstance());
 			character->SetAnim("パンチ_大");
+			character->ChangeState(AttackState::GetInstance());
+			return;
+		}
+		else if (rand == 1)
+		{
+			character->SetAnim("パンチ_小");
+			character->ChangeState(AttackState::GetInstance());
+			return;
+		}
+		else if (rand == 2)
+		{
+			character->SetAnim("キック_大");
+			character->ChangeState(AttackState::GetInstance());
+			return;
+		}
+		else if (rand == 3)
+		{
+			character->SetAnim("キック_小");
+			character->ChangeState(AttackState::GetInstance());
 			return;
 		}
 	}
 	// 距離が遠い場合
-	else
+	else if (abs(vec.x) > 250)
 	{
-		rand = GetRand(1000);
+		rand = GetRand(500);
 
 		if (rand == 0)
 		{
