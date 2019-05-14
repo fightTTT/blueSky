@@ -171,6 +171,12 @@ void Obj::SetPos(VECTOR2 pos)
 	this->pos = pos;
 }
 
+void Obj::SetHitData(ColType type)
+{
+	hitData.colType = &type;
+	hitData.hitFlag = true;
+}
+
 void Obj::SetMove(const GameCtrl & ctl)
 {
 }

@@ -6,6 +6,8 @@
 #include"ObjList.h"
 #include "GameCtrl.h"
 
+enum ColType;
+
 enum ANIM_TBL {
 	ANIM_TBL_START_ID,		// 開始位置
 	ANIM_TBL_FRAME,			// ｺﾏ数
@@ -48,6 +50,12 @@ struct EnemyState
 	VECTOR2 enemyPos;
 	std::string enemyAnimName;
 	std::vector<ShotData> shotData;
+};
+
+struct HitData
+{
+	bool hitFlag;		// 攻撃が当たったか true...あたった　false...あたってない
+	ColType *colType;
 };
 
 class GameCtrl;
@@ -103,6 +111,8 @@ public:
 	// アニメーションが終了しているか
 	bool GetAnimEndFlag() const { return animEndFlag; }
 
+	void SetHitData(ColType type);
+
 	PAD_ID GetPadID() const { return padID; }
 
 private:
@@ -125,6 +135,7 @@ protected:
 	bool turnFlag;					// 画像反転フラグ
 	EnemyState enemyState;			// 敵の現在の座標, 状態
 	PAD_ID padID;					// 使用しているPAD番号
+	HitData hitData;				// 当たった情報
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;		// ｱﾆﾒｰｼｮﾝ情報
 	std::string animName;									// 表示ｱﾆﾒｰｼｮﾝ名
