@@ -10,7 +10,6 @@
 CharSelCursor::CharSelCursor(PAD_ID padId)
 {
 	padID = padId;
-
 	Init();
 }
 
@@ -21,39 +20,58 @@ CharSelCursor::~CharSelCursor()
 
 void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
-	/* ¶°¿Ù‚ÌˆÚ“® */
-	//PL1
-	if (ctl.GetPadDataTrg(padID, THUMB_L_UP) || ctl.GetPadDataTrg(padID,BUTTON_UP))
+	if (!decidFlag)
 	{
-		if (charID >= 4)
+		/* ¶°¿Ù‚ÌˆÚ“® */
+		//PL1
+		if (ctl.GetPadDataTrg(padID, THUMB_L_UP) || ctl.GetPadDataTrg(padID, BUTTON_UP))
 		{
-			charID -= 4;
+			if (charID >= 4)
+			{
+				charID -= 4;
+			}
 		}
-	}
-	if (ctl.GetPadDataTrg(padID, THUMB_L_RIGHT) || ctl.GetPadDataTrg(padID, BUTTON_RIGHT))
-	{
-		if ( (charID % 4) != 3)
+		if (ctl.GetPadDataTrg(padID, THUMB_L_RIGHT) || ctl.GetPadDataTrg(padID, BUTTON_RIGHT))
 		{
-			charID += 1;
+			if ((charID % 4) != 3)
+			{
+				charID += 1;
+			}
 		}
-	}
-	if (ctl.GetPadDataTrg(padID, THUMB_L_DOWN) || ctl.GetPadDataTrg(padID, BUTTON_DOWN))
-	{
-		if (charID < 4)
+		if (ctl.GetPadDataTrg(padID, THUMB_L_DOWN) || ctl.GetPadDataTrg(padID, BUTTON_DOWN))
 		{
-			charID += 4;
+			if (charID < 4)
+			{
+				charID += 4;
+			}
 		}
-	}
-	if (ctl.GetPadDataTrg(padID, THUMB_L_LEFT) || ctl.GetPadDataTrg(padID, BUTTON_LEFT))
-	{
-		if ((charID % 4) != 0)
+		if (ctl.GetPadDataTrg(padID, THUMB_L_LEFT) || ctl.GetPadDataTrg(padID, BUTTON_LEFT))
 		{
-			charID -= 1;
+			if ((charID % 4) != 0)
+			{
+				charID -= 1;
+			}
 		}
-	}
-	lpSceneMng.SetCharID(padID,charID);
+		lpSceneMng.SetCharID(padID, charID);
 
-	
+		// Œˆ’è
+		if (ctl.GetPadDataTrg(padID, BUTTON_A))
+		{
+			decidFlag = true;
+			lpSceneMng.SetDecidFlag(padID, decidFlag);
+		}
+	}
+	else
+	{
+		// Œˆ’èŽæ‚èÁ‚µŠm”F
+		if (ctl.GetPadDataTrg(padID, BUTTON_B))
+		{
+			decidFlag = false;
+			lpSceneMng.SetDecidFlag(padID, false);
+		}
+	}
+
+
 }
 
 bool CharSelCursor::CheckObjType(OBJ_TYPE type)
@@ -64,7 +82,7 @@ bool CharSelCursor::CheckObjType(OBJ_TYPE type)
 int CharSelCursor::Init(void)
 {
 	sSize = lpSceneMng.GetScreenSize();
-
+	decidFlag = false;
 	if (padID == PAD_1)
 	{
 		charID = 0;		// PL1‚Ì·¬×ID

@@ -54,6 +54,21 @@ void SceneMng::SetCharID(PAD_ID padID,int id)
 	charID[static_cast<int>(padID)] = id;
 }
 
+bool SceneMng::GetDecidFlag(PAD_ID padID)
+{
+	return decidFlag[static_cast<int>(padID)];
+}
+
+void SceneMng::SetDecidFlag(PAD_ID padID, bool decidFlag)
+{
+	SceneMng::decidFlag[static_cast<int>(padID)] = decidFlag;
+}
+
+int SceneMng::GetModeFlag(void)
+{
+	return modeFlag;
+}
+
 bool SceneMng::SysInit(void)
 {
 	// ºΩ√—èàóù
@@ -69,6 +84,8 @@ bool SceneMng::SysInit(void)
 	{
 		charID[cnt] = -1;
 	}
+
+	modeFlag = 0;
 
 	return true;
 }
