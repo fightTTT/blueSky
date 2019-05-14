@@ -3,12 +3,7 @@
 
 #include <array>
 #include "VECTOR2.h"
-
-enum MODE {
-	MODE_1PLAYER,
-	MODE_2PLAYER,
-	MODE_MAX
-};
+#include "SceneMng.h"
 
 class TitleScene :
 	public BaseScene
