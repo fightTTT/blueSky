@@ -7,7 +7,6 @@ GuardState::GuardState()
 {
 }
 
-
 GuardState::~GuardState()
 {
 }
@@ -20,6 +19,7 @@ void GuardState::Init(AICharacter * character)
 void GuardState::Update(AICharacter * character)
 {
 	auto pos = character->GetPos();
+	auto dir = character->GetDir();
 
 	if (stateTime > 45)
 	{
@@ -27,7 +27,14 @@ void GuardState::Update(AICharacter * character)
 	}
 	else
 	{
-		pos.x += 1;
+		if (dir == DIR_RIGHT)
+		{
+			pos.x -= 1;
+		}
+		else
+		{
+			pos.x += 1;
+		}
 	}
 
 	character->SetPos(pos);
