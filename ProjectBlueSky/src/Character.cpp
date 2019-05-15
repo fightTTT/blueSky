@@ -326,18 +326,66 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		{
 			if (ctl.GetPadDataTrg(padID, BUTTON_A))
 			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// そのままの方向
+				}
 				SetAnim("パンチ_小_空中");
 			}
 			else if (ctl.GetPadDataTrg(padID, BUTTON_B))
 			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// そのままの方向
+				}
 				SetAnim("パンチ_大_空中");
 			}
 			else if (ctl.GetPadDataTrg(padID, BUTTON_X))
 			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// そのままの方向
+				}
 				SetAnim("キック_小_空中");
 			}
 			else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
 			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// そのままの方向
+				}
 				SetAnim("キック_大_空中");
 			}
 			else
