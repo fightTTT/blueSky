@@ -195,6 +195,11 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		}
 	}
 
+	for (auto& data : *objList)
+	{
+		data->CheckHitFlag();
+	}
+
 	//•`‰æˆ—
 	GameDraw();
 
