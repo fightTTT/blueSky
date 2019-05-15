@@ -20,5 +20,8 @@ private:
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
+
+	bool guardHitFlag;
+	int knockBackSpeed;
 };
 
