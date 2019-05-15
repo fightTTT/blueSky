@@ -10,7 +10,7 @@
 #define JUMP_SPEED_X (4)
 #define JUMP_SPEED_Y (30)
 
-#define KNOCK_BACK_SPEED (4)
+#define KNOCK_BACK_SPEED (10)
 
 #define FALL_SPEED_X (7)
 #define FALL_SPEED_Y (15)
@@ -694,48 +694,47 @@ void Character::CheckHitFlag(void)
 			if (GetAnim() != "ダメージ_立ち")
 			{
 				comboCnt++;
-			}
-
-			if ((comboCnt >= COMBO_BREAK_CNT)
-			 || (GetAnim() == "ジャンプ_上")
-			 || (GetAnim() == "ジャンプ_前")
-			 || (GetAnim() == "ジャンプ_後ろ")
-			 || (GetAnim() == "パンチ_小_空中")
-			 || (GetAnim() == "パンチ_大_空中")
-			 || (GetAnim() == "キック_小_空中")
-			 || (GetAnim() == "キック_大_空中"))
-			{
-				comboCnt = 0;
-
-				SetAnim("ダメージ_ダウン");
-
-				if (dir == DIR_RIGHT)
+				if ((comboCnt >= COMBO_BREAK_CNT)
+				 || (GetAnim() == "ジャンプ_上")
+				 || (GetAnim() == "ジャンプ_前")
+				 || (GetAnim() == "ジャンプ_後ろ")
+				 || (GetAnim() == "パンチ_小_空中")
+				 || (GetAnim() == "パンチ_大_空中")
+				 || (GetAnim() == "キック_小_空中")
+				 || (GetAnim() == "キック_大_空中"))
 				{
-					fallSpeed = { -FALL_SPEED_X, -FALL_SPEED_Y };
+					comboCnt = 0;
+
+					SetAnim("ダメージ_ダウン");
+
+					if (dir == DIR_RIGHT)
+					{
+						fallSpeed = { -FALL_SPEED_X, -FALL_SPEED_Y };
+					}
+					else
+					{
+						fallSpeed = { FALL_SPEED_X, -FALL_SPEED_Y };
+					}
+
+					pos += fallSpeed;
+					if (pos.y > ssize.y)
+					{
+						pos.y = ssize.y;
+					}
 				}
 				else
 				{
-					fallSpeed = { FALL_SPEED_X, -FALL_SPEED_Y };
+					SetAnim("ダメージ_立ち");
+					if (dir == DIR_RIGHT)
+					{
+						knockBackSpeed = -KNOCK_BACK_SPEED;
+					}
+					else
+					{
+						knockBackSpeed = KNOCK_BACK_SPEED;
+					}
+					pos.x += knockBackSpeed;
 				}
-
-				pos += fallSpeed;
-				if (pos.y > ssize.y)
-				{
-					pos.y = ssize.y;
-				}
-			}
-			else
-			{
-				SetAnim("ダメージ_立ち");
-				if (dir == DIR_RIGHT)
-				{
-					knockBackSpeed = -KNOCK_BACK_SPEED;
-				}
-				else
-				{
-					knockBackSpeed = KNOCK_BACK_SPEED;
-				}
-				pos.x += knockBackSpeed;
 			}
 		}
 	}
