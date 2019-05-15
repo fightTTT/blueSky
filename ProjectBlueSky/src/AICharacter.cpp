@@ -131,6 +131,11 @@ HitData AICharacter::GetHitData() const
 	return hitData;
 }
 
+void AICharacter::CheckHitFlag()
+{
+	state->CheckHitFlag(this);
+}
+
 bool AICharacter::InitAnim(void)
 {
 	AddAnim("‘Ò‹@", 0, 0, 6, 5, true, 0, 0);
