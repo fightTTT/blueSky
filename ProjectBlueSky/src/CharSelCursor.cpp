@@ -25,32 +25,61 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 	{
 		/* ¶°¿Ù‚ÌˆÚ“® */
 		//PL1
+		PAD_ID tmpEnemyId;
+		if (lpSceneMng.GetMode() == MODE_2PLAYER)
+		{
+			if (padID == PAD_1)
+			{
+				tmpEnemyId = PAD_2;
+			}
+			else if (padID == PAD_2)
+			{
+				tmpEnemyId = PAD_1;
+			}
+			else
+			{
+				// ‚È‚É‚à‚µ‚È‚¢
+			}
+		}
+
 		if (ctl.GetPadDataTrg(padID, THUMB_L_UP) || ctl.GetPadDataTrg(padID, BUTTON_UP))
 		{
 			if (charID >= 4)
 			{
-				charID -= 4;
+				if ((charID - 4) != tmpEnemyId)
+				{
+					charID -= 4;
+				}
 			}
 		}
 		if (ctl.GetPadDataTrg(padID, THUMB_L_RIGHT) || ctl.GetPadDataTrg(padID, BUTTON_RIGHT))
 		{
 			if ((charID % 4) != 3)
 			{
-				charID += 1;
+				if ((charID + 1) != tmpEnemyId)
+				{
+					charID += 1;
+				}
 			}
 		}
 		if (ctl.GetPadDataTrg(padID, THUMB_L_DOWN) || ctl.GetPadDataTrg(padID, BUTTON_DOWN))
 		{
 			if (charID < 4)
 			{
-				charID += 4;
+				if ((charID + 4) != tmpEnemyId)
+				{
+					charID += 4;
+				}
 			}
 		}
 		if (ctl.GetPadDataTrg(padID, THUMB_L_LEFT) || ctl.GetPadDataTrg(padID, BUTTON_LEFT))
 		{
 			if ((charID % 4) != 0)
 			{
-				charID -= 1;
+				if ((charID - 1) != tmpEnemyId)
+				{
+					charID -= 1;
+				}
 			}
 		}
 		lpSceneMng.SetCharID(padID, charID);
