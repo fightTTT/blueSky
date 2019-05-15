@@ -49,6 +49,8 @@ private:
 	void CommandUpDate(const GameCtrl & ctl);
 	bool CheckCommand(int skillNum);
 
+	VECTOR2 ssize;
+
 	std::map<std::string, std::string> animFileName;		// ｱﾆﾒｰｼｮﾝの画像ﾌｧｲﾙ名 (ｷｰ: ｱﾆﾒｰｼｮﾝ名)
 
 	std::list<COM_DIR> comList;
@@ -56,10 +58,13 @@ private:
 	COM_DIR comDirOld;
 	int comClearCnt;
 
-	VECTOR2 jumpSpeed;
-	VECTOR2 fallSpeed;
+	int comboCnt;
 
-	VECTOR2 ssize;
+	VECTOR2 jumpSpeed;
+
+	VECTOR2 fallSpeed;
+	
+	int knockBackSpeed;
 
 protected:
 	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn, PAD_ID id);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標, 反転ﾌﾗｸﾞ, パッド番号
