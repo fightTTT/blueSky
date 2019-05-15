@@ -80,21 +80,29 @@ int SelectScene::Init()
 					"ƒ€ƒ‰ƒTƒL",
 					"ƒ`ƒƒ" };
 
+	//LoadDivGraph("charIcon", CHAR_CNT_MAX, CHAR_CNT_MAX, 1, 400, 400, charNameTbl[]);
+
 	return 0;
 }
 
 void SelectScene::SelectDraw()
 {
+	DrawGraph(0, 0, IMAGE_ID("image/charSelBG.png")[0], true);		// haikei
+
 	DrawGraph((scSize.x / 2) - (BOX_SIZE_X * 2), (scSize.y * 3 / 5), IMAGE_ID("image/charSel.png")[0], true);		// ·¬×ˆê——‚ğ•`‰æ
 			
 	// PL1‚Ì·¬×–¼
 	const int id[2] = { lpSceneMng.GetCharID(PAD_1) , lpSceneMng.GetCharID(PAD_2) };
+	DrawGraph(150, (scSize.y / 4), IMAGE_ID("image/1p.png")[0], true);		// ÌßÚ²Ô°”Ô†(1P)‚Ì•`‰æ
 	if (id[0] != -1)
 	{
+		DrawGraph(0, (scSize.y-400), IMAGE_DIV_ID("image/charIcon.png", VECTOR2(400, 400), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ·¬×‚Ì±²ºİ‚ğ•`‰æ
 		DrawFormatString(10, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[0]]);
 	}
 	if (id[1] != -1)
 	{
+		DrawGraph((scSize.x-150), (scSize.y / 4), IMAGE_ID("image/2p.png")[0], true);		// ÌßÚ²Ô°”Ô†(2P)‚Ì•`‰æ
+		DrawTurnGraph((scSize.x - 400), (scSize.y - 400), IMAGE_DIV_ID("image/charIcon.png", VECTOR2(400, 400), VECTOR2(CHAR_CNT_MAX, 1))[id[1]], true);		// ·¬×‚Ì±²ºİ‚ğ•`‰æ
 		DrawFormatString(1200, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[1]]);
 	}
 
