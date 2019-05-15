@@ -110,6 +110,6 @@ int CharSelCursor::Init(void)
 
 void CharSelCursor::Draw(void)
 {
-	DrawGraph(posTbl[charID].x, posTbl[charID].y, IMAGE_DIV_ID("image/frame.png", VECTOR2(100, 100), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);		// ·¬×‚Ì±²ºÝ‚ð•`‰æ
+	DrawGraph(posTbl[charID].x, posTbl[charID].y, IMAGE_DIV_ID("image/ƒLƒƒƒ‰ƒZƒŒ—p/frame.png", VECTOR2(100, 100), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);		// ·¬×‚Ì±²ºÝ‚ð•`‰æ
 }
 
