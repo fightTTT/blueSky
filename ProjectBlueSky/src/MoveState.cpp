@@ -16,7 +16,7 @@
 MoveState::MoveState()
 {
 	// Å‰‚¾‚¯‰Šú‰»
-	initFlag = false;
+	moveDirFlag = true;
 }
 
 MoveState::~MoveState()
@@ -25,12 +25,6 @@ MoveState::~MoveState()
 
 void MoveState::Init(AICharacter * character)
 {
-	if (!initFlag)
-	{
-		moveDirFlag = true;
-		initFlag = true;
-	}
-
 	changeGuardStateCount = 0;
 	stateTime = 0;
 }

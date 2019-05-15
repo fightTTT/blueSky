@@ -23,5 +23,6 @@ private:
 	void Update(AICharacter* character);
 	void CheckHitFlag(AICharacter* character) {}
 
-	int knockBackSpeed;
+	VECTOR2 knockBackSpeed;
+	int comboCnt;
 };
