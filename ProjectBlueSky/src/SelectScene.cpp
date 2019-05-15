@@ -87,22 +87,22 @@ int SelectScene::Init()
 
 void SelectScene::SelectDraw()
 {
-	DrawGraph(0, 0, IMAGE_ID("image/charSelBG.png")[0], true);		// haikei
+	DrawGraph(0, 0, IMAGE_ID("image/キャラセレ用/charSelBG.png")[0], true);		// haikei
 
-	DrawGraph((scSize.x / 2) - (BOX_SIZE_X * 2), (scSize.y * 3 / 5), IMAGE_ID("image/charSel.png")[0], true);		// ｷｬﾗ一覧を描画
+	DrawGraph((scSize.x / 2) - (BOX_SIZE_X * 2), (scSize.y * 3 / 5), IMAGE_ID("image/キャラセレ用/charSel.png")[0], true);		// ｷｬﾗ一覧を描画
 			
 	// PL1のｷｬﾗ名
 	const int id[2] = { lpSceneMng.GetCharID(PAD_1) , lpSceneMng.GetCharID(PAD_2) };
-	DrawGraph(150, (scSize.y / 4), IMAGE_ID("image/1p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(1P)の描画
+	DrawGraph(150, (scSize.y / 4), IMAGE_ID("image/キャラセレ用/1p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(1P)の描画
 	if (id[0] != -1)
 	{
-		DrawGraph(0, (scSize.y-400), IMAGE_DIV_ID("image/charIcon.png", VECTOR2(400, 400), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｷｬﾗのｱｲｺﾝを描画
+		DrawGraph(0, (scSize.y-400), IMAGE_DIV_ID("image/キャラセレ用/charIcon.png", VECTOR2(400, 400), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｷｬﾗのｱｲｺﾝを描画
 		DrawFormatString(10, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[0]]);
 	}
 	if (id[1] != -1)
 	{
-		DrawGraph((scSize.x-150), (scSize.y / 4), IMAGE_ID("image/2p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(2P)の描画
-		DrawTurnGraph((scSize.x - 400), (scSize.y - 400), IMAGE_DIV_ID("image/charIcon.png", VECTOR2(400, 400), VECTOR2(CHAR_CNT_MAX, 1))[id[1]], true);		// ｷｬﾗのｱｲｺﾝを描画
+		DrawGraph((scSize.x-150), (scSize.y / 4), IMAGE_ID("image/キャラセレ用/2p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(2P)の描画
+		DrawTurnGraph((scSize.x - 400), (scSize.y - 400), IMAGE_DIV_ID("image/キャラセレ用/charIcon.png", VECTOR2(400, 400), VECTOR2(CHAR_CNT_MAX, 1))[id[1]], true);		// ｷｬﾗのｱｲｺﾝを描画
 		DrawFormatString(1200, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[1]]);
 	}
 
@@ -117,6 +117,7 @@ void SelectScene::SelectDraw()
 	{
 		if (lpSceneMng.GetDecidFlag(PAD_1))
 		{
+			DrawGraph((scSize.x / 2) - 419, (scSize.y / 10) , IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
 			DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
 		}
 	}
@@ -124,6 +125,7 @@ void SelectScene::SelectDraw()
 	{
 		if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
 		{
+			DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
 			DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
 		}
 	}
