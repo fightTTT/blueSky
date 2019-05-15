@@ -83,26 +83,26 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 
 	for (int i = 0; i < animName.size(); i++)
 	{
-		lpColMng.ColLoad("–_lŠÔ", animName[i], animTable[animName[i]][ANIM_TBL_FRAME]);
+		lpColMng.ColLoad(characterName, animName[i], animTable[animName[i]][ANIM_TBL_FRAME]);
 	}
-	lpColMng.ColLoad("–_lŠÔ", "”g“®", 11);
-	lpColMng.ColLoad("–_lŠÔ", "“Š‚°", 13);
-	lpColMng.ColLoad("–_lŠÔ", "¸—³", 16);
 															// •KŽE‹ZŒn
 	if ((spAttackAnimName[0] != "‹Z1") && (spAttackAnimFileName[0] != "waza_1"))
 	{
 		animFileName[spAttackAnimName[0]] = spAttackAnimFileName[0];
 		animName.push_back(spAttackAnimName[0]);
+		lpColMng.ColLoad(characterName, spAttackAnimName[0], animTable[spAttackAnimName[0]][ANIM_TBL_FRAME]);
 	}
 	if ((spAttackAnimName[1] != "‹Z2") && (spAttackAnimFileName[1] != "waza_2"))
 	{
 		animFileName[spAttackAnimName[1]] = spAttackAnimFileName[1];
 		animName.push_back(spAttackAnimName[1]);
+		lpColMng.ColLoad(characterName, spAttackAnimName[1], animTable[spAttackAnimName[1]][ANIM_TBL_FRAME]);
 	}
 	if ((spAttackAnimName[2] != "‹Z3") && (spAttackAnimFileName[2] != "waza_3"))
 	{
 		animFileName[spAttackAnimName[2]] = spAttackAnimFileName[2];
 		animName.push_back(spAttackAnimName[2]);
+		lpColMng.ColLoad(characterName, spAttackAnimName[2], animTable[spAttackAnimName[2]][ANIM_TBL_FRAME]);
 	}
 
 	// ˆêŠ‡“Ç‚Ýž‚Ý
