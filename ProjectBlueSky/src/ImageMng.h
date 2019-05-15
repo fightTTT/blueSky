@@ -8,6 +8,7 @@ using VEC_INT = std::vector<int>;
 
 #define lpImageMng ImageMng::GetInstance()
 #define IMAGE_ID(X) (ImageMng::GetInstance().GetID(X))
+#define IMAGE_DIV_ID(X,Y,Z) (ImageMng::GetInstance().GetID(X,Y,Z))
 
 class ImageMng
 {

@@ -5,6 +5,8 @@
 #include "AttackState.h"
 #include "LongAttackState.h"
 #include "GuardState.h"
+#include "Collision.h"
+#include "DamageState.h"
 
 #include "DxLib.h"
 
@@ -220,4 +222,21 @@ void MoveState::Update(AICharacter * character)
 
 	character->SetPos(pos);
 	stateTime++;
+}
+
+void MoveState::CheckHitFlag(AICharacter * character)
+{
+	auto pos = character->GetPos();
+	auto dir = character->GetDir();
+	auto hitData = character->GetHitData();
+
+	auto hitFlag = hitData.hitFlag && hitData.colType == COLTYPE_HIT;
+
+	if (hitFlag)
+	{
+		character->SetAnim("ƒ_ƒ[ƒW_—§‚¿");
+		character->ChangeState(DamageState::GetInstance());
+	}
+
+	character->SetPos(pos);
 }
