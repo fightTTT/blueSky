@@ -220,17 +220,15 @@ void MoveState::Update(AICharacter * character)
 
 void MoveState::CheckHitFlag(AICharacter * character)
 {
-	auto pos = character->GetPos();
 	auto dir = character->GetDir();
 	auto hitData = character->GetHitData();
+	auto anim = character->GetAnim();
 
 	auto hitFlag = hitData.hitFlag && hitData.colType == COLTYPE_HIT;
 
-	if (hitFlag)
+	if (hitFlag && !(anim == "ダメージ_立ち" ) && !(anim == "ダメージ_ダウン"))
 	{
 		character->SetAnim("ダメージ_立ち");
 		character->ChangeState(DamageState::GetInstance());
 	}
-
-	character->SetPos(pos);
 }
