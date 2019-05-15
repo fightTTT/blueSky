@@ -643,6 +643,10 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 }
 
+void Character::CheckHitFlag(void)
+{
+}
+
 void Character::Draw(void)
 {
 	if (imageName.length() == 0)

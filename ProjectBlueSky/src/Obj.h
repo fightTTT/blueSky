@@ -117,6 +117,9 @@ public:
 
 	int GetCount(std::string animName);
 
+	// “–‚½‚è”»’è‚Ìî•ñ‚ÌÁª¯¸‚ÆA‚»‚ê‚É”º‚¢’Ç‰Á‚Ås‚¤ˆ—
+	virtual void CheckHitFlag(void);
+
 private:
 	//ˆÚ“®ˆ—
 	virtual void SetMove(const GameCtrl &ctl);
