@@ -83,26 +83,26 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 
 	for (int i = 0; i < animName.size(); i++)
 	{
-		lpColMng.ColLoad("–_lŠÔ", animName[i], animTable[animName[i]][ANIM_TBL_FRAME]);
+		lpColMng.ColLoad(characterName, animName[i], animTable[animName[i]][ANIM_TBL_FRAME]);
 	}
-	lpColMng.ColLoad("–_lŠÔ", "”g“®", 11);
-	lpColMng.ColLoad("–_lŠÔ", "“Š‚°", 13);
-	lpColMng.ColLoad("–_lŠÔ", "¸—³", 16);
 															// •KŽE‹ZŒn
 	if ((spAttackAnimName[0] != "‹Z1") && (spAttackAnimFileName[0] != "waza_1"))
 	{
 		animFileName[spAttackAnimName[0]] = spAttackAnimFileName[0];
 		animName.push_back(spAttackAnimName[0]);
+		lpColMng.ColLoad(characterName, spAttackAnimName[0], animTable[spAttackAnimName[0]][ANIM_TBL_FRAME]);
 	}
 	if ((spAttackAnimName[1] != "‹Z2") && (spAttackAnimFileName[1] != "waza_2"))
 	{
 		animFileName[spAttackAnimName[1]] = spAttackAnimFileName[1];
 		animName.push_back(spAttackAnimName[1]);
+		lpColMng.ColLoad(characterName, spAttackAnimName[1], animTable[spAttackAnimName[1]][ANIM_TBL_FRAME]);
 	}
 	if ((spAttackAnimName[2] != "‹Z3") && (spAttackAnimFileName[2] != "waza_3"))
 	{
 		animFileName[spAttackAnimName[2]] = spAttackAnimFileName[2];
 		animName.push_back(spAttackAnimName[2]);
+		lpColMng.ColLoad(characterName, spAttackAnimName[2], animTable[spAttackAnimName[2]][ANIM_TBL_FRAME]);
 	}
 
 	// ˆêŠ‡“Ç‚Ýž‚Ý
@@ -326,18 +326,66 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		{
 			if (ctl.GetPadDataTrg(padID, BUTTON_A))
 			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// ‚»‚Ì‚Ü‚Ü‚Ì•ûŒü
+				}
 				SetAnim("ƒpƒ“ƒ`_¬_‹ó’†");
 			}
 			else if (ctl.GetPadDataTrg(padID, BUTTON_B))
 			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// ‚»‚Ì‚Ü‚Ü‚Ì•ûŒü
+				}
 				SetAnim("ƒpƒ“ƒ`_‘å_‹ó’†");
 			}
 			else if (ctl.GetPadDataTrg(padID, BUTTON_X))
 			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// ‚»‚Ì‚Ü‚Ü‚Ì•ûŒü
+				}
 				SetAnim("ƒLƒbƒN_¬_‹ó’†");
 			}
 			else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
 			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// ‚»‚Ì‚Ü‚Ü‚Ì•ûŒü
+				}
 				SetAnim("ƒLƒbƒN_‘å_‹ó’†");
 			}
 			else
@@ -595,6 +643,10 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 }
 
+void Character::CheckHitFlag(void)
+{
+}
+
 void Character::Draw(void)
 {
 	if (imageName.length() == 0)
@@ -657,7 +709,7 @@ void Character::Draw(void)
 
 			colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
 
-			DrawBox(drawOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, drawOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
+			DrawBox(drawOffset.x + animOffset.x +  pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, drawOffset.x + animOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
 		}
 	}
 

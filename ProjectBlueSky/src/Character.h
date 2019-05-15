@@ -39,7 +39,8 @@ public:
 
 	bool CheckObjType(OBJ_TYPE type);
 
-	void SetMove(const GameCtrl &ctl, weekListObj objList);
+	void SetMove(const GameCtrl &ctl, weekListObj objList);			// 情報更新
+	void CheckHitFlag(void);										// 当たり判定の情報のﾁｪｯｸと、それに伴い追加で行う処理
 
 	void Draw(void);		// 描画処理
 

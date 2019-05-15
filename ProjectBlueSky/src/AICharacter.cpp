@@ -96,7 +96,7 @@ void AICharacter::Draw()
 	if (visible)
 	{
 		SetDrawBright(100, 255, 100);
-		DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + +pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
+		DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 		SetDrawBright(255, 255, 255);
 	}
 
@@ -113,7 +113,7 @@ void AICharacter::Draw()
 
 			colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
 
-			DrawBox(drawOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, drawOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
+			DrawBox(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, drawOffset.x + animOffset.x +  pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
 		}
 	}
 
@@ -129,6 +129,11 @@ void AICharacter::ChangeState(AIState * s)
 HitData AICharacter::GetHitData() const
 {
 	return hitData;
+}
+
+void AICharacter::CheckHitFlag()
+{
+	state->CheckHitFlag(this);
 }
 
 bool AICharacter::InitAnim(void)

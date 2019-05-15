@@ -158,9 +158,10 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			{
 				for (int a = 0; a < colData[i].hitBox.size(); a++)
 				{
-					if (colData[i].hitBox[a].type == COLTYPE_ATTACK|| sObj[(i + 1) % 2]->GetAnim() == "ƒ_ƒ[ƒW_—§‚¿")
+
+					for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
 					{
-						for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
+						if (colData[i].hitBox[a].type == COLTYPE_ATTACK)
 						{
 							if (colData[(i + 1) % 2].hitBox[b].type != COLTYPE_ATTACK)
 							{
@@ -170,6 +171,10 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 									&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
 								{
 									sObj[(i + 1) % 2]->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
+									if (colData[(i + 1) % 2].hitBox[b].type == COLTYPE_GUARD)
+									{
+										break;
+									}
 								}
 								else
 								{
@@ -177,10 +182,21 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 								}
 							}
 						}
+						else
+						{
+							sObj[(i + 1) % 2]->SetHitData(false, colData[(i + 1) % 2].hitBox[b].type);
+						}
+						
 					}
+
 				}
 			}
 		}
+	}
+
+	for (auto& data : *objList)
+	{
+		data->CheckHitFlag();
 	}
 
 	//•`‰æˆ—

@@ -29,6 +29,7 @@ void MoveState::Init(AICharacter * character)
 		initFlag = true;
 	}
 
+	changeGuardStateCount = 0;
 	stateTime = 0;
 }
 
@@ -48,8 +49,7 @@ void MoveState::Update(AICharacter * character)
 		character->ChangeState(GuardState::GetInstance());
 		return;
 	}
-
-	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大_しゃがみ" || enemy.enemyAnimName == "キック_小_しゃがみ"))
+	else if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大_しゃがみ" || enemy.enemyAnimName == "キック_小_しゃがみ"))
 	{
 		character->SetAnim("ガード_しゃがみ");
 		character->ChangeState(GuardState::GetInstance());
@@ -146,12 +146,6 @@ void MoveState::Update(AICharacter * character)
 			return;
 		}
 	}
-
-	//if (abs(vec.x) < 100)
-	//{
-	//	moveDirFlag = !(abs(vec.x) < 100);
-	//	stateTime = 0;
-	//}
 
 	// 移動処理
 	if (moveDirFlag)

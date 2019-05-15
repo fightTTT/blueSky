@@ -39,6 +39,8 @@ public:
 
 	HitData GetHitData() const;
 
+	void CheckHitFlag();
+
 private:
 
 	bool InitAnim(void);
