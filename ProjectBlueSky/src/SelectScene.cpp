@@ -117,6 +117,7 @@ void SelectScene::SelectDraw()
 	{
 		if (lpSceneMng.GetDecidFlag(PAD_1))
 		{
+			DrawGraph((scSize.x / 2) - 419, (scSize.y / 10) , IMAGE_ID("image/ready.png")[0], true);		// haikei
 			DrawString(1000, 10, "STARTƒ{ƒ^ƒ“ or SpaceKey‚Å‘JˆÚ", 0xffffff);
 		}
 	}

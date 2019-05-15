@@ -2,6 +2,7 @@
 #include "SceneMng.h"
 #include "DxLib.h"
 #include "SelectScene.h"
+#include "ImageMng.h"
 
 #define BOX_SIZE_X (100)		// ∑¨◊±≤∫›ÇÃXé≤ª≤Ωﬁ
 #define BOX_SIZE_Y (100)		// ∑¨◊±≤∫›ÇÃYé≤ª≤Ωﬁ
@@ -109,7 +110,6 @@ int CharSelCursor::Init(void)
 
 void CharSelCursor::Draw(void)
 {
-	DrawBox(posTbl[charID].x, posTbl[charID].y, posTbl[charID].x + BOX_SIZE_X, posTbl[charID].y+ BOX_SIZE_Y, colorTbl[static_cast<int>(padID)], false);		// ∂∞øŸÇÃï`âÊ
-	DrawBox(posTbl[charID].x+1, posTbl[charID].y+1, posTbl[charID].x + BOX_SIZE_X+1, posTbl[charID].y + BOX_SIZE_Y+1, colorTbl[static_cast<int>(padID)], false);		// ∂∞øŸÇÃï‚èïï`âÊ
+	DrawGraph(posTbl[charID].x, posTbl[charID].y, IMAGE_DIV_ID("image/frame.png", VECTOR2(100, 100), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);		// ∑¨◊ÇÃ±≤∫›Çï`âÊ
 }
 
