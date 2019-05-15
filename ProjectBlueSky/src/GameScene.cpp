@@ -97,6 +97,13 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		}
 	}
 
+	std::string animName[2];
+
+	for (int i = 0; i < 2; i++)
+	{
+		animName[i] = sObj[i]->GetAnim();
+	}
+
 	// ìñÇΩÇËîªíËèàóù
 	{
 
@@ -124,6 +131,12 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			{
 				for (int a = 0; a < colData[i].hitBox.size(); a++)
 				{
+
+					colData[i].hitBox[a].rect.startPos.x += sObj[i]->GetAnimOffSet(animName[i]).x;
+					colData[i].hitBox[a].rect.endPos.x += sObj[i]->GetAnimOffSet(animName[i]).x;
+					colData[i].hitBox[a].rect.startPos.y += sObj[i]->GetAnimOffSet(animName[i]).y;
+					colData[i].hitBox[a].rect.endPos.y += sObj[i]->GetAnimOffSet(animName[i]).y;
+
 					int b;
 
 					colData[i].hitBox[a].rect.startPos.x *= static_cast<int>(sObj[i]->GetDir()) * -2 + 1;
@@ -146,7 +159,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					// åªç›ÇÃÉvÉåÉCÉÑÅ[ÇÃpos
 					colData[i].hitBox[a].rect.startPos.x = (sObj[i]->GetPos().x + colData[i].hitBox[a].rect.startPos.x);
 					colData[i].hitBox[a].rect.endPos.x = (sObj[i]->GetPos().x + colData[i].hitBox[a].rect.endPos.x);
-					colData[i].hitBox[a].rect.startPos.y = (sObj[i]->GetPos().y + colData[i].hitBox[a].rect.startPos.y);
+					colData[i].hitBox[a].rect.startPos.y =(sObj[i]->GetPos().y + colData[i].hitBox[a].rect.startPos.y);
 					colData[i].hitBox[a].rect.endPos.y = (sObj[i]->GetPos().y + colData[i].hitBox[a].rect.endPos.y);
 
 				}
@@ -171,10 +184,12 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 									&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
 								{
 									sObj[(i + 1) % 2]->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
+									
 									if (colData[(i + 1) % 2].hitBox[b].type == COLTYPE_GUARD)
 									{
 										break;
 									}
+									break;
 								}
 								else
 								{
