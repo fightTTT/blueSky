@@ -20,17 +20,30 @@ void GuardState::Init(AICharacter * character)
 
 void GuardState::Update(AICharacter * character)
 {
-	auto pos = character->GetPos();
-	auto dir = character->GetDir();
-	auto hitData = character->GetHitData();
-
-	guardHitFlag = guardHitFlag || (hitData.hitFlag && hitData.colType == COLTYPE_GUARD);
-
 	if (stateTime > 30)
 	{
 		character->ChangeState(MoveState::GetInstance());
 	}
-	else
+
+	stateTime++;
+}
+
+void GuardState::CheckHitFlag(AICharacter * character)
+{
+	auto pos = character->GetPos();
+	auto dir = character->GetDir();
+	auto hitData = character->GetHitData();
+
+	auto hitFlag = hitData.hitFlag && hitData.colType == COLTYPE_GUARD;
+
+	if (!guardHitFlag && hitFlag)
+	{
+		stateTime = 0;
+	}
+
+	guardHitFlag = guardHitFlag || hitFlag;
+
+	if (guardHitFlag)
 	{
 		if (dir == DIR_RIGHT)
 		{
@@ -40,14 +53,12 @@ void GuardState::Update(AICharacter * character)
 		{
 			pos.x += knockBackSpeed;
 		}
-	}
 
-	if (knockBackSpeed > 1)
-	{
-		knockBackSpeed--;
+		if (knockBackSpeed > 1)
+		{
+			knockBackSpeed--;
+		}
 	}
 
 	character->SetPos(pos);
-
-	stateTime++;
 }

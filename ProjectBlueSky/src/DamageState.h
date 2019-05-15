@@ -1,24 +1,24 @@
 #pragma once
+
 #include "AIState.h"
 
-class AttackState :
+class DamageState :
 	public AIState
 {
 public:
 
-	static AttackState *GetInstance()
+	static DamageState *GetInstance()
 	{
-		static AttackState s_Instance;
+		static DamageState s_Instance;
 		return &s_Instance;
 	}
 
 private:
 
-	AttackState();
-	~AttackState();
+	DamageState();
+	~DamageState();
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
 	void CheckHitFlag(AICharacter* character) {}
 };
-
