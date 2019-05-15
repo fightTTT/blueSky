@@ -180,7 +180,6 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 								{
 									sObj[(i + 1) % 2]->SetHitData(false, colData[(i + 1) % 2].hitBox[b].type);
 								}
-
 							}
 						}
 						else
