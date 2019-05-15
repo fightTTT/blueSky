@@ -3,6 +3,8 @@
 #include "MoveState.h"
 #include "Collision.h"
 
+#define KNOCK_BACK_SPEED (10)
+
 GuardState::GuardState()
 {
 }
@@ -15,7 +17,7 @@ void GuardState::Init(AICharacter * character)
 {
 	stateTime = 0;
 	guardHitFlag = false;
-	knockBackSpeed = 10;
+	knockBackSpeed = 0;
 }
 
 void GuardState::Update(AICharacter * character)
@@ -39,24 +41,38 @@ void GuardState::CheckHitFlag(AICharacter * character)
 	if (!guardHitFlag && hitFlag)
 	{
 		stateTime = 0;
+
+		if (dir == DIR_RIGHT)
+		{
+			knockBackSpeed = -KNOCK_BACK_SPEED;
+		}
+		else
+		{
+			knockBackSpeed = KNOCK_BACK_SPEED;
+		}
 	}
 
 	guardHitFlag = guardHitFlag || hitFlag;
 
 	if (guardHitFlag)
 	{
+		pos.x += knockBackSpeed;
+
 		if (dir == DIR_RIGHT)
 		{
-			pos.x -= knockBackSpeed;
+			knockBackSpeed++;
+			if (knockBackSpeed > 0)
+			{
+				knockBackSpeed = 0;
+			}
 		}
 		else
 		{
-			pos.x += knockBackSpeed;
-		}
-
-		if (knockBackSpeed > 1)
-		{
 			knockBackSpeed--;
+			if (knockBackSpeed < 0)
+			{
+				knockBackSpeed = 0;
+			}
 		}
 	}
 
