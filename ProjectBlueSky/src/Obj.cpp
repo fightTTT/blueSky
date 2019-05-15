@@ -177,6 +177,11 @@ void Obj::SetHitData(bool flag, ColType type)
 	hitData.hitFlag = flag;
 }
 
+const VECTOR2 Obj::GetAnimOffSet(std::string animName)
+{
+	return VECTOR2(animTable[animName][ANIM_TBL_OFFSET_X], animTable[animName][ANIM_TBL_OFFSET_Y]);
+}
+
 int Obj::GetCount(std::string animName)
 {
 	int a = animCnt / animTable[animName][ANIM_TBL_INV];

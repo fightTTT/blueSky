@@ -65,6 +65,7 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	animFileName["ガード_しゃがみ"] = "guard_squat";
 	animFileName["ダメージ_立ち"] = "damage";
 	animFileName["ダメージ_ダウン"] = "damage_down";
+	animFileName["起き上がり"] = "get_up";
 
 	std::vector<std::string> animName = { "待機",
 										  "前移動",
@@ -91,7 +92,8 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 										  "ガード_立ち",
 										  "ガード_しゃがみ",
 										  "ダメージ_立ち",
-										  "ダメージ_ダウン" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
+										  "ダメージ_ダウン",
+										  "起き上がり" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
 
 	for (int i = 0; i < animName.size(); i++)
 	{
@@ -161,6 +163,7 @@ bool Character::InitAnim(void)
 	AddAnim("ガード_しゃがみ", 0, 0, 1, 5, true, 0, 0);
 	AddAnim("ダメージ_立ち", 0, 0, 5, 5, false, 0, 0);
 	AddAnim("ダメージ_ダウン", 0, 0, 13, 5, false, 0, 0);
+	AddAnim("起き上がり", 0, 0, 13, 5, false, 0, 0);
 	SetAnim("待機");
 	return true;
 }
@@ -349,6 +352,13 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		pos.x += fallSpeed.x;
 
 		if (animEndFlag && (pos.y == ssize.y))
+		{
+			SetAnim("起き上がり");
+		}
+	}
+	else if (GetAnim() == "起き上がり")
+	{
+		if (animEndFlag)
 		{
 			SetAnim("待機");
 		}
@@ -687,7 +697,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 void Character::CheckHitFlag(void)
 {
-	if (GetAnim() != "ダメージ_ダウン")
+	if ((GetAnim() != "ダメージ_ダウン") && (GetAnim() != "起き上がり"))
 	{
 		if (hitData.hitFlag && hitData.colType == COLTYPE_HIT)
 		{
@@ -802,7 +812,8 @@ void Character::Draw(void)
 
 			colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
 
-			DrawBox(drawOffset.x + animOffset.x +  pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, drawOffset.x + animOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
+			DrawBox(drawOffset.x + animOffset.x +  pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, 
+				drawOffset.x + animOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
 		}
 	}
 

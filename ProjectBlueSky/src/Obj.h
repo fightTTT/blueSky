@@ -115,6 +115,8 @@ public:
 
 	PAD_ID GetPadID() const { return padID; }
 
+	const VECTOR2 GetAnimOffSet(std::string animName);
+
 	int GetCount(std::string animName);
 
 	// “–‚½‚è”»’è‚Ìî•ñ‚ÌÁª¯¸‚ÆA‚»‚ê‚É”º‚¢’Ç‰Á‚Ås‚¤ˆ—
