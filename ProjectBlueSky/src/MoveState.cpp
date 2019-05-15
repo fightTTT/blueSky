@@ -9,7 +9,7 @@
 #include "DxLib.h"
 
 #define MOVE_SPEED (2)
-#define ATTACK_RANGE (150)
+#define ATTACK_RANGE (110)
 
 MoveState::MoveState()
 {
@@ -146,12 +146,6 @@ void MoveState::Update(AICharacter * character)
 			return;
 		}
 	}
-
-	//if (abs(vec.x) < 100)
-	//{
-	//	moveDirFlag = !(abs(vec.x) < 100);
-	//	stateTime = 0;
-	//}
 
 	// ˆÚ“®ˆ—
 	if (moveDirFlag)

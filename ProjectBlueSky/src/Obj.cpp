@@ -184,6 +184,10 @@ int Obj::GetCount(std::string animName)
 	return a % animTable[animName][ANIM_TBL_FRAME];
 }
 
+void Obj::CheckHitFlag(void)
+{
+}
+
 void Obj::SetMove(const GameCtrl & ctl)
 {
 }
