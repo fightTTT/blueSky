@@ -143,7 +143,6 @@ protected:
 	EnemyState enemyState;			// 敵の現在の座標, 状態
 	PAD_ID padID;					// 使用しているPAD番号
 	HitData hitData;				// 当たった情報
-	int hitAnimFlag;				// ヒット状態のアニメーション再生フラグ
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;		// ｱﾆﾒｰｼｮﾝ情報
 	std::string animName;									// 表示ｱﾆﾒｰｼｮﾝ名

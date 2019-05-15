@@ -6,10 +6,16 @@
 #include "CollisionMng.h"
 
 #define DEF_COM_CLEAR_CNT (60)
+
 #define JUMP_SPEED_X (4)
 #define JUMP_SPEED_Y (30)
-#define KNOCK_BACK_SPEED_X (7)
-#define KNOCK_BACK_SPEED_Y (15)
+
+#define KNOCK_BACK_SPEED (10)
+
+#define FALL_SPEED_X (7)
+#define FALL_SPEED_Y (15)
+
+#define COMBO_BREAK_CNT (3)
 
 Character::Character(VECTOR2 offset) : Obj(offset)
 {
@@ -26,9 +32,11 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 
 	ssize = lpSceneMng.GetScreenSize();
 	jumpSpeed = { 0, 0 };
+	fallSpeed = { 0, 0 };
 	padID = id;
 	hitData.hitFlag = false;
-	hitAnimFlag = 0;
+	comboCnt = 0;
+	knockBackSpeed = 0;
 
 	// 通常のアクション
 	animFileName["待機"] = "stand";
@@ -57,6 +65,7 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	animFileName["ガード_しゃがみ"] = "guard_squat";
 	animFileName["ダメージ_立ち"] = "damage";
 	animFileName["ダメージ_ダウン"] = "damage_down";
+	animFileName["起き上がり"] = "get_up";
 
 	std::vector<std::string> animName = { "待機",
 										  "前移動",
@@ -83,7 +92,8 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 										  "ガード_立ち",
 										  "ガード_しゃがみ",
 										  "ダメージ_立ち",
-										  "ダメージ_ダウン" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
+										  "ダメージ_ダウン",
+										  "起き上がり" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
 
 	for (int i = 0; i < animName.size(); i++)
 	{
@@ -153,6 +163,7 @@ bool Character::InitAnim(void)
 	AddAnim("ガード_しゃがみ", 0, 0, 1, 5, true, 0, 0);
 	AddAnim("ダメージ_立ち", 0, 0, 5, 5, false, 0, 0);
 	AddAnim("ダメージ_ダウン", 0, 0, 13, 5, false, 0, 0);
+	AddAnim("起き上がり", 0, 0, 13, 5, false, 0, 0);
 	SetAnim("待機");
 	return true;
 }
@@ -288,7 +299,32 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	CommandUpDate(ctl);
 
-	if (GetAnim() == "ダメージ_ダウン")
+	if (GetAnim() == "ダメージ_立ち")
+	{
+		if (dir == DIR_RIGHT)
+		{
+			knockBackSpeed++;
+			if (knockBackSpeed > 0)
+			{
+				knockBackSpeed = 0;
+			}
+		}
+		else
+		{
+			knockBackSpeed--;
+			if (knockBackSpeed < 0)
+			{
+				knockBackSpeed = 0;
+			}
+		}
+		pos.x += knockBackSpeed;
+
+		if (animEndFlag && (knockBackSpeed == 0))
+		{
+			SetAnim("待機");
+		}
+	}
+	else if (GetAnim() == "ダメージ_ダウン")
 	{
 		fallSpeed.y += 1;
 		pos.y += fallSpeed.y;
@@ -298,7 +334,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 			if (dir == DIR_RIGHT)
 			{
-				fallSpeed.x += 1;
+				fallSpeed.x++;
 				if (fallSpeed.x > 0)
 				{
 					fallSpeed.x = 0;
@@ -306,7 +342,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			}
 			else
 			{
-				fallSpeed.x -= 1;
+				fallSpeed.x--;
 				if (fallSpeed.x < 0)
 				{
 					fallSpeed.x = 0;
@@ -317,6 +353,13 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 		if (animEndFlag && (pos.y == ssize.y))
 		{
+			SetAnim("起き上がり");
+		}
+	}
+	else if (GetAnim() == "起き上がり")
+	{
+		if (animEndFlag)
+		{
 			SetAnim("待機");
 		}
 	}
@@ -324,12 +367,12 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 	{
 		// キャラクター操作
 		if ((GetAnim() == "ジャンプ_上")
-			|| (GetAnim() == "ジャンプ_前")
-			|| (GetAnim() == "ジャンプ_後ろ")
-			|| (GetAnim() == "パンチ_小_空中")
-			|| (GetAnim() == "パンチ_大_空中")
-			|| (GetAnim() == "キック_小_空中")
-			|| (GetAnim() == "キック_大_空中"))
+		 || (GetAnim() == "ジャンプ_前")
+		 || (GetAnim() == "ジャンプ_後ろ")
+		 || (GetAnim() == "パンチ_小_空中")
+		 || (GetAnim() == "パンチ_大_空中")
+		 || (GetAnim() == "キック_小_空中")
+		 || (GetAnim() == "キック_大_空中"))
 		{
 			if (animTable[GetAnim()][ANIM_TBL_LOOP])
 			{
@@ -456,13 +499,13 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				else if (ctl.GetPadData(padID, THUMB_L_DOWN))		// しゃがみ
 				{
 					if ((GetAnim() == "しゃがみ始め")
-						|| (GetAnim() == "しゃがみ")
-						|| (GetAnim() == "しゃがみ_後ろ")
-						|| (GetAnim() == "パンチ_小_しゃがみ")
-						|| (GetAnim() == "パンチ_大_しゃがみ")
-						|| (GetAnim() == "キック_小_しゃがみ")
-						|| (GetAnim() == "キック_大_しゃがみ")
-						|| (GetAnim() == "ガード_しゃがみ"))
+					 || (GetAnim() == "しゃがみ")
+					 || (GetAnim() == "しゃがみ_後ろ")
+					 || (GetAnim() == "パンチ_小_しゃがみ")
+					 || (GetAnim() == "パンチ_大_しゃがみ")
+					 || (GetAnim() == "キック_小_しゃがみ")
+					 || (GetAnim() == "キック_大_しゃがみ")
+					 || (GetAnim() == "ガード_しゃがみ"))
 					{
 						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 						{
@@ -654,25 +697,54 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 void Character::CheckHitFlag(void)
 {
-	if (GetAnim() != "ダメージ_ダウン")
+	if ((GetAnim() != "ダメージ_ダウン") && (GetAnim() != "起き上がり"))
 	{
 		if (hitData.hitFlag && hitData.colType == COLTYPE_HIT)
 		{
-			SetAnim("ダメージ_ダウン");
+			if (GetAnim() != "ダメージ_立ち")
+			{
+				comboCnt++;
+				if ((comboCnt >= COMBO_BREAK_CNT)
+				 || (GetAnim() == "ジャンプ_上")
+				 || (GetAnim() == "ジャンプ_前")
+				 || (GetAnim() == "ジャンプ_後ろ")
+				 || (GetAnim() == "パンチ_小_空中")
+				 || (GetAnim() == "パンチ_大_空中")
+				 || (GetAnim() == "キック_小_空中")
+				 || (GetAnim() == "キック_大_空中"))
+				{
+					comboCnt = 0;
 
-			if (dir == DIR_RIGHT)
-			{
-				fallSpeed = { -KNOCK_BACK_SPEED_X, -KNOCK_BACK_SPEED_Y };
-			}
-			else
-			{
-				fallSpeed = { KNOCK_BACK_SPEED_X, -KNOCK_BACK_SPEED_Y };
-			}
+					SetAnim("ダメージ_ダウン");
 
-			pos += fallSpeed;
-			if (pos.y > ssize.y)
-			{
-				pos.y = ssize.y;
+					if (dir == DIR_RIGHT)
+					{
+						fallSpeed = { -FALL_SPEED_X, -FALL_SPEED_Y };
+					}
+					else
+					{
+						fallSpeed = { FALL_SPEED_X, -FALL_SPEED_Y };
+					}
+
+					pos += fallSpeed;
+					if (pos.y > ssize.y)
+					{
+						pos.y = ssize.y;
+					}
+				}
+				else
+				{
+					SetAnim("ダメージ_立ち");
+					if (dir == DIR_RIGHT)
+					{
+						knockBackSpeed = -KNOCK_BACK_SPEED;
+					}
+					else
+					{
+						knockBackSpeed = KNOCK_BACK_SPEED;
+					}
+					pos.x += knockBackSpeed;
+				}
 			}
 		}
 	}
