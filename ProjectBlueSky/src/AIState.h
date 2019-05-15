@@ -1,5 +1,7 @@
 #pragma once
 
+#define COMBO_BREAK_CNT (3)
+
 class AICharacter;
 
 class AIState
