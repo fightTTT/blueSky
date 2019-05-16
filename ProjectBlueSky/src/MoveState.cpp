@@ -45,7 +45,7 @@ void MoveState::Update(AICharacter * character)
 		moveDirFlag = true;
 	}
 
-	if (character->GetAnim() == "ガード_立ち" && character->GetAnim() == "ガード_しゃがみ")
+	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
 	{
 		character->ChangeState(GuardState::GetInstance());
 		return;
@@ -122,6 +122,12 @@ void MoveState::Update(AICharacter * character)
 		{
 			continue;
 		}
+	}
+
+	// ガード状態の場合は移動しない
+	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
+	{
+		return;
 	}
 
 	// 移動処理
@@ -207,7 +213,7 @@ void MoveState::CheckHitFlag(AICharacter * character)
 
 	auto hitFlag = hitData.hitFlag && hitData.colType == COLTYPE_HIT;
 
-	if (hitFlag && !(anim == "ダメージ_立ち" ) && !(anim == "ダメージ_ダウン"))
+	if (hitFlag && character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_INVINCIBLE)
 	{
 		character->SetAnim("ダメージ_立ち");
 		character->ChangeState(DamageState::GetInstance());
