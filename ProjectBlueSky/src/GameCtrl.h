@@ -63,8 +63,8 @@ public:
 	bool UpDate(void);		// 钒偺擖椡忣曬偺峏怴傪偡傞
 
 private:
-	KEY_ARRAY data;			// 尰嵼偺腾把偺钒擖椡忣曬傪奿擺偡傞
-	KEY_ARRAY dataOld;		// 1腾把慜偺腾把偺钒擖椡忣曬傪奿擺偡傞
+	KEY_ARRAY keyData;			// 尰嵼偺腾把偺钒擖椡忣曬傪奿擺偡傞
+	KEY_ARRAY keyDataOld;		// 1腾把慜偺腾把偺钒擖椡忣曬傪奿擺偡傞
 
 	std::array<PAD_ARRAY, PAD_MAX> padData;
 	std::array<PAD_ARRAY, PAD_MAX> padDataOld;

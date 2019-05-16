@@ -38,6 +38,7 @@ void GuardState::CheckHitFlag(AICharacter * character)
 
 	auto hitFlag = hitData.hitFlag && hitData.colType == COLTYPE_GUARD;
 
+	// 攻撃を受けた時のノックバック
 	if (!guardHitFlag && hitFlag)
 	{
 		stateTime = 0;
@@ -54,6 +55,7 @@ void GuardState::CheckHitFlag(AICharacter * character)
 
 	guardHitFlag = guardHitFlag || hitFlag;
 
+	// ガード時のノックバック
 	if (guardHitFlag)
 	{
 		pos.x += knockBackSpeed;

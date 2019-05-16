@@ -164,6 +164,7 @@ bool AICharacter::InitAnim(void)
 	AddAnim("ガード_しゃがみ", 0, 0, 1, 5, true, 0, 0);
 	AddAnim("ダメージ_立ち", 0, 0, 5, 5, false, 0, 0);
 	AddAnim("ダメージ_ダウン", 0, 0, 13, 5, false, 0, 0);
+	AddAnim("起き上がり", 0, 0, 13, 5, false, 0, 0);
 	SetAnim("待機");
 
 	return true;
@@ -201,6 +202,7 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 	animFileName["ガード_しゃがみ"] = "guard_squat";
 	animFileName["ダメージ_立ち"] = "damage";
 	animFileName["ダメージ_ダウン"] = "damage_down";
+	animFileName["起き上がり"] = "get_up";
 
 	std::vector<std::string> animName = { "待機",
 										  "前移動",
@@ -227,7 +229,8 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 										  "ガード_立ち",
 										  "ガード_しゃがみ",
 										  "ダメージ_立ち",
-										  "ダメージ_ダウン" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
+										  "ダメージ_ダウン",
+										  "起き上がり" };		// ｱﾆﾒｰｼｮﾝ名を要素として持つvector
 
 	// 必殺技系
 	if ((spAttackAnimName[0] != "技1") && (spAttackAnimFileName[0] != "waza_1"))

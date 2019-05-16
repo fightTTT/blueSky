@@ -58,13 +58,13 @@ void DamageState::Update(AICharacter * character)
 	auto pos = character->GetPos();
 	auto ssize = lpSceneMng.GetScreenSize();
 
-	if (character->GetAnimEndFlag())
-	{
-		character->ChangeState(MoveState::GetInstance());
-	}
-
 	if (character->GetAnim() == "ダメージ_立ち")
 	{
+		if (character->GetAnimEndFlag())
+		{
+			character->ChangeState(MoveState::GetInstance());
+		}
+
 		pos.x += knockBackSpeed.x;
 
 		if (dir == DIR_RIGHT)
@@ -86,6 +86,11 @@ void DamageState::Update(AICharacter * character)
 	}
 	else if (character->GetAnim() == "ダメージ_ダウン")
 	{
+		if (character->GetAnimEndFlag())
+		{
+			character->SetAnim("起き上がり");
+		}
+
 		knockBackSpeed.y++;
 		pos.y += knockBackSpeed.y;
 
@@ -112,6 +117,14 @@ void DamageState::Update(AICharacter * character)
 		}
 
 		pos.x += knockBackSpeed.x;
+	}
+	else if (character->GetAnim() == "起き上がり")
+	{
+		if (character->GetAnimEndFlag())
+		{
+			character->ChangeState(MoveState::GetInstance());
+		}
+
 	}
 
 	character->SetPos(pos);
