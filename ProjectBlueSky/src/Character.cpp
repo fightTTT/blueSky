@@ -37,6 +37,7 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	hitData.hitFlag = false;
 	comboCnt = 0;
 	knockBackSpeed = 0;
+	knockBackFlag = false;
 
 	// 通常のアクション
 	animFileName["待機"] = "stand";
@@ -354,7 +355,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	CommandUpDate(ctl);
 
-	if (GetAnim() == "ダメージ_立ち")
+	if ((knockBackFlag) || (GetAnim() == "ダメージ_立ち"))
 	{
 		if (dir == DIR_RIGHT)
 		{
@@ -374,9 +375,13 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		}
 		pos.x += knockBackSpeed;
 
-		if (animEndFlag && (knockBackSpeed == 0))
+		if (knockBackSpeed == 0)
 		{
-			SetAnim("待機");
+			knockBackFlag = false;
+			if (animEndFlag)
+			{
+				SetAnim("待機");
+			}
 		}
 	}
 	else if (GetAnim() == "ダメージ_ダウン")
@@ -788,6 +793,26 @@ void Character::CheckHitFlag(void)
 					}
 					pos.x += knockBackSpeed;
 				}
+			}
+		}
+	}
+
+	if (animAttribute[1] == ANIM_ATTRIBUTE_GUARD)
+	{
+		if (hitData.hitFlag && (hitData.colType == COLTYPE_GUARD))
+		{
+			if (!knockBackFlag)
+			{
+				if (dir == DIR_RIGHT)
+				{
+					knockBackSpeed = -KNOCK_BACK_SPEED;
+				}
+				else
+				{
+					knockBackSpeed = KNOCK_BACK_SPEED;
+				}
+				pos.x += knockBackSpeed;
+				knockBackFlag = true;
 			}
 		}
 	}

@@ -65,6 +65,7 @@ private:
 	VECTOR2 fallSpeed;
 	
 	int knockBackSpeed;
+	bool knockBackFlag;
 
 protected:
 	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn, PAD_ID id);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標, 反転ﾌﾗｸﾞ, パッド番号
