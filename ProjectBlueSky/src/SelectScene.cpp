@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <time.h>
 #include "SelectScene.h"
 #include "SceneMng.h"
 #include "GameScene.h"
@@ -21,6 +23,7 @@ SelectScene::~SelectScene()
 
 unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
+	
 	for (auto& data : *objList)
 	{
 		data->UpDate(controller, objList);
@@ -33,6 +36,17 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 		{
 			if (lpSceneMng.GetDecidFlag(PAD_1))
 			{
+				// NPC‚Ìg—p·¬×‚ğŒˆ’è
+				bool setEnemyIdFlag = false;
+				do
+				{
+					lpSceneMng.SetCharID(PAD_2, (rand() % 8));
+					if (lpSceneMng.GetCharID(PAD_1) != lpSceneMng.GetCharID(PAD_2))
+					{
+						setEnemyIdFlag = true;
+					}
+				} while (setEnemyIdFlag);
+
 				return std::make_unique<GameScene>();
 			}
 		}
@@ -62,6 +76,9 @@ int SelectScene::Init()
 		objList = std::make_shared<sharedObjList>();
 	}
 	objList->clear();		// objList‚ğ‘Síœ‚·‚é
+
+	// —”
+	srand((unsigned int)time(NULL));
 
 	AddObjList()(objList, std::make_unique<CharSelCursor>(PAD_1));		// Ø½Ä‚ÉCursor¸×½‚ğ’Ç‰Á
 
