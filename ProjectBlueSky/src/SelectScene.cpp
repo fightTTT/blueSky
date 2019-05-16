@@ -45,7 +45,7 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 					{
 						setEnemyIdFlag = true;
 					}
-				} while (setEnemyIdFlag);
+				} while (!setEnemyIdFlag);
 
 				return std::make_unique<GameScene>();
 			}
@@ -70,6 +70,7 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 int SelectScene::Init()
 {
+	
 	flamCnt = 0;
 	if (!objList)
 	{
