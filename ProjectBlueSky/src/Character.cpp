@@ -547,14 +547,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadData(padID, THUMB_L_DOWN))		// しゃがみ
 				{
-					if ((GetAnim() == "しゃがみ始め")
-					 || (GetAnim() == "しゃがみ")
-					 || (GetAnim() == "しゃがみ_後ろ")
-					 || (GetAnim() == "パンチ_小_しゃがみ")
-					 || (GetAnim() == "パンチ_大_しゃがみ")
-					 || (GetAnim() == "キック_小_しゃがみ")
-					 || (GetAnim() == "キック_大_しゃがみ")
-					 || (GetAnim() == "ガード_しゃがみ"))
+					if (animAttribute[0] == ANIM_ATTRIBUTE_SQUAT)
 					{
 						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 						{
@@ -593,7 +586,10 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					// 移動
 					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 					{
-						pos.x += 4;
+						if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+						{
+							pos.x += 4;
+						}
 						if (dir == DIR_LEFT)
 						{
 							SetAnim("後ろ移動");
@@ -605,7 +601,10 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					}
 					else if (ctl.GetPadData(padID, THUMB_L_LEFT))
 					{
-						pos.x -= 4;
+						if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+						{
+							pos.x -= 4;
+						}
 						if (dir == DIR_LEFT)
 						{
 							SetAnim("前移動");
@@ -746,23 +745,16 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 void Character::CheckHitFlag(void)
 {
-	if ((GetAnim() != "ダメージ_ダウン") && (GetAnim() != "起き上がり"))
+	if (animAttribute[1] != ANIM_ATTRIBUTE_INVINCIBLE)
 	{
-		if (hitData.hitFlag && hitData.colType == COLTYPE_HIT)
+		if (hitData.hitFlag && (hitData.colType == COLTYPE_HIT))
 		{
 			dir = tmpDir;
 
 			if (GetAnim() != "ダメージ_立ち")
 			{
 				comboCnt++;
-				if ((comboCnt >= COMBO_BREAK_CNT)
-				 || (GetAnim() == "ジャンプ_上")
-				 || (GetAnim() == "ジャンプ_前")
-				 || (GetAnim() == "ジャンプ_後ろ")
-				 || (GetAnim() == "パンチ_小_空中")
-				 || (GetAnim() == "パンチ_大_空中")
-				 || (GetAnim() == "キック_小_空中")
-				 || (GetAnim() == "キック_大_空中"))
+				if ((comboCnt >= COMBO_BREAK_CNT) || (animAttribute[0] == ANIM_ATTRIBUTE_AIR))
 				{
 					comboCnt = 0;
 
