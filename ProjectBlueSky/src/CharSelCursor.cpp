@@ -46,9 +46,13 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 		{
 			if (charID >= 4)
 			{
-				if ((charID - 4) != tmpEnemyId)
+				charID -= 4;
+				if (lpSceneMng.GetMode() == MODE_2PLAYER)
 				{
-					charID -= 4;
+					if (charID == tmpEnemyId)
+					{
+						charID += 4;
+					}
 				}
 			}
 		}
@@ -56,9 +60,13 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 		{
 			if ((charID % 4) != 3)
 			{
-				if ((charID + 1) != tmpEnemyId)
+				charID += 1;
+				if (lpSceneMng.GetMode() == MODE_2PLAYER)
 				{
-					charID += 1;
+					if (charID == tmpEnemyId)
+					{
+						charID -= 1;
+					}
 				}
 			}
 		}
@@ -66,9 +74,13 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 		{
 			if (charID < 4)
 			{
-				if ((charID + 4) != tmpEnemyId)
+				charID += 4;
+				if (lpSceneMng.GetMode() == MODE_2PLAYER)
 				{
-					charID += 4;
+					if (charID == tmpEnemyId)
+					{
+						charID -= 4;
+					}
 				}
 			}
 		}
@@ -76,9 +88,13 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 		{
 			if ((charID % 4) != 0)
 			{
-				if ((charID - 1) != tmpEnemyId)
+				charID -= 1;
+				if (lpSceneMng.GetMode() == MODE_2PLAYER)
 				{
-					charID -= 1;
+					if (charID == tmpEnemyId)
+					{
+						charID += 1;
+					}
 				}
 			}
 		}
