@@ -22,10 +22,10 @@ void GuardState::Init(AICharacter * character)
 
 void GuardState::Update(AICharacter * character)
 {
-	if (stateTime > 30)
+	if (character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_ATTACK && knockBackSpeed <= 0)
 	{
 		character->ChangeState(MoveState::GetInstance());
-		character->SetAnim("‘Ò‹@");
+		character->SetAnim("Œã‚ëˆÚ“®");
 	}
 
 	stateTime++;

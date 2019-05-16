@@ -48,6 +48,7 @@ void MoveState::Update(AICharacter * character)
 	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
 	{
 		character->ChangeState(GuardState::GetInstance());
+		moveDirFlag = true;
 		return;
 	}
 
