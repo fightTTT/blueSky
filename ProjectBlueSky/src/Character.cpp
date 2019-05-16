@@ -276,22 +276,30 @@ void Character::CommandUpDate(const GameCtrl & ctl)
 	}
 
 	// ƒŠƒXƒg‚É“ü‚ê‚é
-	if (comDir != COM_DIR_CENTER)
+	if (comDir != comDirOld)
 	{
-		if (comDir != comDirOld)
+		if (comDirOld != COM_DIR_ACCUMULATE)
 		{
-			if (comDirOld != COM_DIR_ACCUMULATE)
-			{
-				comList.push_back(comDir);
-				comClearCnt = DEF_COM_CLEAR_CNT;
-			}
+			comList.push_back(comDir);
+			comClearCnt = DEF_COM_CLEAR_CNT;
 		}
-		else
+	}
+	else
+	{
+		if (comDir != COM_DIR_CENTER)
 		{
 			if (comClearCnt <= 0)
 			{
-				comList.push_back(COM_DIR_ACCUMULATE);
-				comClearCnt = DEF_COM_CLEAR_CNT;
+				if (!comList.empty())
+				{
+					auto itr = comList.end();
+					itr--;
+					if ((*itr) != COM_DIR_ACCUMULATE)
+					{
+						comList.push_back(COM_DIR_ACCUMULATE);
+					}
+					comClearCnt = DEF_COM_CLEAR_CNT;
+				}
 			}
 		}
 	}
@@ -893,6 +901,9 @@ void Character::Draw(void)
 	{
 		switch (data)
 		{
+		case COM_DIR_CENTER:
+			DrawString((i * 40) + 15, 200, "’†", 0xffffff);
+			break;
 		case COM_DIR_UP:
 			DrawString((i * 40) + 15, 200, "ã", 0xffffff);
 			break;
