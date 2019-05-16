@@ -431,6 +431,25 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("ë“ã@");
 		}
 	}
+	else if (GetAnim() == "îgìÆ")
+	{
+		if (animCnt == (6 * animTable["îgìÆ"][ANIM_TBL_INV]))
+		{
+			if (dir == DIR_RIGHT)
+			{
+				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(128,0), drawOffset, dir, padID));
+			}
+			else
+			{
+				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(-128, 0), drawOffset, dir, padID));
+			}
+		}
+
+		if (animEndFlag)
+		{
+			SetAnim("ë“ã@");
+		}
+	}
 	else
 	{
 		// ÉLÉÉÉâÉNÉ^Å[ëÄçÏ
@@ -640,10 +659,6 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
 					{
 						SetAnim(spAttackAnimName[0]);
-						if (spAttackAnimName[0] == "îgìÆ")
-						{
-							AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
-						}
 					}
 					else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && CheckCommand(1))
 					{
@@ -670,10 +685,6 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
 					{
 						SetAnim(spAttackAnimName[0]);
-						if (spAttackAnimName[0] == "îgìÆ")
-						{
-							AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
-						}
 					}
 					else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && CheckCommand(1))
 					{
