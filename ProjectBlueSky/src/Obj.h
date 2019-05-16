@@ -18,6 +18,18 @@ enum ANIM_TBL {
 	ANIM_TBL_MAX
 };
 
+enum ANIM_ATTRIBUTE
+{
+	ANIM_ATTRIBUTE_NON,
+	ANIM_ATTRIBUTE_STAND,
+	ANIM_ATTRIBUTE_SQUAT,
+	ANIM_ATTRIBUTE_AIR,
+	ANIM_ATTRIBUTE_ATTACK,
+	ANIM_ATTRIBUTE_GUARD,
+	ANIM_ATTRIBUTE_INVINCIBLE,
+	ANIM_ATTRIBUTE_MAX
+};
+
 enum OBJ_TYPE
 {
 	OBJ_TYPE_CHARACTER,
@@ -146,4 +158,5 @@ protected:
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;		// ±∆“∞ºÆ›èÓïÒ
 	std::string animName;									// ï\é¶±∆“∞ºÆ›ñº
+	ANIM_ATTRIBUTE animAttribute[2];
 };

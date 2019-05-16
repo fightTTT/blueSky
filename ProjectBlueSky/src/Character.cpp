@@ -701,6 +701,8 @@ void Character::CheckHitFlag(void)
 	{
 		if (hitData.hitFlag && hitData.colType == COLTYPE_HIT)
 		{
+			dir = tmpDir;
+
 			if (GetAnim() != "É_ÉÅÅ[ÉW_óßÇø")
 			{
 				comboCnt++;
