@@ -89,13 +89,29 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			}
 
 			// 一人が後ろ歩きでもう一人が攻撃系のアニメーションの時に、後ろ歩きをしている方をガード状態にする
-			if (sObj[0]->GetAnim() == "パンチ_小" && sObj[1]->GetAnim() == "後ろ移動")
+			if (sObj[0]->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK)
 			{
-				sObj[1]->SetAnim("ガード_立ち");
+				if (sObj[1]->GetAnim() == "後ろ移動")
+				{
+					sObj[1]->SetAnim("ガード_立ち");
+				}
+
+				if (sObj[1]->GetAnim() == "しゃがみ_後ろ")
+				{
+					sObj[1]->SetAnim("ガード_しゃがみ");
+				}
 			}
-			if (sObj[1]->GetAnim() == "パンチ_小" && sObj[0]->GetAnim() == "後ろ移動")
+			if (sObj[1]->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK)
 			{
-				sObj[0]->SetAnim("ガード_立ち");
+				if (sObj[0]->GetAnim() == "後ろ移動")
+				{
+					sObj[0]->SetAnim("ガード_立ち");
+				}
+
+				if (sObj[0]->GetAnim() == "しゃがみ_後ろ")
+				{
+					sObj[0]->SetAnim("ガード_しゃがみ");
+				}
 			}
 
 			// キャラクターの状態を相手に渡す
