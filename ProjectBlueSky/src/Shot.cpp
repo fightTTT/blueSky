@@ -1,5 +1,7 @@
+#include"DxLib.h"
 #include "SceneMng.h"
 #include "Shot.h"
+
 
 #define MOVE_SPPED (7)
 
@@ -43,4 +45,29 @@ bool Shot::CheckDeth()
 bool Shot::CheckObjType(OBJ_TYPE type)
 {
 	return type == OBJ_TYPE_SHOT;
+}
+
+void Shot::Draw(void)
+{
+
+		Obj::Draw();
+
+		// îgìÆåùÇÃìñÇΩÇËîªíËÇÃï\é¶
+		if (!hitData.hitFlag)
+		{
+			VECTOR2 startPos = { 0,0 };
+			VECTOR2 endPos = { 0,0 };
+				startPos = { pos.x - 50,pos.y - 50 };
+				endPos = { pos.x + 50,pos.y + 50 };
+				DrawBox(startPos.x, startPos.y, endPos.x, endPos.y,0xff0000,true);
+		}
+
+}
+
+void Shot::CheckHitFlag(void)
+{
+	if (hitData.hitFlag)
+	{
+		deleteFlag = true;
+	}
 }

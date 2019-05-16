@@ -13,10 +13,12 @@ public:
 
 	bool CheckDeth();
 	bool CheckObjType(OBJ_TYPE type);
+	void Draw(void);
 
 private:
 	VECTOR2 ssize;
 	int speed;
+	void CheckHitFlag(void);
 
 	bool deleteFlag;			// íœƒtƒ‰ƒO
 

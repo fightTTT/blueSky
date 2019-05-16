@@ -43,9 +43,6 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		data->UpDate(controller, objList);
 	}
 
-	auto deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
-	objList->erase(deth_itr, objList->end());
-
 	sharedObj sObj[2];	// キャラクターのObj変数保存
 	int charaCount = 0;	// 見つかったキャラクターの数
 	OBJ_TYPE type[2];	// キャラクターのタイプ
@@ -250,6 +247,35 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 							sObj[(i + 1) % 2]->SetHitData(false, colData[(i + 1) % 2].hitBox[b].type);
 						}
 					}
+
+					// 波動拳の当たり判定
+					if (eState.shotData.size())
+					{
+						VECTOR2 startPos = { 0,0 };
+						VECTOR2 endPos = { 0,0 };
+
+						if (colData[i].hitBox[a].type != COLTYPE_ATTACK)
+						{
+							for (int s = 0; s < eState.shotData.size(); s++)
+							{
+								startPos = { eState.shotData[s].pos.x - 50,eState.shotData[s].pos.y - 50 };
+								endPos = { eState.shotData[s].pos.x + 50,eState.shotData[s].pos.y + 50 };
+
+								if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
+									&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
+									&& colData[i].hitBox[a].rect.endPos.y >= startPos.y
+									&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
+								{
+									sObj[i]->SetHitData(true, colData[i].hitBox[a].type);
+									break;
+								}
+								else
+								{
+									sObj[i]->SetHitData(false, colData[i].hitBox[a].type);
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -259,6 +285,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 	{
 		data->CheckHitFlag();
 	}
+
+	auto deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
+	objList->erase(deth_itr, objList->end());
 
 	//描画処理
 	GameDraw();
