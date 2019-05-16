@@ -49,7 +49,7 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 				charID -= 4;
 				if (lpSceneMng.GetMode() == MODE_2PLAYER)
 				{
-					if (charID == tmpEnemyId)
+					if (charID == lpSceneMng.GetCharID(tmpEnemyId))
 					{
 						charID += 4;
 					}
@@ -63,7 +63,7 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 				charID += 1;
 				if (lpSceneMng.GetMode() == MODE_2PLAYER)
 				{
-					if (charID == tmpEnemyId)
+					if (charID == lpSceneMng.GetCharID(tmpEnemyId))
 					{
 						charID -= 1;
 					}
@@ -77,7 +77,7 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 				charID += 4;
 				if (lpSceneMng.GetMode() == MODE_2PLAYER)
 				{
-					if (charID == tmpEnemyId)
+					if (charID == lpSceneMng.GetCharID(tmpEnemyId))
 					{
 						charID -= 4;
 					}
@@ -91,7 +91,7 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 				charID -= 1;
 				if (lpSceneMng.GetMode() == MODE_2PLAYER)
 				{
-					if (charID == tmpEnemyId)
+					if (charID == lpSceneMng.GetCharID(tmpEnemyId))
 					{
 						charID += 1;
 					}
