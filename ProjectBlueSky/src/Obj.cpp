@@ -24,6 +24,8 @@ bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, bool turn)
 	this->divSize = divSize;
 	this->divCut = divCut;
 	turnFlag = turn;
+	animAttribute[0] = ANIM_ATTRIBUTE_NON;
+	animAttribute[1] = ANIM_ATTRIBUTE_NON;
 	return true;
 }
 
