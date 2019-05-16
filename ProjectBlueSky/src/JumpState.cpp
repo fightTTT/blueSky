@@ -38,20 +38,21 @@ void JumpState::Update(AICharacter * character)
 	bool jumpTypeLeft = false;
 	bool jumpTypeRight = false;
 
-	int rand = 0;
+	int randLeft = 0;
+	int randRight = 0;
 
 	if (jumpType == JUMP_TYPE_RAND)
 	{
-		rand = GetRand(10);
-
 		// 前にジャンプするように向いている方向以外をfalse
 		if (charaDir == DIR_LEFT)
 		{
 			jumpLeft = false;
+			randRight = GetRand(10);
 		}
 		else if (charaDir == DIR_RIGHT)
 		{
 			jumpRight = false;
+			randLeft = GetRand(10);
 		}
 	}
 	else if (jumpType == JUMP_TYPE_FRONT)
@@ -60,13 +61,13 @@ void JumpState::Update(AICharacter * character)
 		if (charaDir == DIR_LEFT)
 		{
 			jumpLeft = false;
+			randRight = 10;
 		}
 		else if (charaDir == DIR_RIGHT)
 		{
 			jumpRight = false;
+			randLeft = 10;
 		}
-
-		rand = 10;
 	}
 	else if (jumpType == JUMP_TYPE_BACK)
 	{
@@ -74,22 +75,23 @@ void JumpState::Update(AICharacter * character)
 		if (charaDir == DIR_LEFT)
 		{
 			jumpLeft = true;
+			randLeft = 10;
 		}
 		else if (charaDir == DIR_RIGHT)
 		{
 			jumpRight = true;
+			randRight = 10;
 		}
-
-		rand = 10;
 	}
 	else if (jumpType == JUMP_TYPE_UP)
 	{
-		rand = 0;
+		randLeft = 0;
+		randRight = 0;
 	}
 
 	if (!jumpFlag)
 	{
-		if (rand >= 5 && jumpLeft)
+		if (randLeft >= 7 && jumpLeft)
 		{
 			// 右上
 			jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
@@ -105,7 +107,7 @@ void JumpState::Update(AICharacter * character)
 				character->SetAnim("ジャンプ_前");
 			}
 		}
-		else if (rand >= 5 && jumpRight)
+		else if (randRight >= 7 && jumpRight)
 		{
 			// 左上
 			jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
