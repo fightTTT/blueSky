@@ -56,6 +56,7 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 int SelectScene::Init()
 {
+	flamCnt = 0;
 	if (!objList)
 	{
 		objList = std::make_shared<sharedObjList>();
@@ -117,16 +118,24 @@ void SelectScene::SelectDraw()
 	{
 		if (lpSceneMng.GetDecidFlag(PAD_1))
 		{
-			DrawGraph((scSize.x / 2) - 419, (scSize.y / 10) , IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
-			DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
+			flamCnt++;
+			if (((flamCnt / 30) % 2) == 0)
+			{
+				DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
+				//DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
+			}
 		}
 	}
 	else if (lpSceneMng.GetMode() == MODE_2PLAYER)
 	{
 		if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
 		{
-			DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
-			DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
+			flamCnt++;
+			if (((flamCnt / 30) % 2) == 0)
+			{
+				DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
+				//DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
+			}
 		}
 	}
 	else

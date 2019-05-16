@@ -17,7 +17,7 @@ public:
 
 private:
 	VECTOR2 scSize;
-
+	int flamCnt;		// “_–Å—p
 	int Init(void);
 	void SelectDraw(void);
 	sharedListObj objList;
