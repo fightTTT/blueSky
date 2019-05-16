@@ -17,6 +17,7 @@ public:
 
 private:
 	VECTOR2 scSize;
+	int itvCnt;			// ²ÝÀ°ÊÞÙ—p¶³ÝÄ
 	int flamCnt;		// “_–Å—p
 	int Init(void);
 	void SelectDraw(void);

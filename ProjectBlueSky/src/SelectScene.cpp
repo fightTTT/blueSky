@@ -23,21 +23,27 @@ SelectScene::~SelectScene()
 
 unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
-	
 	for (auto& data : *objList)
 	{
 		data->UpDate(controller, objList);
 	}
 
+	itvCnt++;
+	if (itvCnt > 120)
+	{
+		return std::make_unique<GameScene>();
+	}
+
 	/* ¹Þ°Ñ¼°Ý‚ÖˆÚ“® */
 	if (controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START))
-	{
+	{				
+
 		if (lpSceneMng.GetMode() == MODE_1PLAYER)
 		{
 			if (lpSceneMng.GetDecidFlag(PAD_1))
 			{
+				int setEnemyIdFlag = false;
 				// NPC‚ÌŽg—p·¬×‚ðŒˆ’è
-				bool setEnemyIdFlag = false;
 				do
 				{
 					lpSceneMng.SetCharID(PAD_2, (rand() % 8));
@@ -46,8 +52,6 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 						setEnemyIdFlag = true;
 					}
 				} while (!setEnemyIdFlag);
-
-				return std::make_unique<GameScene>();
 			}
 		}
 		else if (lpSceneMng.GetMode() == MODE_2PLAYER)
@@ -64,13 +68,12 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 	}
 
 	SelectDraw();
-
 	return std::move(own);
 }
 
 int SelectScene::Init()
 {
-	
+	itvCnt = 0;
 	flamCnt = 0;
 	if (!objList)
 	{
@@ -130,7 +133,6 @@ void SelectScene::SelectDraw()
 		(*data).Draw();
 	}
 
-	//DrawString(1200, 200, "SelectScene", 0xffffff);
 
 	if (lpSceneMng.GetMode() == MODE_1PLAYER)
 	{
