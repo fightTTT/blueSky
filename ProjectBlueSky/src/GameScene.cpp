@@ -194,7 +194,14 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			{
 				for (int a = 0; a < colData[i].hitBox.size(); a++)
 				{
-
+					if (a >= 1)
+					{
+						if (colData[i].hitBox[a - 1].type == COLTYPE_ATTACK)
+						{
+							break;
+						}
+					}
+					
 					for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
 					{
 						if (colData[i].hitBox[a].type == COLTYPE_ATTACK)
@@ -224,9 +231,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						{
 							sObj[(i + 1) % 2]->SetHitData(false, colData[(i + 1) % 2].hitBox[b].type);
 						}
-						
 					}
-
 				}
 			}
 		}
