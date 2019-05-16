@@ -15,6 +15,16 @@
 #define BG_IMAGE_SIZE_X (1920)
 #define BG_IMAGE_SIZE_Y (720)
 
+// ﾃﾞﾊﾞｯｸﾒｯｾｰｼﾞ用定義
+#ifdef _DEBUG		// 失敗時の処理
+#define AST() {\
+	CHAR ast_mes[256];\
+	wsprintf(ast_mes, "%s %d行目\0", __FILE__, __LINE__);\
+	MessageBox(0, ast_mes, "ｱｻｰﾄ表示", MB_OK);\
+	}
+#else				// 成功時の処理
+#define AST()
+#endif		// _DEBUG
 
 GameScene::GameScene()
 {
@@ -78,6 +88,16 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				sObj[1]->SetDir(DIR_LEFT);
 			}
 
+			// 一人が後ろ歩きでもう一人が攻撃系のアニメーションの時に、後ろ歩きをしている方をガード状態にする
+			if (sObj[0]->GetAnim() == "パンチ_小" && sObj[1]->GetAnim() == "後ろ移動")
+			{
+				sObj[1]->SetAnim("ガード_立ち");
+			}
+			if (sObj[1]->GetAnim() == "パンチ_小" && sObj[0]->GetAnim() == "後ろ移動")
+			{
+				sObj[0]->SetAnim("ガード_立ち");
+			}
+
 			// キャラクターの状態を相手に渡す
 			if (!(type[0] == type[1]))
 			{
@@ -102,6 +122,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 	for (int i = 0; i < 2; i++)
 	{
 		animName[i] = sObj[i]->GetAnim();
+
+		// 当たり判定をfalseにする
+		sObj[i]->SetHitData(false, COL_TYPE_NON);
 	}
 
 	// 当たり判定処理
@@ -222,8 +245,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 int GameScene::Init(void)
 {
-	auto ssize = lpSceneMng.GetScreenSize();
-	
+	MODE mode = lpSceneMng.GetMode();
+	VECTOR2 ssize = lpSceneMng.GetScreenSize();
+
 	if (!objList)
 	{
 		objList = std::make_shared<sharedObjList>();
@@ -236,21 +260,20 @@ int GameScene::Init(void)
 
 	AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((STICK_HUMAN_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_1, DIR_LEFT));
 
-	if (lpSceneMng.GetMode() == MODE_1PLAYER)
+	if (mode == MODE_1PLAYER)
 	{
 		AddObjList()(objList, std::make_unique<AIStickHuman>(VECTOR2(ssize.x - (STICK_HUMAN_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), DIR_RIGHT));
 	}
-	else if (lpSceneMng.GetMode() == MODE_2PLAYER)
+	else if (mode == MODE_2PLAYER)
 	{
 		AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2(ssize.x - (STICK_HUMAN_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_2, DIR_RIGHT));
 	}
 	else
 	{
+		// MODE_MAXが来ている(エラー)
+		AST();
 	}
-	//AddObjList()(objList, std::make_unique<AIStickHuman>(VECTOR2(ssize.x - (STICK_HUMAN_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), DIR_RIGHT));
-	//AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((STICK_HUMAN_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_1, DIR_LEFT));
-	//AddObjList()(objList, std::make_unique<AIRyu>(VECTOR2(ssize.x - (RYU_IMAGE_SIZE_X / 2), ssize.y), VECTOR2(-(290 / 2), -178), DIR_LEFT));
-
+	
 	return 0;
 }
 
