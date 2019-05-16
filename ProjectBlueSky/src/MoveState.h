@@ -25,5 +25,6 @@ private:
 	bool moveDirFlag;				// true : 前移動 false : 後ろ移動
 	bool changeAttackFlag;			// ステートをAttackに変更するフラグ
 	int changeGuardStateCount;		// ガード状態に入るカウント
+	int notAttackCount;				// 攻撃していない状態のカウント
 };
 

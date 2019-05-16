@@ -11,7 +11,7 @@
 #include "DxLib.h"
 
 #define MOVE_SPEED (2)
-#define ATTACK_RANGE (150)
+#define ATTACK_RANGE (180)
 
 MoveState::MoveState()
 {
@@ -27,6 +27,7 @@ void MoveState::Init(AICharacter * character)
 {
 	changeGuardStateCount = 0;
 	stateTime = 0;
+	notAttackCount = 0;
 }
 
 void MoveState::Update(AICharacter * character)
@@ -53,9 +54,17 @@ void MoveState::Update(AICharacter * character)
 	}
 
 	// ‹ß‹——£UŒ‚‚ª“–‚½‚é‹——£‚Ìê‡UŒ‚
-	if (abs(vec.x) < ATTACK_RANGE - 20)
+	if (abs(vec.x) < ATTACK_RANGE - 80)
 	{
+		rand = GetRand(100);
+		if (rand <= 5)
+		{
+			character->SetJumpType(JUMP_TYPE_FRONT);
+			character->ChangeState(JumpState::GetInstance());
+			return;
+		}
 		character->ChangeState(AttackState::GetInstance());
+		notAttackCount = 0;
 		return;
 	}
 	// ‹——£‚ª‰“‚¢ê‡
@@ -63,18 +72,23 @@ void MoveState::Update(AICharacter * character)
 	{
 		rand = GetRand(100);
 
-		if (rand == 0)
+		if (rand == 0 && notAttackCount > 180)
 		{
 			character->ChangeState(LongAttackState::GetInstance());
-			return;
-		}
-		else if (rand == 1 && moveDirFlag)
-		{
-			character->SetJumpType(JUMP_TYPE_FRONT);
-			character->ChangeState(JumpState::GetInstance());
+			notAttackCount = 0;
 			return;
 		}
 	}
+
+	if (notAttackCount >= 180)
+	{
+		character->SetJumpType(JUMP_TYPE_FRONT);
+		character->ChangeState(JumpState::GetInstance());
+		notAttackCount = 0;
+		return;
+	}
+
+	notAttackCount++;
 
 	// ’e‚ğƒWƒƒƒ“ƒv‰ñ”ğ
 	for (auto data : enemy.shotData)
