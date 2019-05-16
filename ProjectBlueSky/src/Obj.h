@@ -54,13 +54,12 @@ struct ShotData
 
 struct EnemyState
 {
-	EnemyState() : enemyPos(VECTOR2(0, 0)), enemyAnimName("none") {}
-	EnemyState(VECTOR2 pos, std::string animName) : enemyPos(pos), enemyAnimName(animName) {}
+	EnemyState() : enemyPos(VECTOR2(0, 0)) {}
 
 	void pushBackShotData(ShotData data) { shotData.push_back(data); }
 
 	VECTOR2 enemyPos;
-	std::string enemyAnimName;
+	ANIM_ATTRIBUTE enemyAnimAttribute[2];
 	std::vector<ShotData> shotData;
 };
 

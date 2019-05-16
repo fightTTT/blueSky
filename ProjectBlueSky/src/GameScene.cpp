@@ -120,13 +120,15 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				if (type[0] == OBJ_TYPE_CHARACTER)
 				{
 					eState.enemyPos = sObj[0]->GetPos();
-					eState.enemyAnimName = sObj[0]->GetAnim();
+					eState.enemyAnimAttribute[0] = sObj[0]->GetAnimAttribute(0);
+					eState.enemyAnimAttribute[1] = sObj[0]->GetAnimAttribute(1);
 					sObj[1]->SetEnemyState(eState);
 				}
 				else
 				{
 					eState.enemyPos = sObj[1]->GetPos();
-					eState.enemyAnimName = sObj[1]->GetAnim();
+					eState.enemyAnimAttribute[0] = sObj[1]->GetAnimAttribute(0);
+					eState.enemyAnimAttribute[1] = sObj[1]->GetAnimAttribute(1);
 					sObj[0]->SetEnemyState(eState);
 				}
 			}

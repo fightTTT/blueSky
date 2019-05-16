@@ -48,14 +48,11 @@ void MoveState::Update(AICharacter * character)
 	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
 	{
 		character->ChangeState(GuardState::GetInstance());
+		moveDirFlag = true;
 		return;
 	}
 
-	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大" || enemy.enemyAnimName == "キック_小"))
-	{
-		moveDirFlag = false;
-	}
-	else if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大_しゃがみ" || enemy.enemyAnimName == "キック_小_しゃがみ"))
+	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK))
 	{
 		moveDirFlag = false;
 	}
