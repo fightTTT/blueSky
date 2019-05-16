@@ -53,43 +53,25 @@ void MoveState::Update(AICharacter * character)
 	}
 
 	// 近距離攻撃が当たる距離の場合攻撃
-	if (abs(vec.x) < 100)
+	if (abs(vec.x) < ATTACK_RANGE - 20)
 	{
-		rand = GetRand(5);
-
-		if (rand == 0)
-		{
-			character->SetAnim("パンチ_大");
-			character->ChangeState(AttackState::GetInstance());
-			return;
-		}
-		else if (rand == 1)
-		{
-			character->SetAnim("パンチ_小");
-			character->ChangeState(AttackState::GetInstance());
-			return;
-		}
-		else if (rand == 2)
-		{
-			character->SetAnim("キック_大");
-			character->ChangeState(AttackState::GetInstance());
-			return;
-		}
-		else if (rand == 3)
-		{
-			character->SetAnim("キック_小");
-			character->ChangeState(AttackState::GetInstance());
-			return;
-		}
+		character->ChangeState(AttackState::GetInstance());
+		return;
 	}
 	// 距離が遠い場合
 	else if (abs(vec.x) > 250)
 	{
-		rand = GetRand(500);
+		rand = GetRand(100);
 
 		if (rand == 0)
 		{
 			character->ChangeState(LongAttackState::GetInstance());
+			return;
+		}
+		else if (rand == 1 && moveDirFlag)
+		{
+			character->SetJumpType(JUMP_TYPE_FRONT);
+			character->ChangeState(JumpState::GetInstance());
 			return;
 		}
 	}
@@ -118,28 +100,6 @@ void MoveState::Update(AICharacter * character)
 		else
 		{
 			continue;
-		}
-	}
-
-	rand = GetRand(500);
-
-	// 移動方向にジャンプ
-	if (moveDirFlag)
-	{
-		if (rand == 0)
-		{
-			character->SetJumpType(JUMP_TYPE_FRONT);
-			character->ChangeState(JumpState::GetInstance());
-			return;
-		}
-	}
-	else
-	{
-		if (rand == 0)
-		{
-			character->SetJumpType(JUMP_TYPE_BACK);
-			character->ChangeState(JumpState::GetInstance());
-			return;
 		}
 	}
 
