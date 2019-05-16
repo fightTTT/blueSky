@@ -25,6 +25,7 @@ void GuardState::Update(AICharacter * character)
 	if (stateTime > 30)
 	{
 		character->ChangeState(MoveState::GetInstance());
+		character->SetAnim("‘Ò‹@");
 	}
 
 	stateTime++;

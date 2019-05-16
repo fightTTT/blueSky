@@ -37,6 +37,7 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	hitData.hitFlag = false;
 	comboCnt = 0;
 	knockBackSpeed = 0;
+	knockBackFlag = false;
 
 	// 通常のアクション
 	animFileName["待機"] = "stand";
@@ -354,7 +355,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	CommandUpDate(ctl);
 
-	if (GetAnim() == "ダメージ_立ち")
+	if ((knockBackFlag) || (GetAnim() == "ダメージ_立ち"))
 	{
 		if (dir == DIR_RIGHT)
 		{
@@ -374,9 +375,13 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		}
 		pos.x += knockBackSpeed;
 
-		if (animEndFlag && (knockBackSpeed == 0))
+		if (knockBackSpeed == 0)
 		{
-			SetAnim("待機");
+			knockBackFlag = false;
+			if (animEndFlag)
+			{
+				SetAnim("待機");
+			}
 		}
 	}
 	else if (GetAnim() == "ダメージ_ダウン")
@@ -547,14 +552,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadData(padID, THUMB_L_DOWN))		// しゃがみ
 				{
-					if ((GetAnim() == "しゃがみ始め")
-					 || (GetAnim() == "しゃがみ")
-					 || (GetAnim() == "しゃがみ_後ろ")
-					 || (GetAnim() == "パンチ_小_しゃがみ")
-					 || (GetAnim() == "パンチ_大_しゃがみ")
-					 || (GetAnim() == "キック_小_しゃがみ")
-					 || (GetAnim() == "キック_大_しゃがみ")
-					 || (GetAnim() == "ガード_しゃがみ"))
+					if (animAttribute[0] == ANIM_ATTRIBUTE_SQUAT)
 					{
 						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 						{
@@ -593,7 +591,10 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					// 移動
 					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 					{
-						pos.x += 4;
+						if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+						{
+							pos.x += 4;
+						}
 						if (dir == DIR_LEFT)
 						{
 							SetAnim("後ろ移動");
@@ -605,7 +606,10 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					}
 					else if (ctl.GetPadData(padID, THUMB_L_LEFT))
 					{
-						pos.x -= 4;
+						if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+						{
+							pos.x -= 4;
+						}
 						if (dir == DIR_LEFT)
 						{
 							SetAnim("前移動");
@@ -746,23 +750,16 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 void Character::CheckHitFlag(void)
 {
-	if ((GetAnim() != "ダメージ_ダウン") && (GetAnim() != "起き上がり"))
+	if (animAttribute[1] != ANIM_ATTRIBUTE_INVINCIBLE)
 	{
-		if (hitData.hitFlag && hitData.colType == COLTYPE_HIT)
+		if (hitData.hitFlag && (hitData.colType == COLTYPE_HIT))
 		{
 			dir = tmpDir;
 
 			if (GetAnim() != "ダメージ_立ち")
 			{
 				comboCnt++;
-				if ((comboCnt >= COMBO_BREAK_CNT)
-				 || (GetAnim() == "ジャンプ_上")
-				 || (GetAnim() == "ジャンプ_前")
-				 || (GetAnim() == "ジャンプ_後ろ")
-				 || (GetAnim() == "パンチ_小_空中")
-				 || (GetAnim() == "パンチ_大_空中")
-				 || (GetAnim() == "キック_小_空中")
-				 || (GetAnim() == "キック_大_空中"))
+				if ((comboCnt >= COMBO_BREAK_CNT) || (animAttribute[0] == ANIM_ATTRIBUTE_AIR))
 				{
 					comboCnt = 0;
 
@@ -796,6 +793,26 @@ void Character::CheckHitFlag(void)
 					}
 					pos.x += knockBackSpeed;
 				}
+			}
+		}
+	}
+
+	if (animAttribute[1] == ANIM_ATTRIBUTE_GUARD)
+	{
+		if (hitData.hitFlag && (hitData.colType == COLTYPE_GUARD))
+		{
+			if (!knockBackFlag)
+			{
+				if (dir == DIR_RIGHT)
+				{
+					knockBackSpeed = -KNOCK_BACK_SPEED;
+				}
+				else
+				{
+					knockBackSpeed = KNOCK_BACK_SPEED;
+				}
+				pos.x += knockBackSpeed;
+				knockBackFlag = true;
 			}
 		}
 	}
