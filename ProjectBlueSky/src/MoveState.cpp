@@ -38,19 +38,26 @@ void MoveState::Update(AICharacter * character)
 	auto divSize = character->GetDivSize();
 
 	VECTOR2 vec = enemy.enemyPos - pos;
-	int rand;
+	int rand = 0;
 
-	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大" || enemy.enemyAnimName == "キック_小"))
+	if (GetRand(100) == 0)
 	{
-		character->SetAnim("ガード_立ち");
+		moveDirFlag = true;
+	}
+
+	if (character->GetAnim() == "ガード_立ち" && character->GetAnim() == "ガード_しゃがみ")
+	{
 		character->ChangeState(GuardState::GetInstance());
 		return;
 	}
+
+	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大" || enemy.enemyAnimName == "キック_小"))
+	{
+		moveDirFlag = false;
+	}
 	else if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大_しゃがみ" || enemy.enemyAnimName == "キック_小_しゃがみ"))
 	{
-		character->SetAnim("ガード_しゃがみ");
-		character->ChangeState(GuardState::GetInstance());
-		return;
+		moveDirFlag = false;
 	}
 
 	// 近距離攻撃が当たる距離の場合攻撃
