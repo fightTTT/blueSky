@@ -161,6 +161,14 @@ void JumpState::Update(AICharacter * character)
 
 	if (abs(distance.x) < 200 && jumpSpeed.y > -10)
 	{
+		if (distance.x < 0)
+		{
+			character->SetDir(DIR_LEFT);
+		}
+		else
+		{
+			character->SetDir(DIR_RIGHT);
+		}
 		character->SetAnim("ƒLƒbƒN_‘å_‹ó’†");
 	}
 }

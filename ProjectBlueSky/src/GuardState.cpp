@@ -28,6 +28,13 @@ void GuardState::Update(AICharacter * character)
 		character->SetAnim("Œã‚ëˆÚ“®");
 	}
 
+	auto enemy = character->GetEnemyState();
+
+	if (enemy.enemyAnimAttribute[0] == ANIM_ATTRIBUTE_SQUAT)
+	{
+		character->SetAnim("‚µ‚á‚ª‚Ý_Œã‚ë");
+	}
+
 	stateTime++;
 }
 
