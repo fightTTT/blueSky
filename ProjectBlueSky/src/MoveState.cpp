@@ -38,19 +38,26 @@ void MoveState::Update(AICharacter * character)
 	auto divSize = character->GetDivSize();
 
 	VECTOR2 vec = enemy.enemyPos - pos;
-	int rand;
+	int rand = 0;
 
-	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大" || enemy.enemyAnimName == "キック_小"))
+	if (GetRand(100) == 0)
 	{
-		character->SetAnim("ガード_立ち");
+		moveDirFlag = true;
+	}
+
+	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
+	{
 		character->ChangeState(GuardState::GetInstance());
 		return;
 	}
+
+	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大" || enemy.enemyAnimName == "キック_小"))
+	{
+		moveDirFlag = false;
+	}
 	else if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimName == "キック_大_しゃがみ" || enemy.enemyAnimName == "キック_小_しゃがみ"))
 	{
-		character->SetAnim("ガード_しゃがみ");
-		character->ChangeState(GuardState::GetInstance());
-		return;
+		moveDirFlag = false;
 	}
 
 	// 近距離攻撃が当たる距離の場合攻撃
@@ -115,6 +122,12 @@ void MoveState::Update(AICharacter * character)
 		{
 			continue;
 		}
+	}
+
+	// ガード状態の場合は移動しない
+	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
+	{
+		return;
 	}
 
 	// 移動処理
@@ -200,7 +213,7 @@ void MoveState::CheckHitFlag(AICharacter * character)
 
 	auto hitFlag = hitData.hitFlag && hitData.colType == COLTYPE_HIT;
 
-	if (hitFlag && !(anim == "ダメージ_立ち" ) && !(anim == "ダメージ_ダウン"))
+	if (hitFlag && character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_INVINCIBLE)
 	{
 		character->SetAnim("ダメージ_立ち");
 		character->ChangeState(DamageState::GetInstance());
