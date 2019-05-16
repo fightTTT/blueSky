@@ -145,6 +145,18 @@ bool Obj::SetAnim(std::string animName)
 	Obj::animCnt = 0;
 	Obj::animEndFlag = false;
 
+	if (animAttributeTbl.find(animName) == animAttributeTbl.end())
+	{
+		// Ã°ÌŞÙ‚ª’è‹`‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Í‹­§“I‚ÉNON‚ğ“ü‚ê‚Ä‚¨‚­
+		animAttribute[0] = ANIM_ATTRIBUTE_NON;
+		animAttribute[1] = ANIM_ATTRIBUTE_NON;
+	}
+	else
+	{
+		animAttribute[0] = animAttributeTbl[animName][0];
+		animAttribute[1] = animAttributeTbl[animName][1];
+	}
+
 	return true;
 }
 
@@ -156,6 +168,11 @@ const int Obj::GetAnimFrame(std::string animName)
 std::string Obj::GetAnim(void)
 {
 	return animName;
+}
+
+const ANIM_ATTRIBUTE Obj::GetAnimAttribute(int index)
+{
+	return animAttribute[index];
 }
 
 void Obj::SetDir(DIR d)

@@ -106,6 +106,7 @@ public:
 	bool SetAnim(std::string animName);															// ｱﾆﾒｰｼｮﾝをｾｯﾄする
 	const int GetAnimFrame(std::string animName);
 	std::string GetAnim(void);			// ｱﾆﾒｰｼｮﾝの情報を取得する
+	const ANIM_ATTRIBUTE GetAnimAttribute(int index);		// ｱﾆﾒｰｼｮﾝの属性のｹﾞｯﾀｰ
 
 	// サイズ取得
 	VECTOR2 GetDivSize() const { return divSize; }
@@ -156,7 +157,8 @@ protected:
 	PAD_ID padID;					// 使用しているPAD番号
 	HitData hitData;				// 当たった情報
 
-	std::map<std::string, int[ANIM_TBL_MAX]> animTable;		// ｱﾆﾒｰｼｮﾝ情報
-	std::string animName;									// 表示ｱﾆﾒｰｼｮﾝ名
-	ANIM_ATTRIBUTE animAttribute[2];
+	std::map<std::string, int[ANIM_TBL_MAX]> animTable;				// ｱﾆﾒｰｼｮﾝ情報
+	std::string animName;											// 表示ｱﾆﾒｰｼｮﾝ名
+	ANIM_ATTRIBUTE animAttribute[2];								// ｱﾆﾒｰｼｮﾝの属性
+	std::map<std::string, ANIM_ATTRIBUTE[2]> animAttributeTbl;		// ｱﾆﾒｰｼｮﾝの属性のﾃｰﾌﾞﾙ
 };
