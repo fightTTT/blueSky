@@ -122,6 +122,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 	for (int i = 0; i < 2; i++)
 	{
 		animName[i] = sObj[i]->GetAnim();
+
+		// “–‚½‚è”»’è‚ğfalse‚É‚·‚é
+		sObj[i]->SetHitData(false, COL_TYPE_NON);
 	}
 
 	// “–‚½‚è”»’èˆ—
