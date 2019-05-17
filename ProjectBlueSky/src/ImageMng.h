@@ -28,6 +28,9 @@ public:
 private:
 	ImageMng();
 	~ImageMng();
+	
+	ImageMng(const ImageMng&);
+	void operator=(const ImageMng&) {}
 
 	std::map<std::string, VEC_INT> imgMap;			//‰æ‘œ‚ÌÊÝÄÞÙ‚ðŠi”[‚·‚é‚½‚ß‚Ìmap
 };

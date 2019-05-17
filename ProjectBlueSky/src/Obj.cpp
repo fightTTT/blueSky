@@ -26,6 +26,9 @@ bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, bool turn)
 	turnFlag = turn;
 	animAttribute[0] = ANIM_ATTRIBUTE_NON;
 	animAttribute[1] = ANIM_ATTRIBUTE_NON;
+	playerHP = 100;
+	playerHPOld = 100;
+	DrawHPCount = 0.0f;
 	return true;
 }
 
@@ -187,11 +190,22 @@ void Obj::SetEnemyState(EnemyState state)
 
 void Obj::AddPlayerHP(int addHP)
 {
+	playerHPOld = playerHP;
 	playerHP += addHP;
 
 	if (playerHP < 0)
 	{
 		playerHP = 0;
+	}
+}
+
+void Obj::AddPlayerHPOld(int addHP)
+{
+	playerHPOld += addHP;
+
+	if (playerHPOld < 0)
+	{
+		playerHPOld = 0;
 	}
 }
 

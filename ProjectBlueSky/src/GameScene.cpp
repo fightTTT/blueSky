@@ -44,9 +44,13 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 	}
 
 	sharedObj sObj[2];	// キャラクターのObj変数保存
+	sharedObj shotObj;
 	int charaCount = 0;	// 見つかったキャラクターの数
 	OBJ_TYPE type[2];	// キャラクターのタイプ
 	EnemyState eState;
+
+	auto deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
+	objList->erase(deth_itr, objList->end());
 
 	for (auto& data : *objList)
 	{
@@ -66,6 +70,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		// shotの情報をセット
 		if (data->CheckObjType(OBJ_TYPE_SHOT))
 		{
+			shotObj = data;
 			ShotData shot(data->GetPos(), data->GetPadID());
 			eState.pushBackShotData(shot);
 		}
@@ -144,11 +149,12 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 	// 当たり判定処理
 	{
+		ColInfo colData[2];			// 当たり判定の情報を格納する変数(2キャラ分)
 
 		if (lpColMng.GetColFlag(sObj[0]->GetAnim())
 		   && lpColMng.GetColFlag(sObj[1]->GetAnim()))
 		{
-			ColInfo colData[2];			// 当たり判定の情報を格納する変数(2キャラ分)
+			
 
 			// 当たり判定の情報を取得
 			for (int i = 0; i < 2; i++)
@@ -195,10 +201,10 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					}
 
 					// 現在のプレイヤーのpos
-					colData[i].hitBox[a].rect.startPos.x = (sObj[i]->GetPos().x + colData[i].hitBox[a].rect.startPos.x);
-					colData[i].hitBox[a].rect.endPos.x = (sObj[i]->GetPos().x + colData[i].hitBox[a].rect.endPos.x);
-					colData[i].hitBox[a].rect.startPos.y =(sObj[i]->GetPos().y + colData[i].hitBox[a].rect.startPos.y);
-					colData[i].hitBox[a].rect.endPos.y = (sObj[i]->GetPos().y + colData[i].hitBox[a].rect.endPos.y);
+					colData[i].hitBox[a].rect.startPos.x = (sObj[i]->GetPos().x + colData[i].hitBox[a].rect.startPos.x) + (sObj[i]->GetDivSize().x/2);
+					colData[i].hitBox[a].rect.endPos.x = (sObj[i]->GetPos().x + colData[i].hitBox[a].rect.endPos.x) + (sObj[i]->GetDivSize().x / 2);
+					colData[i].hitBox[a].rect.startPos.y =(sObj[i]->GetPos().y + colData[i].hitBox[a].rect.startPos.y) + (sObj[i]->GetDivSize().y);
+					colData[i].hitBox[a].rect.endPos.y = (sObj[i]->GetPos().y + colData[i].hitBox[a].rect.endPos.y) + (sObj[i]->GetDivSize().y);
 
 				}
 			}
@@ -216,6 +222,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 							break;
 						}
 					}
+
+				
 					
 					for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
 					{
@@ -247,7 +255,13 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 							sObj[(i + 1) % 2]->SetHitData(false, colData[(i + 1) % 2].hitBox[b].type);
 						}
 					}
+				}
+			}
 
+			for (int i = 0; i < 2; i++)
+			{
+				for (int a = 0; a < colData[i].hitBox.size(); a++)
+				{
 					// 波動拳の当たり判定
 					if (eState.shotData.size())
 					{
@@ -258,14 +272,16 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						{
 							for (int s = 0; s < eState.shotData.size(); s++)
 							{
-								startPos = { eState.shotData[s].pos.x + (sObj[i]->GetDivSize().x / 2) - 50,eState.shotData[s].pos.y + (sObj[i]->GetDivSize().y / 2) - 50 };
-								endPos = { eState.shotData[s].pos.x + (sObj[i]->GetDivSize().x / 2) + 50,eState.shotData[s].pos.y + (sObj[i]->GetDivSize().y / 2) + 50 };
+								startPos = { eState.shotData[s].pos.x + (shotObj->GetDivSize().x / 2) - 50,eState.shotData[s].pos.y + (shotObj->GetDivSize().y / 2) - 50 };
+								endPos = { eState.shotData[s].pos.x + (shotObj->GetDivSize().x / 2) + 50,eState.shotData[s].pos.y + (shotObj->GetDivSize().y / 2) + 50 };
 
 								if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
 									&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
 									&& colData[i].hitBox[a].rect.endPos.y >= startPos.y
 									&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
 								{
+									shotObj->SetHitData(true, colData[i].hitBox[a].type);
+									
 									sObj[i]->SetHitData(true, colData[i].hitBox[a].type);
 									break;
 								}
@@ -286,8 +302,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		data->CheckHitFlag();
 	}
 
-	auto deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
-	objList->erase(deth_itr, objList->end());
+	
 
 	//描画処理
 	GameDraw();

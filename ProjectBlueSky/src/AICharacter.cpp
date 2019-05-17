@@ -17,6 +17,8 @@ AICharacter::AICharacter(VECTOR2 offset) : Obj(offset)
 
 	padID = PAD_AI;
 
+	DrawHPCount = 0.0f;
+
 	ChangeState(MoveState::GetInstance());
 }
 
@@ -129,6 +131,18 @@ void AICharacter::Draw()
 	auto ssize = lpSceneMng.GetScreenSize();
 	int hpColor = 0;
 
+	if (playerHP != playerHPOld)
+	{
+		DrawHPCount += 0.2f;
+
+		playerHPOld -= static_cast<int>(DrawHPCount);
+
+		if (static_cast<int>(DrawHPCount) == 1)
+		{
+			DrawHPCount = 0.0f;
+		}
+	}
+
 	// HPï\é¶
 	if (playerHP <= 50 && playerHP > 25)
 	{
@@ -143,8 +157,9 @@ void AICharacter::Draw()
 		hpColor = 0x00ff00;
 	}
 	DrawFormatString(ssize.x - 410, 25, 0xffffff, "AIÇÃécÇËHP %d \n", playerHP);
-	DrawBox(ssize.x - 405, 45, ssize.x - 400 + 205, 75, 0x000000, true);
-	DrawBox(ssize.x - 400, 50, ssize.x - 400 + (playerHP * 2), 70, hpColor, true);
+	DrawBox(ssize.x - 405, 45, ssize.x - 400 + 305, 75, 0x000000, true);
+	DrawBox(ssize.x - 400, 50, ssize.x - 400 + (playerHPOld * 3), 70, 0xff0000, true);
+	DrawBox(ssize.x - 400, 50, ssize.x - 400 + (playerHP * 3), 70, hpColor, true);
 
 	animCnt++;
 }
@@ -335,8 +350,6 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 
 	// àÍäáì«Ç›çûÇ›
 	lpImageMng.LoadImageCharacterAll(characterName, animName, animFileName);
-
-	playerHP = 100;
 
 	return true;
 }

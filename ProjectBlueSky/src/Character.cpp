@@ -188,8 +188,6 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	comDirOld = COM_DIR_CENTER;
 	comClearCnt = DEF_COM_CLEAR_CNT;
 
-	playerHP = 100;
-
 	return true;
 }
 
@@ -325,6 +323,10 @@ bool Character::CheckCommand(int skillNum)
 		auto itr = comList.end();
 		int comNum = 0;
 
+		COM_DIR com;
+		COM_DIR leftSideCom;
+		COM_DIR rightSideCom;
+
 		// コマンド数分だけ戻す
 		for (unsigned int buckCnt = 0; buckCnt < spAttackCommand[skillNum][dir].size(); buckCnt++)
 		{
@@ -334,7 +336,30 @@ bool Character::CheckCommand(int skillNum)
 		// 順番に比較
 		while (itr != comList.end())
 		{
-			if ((*itr) != spAttackCommand[skillNum][dir][comNum])
+			com = (*itr);
+			if ((com != COM_DIR_CENTER) && (com != COM_DIR_ACCUMULATE))
+			{
+				leftSideCom = (COM_DIR)(com - 1);
+				if (leftSideCom == COM_DIR_CENTER)
+				{
+					leftSideCom = COM_DIR_LEFT_UP;
+				}
+
+				rightSideCom = (COM_DIR)(com + 1);
+				if (rightSideCom == COM_DIR_ACCUMULATE)
+				{
+					rightSideCom = COM_DIR_UP;
+				}
+			}
+			else
+			{
+				leftSideCom = com;
+				rightSideCom = com;
+			}
+
+			if (com			 != spAttackCommand[skillNum][dir][comNum]
+			 && leftSideCom	 != spAttackCommand[skillNum][dir][comNum]
+			 && rightSideCom != spAttackCommand[skillNum][dir][comNum])
 			{
 				break;
 			}
@@ -658,17 +683,17 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				// 攻撃
 				if (ctl.GetPadDataTrg(padID, BUTTON_A))
 				{
-					if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
+					if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
 					{
-						SetAnim(spAttackAnimName[0]);
+						SetAnim(spAttackAnimName[2]);
 					}
 					else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && CheckCommand(1))
 					{
 						SetAnim(spAttackAnimName[1]);
 					}
-					else if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
+					else if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
 					{
-						SetAnim(spAttackAnimName[2]);
+						SetAnim(spAttackAnimName[0]);
 					}
 					else
 					{
@@ -684,17 +709,17 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadDataTrg(padID, BUTTON_B))
 				{
-					if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
+					if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
 					{
-						SetAnim(spAttackAnimName[0]);
+						SetAnim(spAttackAnimName[2]);
 					}
 					else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && CheckCommand(1))
 					{
 						SetAnim(spAttackAnimName[1]);
 					}
-					else if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
+					else if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
 					{
-						SetAnim(spAttackAnimName[2]);
+						SetAnim(spAttackAnimName[0]);
 					}
 					else
 					{
@@ -710,17 +735,17 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadDataTrg(padID, BUTTON_X))
 				{
-					if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
+					if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
 					{
-						SetAnim(spAttackAnimName[0]);
+						SetAnim(spAttackAnimName[2]);
 					}
 					else if ((spAttackType[1] == SKILL_TYPE_KICK) && CheckCommand(1))
 					{
 						SetAnim(spAttackAnimName[1]);
 					}
-					else if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
+					else if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
 					{
-						SetAnim(spAttackAnimName[2]);
+						SetAnim(spAttackAnimName[0]);
 					}
 					else
 					{
@@ -736,17 +761,17 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
 				{
-					if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
+					if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
 					{
-						SetAnim(spAttackAnimName[0]);
+						SetAnim(spAttackAnimName[2]);
 					}
 					else if ((spAttackType[1] == SKILL_TYPE_KICK) && CheckCommand(1))
 					{
 						SetAnim(spAttackAnimName[1]);
 					}
-					else if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
+					else if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
 					{
-						SetAnim(spAttackAnimName[2]);
+						SetAnim(spAttackAnimName[0]);
 					}
 					else
 					{
@@ -906,6 +931,37 @@ void Character::Draw(void)
 		}
 	}
 
+	int hpColor = 0;
+
+	if (playerHP != playerHPOld)
+	{
+		DrawHPCount += 0.2f;
+
+		playerHPOld -= static_cast<int>(DrawHPCount);
+
+		if (static_cast<int>(DrawHPCount) == 1)
+		{
+			DrawHPCount = 0.0f;
+		}
+	}
+
+	// HP表示
+	if (playerHP <= 50 && playerHP > 25)
+	{
+		hpColor = 0xffd900;
+	}
+	else if (playerHP <= 25)
+	{
+		hpColor = 0xff0000;
+	}
+	else
+	{
+		hpColor = 0x00ff00;
+	}
+	DrawFormatString(110, 25, 0xffffff, "playerの残りHP %d \n", playerHP);
+	DrawBox(90, 45, 100 + 305, 75, 0x000000, true);
+	DrawBox(95, 50, 100 + (playerHPOld * 3), 70, 0xff0000, true);
+	DrawBox(95, 50, 100 + (playerHP * 3), 70, hpColor, true);
 
 	animCnt++;
 
