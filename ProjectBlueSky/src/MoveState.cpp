@@ -7,6 +7,7 @@
 #include "GuardState.h"
 #include "Collision.h"
 #include "DamageState.h"
+#include "WaitState.h"
 
 #include "DxLib.h"
 
@@ -28,6 +29,7 @@ void MoveState::Init(AICharacter * character)
 	changeGuardStateCount = 0;
 	stateTime = 0;
 	notAttackCount = 0;
+	moveFrontCount = 0;
 }
 
 void MoveState::Update(AICharacter * character)
@@ -40,16 +42,39 @@ void MoveState::Update(AICharacter * character)
 	VECTOR2 vec = enemy.enemyPos - pos;
 	int rand = 0;
 
-	if (!(abs(vec.x) < ATTACK_RANGE - 80) && GetRand(100) == 0)
-	{
-		moveDirFlag = !moveDirFlag;
-	}
-
 	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
 	{
 		character->ChangeState(GuardState::GetInstance());
 		moveDirFlag = true;
 		return;
+	}
+
+	if (moveDirFlag)
+	{
+		moveFrontCount++;
+	}
+	else
+	{
+		moveFrontCount = 0;
+	}
+
+	if (moveFrontCount > 50 && notAttackCount > 100)
+	{
+		character->ChangeState(WaitState::GetInstance());
+		moveDirFlag = true;
+		return;
+	}
+
+	if (!moveDirFlag && (abs(vec.x) > 300))
+	{
+		character->ChangeState(WaitState::GetInstance());
+		moveDirFlag = true;
+		return;
+	}
+
+	if (!(abs(vec.x) < ATTACK_RANGE - 80) && GetRand(100) == 0)
+	{
+		moveDirFlag = !moveDirFlag;
 	}
 
 	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK))
