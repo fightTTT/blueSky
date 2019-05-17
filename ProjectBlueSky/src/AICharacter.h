@@ -57,7 +57,6 @@ protected:
 	bool longAttackFlag;			// 遠距離攻撃フラグ
 	bool dirChangeFlag;				// 方向変更フラグ
 	JUMP_TYPE jumpType;				// ジャンプ方向のタイプ
-	float DrawHPCount;
 
 	std::string characterName;
 	std::string spAttackAnimName[3] = { "技1", "技2" , "技3" };

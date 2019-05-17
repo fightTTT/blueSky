@@ -32,7 +32,7 @@ void SceneMng::Run(void)
 		activeScene = activeScene->UpDate(std::move(activeScene), *gameCtl);
 		frame->FrameEnd();
 
-		frame->Draw();
+		//frame->Draw();
 
 		ScreenFlip();
 	}

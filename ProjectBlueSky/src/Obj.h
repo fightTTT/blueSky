@@ -161,6 +161,7 @@ protected:
 	HitData hitData;				// 当たった情報
 	int playerHP;					// プレイヤーのHP
 	int playerHPOld;				// プレイヤーHP変更前の値
+	float DrawHPCount;				// HP描画のカウント
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;				// ｱﾆﾒｰｼｮﾝ情報
 	std::string animName;											// 表示ｱﾆﾒｰｼｮﾝ名
