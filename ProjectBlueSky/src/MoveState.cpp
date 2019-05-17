@@ -40,9 +40,9 @@ void MoveState::Update(AICharacter * character)
 	VECTOR2 vec = enemy.enemyPos - pos;
 	int rand = 0;
 
-	if (GetRand(100) == 0)
+	if (!(abs(vec.x) < ATTACK_RANGE - 80) && GetRand(100) == 0)
 	{
-		moveDirFlag = true;
+		moveDirFlag = !moveDirFlag;
 	}
 
 	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
@@ -65,6 +65,7 @@ void MoveState::Update(AICharacter * character)
 		{
 			character->SetJumpType(JUMP_TYPE_FRONT);
 			character->ChangeState(JumpState::GetInstance());
+			moveDirFlag = true;
 			return;
 		}
 		character->ChangeState(AttackState::GetInstance());
@@ -84,11 +85,13 @@ void MoveState::Update(AICharacter * character)
 		}
 	}
 
+	// UŒ‚‚µ‚Ä‚¢‚È‚¢ó‘Ô‚ª‘±‚¢‚½ê‡
 	if (notAttackCount >= 180)
 	{
 		character->SetJumpType(JUMP_TYPE_FRONT);
 		character->ChangeState(JumpState::GetInstance());
 		notAttackCount = 0;
+		moveDirFlag = true;
 		return;
 	}
 
@@ -112,12 +115,42 @@ void MoveState::Update(AICharacter * character)
 			{
 				character->SetJumpType(JUMP_TYPE_RAND);
 				character->ChangeState(JumpState::GetInstance());
+				moveDirFlag = true;
 				return;
 			}
 		}
 		else
 		{
 			continue;
+		}
+	}
+
+	// ‰æ–Ê’[‚É‹ß‚Ã‚¢‚½‚ç•ûŒü‚ğØ‚è‘Ö‚¦‚é
+	VECTOR2 ssize = lpSceneMng.GetScreenSize();
+	int screenDistance = 0;
+
+	if (charaDir == DIR_RIGHT)
+	{
+		screenDistance = pos.x;
+	}
+	else
+	{
+		screenDistance = abs(pos.x - ssize.x);
+	}
+
+	if (abs(vec.x < 250) && screenDistance < 200)
+	{
+		rand = GetRand(1);
+		if (rand == 0)
+		{
+			character->SetJumpType(JUMP_TYPE_FRONT);
+			character->ChangeState(JumpState::GetInstance());
+			moveDirFlag = true;
+			return;
+		}
+		else
+		{
+			moveDirFlag = true;
 		}
 	}
 
@@ -190,8 +223,6 @@ void MoveState::Update(AICharacter * character)
 			}
 		}
 	}
-
-	auto ssize = lpSceneMng.GetScreenSize();
 
 	if (pos.x > ssize.x - divSize.x / 4)
 	{

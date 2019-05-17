@@ -21,6 +21,6 @@ private:
 	void Update(AICharacter* character);
 	void CheckHitFlag(AICharacter* character);
 
-	int shotCount;	// 弾の発射カウント
+	int shotCount;		// 弾の発射カウント
 };
 
