@@ -22,7 +22,7 @@ private:
 	void Update(AICharacter* character);
 
 	bool moveDirFlag;				// true : 前移動 false : 後ろ移動
-	bool changeGuardFlag;			// ステートをガードに変更するフラグ
+	int changeGuardCount;			// ステートをガードに変更するカウント
 	int changeGuardStateCount;		// ガード状態に入るカウント
 	int changeWaitStateCount;		// 待機状態に入るカウント
 	int notAttackCount;				// 攻撃していない状態のカウント

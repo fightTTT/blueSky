@@ -188,8 +188,6 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	comDirOld = COM_DIR_CENTER;
 	comClearCnt = DEF_COM_CLEAR_CNT;
 
-	playerHP = 100;
-
 	return true;
 }
 
@@ -933,6 +931,37 @@ void Character::Draw(void)
 		}
 	}
 
+	int hpColor = 0;
+
+	if (playerHP != playerHPOld)
+	{
+		DrawHPCount += 0.2f;
+
+		playerHPOld -= static_cast<int>(DrawHPCount);
+
+		if (static_cast<int>(DrawHPCount) == 1)
+		{
+			DrawHPCount = 0.0f;
+		}
+	}
+
+	// HP•\Ž¦
+	if (playerHP <= 50 && playerHP > 25)
+	{
+		hpColor = 0xffd900;
+	}
+	else if (playerHP <= 25)
+	{
+		hpColor = 0xff0000;
+	}
+	else
+	{
+		hpColor = 0x00ff00;
+	}
+	DrawFormatString(110, 25, 0xffffff, "player‚ÌŽc‚èHP %d \n", playerHP);
+	DrawBox(90, 45, 100 + 305, 75, 0x000000, true);
+	DrawBox(95, 50, 100 + (playerHPOld * 3), 70, 0xff0000, true);
+	DrawBox(95, 50, 100 + (playerHP * 3), 70, hpColor, true);
 
 	animCnt++;
 

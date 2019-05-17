@@ -52,6 +52,12 @@ void MoveState::Update(AICharacter * character)
 		return;
 	}
 
+	if (changeGuardCount > GetRand(10) + 1)
+	{
+		moveDirFlag = false;
+		changeGuardCount = 0;
+	}
+
 	changeWaitStateCount++;
 
 	if (moveDirFlag)
@@ -94,10 +100,13 @@ void MoveState::Update(AICharacter * character)
 		moveDirFlag = !moveDirFlag;
 	}
 
-	// “G‚Æ‚Ì‹——£‚ª‹ß‚¢ó‘Ô‚Å“G‚ªUŒ‚‚µ‚Ä‚¢‚½ê‡ƒK[ƒh‚ğ‚·‚é‚½‚ß‚ÉŒã‚ëˆÚ“®‚ÉØ‚è‘Ö‚¦‚é
 	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK))
 	{
-		moveDirFlag = false;
+		changeGuardCount++;
+	}
+	else
+	{
+		changeGuardCount = 0;
 	}
 
 	// ‹ß‹——£UŒ‚‚ª“–‚½‚é‹——£‚Ìê‡UŒ‚

@@ -135,7 +135,7 @@ void AICharacter::Draw()
 	{
 		DrawHPCount += 0.2f;
 
-		AddPlayerHPOld(static_cast<int>(-DrawHPCount));
+		playerHPOld -= static_cast<int>(DrawHPCount);
 
 		if (static_cast<int>(DrawHPCount) == 1)
 		{
@@ -350,8 +350,6 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 
 	// àÍäáì«Ç›çûÇ›
 	lpImageMng.LoadImageCharacterAll(characterName, animName, animFileName);
-
-	playerHP = 100;
 
 	return true;
 }
