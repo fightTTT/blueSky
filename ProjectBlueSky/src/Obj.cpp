@@ -185,6 +185,16 @@ void Obj::SetEnemyState(EnemyState state)
 	enemyState = state;
 }
 
+void Obj::AddPlayerHP(int addHP)
+{
+	playerHP += addHP;
+
+	if (playerHP < 0)
+	{
+		playerHP = 0;
+	}
+}
+
 void Obj::SetPos(VECTOR2 pos)
 {
 	this->pos = pos;
