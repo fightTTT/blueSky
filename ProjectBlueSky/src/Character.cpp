@@ -188,6 +188,8 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	comDirOld = COM_DIR_CENTER;
 	comClearCnt = DEF_COM_CLEAR_CNT;
 
+	playerHP = 100;
+
 	return true;
 }
 
