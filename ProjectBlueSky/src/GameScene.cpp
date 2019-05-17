@@ -70,7 +70,18 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		// shot‚Ìî•ñ‚ðƒZƒbƒg
 		if (data->CheckObjType(OBJ_TYPE_SHOT))
 		{
-			shotObj = data;
+			if (data->GetPadID() == PAD_1)
+			{
+				shotObj = data;
+			}
+			else if (data->GetPadID() == PAD_2 || data->GetPadID() == PAD_AI)
+			{
+				shotObj = data;
+			}
+			else
+			{
+				AST();
+			}
 			ShotData shot(data->GetPos(), data->GetPadID());
 			eState.pushBackShotData(shot);
 		}
