@@ -31,7 +31,7 @@ Shot::~Shot()
 void Shot::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	pos.x += speed;
-	if ((pos.x < (0 - divSize.x)) || (pos.x > ssize.x))
+	if ((pos.x < (0 - divSize.x)) || ((pos.x - divSize.x) > ssize.x))
 	{
 		deleteFlag = true;
 	}
@@ -55,11 +55,7 @@ void Shot::Draw(void)
 		// îgìÆåùÇÃìñÇΩÇËîªíËÇÃï\é¶
 		if (!hitData.hitFlag)
 		{
-			VECTOR2 startPos = { 0,0 };
-			VECTOR2 endPos = { 0,0 };
-				startPos = { pos.x - 50,pos.y - 50 };
-				endPos = { pos.x + 50,pos.y + 50 };
-				DrawBox(startPos.x, startPos.y, endPos.x, endPos.y,0xff0000,true);
+				DrawBox(drawOffset.x + pos.x, drawOffset.y +  pos.y + (divSize.y/2), drawOffset.x + pos.x + 100, drawOffset.y + pos.y + (divSize.y / 2) + 100,0x0000ff,true);
 		}
 
 }
