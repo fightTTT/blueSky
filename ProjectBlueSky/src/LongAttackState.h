@@ -19,7 +19,6 @@ private:
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
-	void CheckHitFlag(AICharacter* character);
 
 	int shotCount;		// ’e‚Ì”­ŽËƒJƒEƒ“ƒg
 };

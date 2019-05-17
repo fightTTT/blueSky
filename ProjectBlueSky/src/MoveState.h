@@ -20,7 +20,6 @@ private:
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
-	void CheckHitFlag(AICharacter* character);
 
 	bool moveDirFlag;				// true : 前移動 false : 後ろ移動
 	bool changeGuardFlag;			// ステートをガードに変更するフラグ

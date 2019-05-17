@@ -58,7 +58,7 @@ void MoveState::Update(AICharacter * character)
 		moveFrontCount = 0;
 	}
 
-	if (moveFrontCount > 50 && notAttackCount > 100)
+	if (moveFrontCount > 40 && notAttackCount > 80)
 	{
 		character->ChangeState(WaitState::GetInstance());
 		moveDirFlag = true;
@@ -256,19 +256,4 @@ void MoveState::Update(AICharacter * character)
 
 	character->SetPos(pos);
 	stateTime++;
-}
-
-void MoveState::CheckHitFlag(AICharacter * character)
-{
-	auto dir = character->GetDir();
-	auto hitData = character->GetHitData();
-	auto anim = character->GetAnim();
-
-	auto hitFlag = hitData.hitFlag && hitData.colType == COLTYPE_HIT;
-
-	if (hitFlag && character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_INVINCIBLE)
-	{
-		character->SetAnim("ƒ_ƒ[ƒW_—§‚¿");
-		character->ChangeState(DamageState::GetInstance());
-	}
 }
