@@ -49,8 +49,8 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 				// NPC‚ÌŽg—p·¬×‚ðŒˆ’è
 				do
 				{
-					lpSceneMng.SetCharID(PAD_2, (rand() % 8));
-					if (lpSceneMng.GetCharID(PAD_1) != lpSceneMng.GetCharID(PAD_2))
+					lpSceneMng.SetCharID(PAD_AI, (rand() % 8));
+					if (lpSceneMng.GetCharID(PAD_1) != lpSceneMng.GetCharID(PAD_AI))
 					{
 						setEnemyIdFlag = true;
 					}

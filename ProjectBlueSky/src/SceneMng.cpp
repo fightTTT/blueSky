@@ -45,12 +45,30 @@ VECTOR2 SceneMng::GetScreenSize(void)
 
 const int SceneMng::GetCharID(PAD_ID padID)
 {
-	return charID[static_cast<int>(padID)];
+	int charIdIndex;
+	if (padID == PAD_1)
+	{
+		charIdIndex = 0;
+	}
+	else
+	{
+		charIdIndex = 1;
+	}
+	return charID[charIdIndex];
 }
 
 void SceneMng::SetCharID(PAD_ID padID,int id)
 {
-	charID[static_cast<int>(padID)] = id;
+	int charIdIndex;
+	if (padID == PAD_1)
+	{
+		charIdIndex = 0;
+	}
+	else
+	{
+		charIdIndex = 1;
+	}
+	charID[charIdIndex] = id;
 }
 
 bool SceneMng::GetDecidFlag(PAD_ID padID)
