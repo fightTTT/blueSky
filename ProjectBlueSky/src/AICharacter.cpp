@@ -44,7 +44,15 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 	if (longAttackFlag)
 	{
 		// âìãóó£çUåÇ
-		AddObjList()(objList, std::make_unique<Shot>(pos, drawOffset, dir, padID));
+		if (dir == DIR_RIGHT)
+		{
+			AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(128, 0), drawOffset, dir, padID));
+		}
+		else
+		{
+			AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(-128, 0), drawOffset, dir, padID));
+		}
+	
 		longAttackFlag = false;
 	}
 }
