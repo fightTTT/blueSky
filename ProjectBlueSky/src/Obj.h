@@ -122,6 +122,7 @@ public:
 
 	// プレイヤーのHPを加算
 	void AddPlayerHP(int addHP);
+	void AddPlayerHPOld(int addHP);
 
 	// アニメーションが終了しているか
 	bool GetAnimEndFlag() const { return animEndFlag; }
@@ -159,6 +160,7 @@ protected:
 	PAD_ID padID;					// 使用しているPAD番号
 	HitData hitData;				// 当たった情報
 	int playerHP;					// プレイヤーのHP
+	int playerHPOld;				// プレイヤーHP変更前の値
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;				// ｱﾆﾒｰｼｮﾝ情報
 	std::string animName;											// 表示ｱﾆﾒｰｼｮﾝ名
