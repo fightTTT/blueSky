@@ -14,6 +14,8 @@
 #define MOVE_SPEED (4)
 #define ATTACK_RANGE (180)
 
+#define WAITSTATE_INV (60)
+
 MoveState::MoveState()
 {
 	// 最初だけ初期化
@@ -30,6 +32,7 @@ void MoveState::Init(AICharacter * character)
 	stateTime = 0;
 	notAttackCount = 0;
 	moveFrontCount = 0;
+	changeWaitStateCount = 0;
 }
 
 void MoveState::Update(AICharacter * character)
@@ -49,8 +52,11 @@ void MoveState::Update(AICharacter * character)
 		return;
 	}
 
+	changeWaitStateCount++;
+
 	if (moveDirFlag)
 	{
+		// 前移動をしている場合カウントを加算
 		moveFrontCount++;
 	}
 	else
@@ -58,25 +64,37 @@ void MoveState::Update(AICharacter * character)
 		moveFrontCount = 0;
 	}
 
+	// 攻撃をしていない状態で前に移動し続けていたら状態を変更
 	if (moveFrontCount > 40 && notAttackCount > 80)
 	{
-		character->ChangeState(WaitState::GetInstance());
-		moveDirFlag = true;
-		return;
+		if (changeWaitStateCount > WAITSTATE_INV)
+		{
+			character->ChangeState(WaitState::GetInstance());
+			changeWaitStateCount = 0;
+			moveDirFlag = true;
+			return;
+		}
 	}
 
+	// 後ろ移動で距離がはなれすぎていたら状態を変更
 	if (!moveDirFlag && (abs(vec.x) > 300))
 	{
-		character->ChangeState(WaitState::GetInstance());
-		moveDirFlag = true;
-		return;
+		if (changeWaitStateCount > WAITSTATE_INV)
+		{
+			character->ChangeState(WaitState::GetInstance());
+			changeWaitStateCount = 0;
+			moveDirFlag = true;
+			return;
+		}
 	}
 
+	// ランダムで方向を逆方向に切り替え
 	if (!(abs(vec.x) < ATTACK_RANGE - 80) && GetRand(100) == 0)
 	{
 		moveDirFlag = !moveDirFlag;
 	}
 
+	// 敵との距離が近い状態で敵が攻撃していた場合ガードをするために後ろ移動に切り替える
 	if (abs(vec.x) < ATTACK_RANGE && (enemy.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK))
 	{
 		moveDirFlag = false;
@@ -179,6 +197,8 @@ void MoveState::Update(AICharacter * character)
 		}
 	}
 
+	stateTime++;
+
 	// ガード状態の場合は移動しない
 	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
 	{
@@ -255,5 +275,4 @@ void MoveState::Update(AICharacter * character)
 	}
 
 	character->SetPos(pos);
-	stateTime++;
 }
