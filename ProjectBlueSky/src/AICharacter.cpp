@@ -1,10 +1,11 @@
 #include "AICharacter.h"
 #include "ImageMng.h"
 #include "Shot.h"
-#include"CollisionMng.h"
+#include "CollisionMng.h"
 #include "AIState.h"
 #include "MoveState.h"
 #include "WaitState.h"
+#include "SceneMng.h"
 
 #include "DxLib.h"
 
@@ -46,11 +47,11 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 		// âìãóó£çUåÇ
 		if (dir == DIR_RIGHT)
 		{
-			AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(128, 0), drawOffset, dir, padID));
+			AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(256, 64), drawOffset, dir, padID));
 		}
 		else
 		{
-			AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(-128, 0), drawOffset, dir, padID));
+			AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(-128, 64), drawOffset, dir, padID));
 		}
 	
 		longAttackFlag = false;
@@ -124,6 +125,26 @@ void AICharacter::Draw()
 			DrawBox(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, drawOffset.x + animOffset.x +  pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
 		}
 	}
+
+	auto ssize = lpSceneMng.GetScreenSize();
+	int hpColor = 0;
+
+	// HPï\é¶
+	if (playerHP <= 50 && playerHP > 25)
+	{
+		hpColor = 0xffd900;
+	}
+	else if (playerHP <= 25)
+	{
+		hpColor = 0xff0000;
+	}
+	else
+	{
+		hpColor = 0x00ff00;
+	}
+	DrawFormatString(ssize.x - 410, 25, 0xffffff, "AIÇÃécÇËHP %d \n", playerHP);
+	DrawBox(ssize.x - 405, 45, ssize.x - 400 + 205, 75, 0x000000, true);
+	DrawBox(ssize.x - 400, 50, ssize.x - 400 + (playerHP * 2), 70, hpColor, true);
 
 	animCnt++;
 }
