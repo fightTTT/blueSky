@@ -315,5 +315,7 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 	// ˆêŠ‡“Ç‚İ‚İ
 	lpImageMng.LoadImageCharacterAll(characterName, animName, animFileName);
 
+	playerHP = 100;
+
 	return true;
 }
