@@ -30,6 +30,9 @@ private:
 	CollisionMng();
 	~CollisionMng();
 
+	CollisionMng(const CollisionMng&);
+	void operator=(const CollisionMng&) {}
+
 	std::vector<ColInfo> data;
 
 	// キー : キャラクター名

@@ -44,6 +44,9 @@ private:
 	SceneMng();
 	~SceneMng();
 
+	SceneMng(const SceneMng&);
+	void operator=(const SceneMng&) {}
+
 	int charID[PLAYER_CNT_MAX];								// ·¬×‚ÌID
 
 	std::shared_ptr<GameCtrl> gameCtl;		// GameController¸×½‚ÌÎß²İÀŠi”[—p•Ï”
