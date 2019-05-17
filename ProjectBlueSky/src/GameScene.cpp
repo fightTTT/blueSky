@@ -258,8 +258,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						{
 							for (int s = 0; s < eState.shotData.size(); s++)
 							{
-								startPos = { eState.shotData[s].pos.x - 50,eState.shotData[s].pos.y - 50 };
-								endPos = { eState.shotData[s].pos.x + 50,eState.shotData[s].pos.y + 50 };
+								startPos = { eState.shotData[s].pos.x + (sObj[i]->GetDivSize().x / 2) - 50,eState.shotData[s].pos.y + (sObj[i]->GetDivSize().y / 2) - 50 };
+								endPos = { eState.shotData[s].pos.x + (sObj[i]->GetDivSize().x / 2) + 50,eState.shotData[s].pos.y + (sObj[i]->GetDivSize().y / 2) + 50 };
 
 								if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
 									&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
