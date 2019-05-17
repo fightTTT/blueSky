@@ -26,5 +26,6 @@ private:
 	bool changeGuardFlag;			// ステートをガードに変更するフラグ
 	int changeGuardStateCount;		// ガード状態に入るカウント
 	int notAttackCount;				// 攻撃していない状態のカウント
+	int moveFrontCount;				// 前移動持続時間のカウント
 };
 
