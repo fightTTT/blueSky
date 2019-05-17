@@ -2,6 +2,7 @@
 #include "AICharacter.h"
 #include "LongAttackState.h"
 #include "JumpState.h"
+#include "MoveState.h"
 
 #include "DxLib.h"
 
@@ -29,17 +30,23 @@ void WaitState::Update(AICharacter * character)
 	character->SetAnim("‘Ò‹@");
 	int rand = 0;
 
+	if(distance < 300)
+	{
+		character->SetJumpType(JUMP_TYPE_FRONT);
+		character->ChangeState(JumpState::GetInstance());
+		return;
+	}
+
 	if (stateTime == 15)
 	{
-		if (distance > 300)
+		if (distance > 500)
 		{
 			character->ChangeState(LongAttackState::GetInstance());
 			return;
 		}
 		else
 		{
-			character->SetJumpType(JUMP_TYPE_FRONT);
-			character->ChangeState(JumpState::GetInstance());
+			character->ChangeState(MoveState::GetInstance());
 			return;
 		}
 	}
