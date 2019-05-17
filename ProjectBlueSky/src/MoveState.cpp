@@ -10,7 +10,7 @@
 
 #include "DxLib.h"
 
-#define MOVE_SPEED (2)
+#define MOVE_SPEED (4)
 #define ATTACK_RANGE (180)
 
 MoveState::MoveState()
