@@ -120,6 +120,9 @@ public:
 	// 敵の情報取得
 	EnemyState GetEnemyState() const { return enemyState; }
 
+	// プレイヤーのHPを加算
+	void AddPlayerHP(int addHP);
+
 	// アニメーションが終了しているか
 	bool GetAnimEndFlag() const { return animEndFlag; }
 
