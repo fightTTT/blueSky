@@ -20,11 +20,11 @@ private:
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
-	void CheckHitFlag(AICharacter* character);
 
 	bool moveDirFlag;				// true : 前移動 false : 後ろ移動
 	bool changeGuardFlag;			// ステートをガードに変更するフラグ
 	int changeGuardStateCount;		// ガード状態に入るカウント
+	int changeWaitStateCount;		// 待機状態に入るカウント
 	int notAttackCount;				// 攻撃していない状態のカウント
 	int moveFrontCount;				// 前移動持続時間のカウント
 };

@@ -38,9 +38,10 @@ void DamageState::Init(AICharacter * character)
 
 		comboCnt = 0;
 	}
-
-	if (character->GetAnim() == "ダメージ_立ち")
+	else
 	{
+		character->SetAnim("ダメージ_立ち");
+
 		if (dir == DIR_RIGHT)
 		{
 			knockBackSpeed = { -KNOCK_BACK_SPEED, 0 };

@@ -20,6 +20,5 @@ private:
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
-	void CheckHitFlag(AICharacter* character) {}
 };
 

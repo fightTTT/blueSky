@@ -2,6 +2,8 @@
 #include "AICharacter.h"
 #include "MoveState.h"
 #include "SceneMng.h"
+#include "Collision.h"
+#include "DamageState.h"
 
 #include "DxLib.h"
 

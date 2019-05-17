@@ -3,6 +3,8 @@
 #include "LongAttackState.h"
 #include "JumpState.h"
 #include "MoveState.h"
+#include "Collision.h"
+#include "DamageState.h"
 
 #include "DxLib.h"
 
