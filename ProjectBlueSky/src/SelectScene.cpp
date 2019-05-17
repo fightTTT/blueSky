@@ -28,16 +28,19 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 		data->UpDate(controller, objList);
 	}
 
-	itvCnt++;
-	if (itvCnt > 120)
+	if (itvCnt > 0)
 	{
-		return std::make_unique<GameScene>();
+		itvCnt++;
+
+		if (itvCnt > 120)
+		{
+			return std::make_unique<GameScene>();
+		}
 	}
 
 	/* ｹﾞｰﾑｼｰﾝへ移動 */
-	if (controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START))
+	if ((controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START)) && !sceneChangeFlag)
 	{				
-
 		if (lpSceneMng.GetMode() == MODE_1PLAYER)
 		{
 			if (lpSceneMng.GetDecidFlag(PAD_1))
@@ -52,13 +55,17 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 						setEnemyIdFlag = true;
 					}
 				} while (!setEnemyIdFlag);
+				itvCnt = 1;
+				sceneChangeFlag = true;
+
 			}
 		}
 		else if (lpSceneMng.GetMode() == MODE_2PLAYER)
 		{
 			if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
 			{
-				return std::make_unique<GameScene>();
+				itvCnt = 1;
+				/*return std::make_unique<GameScene>();*/
 			}
 		}
 		else
@@ -102,7 +109,7 @@ int SelectScene::Init()
 					"ムラサキ",
 					"チャ" };
 
-	//LoadDivGraph("charIcon", CHAR_CNT_MAX, CHAR_CNT_MAX, 1, 400, 400, charNameTbl[]);
+	sceneChangeFlag = false;
 
 	return 0;
 }
@@ -139,10 +146,19 @@ void SelectScene::SelectDraw()
 		if (lpSceneMng.GetDecidFlag(PAD_1))
 		{
 			flamCnt++;
-			if (((flamCnt / 30) % 2) == 0)
+			if (sceneChangeFlag == false)
 			{
-				DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
-				//DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
+				if (((flamCnt / 30) % 2) == 0)
+				{
+					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
+				}
+			}
+			else
+			{
+				if (((flamCnt / 4) % 2) == 0)
+				{
+					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
+				}
 			}
 		}
 	}
@@ -151,10 +167,19 @@ void SelectScene::SelectDraw()
 		if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
 		{
 			flamCnt++;
-			if (((flamCnt / 30) % 2) == 0)
+			if (sceneChangeFlag == false)
 			{
-				DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
-				//DrawString(1000, 10, "STARTボタン or SpaceKeyで遷移", 0xffffff);
+				if (((flamCnt / 30) % 2) == 0)
+				{
+					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
+				}
+			}
+			else
+			{
+				if (((flamCnt / 4) % 2) == 0)
+				{
+					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
+				}
 			}
 		}
 	}

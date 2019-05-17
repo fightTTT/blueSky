@@ -17,8 +17,9 @@ public:
 
 private:
 	VECTOR2 scSize;
-	int itvCnt;			// ｲﾝﾀｰﾊﾞﾙ用ｶｳﾝﾄ
-	int flamCnt;		// 点滅用
+	int itvCnt;				// ｲﾝﾀｰﾊﾞﾙ用ｶｳﾝﾄ
+	int flamCnt;			// 点滅用
+	bool sceneChangeFlag;	// ｼｰﾝを変更するﾌﾗｸﾞ
 	int Init(void);
 	void SelectDraw(void);
 	sharedListObj objList;
