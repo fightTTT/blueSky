@@ -325,6 +325,10 @@ bool Character::CheckCommand(int skillNum)
 		auto itr = comList.end();
 		int comNum = 0;
 
+		COM_DIR com;
+		COM_DIR leftSideCom;
+		COM_DIR rightSideCom;
+
 		// ƒRƒ}ƒ“ƒh”•ª‚¾‚¯–ß‚·
 		for (unsigned int buckCnt = 0; buckCnt < spAttackCommand[skillNum][dir].size(); buckCnt++)
 		{
@@ -334,7 +338,30 @@ bool Character::CheckCommand(int skillNum)
 		// ‡”Ô‚É”äŠr
 		while (itr != comList.end())
 		{
-			if ((*itr) != spAttackCommand[skillNum][dir][comNum])
+			com = (*itr);
+			if ((com != COM_DIR_CENTER) && (com != COM_DIR_ACCUMULATE))
+			{
+				leftSideCom = (COM_DIR)(com - 1);
+				if (leftSideCom == COM_DIR_CENTER)
+				{
+					leftSideCom = COM_DIR_LEFT_UP;
+				}
+
+				rightSideCom = (COM_DIR)(com + 1);
+				if (rightSideCom == COM_DIR_ACCUMULATE)
+				{
+					rightSideCom = COM_DIR_UP;
+				}
+			}
+			else
+			{
+				leftSideCom = com;
+				rightSideCom = com;
+			}
+
+			if (com			 != spAttackCommand[skillNum][dir][comNum]
+			 && leftSideCom	 != spAttackCommand[skillNum][dir][comNum]
+			 && rightSideCom != spAttackCommand[skillNum][dir][comNum])
 			{
 				break;
 			}
@@ -658,17 +685,17 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				// UŒ‚
 				if (ctl.GetPadDataTrg(padID, BUTTON_A))
 				{
-					if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
+					if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
 					{
-						SetAnim(spAttackAnimName[0]);
+						SetAnim(spAttackAnimName[2]);
 					}
 					else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && CheckCommand(1))
 					{
 						SetAnim(spAttackAnimName[1]);
 					}
-					else if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
+					else if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
 					{
-						SetAnim(spAttackAnimName[2]);
+						SetAnim(spAttackAnimName[0]);
 					}
 					else
 					{
@@ -684,17 +711,17 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadDataTrg(padID, BUTTON_B))
 				{
-					if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
+					if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
 					{
-						SetAnim(spAttackAnimName[0]);
+						SetAnim(spAttackAnimName[2]);
 					}
 					else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && CheckCommand(1))
 					{
 						SetAnim(spAttackAnimName[1]);
 					}
-					else if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
+					else if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
 					{
-						SetAnim(spAttackAnimName[2]);
+						SetAnim(spAttackAnimName[0]);
 					}
 					else
 					{
@@ -710,17 +737,17 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadDataTrg(padID, BUTTON_X))
 				{
-					if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
+					if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
 					{
-						SetAnim(spAttackAnimName[0]);
+						SetAnim(spAttackAnimName[2]);
 					}
 					else if ((spAttackType[1] == SKILL_TYPE_KICK) && CheckCommand(1))
 					{
 						SetAnim(spAttackAnimName[1]);
 					}
-					else if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
+					else if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
 					{
-						SetAnim(spAttackAnimName[2]);
+						SetAnim(spAttackAnimName[0]);
 					}
 					else
 					{
@@ -736,17 +763,17 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
 				{
-					if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
+					if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
 					{
-						SetAnim(spAttackAnimName[0]);
+						SetAnim(spAttackAnimName[2]);
 					}
 					else if ((spAttackType[1] == SKILL_TYPE_KICK) && CheckCommand(1))
 					{
 						SetAnim(spAttackAnimName[1]);
 					}
-					else if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
+					else if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
 					{
-						SetAnim(spAttackAnimName[2]);
+						SetAnim(spAttackAnimName[0]);
 					}
 					else
 					{
