@@ -16,6 +16,7 @@
 #define BG_IMAGE_SIZE_Y (720)
 
 #define DEF_BG_POS_X (-(BG_IMAGE_SIZE_X / 6))
+#define DEF_CENTER_POS_X (640)
 
 // ﾃﾞﾊﾞｯｸﾒｯｾｰｼﾞ用定義
 #ifdef _DEBUG		// 失敗時の処理
@@ -323,19 +324,14 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 	}
 	else
 	{
-		// 少なくともどちらか一方は動いている
-		int leftCharacter;		// 左にいる方のcharacterPosのindex
-		int rightCharacter;		// 右にいる方のcharacterPosのindex
-
-		if (characterPos[0].x < characterPos[1].x)
+		bgPos_x += (DEF_CENTER_POS_X - ((characterPos[0].x + characterPos[1].x) / 2));
+		if (bgPos_x > 0)
 		{
-			leftCharacter = 0;
-			rightCharacter = 1;
+			bgPos_x = 0;
 		}
-		else
+		if (bgPos_x < (ssize.x - BG_IMAGE_SIZE_X))
 		{
-			leftCharacter = 1;
-			rightCharacter = 0;
+			bgPos_x = (ssize.x - BG_IMAGE_SIZE_X);
 		}
 
 		int edgePosLeft;		// 移動制限の左側
@@ -364,71 +360,35 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			edgePosRight = (ssize.x - (STICK_HUMAN_IMAGE_SIZE_X / 2));
 		}
 
-		if (characterPos[leftCharacter].x < edgePosLeft)
-		{
-			if (characterPos[rightCharacter].x > edgePosRight)
-			{
-				sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
-				sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
-			}
-			else
-			{
-				sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
+		int leftCharacter;		// 左にいる方のcharacterPosのindex
+		int rightCharacter;		// 右にいる方のcharacterPosのindex
 
-				if ((bgPos_x + (edgePosLeft - characterPos[leftCharacter].x)) > 0)
-				{
-					if ((characterPos[rightCharacter].x + (0 - bgPos_x)) > edgePosRight)
-					{
-						bgPos_x += edgePosRight - characterPos[rightCharacter].x;
-						sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
-					}
-					else
-					{
-						bgPos_x = 0;
-					}
-				}
-				else if ((characterPos[rightCharacter].x + (edgePosLeft - characterPos[leftCharacter].x)) > edgePosRight)
-				{
-					bgPos_x += edgePosRight - characterPos[rightCharacter].x;
-					sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
-				}
-				else
-				{
-					bgPos_x += (edgePosLeft - characterPos[leftCharacter].x);
-					sObj[rightCharacter]->AddPos(VECTOR2(edgePosLeft - characterPos[leftCharacter].x, 0));
-				}
-			}
-		}
-		else if (characterPos[rightCharacter].x > edgePosRight)
+		if (characterPos[0].x < characterPos[1].x)
 		{
-			sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
-
-			if (bgPos_x + (edgePosRight - characterPos[rightCharacter].x) < (ssize.x - BG_IMAGE_SIZE_X))
-			{
-				if (characterPos[leftCharacter].x + ((ssize.x - BG_IMAGE_SIZE_X) - bgPos_x) < edgePosLeft)
-				{
-					bgPos_x += edgePosLeft - characterPos[leftCharacter].x;
-					sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
-				}
-				else
-				{
-					bgPos_x = (ssize.x - BG_IMAGE_SIZE_X);
-				}
-			}
-			else if (characterPos[leftCharacter].x + (edgePosRight - characterPos[rightCharacter].x) < edgePosLeft)
-			{
-				bgPos_x += edgePosLeft - characterPos[leftCharacter].x;
-				sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
-			}
-			else
-			{
-				bgPos_x += (edgePosRight - characterPos[rightCharacter].x);
-				sObj[leftCharacter]->AddPos(VECTOR2(edgePosRight - characterPos[rightCharacter].x, 0));
-			}
+			leftCharacter = 0;
+			rightCharacter = 1;
 		}
 		else
 		{
-			// 何もしない
+			leftCharacter = 1;
+			rightCharacter = 0;
+		}
+
+		int characterDistanceHalf = ((characterPos[rightCharacter].x - characterPos[leftCharacter].x) / 2);
+
+		if ((bgPos_x != 0) && (bgPos_x != (ssize.x - BG_IMAGE_SIZE_X)))
+		{
+			sObj[leftCharacter]->SetPos(VECTOR2(DEF_CENTER_POS_X - characterDistanceHalf, characterPos[leftCharacter].y));
+			sObj[rightCharacter]->SetPos(VECTOR2(DEF_CENTER_POS_X + characterDistanceHalf, characterPos[rightCharacter].y));
+		}
+
+		if (characterPos[leftCharacter].x < edgePosLeft)
+		{
+			sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
+		}
+		if (characterPos[rightCharacter].x > edgePosRight)
+		{
+			sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
 		}
 	}
 
