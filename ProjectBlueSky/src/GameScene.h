@@ -14,6 +14,8 @@ public:
 
 private:
 	int Init(void);
+	int bgPos_x;
+	VECTOR2 ssize;
 
 	bool GameDraw(void);		// •`‰æˆ—
 	int id[2];			// “–‚½‚è”»’è‚ÌƒtƒŒ[ƒ€”
