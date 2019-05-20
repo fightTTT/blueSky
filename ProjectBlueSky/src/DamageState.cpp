@@ -3,6 +3,8 @@
 #include "MoveState.h"
 #include "SceneMng.h"
 
+#include "DxLib.h"
+
 #define KNOCK_BACK_SPEED (10)
 
 #define FALL_SPEED_X (7)
@@ -36,6 +38,8 @@ void DamageState::Init(AICharacter * character)
 			knockBackSpeed = { FALL_SPEED_X, -FALL_SPEED_Y };
 		}
 
+		WaitTimer(65);
+
 		comboCnt = 0;
 	}
 	else
@@ -50,6 +54,8 @@ void DamageState::Init(AICharacter * character)
 		{
 			knockBackSpeed = { KNOCK_BACK_SPEED, 0 };
 		}
+
+		WaitTimer(65);
 	}
 }
 
