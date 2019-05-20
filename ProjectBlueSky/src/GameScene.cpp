@@ -16,6 +16,8 @@
 #define BG_IMAGE_SIZE_Y (720)
 
 #define DEF_BG_POS_X (-(BG_IMAGE_SIZE_X / 6))
+#define DEF_BG_POS_Y (-64)
+
 #define DEF_CENTER_POS_X (640)
 
 // ﾃﾞﾊﾞｯｸﾒｯｾｰｼﾞ用定義
@@ -41,40 +43,7 @@ GameScene::~GameScene()
 
 unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
-	// ｷｬﾗｸﾀｰの情報をｾｯﾄ
-	sharedObj sObj[2];	// キャラクターのObj変数保存
-	OBJ_TYPE type[2];	// キャラクターのタイプ
-
-	int charaCount = 0;	// 見つかったキャラクターの数
-
-	for (auto& data : *objList)
-	{
-		if (data->CheckObjType(OBJ_TYPE_CHARACTER))
-		{
-			sObj[charaCount] = data;
-			type[charaCount] = OBJ_TYPE_CHARACTER;
-			charaCount++;
-		}
-		else if (data->CheckObjType(OBJ_TYPE_AICHARACTER))
-		{
-			sObj[charaCount] = data;
-			type[charaCount] = OBJ_TYPE_AICHARACTER;
-			charaCount++;
-		}
-		else
-		{
-			// 何もしない
-		}
-
-		if (charaCount >= 2)
-		{
-			break;
-		}
-	}
-
-	// 更新前のｷｬﾗｸﾀｰの位置情報格納
-	VECTOR2 characterPosOld[2] = { sObj[0]->GetPos(), sObj[1]->GetPos() };
-
+	// 情報更新
 	for (auto& data : *objList)
 	{
 		data->UpDate(controller, objList);
@@ -82,7 +51,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 	auto deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
 	objList->erase(deth_itr, objList->end());
-
+	
 	// shotの情報をセット
 	sharedObj shotObj;
 	EnemyState eState;
@@ -96,7 +65,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			eState.pushBackShotData(shot);
 		}
 	}
-
+	
 	// キャラクター同士を向い合せる
 	if (sObj[0]->GetPos().x > sObj[1]->GetPos().x)
 	{
@@ -314,85 +283,10 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		data->CheckHitFlag();
 	}
 
-	// 更新後のｷｬﾗｸﾀｰの位置情報格納
-	VECTOR2 characterPos[2] = { sObj[0]->GetPos(), sObj[1]->GetPos() };
+	// 背景の位置情報更新
+	BgPosUpDate();
 
-	// 横軸の処理
-	if (((characterPos[0].x - characterPosOld[0].x) == 0) && ((characterPos[1].x - characterPosOld[1].x) == 0))
-	{
-		// どちらも動いていない
-	}
-	else
-	{
-		bgPos_x += (DEF_CENTER_POS_X - ((characterPos[0].x + characterPos[1].x) / 2));
-		if (bgPos_x > 0)
-		{
-			bgPos_x = 0;
-		}
-		if (bgPos_x < (ssize.x - BG_IMAGE_SIZE_X))
-		{
-			bgPos_x = (ssize.x - BG_IMAGE_SIZE_X);
-		}
-
-		int edgePosLeft;		// 移動制限の左側
-		int edgePosRight;		// 移動制限の右側
-
-		edgePosLeft = (ssize.x / 5);
-		edgePosRight = ((ssize.x * 4) / 5);
-
-		edgePosLeft = (ssize.x / 5) + bgPos_x;
-		if (edgePosLeft < (STICK_HUMAN_IMAGE_SIZE_X / 2))
-		{
-			edgePosLeft = (STICK_HUMAN_IMAGE_SIZE_X / 2);
-		}
-		if (edgePosLeft > (ssize.x / 5))
-		{
-			edgePosLeft = (ssize.x / 5);
-		}
-		
-		edgePosRight = (((ssize.x * 4) / 5) + bgPos_x - (ssize.x - BG_IMAGE_SIZE_X));
-		if (edgePosRight < ((ssize.x * 4) / 5))
-		{
-			edgePosRight = ((ssize.x * 4) / 5);
-		}
-		if (edgePosRight > (ssize.x - (STICK_HUMAN_IMAGE_SIZE_X / 2)))
-		{
-			edgePosRight = (ssize.x - (STICK_HUMAN_IMAGE_SIZE_X / 2));
-		}
-
-		int leftCharacter;		// 左にいる方のcharacterPosのindex
-		int rightCharacter;		// 右にいる方のcharacterPosのindex
-
-		if (characterPos[0].x < characterPos[1].x)
-		{
-			leftCharacter = 0;
-			rightCharacter = 1;
-		}
-		else
-		{
-			leftCharacter = 1;
-			rightCharacter = 0;
-		}
-
-		int characterDistanceHalf = ((characterPos[rightCharacter].x - characterPos[leftCharacter].x) / 2);
-
-		if ((bgPos_x != 0) && (bgPos_x != (ssize.x - BG_IMAGE_SIZE_X)))
-		{
-			sObj[leftCharacter]->SetPos(VECTOR2(DEF_CENTER_POS_X - characterDistanceHalf, characterPos[leftCharacter].y));
-			sObj[rightCharacter]->SetPos(VECTOR2(DEF_CENTER_POS_X + characterDistanceHalf, characterPos[rightCharacter].y));
-		}
-
-		if (characterPos[leftCharacter].x < edgePosLeft)
-		{
-			sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
-		}
-		if (characterPos[rightCharacter].x > edgePosRight)
-		{
-			sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
-		}
-	}
-
-	//描画処理
+	// 描画処理
 	GameDraw();
 
 	return std::move(own);
@@ -402,7 +296,7 @@ int GameScene::Init(void)
 {
 	MODE mode = lpSceneMng.GetMode();
 	ssize = lpSceneMng.GetScreenSize();
-	bgPos_x = DEF_BG_POS_X;
+	bgPos = VECTOR2(DEF_BG_POS_X, DEF_BG_POS_Y);
 
 	if (!objList)
 	{
@@ -414,15 +308,18 @@ int GameScene::Init(void)
 		id[a] = 0;
 	}
 
-	AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((ssize.x / 4), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_1, DIR_LEFT));
+	sObj[0] = *AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((ssize.x / 4), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_1, DIR_LEFT));
+	type[0] = OBJ_TYPE_CHARACTER;
 
 	if (mode == MODE_1PLAYER)
 	{
-		AddObjList()(objList, std::make_unique<AIStickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), DIR_RIGHT));
+		sObj[1] = *AddObjList()(objList, std::make_unique<AIStickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), DIR_RIGHT));
+		type[1] = OBJ_TYPE_AICHARACTER;
 	}
 	else if (mode == MODE_2PLAYER)
 	{
-		AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_2, DIR_RIGHT));
+		sObj[1] = *AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_2, DIR_RIGHT));
+		type[1] = OBJ_TYPE_CHARACTER;
 	}
 	else
 	{
@@ -433,9 +330,83 @@ int GameScene::Init(void)
 	return 0;
 }
 
+void GameScene::BgPosUpDate(void)
+{
+	// ｷｬﾗｸﾀｰの位置情報格納
+	VECTOR2 characterPos[2] = { sObj[0]->GetPos(), sObj[1]->GetPos() };
+
+	// 横軸の処理
+	bgPos.x += (DEF_CENTER_POS_X - ((characterPos[0].x + characterPos[1].x) / 2));
+	if (bgPos.x > 0)
+	{
+		bgPos.x = 0;
+	}
+	if (bgPos.x < (ssize.x - BG_IMAGE_SIZE_X))
+	{
+		bgPos.x = (ssize.x - BG_IMAGE_SIZE_X);
+	}
+
+	int edgePosLeft;		// 移動制限の左側
+	int edgePosRight;		// 移動制限の右側
+
+	edgePosLeft = (ssize.x / 5);
+	edgePosRight = ((ssize.x * 4) / 5);
+
+	edgePosLeft = (ssize.x / 5) + bgPos.x;
+	if (edgePosLeft < (STICK_HUMAN_IMAGE_SIZE_X / 2))
+	{
+		edgePosLeft = (STICK_HUMAN_IMAGE_SIZE_X / 2);
+	}
+	if (edgePosLeft > (ssize.x / 5))
+	{
+		edgePosLeft = (ssize.x / 5);
+	}
+
+	edgePosRight = (((ssize.x * 4) / 5) + bgPos.x - (ssize.x - BG_IMAGE_SIZE_X));
+	if (edgePosRight < ((ssize.x * 4) / 5))
+	{
+		edgePosRight = ((ssize.x * 4) / 5);
+	}
+	if (edgePosRight > (ssize.x - (STICK_HUMAN_IMAGE_SIZE_X / 2)))
+	{
+		edgePosRight = (ssize.x - (STICK_HUMAN_IMAGE_SIZE_X / 2));
+	}
+
+	int leftCharacter;		// 左にいる方のcharacterPosのindex
+	int rightCharacter;		// 右にいる方のcharacterPosのindex
+
+	if (characterPos[0].x < characterPos[1].x)
+	{
+		leftCharacter = 0;
+		rightCharacter = 1;
+	}
+	else
+	{
+		leftCharacter = 1;
+		rightCharacter = 0;
+	}
+
+	int characterDistanceHalf = ((characterPos[rightCharacter].x - characterPos[leftCharacter].x) / 2);
+
+	if ((bgPos.x != 0) && (bgPos.x != (ssize.x - BG_IMAGE_SIZE_X)))
+	{
+		sObj[leftCharacter]->SetPos(VECTOR2(DEF_CENTER_POS_X - characterDistanceHalf, characterPos[leftCharacter].y));
+		sObj[rightCharacter]->SetPos(VECTOR2(DEF_CENTER_POS_X + characterDistanceHalf, characterPos[rightCharacter].y));
+	}
+
+	if (characterPos[leftCharacter].x < edgePosLeft)
+	{
+		sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
+	}
+	if (characterPos[rightCharacter].x > edgePosRight)
+	{
+		sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
+	}
+}
+
 bool GameScene::GameDraw(void)
 {
-	DrawGraph(bgPos_x, 0, IMAGE_ID("image/bluesky_背景.png")[0], true);
+	DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/bluesky_背景.png")[0], true);
 
 	//objListに登録されているｸﾗｽの描画処理を行う
 	for (auto &data : (*objList))
