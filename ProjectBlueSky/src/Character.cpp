@@ -805,6 +805,7 @@ void Character::CheckHitFlag(void)
 			if (GetAnim() != "ダメージ_立ち")
 			{
 				AddPlayerHP(-10);
+				WaitTimer(65);
 
 				comboCnt++;
 				if ((comboCnt >= COMBO_BREAK_CNT) || (animAttribute[0] == ANIM_ATTRIBUTE_AIR))
@@ -961,9 +962,9 @@ void Character::Draw(void)
 		hpColor = 0x00ff00;
 	}
 	DrawFormatString(110, 25, 0xffffff, "playerの残りHP %d \n", playerHP);
-	DrawBox(90, 45, 100 + 305, 75, 0x000000, true);
-	DrawBox(95, 50, 100 + (playerHPOld * 3), 70, 0xff0000, true);
-	DrawBox(95, 50, 100 + (playerHP * 3), 70, hpColor, true);
+	DrawBox(95, 45, 100 + 305, 75, 0x000000, true);
+	DrawBox(100, 50, 100 + (playerHPOld * 3), 70, 0xff0000, true);
+	DrawBox(100, 50, 100 + (playerHP * 3), 70, hpColor, true);
 
 	animCnt++;
 
