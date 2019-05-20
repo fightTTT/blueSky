@@ -9,7 +9,7 @@ enum ColType
 	COLTYPE_ATTACK,		// 攻撃用の当たり判定
 	COLTYPE_HIT,		// ダメージ受ける用の当たり判定
 	COLTYPE_GUARD,		// ガード用の当たり判定
-	COL_TYPE_NON,
+	COLTYPE_NON,
 	COLTYPE_MAX
 };
 

@@ -130,7 +130,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		animName[i] = sObj[i]->GetAnim();
 
 		// “–‚½‚è”»’è‚ðfalse‚É‚·‚é
-		sObj[i]->SetHitData(false, COL_TYPE_NON);
+		sObj[i]->SetHitData(false, COLTYPE_NON);
 	}
 
 	// “–‚½‚è”»’èˆ—
@@ -246,6 +246,10 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					// ”g“®Œ‚Ì“–‚½‚è”»’è
 					if (eState.shotData.size())
 					{
+						if (shotObj->GetHitFlag())
+						{
+							break;
+						}
 						VECTOR2 startPos = { 0,0 };
 						VECTOR2 endPos = { 0,0 };
 

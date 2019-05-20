@@ -128,6 +128,7 @@ public:
 	bool GetAnimEndFlag() const { return animEndFlag; }
 
 	void SetHitData(bool flag, ColType type);
+	bool GetHitFlag() const { return hitData.hitFlag; }
 
 	PAD_ID GetPadID() const { return padID; }
 
