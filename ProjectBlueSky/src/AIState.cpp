@@ -3,6 +3,8 @@
 #include "DamageState.h"
 #include "AICharacter.h"
 
+#include "DxLib.h"
+
 AIState::AIState()
 {
 	stateTime = 0;

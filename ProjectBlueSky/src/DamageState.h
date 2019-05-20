@@ -25,4 +25,7 @@ private:
 
 	VECTOR2 knockBackSpeed;
 	int comboCnt;
+
+	DamageState(const DamageState&);
+	void operator=(const DamageState&) {}
 };

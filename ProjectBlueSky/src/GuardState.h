@@ -24,5 +24,8 @@ private:
 
 	bool guardHitFlag;
 	int knockBackSpeed;
+
+	GuardState(const GuardState&);
+	void operator=(const GuardState&) {}
 };
 
