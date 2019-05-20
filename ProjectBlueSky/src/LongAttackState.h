@@ -21,5 +21,8 @@ private:
 	void Update(AICharacter* character);
 
 	int shotCount;		// ’e‚Ì”­ŽËƒJƒEƒ“ƒg
+
+	LongAttackState(const LongAttackState&);
+	void operator=(const LongAttackState&) {}
 };
 

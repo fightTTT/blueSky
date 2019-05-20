@@ -27,5 +27,8 @@ private:
 	int changeWaitStateCount;		// 待機状態に入るカウント
 	int notAttackCount;				// 攻撃していない状態のカウント
 	int moveFrontCount;				// 前移動持続時間のカウント
+
+	MoveState(const MoveState&);
+	void operator=(const MoveState&) {}
 };
 
