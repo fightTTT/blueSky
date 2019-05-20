@@ -18,7 +18,7 @@ void AttackState::Init(AICharacter * character)
 {
 	character->SetDirChange(false);
 
-	int rand = GetRand(3);
+	int rand = GetRand(7);
 
 	if (rand == 0)
 	{
@@ -35,6 +35,22 @@ void AttackState::Init(AICharacter * character)
 	else if (rand == 3)
 	{
 		character->SetAnim("キック_小");
+	}
+	else if (rand == 4)
+	{
+		character->SetAnim("パンチ_小_しゃがみ");
+	}
+	else if (rand == 5)
+	{
+		character->SetAnim("パンチ_大_しゃがみ");
+	}
+	else if (rand == 6)
+	{
+		character->SetAnim("キック_小_しゃがみ");
+	}
+	else if (rand == 7)
+	{
+		character->SetAnim("キック_大_しゃがみ");
 	}
 }
 

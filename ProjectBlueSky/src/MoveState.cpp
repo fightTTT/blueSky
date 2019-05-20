@@ -20,6 +20,7 @@ MoveState::MoveState()
 {
 	// Å‰‚¾‚¯‰Šú‰»
 	moveDirFlag = true;
+	guardHitCount = 0;
 }
 
 MoveState::~MoveState()
@@ -30,7 +31,6 @@ void MoveState::Init(AICharacter * character)
 {
 	changeGuardStateCount = 0;
 	stateTime = 0;
-	notAttackCount = 0;
 	moveFrontCount = 0;
 	changeWaitStateCount = 0;
 }
@@ -44,15 +44,26 @@ void MoveState::Update(AICharacter * character)
 
 	VECTOR2 vec = enemy.enemyPos - pos;
 	int rand = 0;
+	notAttackCount++;
 
-	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
+	if (guardHitCount >= 50)
 	{
-		character->ChangeState(GuardState::GetInstance());
+		character->SetJumpType(JUMP_TYPE_FRONT);
+		character->ChangeState(JumpState::GetInstance());
+		guardHitCount = 0;
 		moveDirFlag = true;
 		return;
 	}
 
-	if (changeGuardCount > GetRand(10) + 1)
+	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
+	{
+		character->ChangeState(GuardState::GetInstance());
+		guardHitCount++;
+		moveDirFlag = true;
+		return;
+	}
+
+	if ( static_cast<int>(changeGuardCount) > GetRand(10))
 	{
 		moveDirFlag = false;
 		changeGuardCount = 0;
@@ -138,7 +149,7 @@ void MoveState::Update(AICharacter * character)
 	}
 
 	// UŒ‚‚µ‚Ä‚¢‚È‚¢ó‘Ô‚ª‘±‚¢‚½ê‡
-	if (notAttackCount >= 180)
+	if (notAttackCount >= 120)
 	{
 		character->SetJumpType(JUMP_TYPE_FRONT);
 		character->ChangeState(JumpState::GetInstance());
@@ -146,8 +157,6 @@ void MoveState::Update(AICharacter * character)
 		moveDirFlag = true;
 		return;
 	}
-
-	notAttackCount++;
 
 	// ’e‚ðƒWƒƒƒ“ƒv‰ñ”ð
 	for (auto data : enemy.shotData)

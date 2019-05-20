@@ -477,6 +477,22 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("待機");
 		}
 	}
+	else if (GetAnim() == "旋風脚")
+	{
+		if (dir == DIR_RIGHT)
+		{
+			pos.x += 6;
+		}
+		else
+		{
+			pos.x -= 6;
+		}
+
+		if (animCnt > 60)
+		{
+			SetAnim("待機");
+		}
+	}
 	else
 	{
 		// キャラクター操作
