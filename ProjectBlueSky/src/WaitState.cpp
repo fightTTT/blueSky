@@ -41,7 +41,7 @@ void WaitState::Update(AICharacter * character)
 
 	if (stateTime == 15)
 	{
-		if (distance > 500)
+		if (distance > 10)
 		{
 			character->ChangeState(LongAttackState::GetInstance());
 			return;
