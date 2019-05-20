@@ -143,7 +143,7 @@ void JumpState::Update(AICharacter * character)
 	auto ssize = lpSceneMng.GetScreenSize();
 
 	// ’…’n
-	if (pos.y > ssize.y)
+	if (jumpSpeed.y == JUMP_SPEED_Y)
 	{
 		pos.y = ssize.y;
 		jumpFlag = false;

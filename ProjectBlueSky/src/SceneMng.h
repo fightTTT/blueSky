@@ -31,7 +31,6 @@ public:
 	const int GetCharID(PAD_ID padID);
 	void SetCharID(PAD_ID padID, int id);
 
-
 	//decidFlag‚Ìî•ñ‚ğæ“¾‚·‚é(ˆø”FdecidFlag‚ğæ“¾‚µ‚½‚¢ÌßÚ²Ô°‚Ì”Ô†)
 	bool GetDecidFlag(PAD_ID padID);
 	//decidFlag‚Ìî•ñ‚ğ¾¯Ä‚·‚é(ˆø”FdecidFlag‚ğ¾¯Ä‚µ‚½‚¢ÌßÚ²Ô°‚Ì”Ô†, ¾¯Ä‚µ‚½‚¢flag)
