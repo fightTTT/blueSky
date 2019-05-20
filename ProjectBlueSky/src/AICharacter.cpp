@@ -113,7 +113,7 @@ void AICharacter::Draw()
 
 	if (lpColMng.GetColFlag(animName))
 	{
-		ColInfo colData = lpColMng.GetCollisionData(characterName, animName, id);
+		ColInfo colData = lpColMng.GetCollisionData("ñ_êlä‘", animName, id);
 
 		int colColor;
 
