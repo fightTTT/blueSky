@@ -238,49 +238,49 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					}
 				}
 			}
-
 			for (int i = 0; i < 2; i++)
 			{
 				for (int a = 0; a < colData[i].hitBox.size(); a++)
 				{
 					// ”g“®Œ‚Ì“–‚½‚è”»’è
-					if (eState.shotData.size())
+					for (auto& data : *objList)
 					{
-						if (shotObj->GetHitFlag())
+						if (data->CheckObjType(OBJ_TYPE_SHOT))
 						{
-							break;
-						}
-						VECTOR2 startPos = { 0,0 };
-						VECTOR2 endPos = { 0,0 };
-
-						if (colData[i].hitBox[a].type != COLTYPE_ATTACK)
-						{
-							for (int s = 0; s < eState.shotData.size(); s++)
+							if (data->GetHitFlag())
 							{
-								startPos = { eState.shotData[s].pos.x + (shotObj->GetDivSize().x / 2) - 50,eState.shotData[s].pos.y + (shotObj->GetDivSize().y / 2) - 50 };
-								endPos = { eState.shotData[s].pos.x + (shotObj->GetDivSize().x / 2) + 50,eState.shotData[s].pos.y + (shotObj->GetDivSize().y / 2) + 50 };
-
-								if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
-									&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
-									&& colData[i].hitBox[a].rect.endPos.y >= startPos.y
-									&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
-								{
-
-									sObj[i]->SetHitData(true, colData[i].hitBox[a].type);
-									shotObj->SetHitData(true, colData[i].hitBox[a].type);
-									break;
-								}
-								else
-								{
-									sObj[i]->SetHitData(false, colData[i].hitBox[a].type);
-								}
+								break;
 							}
+							VECTOR2 startPos = { 0,0 };
+							VECTOR2 endPos = { 0,0 };
+
+							if (colData[i].hitBox[a].type != COLTYPE_ATTACK)
+							{
+									startPos = { data->GetPos().x + (data->GetDivSize().x / 2) - 50,data->GetPos().y + (data->GetDivSize().y / 2) - 50 };
+									endPos = { data->GetPos().x + (data->GetDivSize().x / 2) + 50,data->GetPos().y + (data->GetDivSize().y / 2) + 50 };
+
+									if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
+										&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
+										&& colData[i].hitBox[a].rect.endPos.y >= startPos.y
+										&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
+									{
+
+										sObj[i]->SetHitData(true, colData[i].hitBox[a].type);
+										data->SetHitData(true, colData[i].hitBox[a].type);
+										break;
+									}
+									else
+									{
+										sObj[i]->SetHitData(false, colData[i].hitBox[a].type);
+									}
+								}
 						}
 					}
 				}
 			}
+			
+			}
 		}
-	}
 
 	for (auto& data : *objList)
 	{
