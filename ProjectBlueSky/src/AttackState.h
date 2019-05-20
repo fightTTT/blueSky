@@ -19,5 +19,8 @@ private:
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
+
+	AttackState(const AttackState&);
+	void operator=(const AttackState&) {}
 };
 

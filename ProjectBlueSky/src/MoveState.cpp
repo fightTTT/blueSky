@@ -177,35 +177,6 @@ void MoveState::Update(AICharacter * character)
 		}
 	}
 
-	// ‰æ–Ê’[‚É‹ß‚Ã‚¢‚½‚ç•ûŒü‚ğØ‚è‘Ö‚¦‚é
-	VECTOR2 ssize = lpSceneMng.GetScreenSize();
-	int screenDistance = 0;
-
-	if (charaDir == DIR_RIGHT)
-	{
-		screenDistance = pos.x;
-	}
-	else
-	{
-		screenDistance = abs(pos.x - ssize.x);
-	}
-
-	if (abs(vec.x < 250) && screenDistance < 200)
-	{
-		rand = GetRand(1);
-		if (rand == 0)
-		{
-			character->SetJumpType(JUMP_TYPE_FRONT);
-			character->ChangeState(JumpState::GetInstance());
-			moveDirFlag = true;
-			return;
-		}
-		else
-		{
-			moveDirFlag = true;
-		}
-	}
-
 	stateTime++;
 
 	// ƒK[ƒhó‘Ô‚Ìê‡‚ÍˆÚ“®‚µ‚È‚¢
@@ -277,6 +248,8 @@ void MoveState::Update(AICharacter * character)
 			}
 		}
 	}
+
+	VECTOR2 ssize = lpSceneMng.GetScreenSize();
 
 	if (pos.x > ssize.x - divSize.x / 4)
 	{

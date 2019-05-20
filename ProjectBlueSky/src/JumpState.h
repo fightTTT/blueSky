@@ -22,8 +22,10 @@ private:
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
 
-
 	bool jumpFlag;
 	VECTOR2 jumpSpeed;
+
+	JumpState(const JumpState&);
+	void operator=(const JumpState&) {}
 };
 

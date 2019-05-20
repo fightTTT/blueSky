@@ -20,5 +20,8 @@ private:
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
+
+	WaitState(const WaitState&);
+	void operator=(const WaitState&) {}
 };
 
