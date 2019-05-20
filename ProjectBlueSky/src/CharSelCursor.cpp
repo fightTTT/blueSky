@@ -6,7 +6,7 @@
 
 #define BOX_SIZE_X (100)		// ｷｬﾗｱｲｺﾝのX軸ｻｲｽﾞ
 #define BOX_SIZE_Y (100)		// ｷｬﾗｱｲｺﾝのY軸ｻｲｽﾞ
-
+#define PI2 (3.141592654f*6)	// ｶｰｿﾙの回転用
 
 CharSelCursor::CharSelCursor(PAD_ID padId)
 {
@@ -21,6 +21,8 @@ CharSelCursor::~CharSelCursor()
 
 void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
+	mCount++;
+
 	if (!decidFlag)
 	{
 		/* ｶｰｿﾙの移動 */
@@ -172,11 +174,22 @@ int CharSelCursor::Init(void)
 			   VECTOR2((sSize.x / 2) + BOX_SIZE_X,			(sSize.y * 3 / 5) + BOX_SIZE_Y) };
 
 	colorTbl = {0xff0000, 0x00ffff};
+
+	mCount = 0;
+	mMask = LoadMask("image/selected_mask.png");
 	return 0;
 }
 
 void CharSelCursor::Draw(void)
 {
-	DrawGraph(posTbl[charID].x, posTbl[charID].y, IMAGE_DIV_ID("image/キャラセレ用/frame.png", VECTOR2(100, 100), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);		// ｷｬﾗのｱｲｺﾝを描画
+	//DrawGraph(posTbl[charID].x, posTbl[charID].y, IMAGE_DIV_ID("image/キャラセレ用/frame.png", VECTOR2(100, 100), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);		// 選択用ｶｰｿﾙを描画
+
+	CreateMaskScreen();     // ﾏｽｸ開始
+	DrawMask(posTbl[charID].x-40, posTbl[charID].y-40, mMask, DX_MASKTRANS_BLACK); // 黒色の場所だけ描画
+	SetDrawBlendMode(DX_BLENDMODE_ADD, 255);               // 加算ブレンドに設定
+	DrawRotaGraph2((posTbl[charID].x + 50), (posTbl[charID].y + 50), 50, 50, 1.0, PI2 / 240 * mCount, IMAGE_ID("image/menu_back_over.png")[0], true);			// ｶｰｿﾙをﾏｽの中心で画像の中心を軸に回転
+	DrawRotaGraph2((posTbl[charID].x + 50), (posTbl[charID].y + 50), 50, 50, 1.0, PI2 / 240 * (mCount - 120), IMAGE_ID("image/menu_back_over.png")[0], true);	// 対角線上にもう一つ
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);     // ﾌﾞﾚﾝﾄﾞをﾘｾｯﾄ
+	DeleteMaskScreen(); // ﾏｽｸ終了
 }
 

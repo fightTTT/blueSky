@@ -25,4 +25,7 @@ private:
 	std::array<unsigned int, PALYER_CNT_MAX> colorTbl;					// ÌßÚ²±°‚É‘Î‰‚µ‚½F‚ÌÃ°ÌŞÙ
 
 	bool decidFlag;			//‘I‘ğŒˆ’è‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ÌÌ×¸Ş(true:Œˆ’è‚µ‚Ä‚¢‚é, false:Œˆ’è‚µ‚Ä‚¢‚È‚¢)
+
+	int mCount;		// ¶°¿Ù‚Ì‰ñ“]—p•Ï”
+	int mMask;		// Ï½¸‚Ì‚½‚ß‚Ì•Ï”
 };
