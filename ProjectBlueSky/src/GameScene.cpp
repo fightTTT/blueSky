@@ -283,8 +283,19 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		data->CheckHitFlag();
 	}
 
+	deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
+	objList->erase(deth_itr, objList->end());
+
 	// ”wŒi‚ÌˆÊ’uî•ñXV
 	BgPosUpDate();
+
+	for (auto& data : *objList)
+	{
+		if (data->CheckObjType(OBJ_TYPE_SHOT))
+		{
+			data->AddPos(bgPos - bgPosOld);
+		}
+	}
 
 	// •`‰æˆ—
 	GameDraw();
@@ -335,6 +346,9 @@ void GameScene::BgPosUpDate(void)
 	// ·¬×¸À°‚ÌˆÊ’uî•ñŠi”[
 	VECTOR2 characterPos[2] = { sObj[0]->GetPos(), sObj[1]->GetPos() };
 
+	// 1ÌÚ°Ñ‘O‚Ì”wŒi‚ÌˆÊ’uÀ•W‚ÌŠi”[
+	bgPosOld = bgPos;
+
 	// ‰¡Ž²‚Ìˆ—
 	bgPos.x += (DEF_CENTER_POS_X - ((characterPos[0].x + characterPos[1].x) / 2));
 	if (bgPos.x > 0)
@@ -383,8 +397,6 @@ void GameScene::BgPosUpDate(void)
 		highCharacter = 1;
 		lowCharacter = 0;
 	}
-
-	bgPosOld_y = bgPos.y;
 	
 	bgPos.y = (DEF_BG_POS_Y + ((ssize.y - characterPos[highCharacter].y) / 4));
 	if (bgPos.y > 0)
@@ -396,10 +408,10 @@ void GameScene::BgPosUpDate(void)
 		bgPos.y = DEF_BG_POS_Y;
 	}
 
-	if (bgPosOld_y != bgPos.y)
+	if (bgPosOld.y != bgPos.y)
 	{
-		characterPos[highCharacter].y += (bgPos.y - bgPosOld_y);
-		characterPos[lowCharacter].y += (bgPos.y - bgPosOld_y);
+		characterPos[highCharacter].y += (bgPos.y - bgPosOld.y);
+		characterPos[lowCharacter].y += (bgPos.y - bgPosOld.y);
 	}
 
 	// ”ÍˆÍŠO‚Ìˆ—
@@ -465,7 +477,7 @@ void GameScene::BgPosUpDate(void)
 	{
 		if ((characterPos[rightCharacter].y > edgePosDown) || (sObj[rightCharacter]->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
 		{
-			sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
+			sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, edgePosDown));
 		}
 		else
 		{
@@ -476,7 +488,7 @@ void GameScene::BgPosUpDate(void)
 	{
 		if ((characterPos[rightCharacter].y > edgePosDown) || (sObj[rightCharacter]->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
 		{
-			sObj[rightCharacter]->SetPos(VECTOR2(characterPos[rightCharacter].x, characterPos[rightCharacter].y));
+			sObj[rightCharacter]->SetPos(VECTOR2(characterPos[rightCharacter].x, edgePosDown));
 		}
 		else
 		{
