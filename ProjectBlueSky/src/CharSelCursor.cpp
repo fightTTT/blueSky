@@ -176,7 +176,7 @@ int CharSelCursor::Init(void)
 	colorTbl = {0xff0000, 0x00ffff};
 
 	mCount = 0;
-	mMask = LoadMask("image/selected_mask.png");
+	mMask = LoadMask("image/キャラセレ用/selected_mask.png");
 	return 0;
 }
 
@@ -187,8 +187,8 @@ void CharSelCursor::Draw(void)
 	CreateMaskScreen();     // ﾏｽｸ開始
 	DrawMask(posTbl[charID].x-40, posTbl[charID].y-40, mMask, DX_MASKTRANS_BLACK); // 黒色の場所だけ描画
 	SetDrawBlendMode(DX_BLENDMODE_ADD, 255);               // 加算ブレンドに設定
-	DrawRotaGraph2((posTbl[charID].x + 50), (posTbl[charID].y + 50), 50, 50, 1.0, PI2 / 240 * mCount, IMAGE_ID("image/menu_back_over.png")[0], true);			// ｶｰｿﾙをﾏｽの中心で画像の中心を軸に回転
-	DrawRotaGraph2((posTbl[charID].x + 50), (posTbl[charID].y + 50), 50, 50, 1.0, PI2 / 240 * (mCount - 120), IMAGE_ID("image/menu_back_over.png")[0], true);	// 対角線上にもう一つ
+	DrawRotaGraph2((posTbl[charID].x + 50), (posTbl[charID].y + 50), 50, 50, 1.0, PI2 / 240 * mCount, IMAGE_ID("image/キャラセレ用/menu_back_over.png")[0], true);			// ｶｰｿﾙをﾏｽの中心で画像の中心を軸に回転
+	DrawRotaGraph2((posTbl[charID].x + 50), (posTbl[charID].y + 50), 50, 50, 1.0, PI2 / 240 * (mCount - 120), IMAGE_ID("image/キャラセレ用/menu_back_over.png")[0], true);	// 対角線上にもう一つ
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);     // ﾌﾞﾚﾝﾄﾞをﾘｾｯﾄ
 	DeleteMaskScreen(); // ﾏｽｸ終了
 }
