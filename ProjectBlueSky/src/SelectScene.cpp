@@ -66,6 +66,7 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 			if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
 			{
 				itvCnt = 1;
+				flamCnt = 0;
 				sceneChangeFlag = true;
 				/*return std::make_unique<GameScene>();*/
 			}
