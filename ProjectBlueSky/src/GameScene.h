@@ -20,6 +20,7 @@ private:
 
 	VECTOR2 ssize;				// 画面ｻｲｽﾞ
 	VECTOR2 bgPos;				// 背景の位置座標
+	int bgPosOld_y;
 
 	bool GameDraw(void);		// 描画処理
 	int id[2];			// 当たり判定のフレーム数

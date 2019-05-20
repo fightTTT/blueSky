@@ -558,9 +558,8 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			jumpSpeed.y += 1;
 			pos += jumpSpeed;
 
-			if (pos.y > ssize.y)
+			if (jumpSpeed.y == JUMP_SPEED_Y)
 			{
-				pos.y = ssize.y;
 				SetAnim("待機");
 			}
 		}
@@ -804,6 +803,8 @@ void Character::CheckHitFlag(void)
 
 			if (GetAnim() != "ダメージ_立ち")
 			{
+				playerHP -= 10;
+
 				comboCnt++;
 				if ((comboCnt >= COMBO_BREAK_CNT) || (animAttribute[0] == ANIM_ATTRIBUTE_AIR))
 				{

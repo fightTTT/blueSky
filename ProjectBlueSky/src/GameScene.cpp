@@ -346,11 +346,65 @@ void GameScene::BgPosUpDate(void)
 		bgPos.x = (ssize.x - BG_IMAGE_SIZE_X);
 	}
 
+	int leftCharacter;		// 左にいる方のcharacterPosのindex
+	int rightCharacter;		// 右にいる方のcharacterPosのindex
+
+	if (characterPos[0].x < characterPos[1].x)
+	{
+		leftCharacter = 0;
+		rightCharacter = 1;
+	}
+	else
+	{
+		leftCharacter = 1;
+		rightCharacter = 0;
+	}
+
+	int characterDistanceHalf = ((characterPos[rightCharacter].x - characterPos[leftCharacter].x) / 2);
+
+	if ((bgPos.x != 0) && (bgPos.x != (ssize.x - BG_IMAGE_SIZE_X)))
+	{
+		characterPos[leftCharacter].x = DEF_CENTER_POS_X - characterDistanceHalf;
+		characterPos[rightCharacter].x = DEF_CENTER_POS_X + characterDistanceHalf;
+	}
+
+	
+
+	// 横軸の処理
+	int highCharacter;		// 上にいる方のcharacterPosのindex
+	int lowCharacter;		// 下にいる方のcharacterPosのindex
+	if (characterPos[0].y < characterPos[1].y)
+	{
+		highCharacter = 0;
+		lowCharacter = 1;
+	}
+	else
+	{
+		highCharacter = 1;
+		lowCharacter = 0;
+	}
+
+	bgPosOld_y = bgPos.y;
+	
+	bgPos.y = (DEF_BG_POS_Y + ((ssize.y - characterPos[highCharacter].y) / 4));
+	if (bgPos.y > 0)
+	{
+		bgPos.y = 0;
+	}
+	if (bgPos.y < DEF_BG_POS_Y)
+	{
+		bgPos.y = DEF_BG_POS_Y;
+	}
+
+	if (bgPosOld_y != bgPos.y)
+	{
+		characterPos[highCharacter].y += (bgPos.y - bgPosOld_y);
+		characterPos[lowCharacter].y += (bgPos.y - bgPosOld_y);
+	}
+
+	// 範囲外の処理
 	int edgePosLeft;		// 移動制限の左側
 	int edgePosRight;		// 移動制限の右側
-
-	edgePosLeft = (ssize.x / 5);
-	edgePosRight = ((ssize.x * 4) / 5);
 
 	edgePosLeft = (ssize.x / 5) + bgPos.x;
 	if (edgePosLeft < (STICK_HUMAN_IMAGE_SIZE_X / 2))
@@ -372,35 +426,62 @@ void GameScene::BgPosUpDate(void)
 		edgePosRight = (ssize.x - (STICK_HUMAN_IMAGE_SIZE_X / 2));
 	}
 
-	int leftCharacter;		// 左にいる方のcharacterPosのindex
-	int rightCharacter;		// 右にいる方のcharacterPosのindex
+	int edgePosDown;		// 移動制限の下側
 
-	if (characterPos[0].x < characterPos[1].x)
+	edgePosDown = ssize.y + (bgPos.y - DEF_BG_POS_Y);
+	if (edgePosDown < ssize.y)
 	{
-		leftCharacter = 0;
-		rightCharacter = 1;
+		edgePosDown = ssize.y;
 	}
-	else
+	if (edgePosDown > (ssize.y - DEF_BG_POS_Y))
 	{
-		leftCharacter = 1;
-		rightCharacter = 0;
-	}
-
-	int characterDistanceHalf = ((characterPos[rightCharacter].x - characterPos[leftCharacter].x) / 2);
-
-	if ((bgPos.x != 0) && (bgPos.x != (ssize.x - BG_IMAGE_SIZE_X)))
-	{
-		sObj[leftCharacter]->SetPos(VECTOR2(DEF_CENTER_POS_X - characterDistanceHalf, characterPos[leftCharacter].y));
-		sObj[rightCharacter]->SetPos(VECTOR2(DEF_CENTER_POS_X + characterDistanceHalf, characterPos[rightCharacter].y));
+		edgePosDown = (ssize.y - DEF_BG_POS_Y);
 	}
 
 	if (characterPos[leftCharacter].x < edgePosLeft)
 	{
-		sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
+		if ((characterPos[leftCharacter].y > edgePosDown) || (sObj[leftCharacter]->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
+		{
+			sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, edgePosDown));
+		}
+		else
+		{
+			sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
+		}
 	}
+	else
+	{
+		if ((characterPos[leftCharacter].y > edgePosDown) || (sObj[leftCharacter]->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
+		{
+			sObj[leftCharacter]->SetPos(VECTOR2(characterPos[leftCharacter].x, edgePosDown));
+		}
+		else
+		{
+			sObj[leftCharacter]->SetPos(VECTOR2(characterPos[leftCharacter].x, characterPos[leftCharacter].y));
+		}
+	}
+
 	if (characterPos[rightCharacter].x > edgePosRight)
 	{
-		sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
+		if ((characterPos[rightCharacter].y > edgePosDown) || (sObj[rightCharacter]->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
+		{
+			sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
+		}
+		else
+		{
+			sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
+		}
+	}
+	else
+	{
+		if ((characterPos[rightCharacter].y > edgePosDown) || (sObj[rightCharacter]->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
+		{
+			sObj[rightCharacter]->SetPos(VECTOR2(characterPos[rightCharacter].x, characterPos[rightCharacter].y));
+		}
+		else
+		{
+			sObj[rightCharacter]->SetPos(VECTOR2(characterPos[rightCharacter].x, characterPos[rightCharacter].y));
+		}
 	}
 }
 
