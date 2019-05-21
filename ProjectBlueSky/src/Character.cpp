@@ -824,7 +824,7 @@ void Character::CheckHitFlag(void)
 				WaitTimer(65);
 
 				comboCnt++;
-				if ((comboCnt >= COMBO_BREAK_CNT) || (animAttribute[0] == ANIM_ATTRIBUTE_AIR))
+				if ((comboCnt >= COMBO_BREAK_CNT) || (animAttribute[0] == ANIM_ATTRIBUTE_AIR) || (playerHP <= 0))
 				{
 					comboCnt = 0;
 

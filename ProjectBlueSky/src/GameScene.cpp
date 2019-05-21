@@ -301,6 +301,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		}
 	}
 
+	CheckGameEnd();
+
 	// •`‰æˆ—
 	GameDraw();
 
@@ -312,6 +314,8 @@ int GameScene::Init(void)
 	MODE mode = lpSceneMng.GetMode();
 	ssize = lpSceneMng.GetScreenSize();
 	bgPos = VECTOR2(DEF_BG_POS_X, DEF_BG_POS_Y);
+	hitStopCount = 0;
+	gameEndFlag = false;
 
 	if (!objList)
 	{
@@ -497,6 +501,37 @@ void GameScene::BgPosUpDate(void)
 		else
 		{
 			sObj[rightCharacter]->SetPos(VECTOR2(characterPos[rightCharacter].x, characterPos[rightCharacter].y));
+		}
+	}
+}
+
+void GameScene::CheckGameEnd()
+{
+	if (hitStopCount)
+	{
+		if (hitStopCount < 30)
+		{
+			hitStopCount++;
+			WaitTimer(50);
+		}
+		else
+		{
+			gameEndFlag = true;
+			hitStopCount = 0;
+		}
+	}
+	else
+	{
+		if (!gameEndFlag)
+		{
+			for (int i = 0; i < 2; ++i)
+			{
+				if (sObj[i]->GetPlayerHP() == 0)
+				{
+					hitStopCount = 1;
+					break;
+				}
+			}
 		}
 	}
 }
