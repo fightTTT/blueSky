@@ -78,10 +78,10 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["ローリングアタック"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["ローリングアタック"][1] = ANIM_ATTRIBUTE_NON;
 
-		spAttackCommand[2][DIR_RIGHT].resize(3);
-		spAttackCommand[2][DIR_RIGHT] = { COM_DIR_LEFT, COM_DIR_ACCUMULATE, COM_DIR_RIGHT };
-		spAttackCommand[2][DIR_LEFT].resize(3);
-		spAttackCommand[2][DIR_LEFT] = { COM_DIR_RIGHT, COM_DIR_ACCUMULATE, COM_DIR_LEFT };
+		spAttackCommand[2][DIR_RIGHT].resize(4);
+		spAttackCommand[2][DIR_RIGHT] = { COM_DIR_LEFT, COM_DIR_ACCUMULATE, COM_DIR_CENTER, COM_DIR_RIGHT };
+		spAttackCommand[2][DIR_LEFT].resize(4);
+		spAttackCommand[2][DIR_LEFT] = { COM_DIR_RIGHT, COM_DIR_ACCUMULATE, COM_DIR_CENTER, COM_DIR_LEFT };
 		break;
 
 	case 2:
