@@ -1,5 +1,5 @@
-#include"DxLib.h"
-#include"SceneMng.h"
+#include "DxLib.h"
+#include "SceneMng.h"
 #include "ImageMng.h"
 #include "Obj.h"
 
