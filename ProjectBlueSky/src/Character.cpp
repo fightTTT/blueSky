@@ -745,38 +745,23 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadDataTrg(padID, BUTTON_B))
 				{
-					if (ctl.GetPadData(padID, THUMB_L_DOWN))
+					if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
 					{
-						if ((spAttackType[2] == SKILL_TYPE_PUNCH) && (animAttributeTbl[spAttackAnimName[2]][0] == ANIM_ATTRIBUTE_SQUAT) && CheckCommand(2))
-						{
-							SetAnim(spAttackAnimName[2]);
-						}
-						else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && (animAttributeTbl[spAttackAnimName[1]][0] == ANIM_ATTRIBUTE_SQUAT) && CheckCommand(1))
-						{
-							SetAnim(spAttackAnimName[1]);
-						}
-						else if ((spAttackType[0] == SKILL_TYPE_PUNCH) && (animAttributeTbl[spAttackAnimName[0]][0] == ANIM_ATTRIBUTE_SQUAT) && CheckCommand(0))
-						{
-							SetAnim(spAttackAnimName[0]);
-						}
-						else
-						{
-							SetAnim("パンチ_大_しゃがみ");
-						}
+						SetAnim(spAttackAnimName[2]);
+					}
+					else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && CheckCommand(1))
+					{
+						SetAnim(spAttackAnimName[1]);
+					}
+					else if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
+					{
+						SetAnim(spAttackAnimName[0]);
 					}
 					else
 					{
-						if ((spAttackType[2] == SKILL_TYPE_PUNCH) && (animAttributeTbl[spAttackAnimName[2]][0] == ANIM_ATTRIBUTE_STAND) && CheckCommand(2))
+						if (ctl.GetPadData(padID, THUMB_L_DOWN))
 						{
-							SetAnim(spAttackAnimName[2]);
-						}
-						else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && (animAttributeTbl[spAttackAnimName[1]][0] == ANIM_ATTRIBUTE_STAND) && CheckCommand(1))
-						{
-							SetAnim(spAttackAnimName[1]);
-						}
-						else if ((spAttackType[0] == SKILL_TYPE_PUNCH) && (animAttributeTbl[spAttackAnimName[0]][0] == ANIM_ATTRIBUTE_STAND) && CheckCommand(0))
-						{
-							SetAnim(spAttackAnimName[0]);
+							SetAnim("パンチ_大_しゃがみ");
 						}
 						else
 						{
@@ -812,38 +797,23 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
 				{
-					if (ctl.GetPadData(padID, THUMB_L_DOWN))
+					if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
 					{
-						if ((spAttackType[2] == SKILL_TYPE_KICK) && (animAttributeTbl[spAttackAnimName[2]][0] == ANIM_ATTRIBUTE_SQUAT) && CheckCommand(2))
-						{
-							SetAnim(spAttackAnimName[2]);
-						}
-						else if ((spAttackType[1] == SKILL_TYPE_KICK) && (animAttributeTbl[spAttackAnimName[1]][0] == ANIM_ATTRIBUTE_SQUAT) && CheckCommand(1))
-						{
-							SetAnim(spAttackAnimName[1]);
-						}
-						else if ((spAttackType[0] == SKILL_TYPE_KICK) && (animAttributeTbl[spAttackAnimName[0]][0] == ANIM_ATTRIBUTE_SQUAT) && CheckCommand(0))
-						{
-							SetAnim(spAttackAnimName[0]);
-						}
-						else
-						{
-							SetAnim("キック_大_しゃがみ");
-						}
+						SetAnim(spAttackAnimName[2]);
+					}
+					else if ((spAttackType[1] == SKILL_TYPE_KICK) && CheckCommand(1))
+					{
+						SetAnim(spAttackAnimName[1]);
+					}
+					else if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
+					{
+						SetAnim(spAttackAnimName[0]);
 					}
 					else
 					{
-						if ((spAttackType[2] == SKILL_TYPE_KICK) && (animAttributeTbl[spAttackAnimName[2]][0] == ANIM_ATTRIBUTE_STAND) && CheckCommand(2))
+						if (ctl.GetPadData(padID, THUMB_L_DOWN))
 						{
-							SetAnim(spAttackAnimName[2]);
-						}
-						else if ((spAttackType[1] == SKILL_TYPE_KICK) && (animAttributeTbl[spAttackAnimName[1]][0] == ANIM_ATTRIBUTE_STAND) && CheckCommand(1))
-						{
-							SetAnim(spAttackAnimName[1]);
-						}
-						else if ((spAttackType[0] == SKILL_TYPE_KICK) && (animAttributeTbl[spAttackAnimName[0]][0] == ANIM_ATTRIBUTE_STAND) && CheckCommand(0))
-						{
-							SetAnim(spAttackAnimName[0]);
+							SetAnim("キック_大_しゃがみ");
 						}
 						else
 						{
