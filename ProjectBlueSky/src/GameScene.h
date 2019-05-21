@@ -50,6 +50,7 @@ private:
 	bool drawflag;
 
 	int koDrawCount;			// koを表示する時間のカウント
+	int koImageHandle;			// ko描画時のハンドル
 
 	sharedListObj objList;
 };
