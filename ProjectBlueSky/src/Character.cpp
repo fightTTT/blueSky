@@ -479,6 +479,25 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("ë“ã@");
 		}
 	}
+	else if (GetAnim() == "éhìÀñC")
+	{
+		if (animCnt == (6 * animTable["éhìÀñC"][ANIM_TBL_INV]))
+		{
+			if (dir == DIR_RIGHT)
+			{
+				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(256, 64), drawOffset, dir, padID));
+			}
+			else
+			{
+				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(-128, 64), drawOffset, dir, padID));
+			}
+		}
+
+		if (animEndFlag)
+		{
+			SetAnim("ë“ã@");
+		}
+	}
 	else if (GetAnim() == "ê˘ïóãr")
 	{
 		if (dir == DIR_RIGHT)
