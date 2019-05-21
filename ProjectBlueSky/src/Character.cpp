@@ -1002,6 +1002,7 @@ void Character::Draw(void)
 	DrawBox(100, 65, 100 + (playerHPOld * 3), 85, 0xff0000, true);
 	DrawBox(100, 65, 100 + (playerHP * 3), 85, hpColor, true);
 	DrawGraph(70, 55, IMAGE_ID("image/ゲームシーン用/hpGage.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(2P)の描画
+
 	DrawGraph(0, 5, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
 
 	if (!animStopFlag)
