@@ -3,11 +3,13 @@
 #include "MoveState.h"
 #include "Collision.h"
 #include "DamageState.h"
+#include "JumpState.h"
 
 #include "DxLib.h"
 
 AttackState::AttackState()
 {
+	attackCount = 0;
 }
 
 AttackState::~AttackState()
@@ -17,6 +19,18 @@ AttackState::~AttackState()
 void AttackState::Init(AICharacter * character)
 {
 	character->SetDirChange(false);
+
+	if (attackCount >= GetRand(10) + 4)
+	{
+		attackCount = 0;
+		character->SetJumpType(JUMP_TYPE_FRONT);
+		character->ChangeState(JumpState::GetInstance());
+		return;
+	}
+	else
+	{
+		attackCount++;
+	}
 
 	int rand = GetRand(7);
 
