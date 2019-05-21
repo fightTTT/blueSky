@@ -126,6 +126,9 @@
     <ClCompile Include="src\DamageState.cpp">
       <Filter>ソース ファイル\character\AIState</Filter>
     </ClCompile>
+    <ClCompile Include="src\ResultScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameCtrl.h">
@@ -208,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="src\DamageState.h">
       <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResultScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

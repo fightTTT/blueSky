@@ -8,6 +8,7 @@
 #include "GameScene.h"
 #include "GameCtrl.h"
 #include "CollisionMng.h"
+#include "ResultScene.h"
 
 #define STICK_HUMAN_IMAGE_SIZE_X (256)
 #define STICK_HUMAN_IMAGE_SIZE_Y (256)
@@ -43,15 +44,37 @@ GameScene::~GameScene()
 
 unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
-	if (koDrawCount)
+	if (CheckGameEnd())
 	{
+		if (koDrawCount == 0)
+		{
+			WaitTimer(650);
+			charaObj[0].charaObj->SetAnimStopFlag(true);
+			charaObj[1].charaObj->SetAnimStopFlag(true);
+
+			if (drawflag)
+			{
+				charaObj[0].winCount++;
+				charaObj[1].winCount++;
+			}
+			else
+			{
+				charaObj[winCharacter].winCount++;
+			}
+		}
+
 		koDrawCount++;
 
 		if (koDrawCount >= 120)
 		{
-			charaObj[0].charaObj->SetAnimStopFlag(false);
-			charaObj[1].charaObj->SetAnimStopFlag(false);
-			Init();
+			if (gameEndFlag)
+			{
+				return std::make_unique<ResultScene>();
+			}
+			else
+			{
+				Init();
+			}
 		}
 	}
 	else
@@ -313,8 +336,6 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				data->AddPos(bgPos - bgPosOld);
 			}
 		}
-
-		CheckGameEnd();
 	}
 
 	// 描画処理
@@ -523,38 +544,21 @@ void GameScene::BgPosUpDate(void)
 	}
 }
 
-void GameScene::CheckGameEnd()
+bool GameScene::CheckGameEnd()
 {
 	if (charaObj[0].winCount >= 2 || charaObj[1].winCount >= 2)
 	{
 		gameEndFlag = true;
+		return true;
 	}
 	else
 	{
 		if (hitStopFlag)
 		{
-			if (drawflag)
+			
+			if (charaObj[0].charaObj->GetAnim() == "ダメージ_ダウン" && charaObj[0].charaObj->GetAnimEndFlag())
 			{
-				if (charaObj[0].charaObj->GetAnim() == "ダメージ_ダウン" && charaObj[0].charaObj->GetAnimEndFlag())
-				{
-					WaitTimer(650);
-					charaObj[0].winCount++;
-					charaObj[1].winCount++;
-					koDrawCount = 1;
-					charaObj[0].charaObj->SetAnimStopFlag(true);
-					charaObj[1].charaObj->SetAnimStopFlag(true);
-				}
-			}
-			else
-			{
-				if (charaObj[loseCharacter].charaObj->GetAnim() == "ダメージ_ダウン" && charaObj[loseCharacter].charaObj->GetAnimEndFlag())
-				{
-					WaitTimer(650);
-					charaObj[winCharacter].winCount++;
-					koDrawCount = 1;
-					charaObj[0].charaObj->SetAnimStopFlag(true);
-					charaObj[1].charaObj->SetAnimStopFlag(true);
-				}
+				return true;
 			}
 			
 			WaitTimer(50);
@@ -581,6 +585,8 @@ void GameScene::CheckGameEnd()
 			}
 		}
 	}
+
+	return false;
 }
 
 bool GameScene::GameDraw(void)
