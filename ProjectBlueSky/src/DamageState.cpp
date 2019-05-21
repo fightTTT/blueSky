@@ -103,8 +103,6 @@ void DamageState::Update(AICharacter * character)
 
 		if (pos.y > ssize.y)
 		{
-			pos.y = ssize.y;
-
 			if (dir == DIR_RIGHT)
 			{
 				knockBackSpeed.x++;
