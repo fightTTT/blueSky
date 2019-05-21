@@ -43,27 +43,16 @@ GameScene::~GameScene()
 
 unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
+	CheckGameEnd();
+
 	if (koDrawCount)
 	{
-		if (koDrawCount == 1)
-		{
-			koImageHandle = MakeScreen(ssize.x, ssize.y, FALSE);
-			SetDrawScreen(koImageHandle);
-
-			DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/bluesky_背景.png")[0], true);
-
-			//objListに登録されているｸﾗｽの描画処理を行う
-			for (auto &data : (*objList))
-			{
-				(*data).Draw();
-			}
-
-			SetDrawScreen(DX_SCREEN_BACK);
-		}
 		koDrawCount++;
 
 		if (koDrawCount >= 120)
 		{
+			charaObj[0].charaObj->SetAnimStopFlag(false);
+			charaObj[1].charaObj->SetAnimStopFlag(false);
 			Init();
 		}
 	}
@@ -326,8 +315,6 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				data->AddPos(bgPos - bgPosOld);
 			}
 		}
-
-		CheckGameEnd();
 	}
 
 	// 描画処理
@@ -548,22 +535,25 @@ void GameScene::CheckGameEnd()
 		{
 			if (drawflag)
 			{
-				if (charaObj[0].charaObj->GetAnim() != "ダメージ_ダウン")
+				if (charaObj[0].charaObj->GetAnim() == "ダメージ_ダウン" && charaObj[0].charaObj->GetAnimEndFlag())
 				{
 					WaitTimer(650);
-					// ラウンド終了からリザルト(次ラウンド)までの処理
 					charaObj[0].winCount++;
 					charaObj[1].winCount++;
 					koDrawCount = 1;
+					charaObj[0].charaObj->SetAnimStopFlag(true);
+					charaObj[1].charaObj->SetAnimStopFlag(true);
 				}
 			}
 			else
 			{
-				if (charaObj[loseCharacter].charaObj->GetAnim() != "ダメージ_ダウン")
+				if (charaObj[loseCharacter].charaObj->GetAnim() == "ダメージ_ダウン" && charaObj[loseCharacter].charaObj->GetAnimEndFlag())
 				{
 					WaitTimer(650);
 					charaObj[winCharacter].winCount++;
 					koDrawCount = 1;
+					charaObj[0].charaObj->SetAnimStopFlag(true);
+					charaObj[1].charaObj->SetAnimStopFlag(true);
 				}
 			}
 			
@@ -595,21 +585,18 @@ void GameScene::CheckGameEnd()
 
 bool GameScene::GameDraw(void)
 {
+	DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/bluesky_背景.png")[0], true);
+
+	//objListに登録されているｸﾗｽの描画処理を行う
+	for (auto &data : (*objList))
+	{
+		(*data).Draw();
+	}
+
 	// KOの文字の描画
 	if (koDrawCount)
 	{
-		DrawGraph(0, 0, koImageHandle, true);
 		DrawString(500, 300, "KO", 0xff0000);
-	}
-	else
-	{
-		DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/bluesky_背景.png")[0], true);
-
-		//objListに登録されているｸﾗｽの描画処理を行う
-		for (auto &data : (*objList))
-		{
-			(*data).Draw();
-		}
 	}
 
 	DrawFormatString(0, 300, 0xff0000, "chara 0 : winCount %d\nchara 1 : winCount %d\n", charaObj[0].winCount, charaObj[1].winCount);

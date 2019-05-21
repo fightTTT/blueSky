@@ -123,7 +123,11 @@ public:
 	void AddPlayerHP(int addHP);
 	void AddPlayerHPOld(int addHP);
 
+	// プレイヤーのHPを取得
 	int GetPlayerHP();
+
+	// アニメーションを止めるフラグをセット
+	void SetAnimStopFlag(bool flag) { animStopFlag = flag; }
 
 	// アニメーションが終了しているか
 	bool GetAnimEndFlag() const { return animEndFlag; }
@@ -134,8 +138,6 @@ public:
 	PAD_ID GetPadID() const { return padID; }
 
 	const VECTOR2 GetAnimOffSet(std::string animName);
-
-	
 
 	int GetCount(std::string animName);
 
@@ -166,6 +168,7 @@ protected:
 	int playerHP;					// プレイヤーのHP
 	int playerHPOld;				// プレイヤーHP変更前の値
 	float DrawHPCount;				// HP描画のカウント
+	bool animStopFlag;				// アニメーションをとめるフラグ
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;				// ｱﾆﾒｰｼｮﾝ情報
 	std::string animName;											// 表示ｱﾆﾒｰｼｮﾝ名

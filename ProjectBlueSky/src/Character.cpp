@@ -982,7 +982,10 @@ void Character::Draw(void)
 	DrawBox(100, 50, 100 + (playerHPOld * 3), 70, 0xff0000, true);
 	DrawBox(100, 50, 100 + (playerHP * 3), 70, hpColor, true);
 
-	animCnt++;
+	if (!animStopFlag)
+	{
+		animCnt++;
+	}
 
 	int i = 0;
 	for (auto& data : comList)

@@ -29,6 +29,7 @@ bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, bool turn)
 	playerHP = 100;
 	playerHPOld = 100;
 	DrawHPCount = 0.0f;
+	animStopFlag = false;
 	return true;
 }
 
@@ -89,7 +90,11 @@ void Obj::Draw(void)
 			DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[id], true, turnFlag);
 		}
 	}
-	animCnt++;
+
+	if (!animStopFlag)
+	{
+		animCnt++;
+	}
 }
 
 void Obj::Draw(unsigned int id)

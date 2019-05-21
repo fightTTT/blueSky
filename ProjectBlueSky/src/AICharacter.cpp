@@ -161,7 +161,10 @@ void AICharacter::Draw()
 	DrawBox(ssize.x - 400, 50, ssize.x - 400 + (playerHPOld * 3), 70, 0xff0000, true);
 	DrawBox(ssize.x - 400, 50, ssize.x - 400 + (playerHP * 3), 70, hpColor, true);
 
-	animCnt++;
+	if (!animStopFlag)
+	{
+		animCnt++;
+	}
 }
 
 void AICharacter::ChangeState(AIState * s)
