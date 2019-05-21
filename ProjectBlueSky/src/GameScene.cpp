@@ -8,6 +8,7 @@
 #include "GameScene.h"
 #include "GameCtrl.h"
 #include "CollisionMng.h"
+#include "ResultScene.h"
 
 #define STICK_HUMAN_IMAGE_SIZE_X (256)
 #define STICK_HUMAN_IMAGE_SIZE_Y (256)
@@ -66,8 +67,14 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 		if (koDrawCount >= 120)
 		{
-			// gameEndFlag‚Åresult‚ÉØ‚è‘Ö‚¦‚é
-			Init();
+			if (gameEndFlag)
+			{
+				return std::make_unique<ResultScene>();
+			}
+			else
+			{
+				Init();
+			}
 		}
 	}
 	else

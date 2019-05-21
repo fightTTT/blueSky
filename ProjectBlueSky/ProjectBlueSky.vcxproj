@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ResultScene.cpp" />
     <ClCompile Include="src\DamageState.cpp" />
     <ClCompile Include="src\GuardState.cpp" />
     <ClCompile Include="src\AIStickHuman.cpp" />
@@ -48,6 +49,7 @@
     <ClCompile Include="src\StickHuman.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ResultScene.h" />
     <ClInclude Include="src\DamageState.h" />
     <ClInclude Include="src\GuardState.h" />
     <ClInclude Include="src\AIStickHuman.h" />
