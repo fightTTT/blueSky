@@ -319,6 +319,7 @@ int GameScene::Init(void)
 	loseCharacter = -1;
 	winCharacter = -1;
 	drawflag = false;
+	koDrawCount = 0;
 
 	if (!objList)
 	{
@@ -510,9 +511,9 @@ void GameScene::BgPosUpDate(void)
 
 void GameScene::CheckGameEnd()
 {
-	if (gameEndFlag)
+	if (charaObj[0].winCount >= 2 || charaObj[1].winCount >= 2)
 	{
-		
+		gameEndFlag = true;
 	}
 	else
 	{
@@ -520,10 +521,12 @@ void GameScene::CheckGameEnd()
 		{
 			if (drawflag)
 			{
-				if (charaObj[winCharacter].charaObj->GetAnim() != "ダメージ_ダウン")
+				if (charaObj[0].charaObj->GetAnim() != "ダメージ_ダウン")
 				{
 					WaitTimer(650);
 					// ラウンド終了からリザルト(次ラウンド)までの処理
+					charaObj[0].winCount++;
+					charaObj[1].winCount++;
 					Init();
 				}
 			}
@@ -532,6 +535,7 @@ void GameScene::CheckGameEnd()
 				if (charaObj[loseCharacter].charaObj->GetAnim() != "ダメージ_ダウン")
 				{
 					WaitTimer(650);
+					charaObj[winCharacter].winCount++;
 					Init();
 				}
 			}
@@ -573,6 +577,8 @@ bool GameScene::GameDraw(void)
 	}
 
 	// KOの文字の描画
+
+	DrawFormatString(0, 300, 0xff0000, "chara 0 : winCount %d\nchara 1 : winCount %d\n", charaObj[0].winCount, charaObj[1].winCount);
 
 	return true;
 }

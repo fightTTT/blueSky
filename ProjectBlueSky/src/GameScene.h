@@ -20,6 +20,7 @@ private:
 
 	void CheckGameEnd();		// 勝敗をチェック
 
+	// キャラクターのObj情報
 	struct CharacterObj
 	{
 		CharacterObj() : charaObj(nullptr), charaType(OBJ_TYPE_MAX), winCount(0) {}
@@ -47,6 +48,8 @@ private:
 	int loseCharacter;
 	int winCharacter;
 	bool drawflag;
+
+	int koDrawCount;			// koを表示する時間のカウント
 
 	sharedListObj objList;
 };
