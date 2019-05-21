@@ -314,8 +314,11 @@ int GameScene::Init(void)
 	MODE mode = lpSceneMng.GetMode();
 	ssize = lpSceneMng.GetScreenSize();
 	bgPos = VECTOR2(DEF_BG_POS_X, DEF_BG_POS_Y);
-	hitStopCount = 0;
+	hitStopFlag = false;
 	gameEndFlag = false;
+	loseCharacter = -1;
+	winCharacter = -1;
+	drawflag = false;
 
 	if (!objList)
 	{
@@ -507,29 +510,52 @@ void GameScene::BgPosUpDate(void)
 
 void GameScene::CheckGameEnd()
 {
-	if (hitStopCount)
+	if (gameEndFlag)
 	{
-		if (hitStopCount < 30)
-		{
-			hitStopCount++;
-			WaitTimer(50);
-		}
-		else
-		{
-			gameEndFlag = true;
-			hitStopCount = 0;
-		}
+		
 	}
 	else
 	{
-		if (!gameEndFlag)
+		if (hitStopFlag)
+		{
+			if (drawflag)
+			{
+				if (sObj[winCharacter]->GetAnim() != "ダメージ_ダウン")
+				{
+					WaitTimer(650);
+					// ラウンド終了からリザルト(次ラウンド)までの処理
+					Init();
+				}
+			}
+			else
+			{
+				if (sObj[loseCharacter]->GetAnim() != "ダメージ_ダウン")
+				{
+					WaitTimer(650);
+					Init();
+				}
+			}
+			
+			WaitTimer(50);
+		}
+		else
 		{
 			for (int i = 0; i < 2; ++i)
 			{
 				if (sObj[i]->GetPlayerHP() == 0)
 				{
-					hitStopCount = 1;
-					break;
+					if (winCharacter == i)
+					{
+						// 引き分け
+						drawflag = true;
+					}
+					else
+					{
+						loseCharacter = i;
+						winCharacter = (1 - i);
+					}
+
+					hitStopFlag = true;
 				}
 			}
 		}
@@ -545,6 +571,8 @@ bool GameScene::GameDraw(void)
 	{
 		(*data).Draw();
 	}
+
+	// KOの文字の描画
 
 	return true;
 }

@@ -30,8 +30,12 @@ private:
 	sharedObj sObj[2];			// キャラクターのObj変数保存
 	OBJ_TYPE type[2];			// キャラクターのタイプ
 
-	unsigned int hitStopCount;	// ヒットストップ用のカウント
+	bool hitStopFlag;			// ヒットストップ用のﾌﾗｸﾞ
 	bool gameEndFlag;			// ゲームの終了フラグ
+
+	int loseCharacter;
+	int winCharacter;
+	bool drawflag;
 
 	sharedListObj objList;
 };
