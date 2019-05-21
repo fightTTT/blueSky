@@ -226,6 +226,11 @@ bool Character::InitAnim(void)
 
 void Character::CommandUpDate(const GameCtrl & ctl)
 {
+	if (comList.empty())
+	{
+		comList.push_back(COM_DIR_CENTER);
+	}
+
 	// “ü—Í•ûŒü‚Ìî•ñ‚ğXV
 	comDirOld = comDir;
 
@@ -286,20 +291,17 @@ void Character::CommandUpDate(const GameCtrl & ctl)
 	}
 	else
 	{
-		if (comDir != COM_DIR_CENTER)
+		if (comClearCnt <= 0)
 		{
-			if (comClearCnt <= 0)
+			if (!comList.empty())
 			{
-				if (!comList.empty())
+				auto itr = comList.end();
+				itr--;
+				if ((*itr) != COM_DIR_ACCUMULATE)
 				{
-					auto itr = comList.end();
-					itr--;
-					if ((*itr) != COM_DIR_ACCUMULATE)
-					{
-						comList.push_back(COM_DIR_ACCUMULATE);
-					}
-					comClearCnt = DEF_COM_CLEAR_CNT;
+					comList.push_back(COM_DIR_ACCUMULATE);
 				}
+				comClearCnt = DEF_COM_CLEAR_CNT;
 			}
 		}
 	}
