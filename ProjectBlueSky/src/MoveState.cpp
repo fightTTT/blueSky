@@ -106,7 +106,7 @@ void MoveState::Update(AICharacter * character)
 	}
 
 	// ƒ‰ƒ“ƒ_ƒ€‚Å•ûŒü‚ğ‹t•ûŒü‚ÉØ‚è‘Ö‚¦
-	if (!(abs(vec.x) < ATTACK_RANGE - 80) && GetRand(100) == 0)
+	if (!(abs(vec.x) < ATTACK_RANGE - GetRand(200)) && GetRand(50) == 0)
 	{
 		moveDirFlag = !moveDirFlag;
 	}
@@ -121,7 +121,7 @@ void MoveState::Update(AICharacter * character)
 	}
 
 	// ‹ß‹——£UŒ‚‚ª“–‚½‚é‹——£‚Ìê‡UŒ‚
-	if (abs(vec.x) < ATTACK_RANGE - 80)
+	if (abs(vec.x) < ATTACK_RANGE - GetRand(120))
 	{
 		rand = GetRand(100);
 		if (rand <= 5)
