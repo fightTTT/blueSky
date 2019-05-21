@@ -67,59 +67,59 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 	}
 	
 	// キャラクター同士を向い合せる
-	if (sObj[0]->GetPos().x > sObj[1]->GetPos().x)
+	if (charaObj[0].charaObj->GetPos().x > charaObj[1].charaObj->GetPos().x)
 	{
-		sObj[0]->SetDir(DIR_LEFT);
-		sObj[1]->SetDir(DIR_RIGHT);
+		charaObj[0].charaObj->SetDir(DIR_LEFT);
+		charaObj[1].charaObj->SetDir(DIR_RIGHT);
 	}
 	else
 	{
-		sObj[0]->SetDir(DIR_RIGHT);
-		sObj[1]->SetDir(DIR_LEFT);
+		charaObj[0].charaObj->SetDir(DIR_RIGHT);
+		charaObj[1].charaObj->SetDir(DIR_LEFT);
 	}
 
 	// 一人が後ろ歩きでもう一人が攻撃系のアニメーションの時に、後ろ歩きをしている方をガード状態にする
-	if (sObj[0]->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK)
+	if (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK)
 	{
-		if (sObj[1]->GetAnim() == "後ろ移動")
+		if (charaObj[1].charaObj->GetAnim() == "後ろ移動")
 		{
-			sObj[1]->SetAnim("ガード_立ち");
+			charaObj[1].charaObj->SetAnim("ガード_立ち");
 		}
 
-		if (sObj[1]->GetAnim() == "しゃがみ_後ろ")
+		if (charaObj[1].charaObj->GetAnim() == "しゃがみ_後ろ")
 		{
-			sObj[1]->SetAnim("ガード_しゃがみ");
+			charaObj[1].charaObj->SetAnim("ガード_しゃがみ");
 		}
 	}
-	if (sObj[1]->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK)
+	if (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK)
 	{
-		if (sObj[0]->GetAnim() == "後ろ移動")
+		if (charaObj[0].charaObj->GetAnim() == "後ろ移動")
 		{
-			sObj[0]->SetAnim("ガード_立ち");
+			charaObj[0].charaObj->SetAnim("ガード_立ち");
 		}
 
-		if (sObj[0]->GetAnim() == "しゃがみ_後ろ")
+		if (charaObj[0].charaObj->GetAnim() == "しゃがみ_後ろ")
 		{
-			sObj[0]->SetAnim("ガード_しゃがみ");
+			charaObj[0].charaObj->SetAnim("ガード_しゃがみ");
 		}
 	}
 
 	// キャラクターの状態を相手に渡す
-	if (!(type[0] == type[1]))
+	if (!(charaObj[0].charaType == charaObj[1].charaType))
 	{
-		if (type[0] == OBJ_TYPE_CHARACTER)
+		if (charaObj[0].charaType == OBJ_TYPE_CHARACTER)
 		{
-			eState.enemyPos = sObj[0]->GetPos();
-			eState.enemyAnimAttribute[0] = sObj[0]->GetAnimAttribute(0);
-			eState.enemyAnimAttribute[1] = sObj[0]->GetAnimAttribute(1);
-			sObj[1]->SetEnemyState(eState);
+			eState.enemyPos = charaObj[0].charaObj->GetPos();
+			eState.enemyAnimAttribute[0] = charaObj[0].charaObj->GetAnimAttribute(0);
+			eState.enemyAnimAttribute[1] = charaObj[0].charaObj->GetAnimAttribute(1);
+			charaObj[1].charaObj->SetEnemyState(eState);
 		}
 		else
 		{
-			eState.enemyPos = sObj[1]->GetPos();
-			eState.enemyAnimAttribute[0] = sObj[1]->GetAnimAttribute(0);
-			eState.enemyAnimAttribute[1] = sObj[1]->GetAnimAttribute(1);
-			sObj[0]->SetEnemyState(eState);
+			eState.enemyPos = charaObj[1].charaObj->GetPos();
+			eState.enemyAnimAttribute[0] = charaObj[1].charaObj->GetAnimAttribute(0);
+			eState.enemyAnimAttribute[1] = charaObj[1].charaObj->GetAnimAttribute(1);
+			charaObj[0].charaObj->SetEnemyState(eState);
 		}
 	}
 
@@ -127,26 +127,26 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 	for (int i = 0; i < 2; i++)
 	{
-		animName[i] = sObj[i]->GetAnim();
+		animName[i] = charaObj[i].charaObj->GetAnim();
 
 		// 当たり判定をfalseにする
-		sObj[i]->SetHitData(false, COLTYPE_NON);
+		charaObj[i].charaObj->SetHitData(false, COLTYPE_NON);
 	}
 
 	// 当たり判定処理
 	{
 		ColInfo colData[2];			// 当たり判定の情報を格納する変数(2キャラ分)
 
-		if (lpColMng.GetColFlag(sObj[0]->GetAnim())
-		   && lpColMng.GetColFlag(sObj[1]->GetAnim()))
+		if (lpColMng.GetColFlag(charaObj[0].charaObj->GetAnim())
+		   && lpColMng.GetColFlag(charaObj[1].charaObj->GetAnim()))
 		{
 			// 当たり判定の情報を取得
 			for (int i = 0; i < 2; i++)
 			{
-				id[i] = sObj[i]->GetCount(sObj[i]->GetAnim());
-				if (id[i] < sObj[i]->GetAnimFrame(sObj[i]->GetAnim()))
+				id[i] = charaObj[i].charaObj->GetCount(charaObj[i].charaObj->GetAnim());
+				if (id[i] < charaObj[i].charaObj->GetAnimFrame(charaObj[i].charaObj->GetAnim()))
 				{
-					colData[i] = lpColMng.GetCollisionData("棒人間", sObj[i]->GetAnim(), id[i]);
+					colData[i] = lpColMng.GetCollisionData("棒人間", charaObj[i].charaObj->GetAnim(), id[i]);
 				}
 				else
 				{
@@ -160,15 +160,15 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				for (int a = 0; a < colData[i].hitBox.size(); a++)
 				{
 
-					colData[i].hitBox[a].rect.startPos.x += sObj[i]->GetAnimOffSet(animName[i]).x;
-					colData[i].hitBox[a].rect.endPos.x += sObj[i]->GetAnimOffSet(animName[i]).x;
-					colData[i].hitBox[a].rect.startPos.y += sObj[i]->GetAnimOffSet(animName[i]).y;
-					colData[i].hitBox[a].rect.endPos.y += sObj[i]->GetAnimOffSet(animName[i]).y;
+					colData[i].hitBox[a].rect.startPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
+					colData[i].hitBox[a].rect.endPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
+					colData[i].hitBox[a].rect.startPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
+					colData[i].hitBox[a].rect.endPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
 
 					int b;
 
-					colData[i].hitBox[a].rect.startPos.x *= static_cast<int>(sObj[i]->GetDir()) * -2 + 1;
-					colData[i].hitBox[a].rect.endPos.x *= static_cast<int>(sObj[i]->GetDir()) * -2 + 1;
+					colData[i].hitBox[a].rect.startPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
+					colData[i].hitBox[a].rect.endPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
 
 					// startPosがendPosよりも大きかった場合、座標を交換する
 					if (colData[i].hitBox[a].rect.startPos.x > colData[i].hitBox[a].rect.endPos.x)
@@ -185,10 +185,10 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					}
 
 					// 現在のプレイヤーのpos
-					colData[i].hitBox[a].rect.startPos.x = (sObj[i]->GetPos().x + colData[i].hitBox[a].rect.startPos.x) + (sObj[i]->GetDivSize().x/2);
-					colData[i].hitBox[a].rect.endPos.x = (sObj[i]->GetPos().x + colData[i].hitBox[a].rect.endPos.x) + (sObj[i]->GetDivSize().x / 2);
-					colData[i].hitBox[a].rect.startPos.y =(sObj[i]->GetPos().y + colData[i].hitBox[a].rect.startPos.y) + (sObj[i]->GetDivSize().y);
-					colData[i].hitBox[a].rect.endPos.y = (sObj[i]->GetPos().y + colData[i].hitBox[a].rect.endPos.y) + (sObj[i]->GetDivSize().y);
+					colData[i].hitBox[a].rect.startPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.startPos.x) + (charaObj[i].charaObj->GetDivSize().x/2);
+					colData[i].hitBox[a].rect.endPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.endPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
+					colData[i].hitBox[a].rect.startPos.y =(charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.startPos.y) + (charaObj[i].charaObj->GetDivSize().y);
+					colData[i].hitBox[a].rect.endPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.endPos.y) + (charaObj[i].charaObj->GetDivSize().y);
 
 				}
 			}
@@ -217,7 +217,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 									&& colData[i].hitBox[a].rect.endPos.y >= colData[(i + 1) % 2].hitBox[b].rect.startPos.y
 									&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
 								{
-									sObj[(i + 1) % 2]->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
+									charaObj[(i + 1) % 2].charaObj->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
 									
 									if (colData[(i + 1) % 2].hitBox[b].type == COLTYPE_GUARD)
 									{
@@ -227,13 +227,13 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 								}
 								else
 								{
-									sObj[(i + 1) % 2]->SetHitData(false, colData[(i + 1) % 2].hitBox[b].type);
+									charaObj[(i + 1) % 2].charaObj->SetHitData(false, colData[(i + 1) % 2].hitBox[b].type);
 								}
 							}
 						}
 						else
 						{
-							sObj[(i + 1) % 2]->SetHitData(false, colData[(i + 1) % 2].hitBox[b].type);
+							charaObj[(i + 1) % 2].charaObj->SetHitData(false, colData[(i + 1) % 2].hitBox[b].type);
 						}
 					}
 				}
@@ -265,13 +265,13 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 										&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
 									{
 
-										sObj[i]->SetHitData(true, colData[i].hitBox[a].type);
+										charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
 										data->SetHitData(true, colData[i].hitBox[a].type);
 										break;
 									}
 									else
 									{
-										sObj[i]->SetHitData(false, colData[i].hitBox[a].type);
+										charaObj[i].charaObj->SetHitData(false, colData[i].hitBox[a].type);
 									}
 								}
 						}
@@ -330,18 +330,18 @@ int GameScene::Init(void)
 		id[a] = 0;
 	}
 
-	sObj[0] = *AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((ssize.x / 4), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_1, DIR_LEFT));
-	type[0] = OBJ_TYPE_CHARACTER;
+	charaObj[0].charaObj = *AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((ssize.x / 4), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_1, DIR_LEFT));
+	charaObj[0].charaType = OBJ_TYPE_CHARACTER;
 
 	if (mode == MODE_1PLAYER)
 	{
-		sObj[1] = *AddObjList()(objList, std::make_unique<AIStickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), DIR_RIGHT));
-		type[1] = OBJ_TYPE_AICHARACTER;
+		charaObj[1].charaObj = *AddObjList()(objList, std::make_unique<AIStickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), DIR_RIGHT));
+		charaObj[1].charaType = OBJ_TYPE_AICHARACTER;
 	}
 	else if (mode == MODE_2PLAYER)
 	{
-		sObj[1] = *AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_2, DIR_RIGHT));
-		type[1] = OBJ_TYPE_CHARACTER;
+		charaObj[1].charaObj = *AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_2, DIR_RIGHT));
+		charaObj[1].charaType = OBJ_TYPE_CHARACTER;
 	}
 	else
 	{
@@ -355,7 +355,7 @@ int GameScene::Init(void)
 void GameScene::BgPosUpDate(void)
 {
 	// ｷｬﾗｸﾀｰの位置情報格納
-	VECTOR2 characterPos[2] = { sObj[0]->GetPos(), sObj[1]->GetPos() };
+	VECTOR2 characterPos[2] = { charaObj[0].charaObj->GetPos(), charaObj[1].charaObj->GetPos() };
 
 	// 1ﾌﾚｰﾑ前の背景の位置座標の格納
 	bgPosOld = bgPos;
@@ -463,47 +463,47 @@ void GameScene::BgPosUpDate(void)
 
 	if (characterPos[leftCharacter].x < edgePosLeft)
 	{
-		if ((characterPos[leftCharacter].y > edgePosDown) || (sObj[leftCharacter]->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
+		if ((characterPos[leftCharacter].y > edgePosDown) || (charaObj[leftCharacter].charaObj->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
 		{
-			sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, edgePosDown));
+			charaObj[leftCharacter].charaObj->SetPos(VECTOR2(edgePosLeft, edgePosDown));
 		}
 		else
 		{
-			sObj[leftCharacter]->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
+			charaObj[leftCharacter].charaObj->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
 		}
 	}
 	else
 	{
-		if ((characterPos[leftCharacter].y > edgePosDown) || (sObj[leftCharacter]->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
+		if ((characterPos[leftCharacter].y > edgePosDown) || (charaObj[leftCharacter].charaObj->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
 		{
-			sObj[leftCharacter]->SetPos(VECTOR2(characterPos[leftCharacter].x, edgePosDown));
+			charaObj[leftCharacter].charaObj->SetPos(VECTOR2(characterPos[leftCharacter].x, edgePosDown));
 		}
 		else
 		{
-			sObj[leftCharacter]->SetPos(VECTOR2(characterPos[leftCharacter].x, characterPos[leftCharacter].y));
+			charaObj[leftCharacter].charaObj->SetPos(VECTOR2(characterPos[leftCharacter].x, characterPos[leftCharacter].y));
 		}
 	}
 
 	if (characterPos[rightCharacter].x > edgePosRight)
 	{
-		if ((characterPos[rightCharacter].y > edgePosDown) || (sObj[rightCharacter]->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
+		if ((characterPos[rightCharacter].y > edgePosDown) || (charaObj[rightCharacter].charaObj->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
 		{
-			sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, edgePosDown));
+			charaObj[rightCharacter].charaObj->SetPos(VECTOR2(edgePosRight, edgePosDown));
 		}
 		else
 		{
-			sObj[rightCharacter]->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
+			charaObj[rightCharacter].charaObj->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
 		}
 	}
 	else
 	{
-		if ((characterPos[rightCharacter].y > edgePosDown) || (sObj[rightCharacter]->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
+		if ((characterPos[rightCharacter].y > edgePosDown) || (charaObj[rightCharacter].charaObj->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
 		{
-			sObj[rightCharacter]->SetPos(VECTOR2(characterPos[rightCharacter].x, edgePosDown));
+			charaObj[rightCharacter].charaObj->SetPos(VECTOR2(characterPos[rightCharacter].x, edgePosDown));
 		}
 		else
 		{
-			sObj[rightCharacter]->SetPos(VECTOR2(characterPos[rightCharacter].x, characterPos[rightCharacter].y));
+			charaObj[rightCharacter].charaObj->SetPos(VECTOR2(characterPos[rightCharacter].x, characterPos[rightCharacter].y));
 		}
 	}
 }
@@ -520,7 +520,7 @@ void GameScene::CheckGameEnd()
 		{
 			if (drawflag)
 			{
-				if (sObj[winCharacter]->GetAnim() != "ダメージ_ダウン")
+				if (charaObj[winCharacter].charaObj->GetAnim() != "ダメージ_ダウン")
 				{
 					WaitTimer(650);
 					// ラウンド終了からリザルト(次ラウンド)までの処理
@@ -529,7 +529,7 @@ void GameScene::CheckGameEnd()
 			}
 			else
 			{
-				if (sObj[loseCharacter]->GetAnim() != "ダメージ_ダウン")
+				if (charaObj[loseCharacter].charaObj->GetAnim() != "ダメージ_ダウン")
 				{
 					WaitTimer(650);
 					Init();
@@ -542,7 +542,7 @@ void GameScene::CheckGameEnd()
 		{
 			for (int i = 0; i < 2; ++i)
 			{
-				if (sObj[i]->GetPlayerHP() == 0)
+				if (charaObj[i].charaObj->GetPlayerHP() == 0)
 				{
 					if (winCharacter == i)
 					{

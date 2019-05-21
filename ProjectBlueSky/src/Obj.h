@@ -5,8 +5,7 @@
 #include"VECTOR2.h"
 #include"ObjList.h"
 #include "GameCtrl.h"
-
-enum ColType;
+#include "Collision.h"
 
 enum ANIM_TBL {
 	ANIM_TBL_START_ID,		// ŠJŽnˆÊ’u

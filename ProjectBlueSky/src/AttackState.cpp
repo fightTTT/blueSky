@@ -20,7 +20,7 @@ void AttackState::Init(AICharacter * character)
 {
 	character->SetDirChange(false);
 
-	if (attackCount >= GetRand(10) + 4)
+	if (attackCount >= static_cast<unsigned int>(GetRand(10) + 4))
 	{
 		attackCount = 0;
 		character->SetJumpType(JUMP_TYPE_FRONT);
