@@ -157,9 +157,11 @@ void AICharacter::Draw()
 		hpColor = 0x00ff00;
 	}
 	DrawFormatString(ssize.x - 410, 25, 0xffffff, "AIの残りHP %d \n", playerHP);
-	DrawBox(ssize.x - 405, 45, ssize.x - 400 + 305, 75, 0x000000, true);
-	DrawBox(ssize.x - 400, 50, ssize.x - 400 + (playerHPOld * 3), 70, 0xff0000, true);
-	DrawBox(ssize.x - 400, 50, ssize.x - 400 + (playerHP * 3), 70, hpColor, true);
+	DrawBox(ssize.x - 415, 50, ssize.x - 410 + 305, 80, 0x000000, true);
+	DrawBox(ssize.x - 410, 55, ssize.x - 410 + (playerHPOld * 3), 75, 0xff0000, true);
+	DrawBox(ssize.x - 410, 55, ssize.x - 410 + (playerHP * 3), 75, hpColor, true);
+
+	DrawGraph(ssize.x - 400 + 300, 5, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
 
 	if (!animStopFlag)
 	{
