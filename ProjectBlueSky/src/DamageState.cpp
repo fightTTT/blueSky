@@ -93,7 +93,7 @@ void DamageState::Update(AICharacter * character)
 	}
 	else if (character->GetAnim() == "ダメージ_ダウン")
 	{
-		if (character->GetAnimEndFlag())
+		if (character->GetAnimEndFlag() && character->GetPlayerHP() != 0)
 		{
 			character->SetAnim("起き上がり");
 		}
