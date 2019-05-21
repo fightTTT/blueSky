@@ -448,7 +448,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		}
 		pos.x += fallSpeed.x;
 
-		if (animEndFlag && (pos.y == ssize.y))
+		if (animEndFlag && (pos.y == ssize.y) && playerHP != 0)
 		{
 			SetAnim("‹N‚«ã‚ª‚è");
 		}

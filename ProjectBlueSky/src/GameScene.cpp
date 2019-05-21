@@ -43,8 +43,6 @@ GameScene::~GameScene()
 
 unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
-	CheckGameEnd();
-
 	if (koDrawCount)
 	{
 		koDrawCount++;
@@ -315,6 +313,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				data->AddPos(bgPos - bgPosOld);
 			}
 		}
+
+		CheckGameEnd();
 	}
 
 	// •`‰æˆ—
