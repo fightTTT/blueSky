@@ -24,7 +24,7 @@ void AIState::CheckHitFlag(AICharacter * character)
 
 	if(hitFlag && character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_INVINCIBLE)
 	{
-		WaitTimer(65);
+		WaitTimer(WAIT_TIMER_COUNT);
 		character->AddPlayerHP(-10);
 		character->ChangeState(DamageState::GetInstance());
 	}

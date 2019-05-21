@@ -1,6 +1,7 @@
 #pragma once
 
 #define COMBO_BREAK_CNT (3)
+#define WAIT_TIMER_COUNT 65
 
 class AICharacter;
 
