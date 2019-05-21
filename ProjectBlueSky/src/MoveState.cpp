@@ -63,7 +63,7 @@ void MoveState::Update(AICharacter * character)
 		return;
 	}
 
-	if ( static_cast<int>(changeGuardCount) > GetRand(10))
+	if ( static_cast<int>(changeGuardCount) > GetRand(30))
 	{
 		moveDirFlag = false;
 		changeGuardCount = 0;
