@@ -423,12 +423,11 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 	}
 	else if (GetAnim() == "ダメージ_ダウン")
 	{
-		fallSpeed.y += 1;
+		fallSpeed.y++;
 		pos.y += fallSpeed.y;
+
 		if (pos.y > ssize.y)
 		{
-			pos.y = ssize.y;
-
 			if (dir == DIR_RIGHT)
 			{
 				fallSpeed.x++;
@@ -446,9 +445,10 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 			}
 		}
+
 		pos.x += fallSpeed.x;
 
-		if (animEndFlag && (pos.y == ssize.y) && playerHP != 0)
+		if (animEndFlag && playerHP != 0)
 		{
 			SetAnim("起き上がり");
 		}
@@ -597,7 +597,6 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 			if (jumpSpeed.y == JUMP_SPEED_Y)
 			{
-				pos.y = ssize.y;
 				SetAnim("待機");
 			}
 		}
