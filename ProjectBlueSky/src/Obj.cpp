@@ -209,6 +209,11 @@ void Obj::AddPlayerHPOld(int addHP)
 	}
 }
 
+int Obj::GetPlayerHP()
+{
+	return playerHP;
+}
+
 void Obj::SetPos(VECTOR2 pos)
 {
 	this->pos = pos;

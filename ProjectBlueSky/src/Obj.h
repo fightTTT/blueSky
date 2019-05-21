@@ -124,6 +124,8 @@ public:
 	void AddPlayerHP(int addHP);
 	void AddPlayerHPOld(int addHP);
 
+	int GetPlayerHP();
+
 	// アニメーションが終了しているか
 	bool GetAnimEndFlag() const { return animEndFlag; }
 
