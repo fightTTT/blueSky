@@ -38,7 +38,7 @@ void DamageState::Init(AICharacter * character)
 			knockBackSpeed = { FALL_SPEED_X, -FALL_SPEED_Y };
 		}
 
-		WaitTimer(65);
+		WaitTimer(WAIT_TIMER_COUNT);
 
 		comboCnt = 0;
 	}
@@ -55,7 +55,7 @@ void DamageState::Init(AICharacter * character)
 			knockBackSpeed = { KNOCK_BACK_SPEED, 0 };
 		}
 
-		WaitTimer(65);
+		WaitTimer(WAIT_TIMER_COUNT);
 	}
 }
 
