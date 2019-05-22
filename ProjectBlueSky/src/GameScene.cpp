@@ -547,6 +547,20 @@ void GameScene::BgPosUpDate(void)
 
 void GameScene::ExtrusionUpdata(VECTOR2 beforPos[2], VECTOR2 afterPos[2])
 {
+	int difPosX[2];
+
+	for (int i = 0; i < 0; i++)
+	{
+		difPosX[i] = afterPos[i].x - beforPos[i].x;
+	}
+
+	for (int i = 0; i < 0; i++)
+	{
+		if (difPosX[i])
+		{
+
+		}
+	}
 
 	
 }
