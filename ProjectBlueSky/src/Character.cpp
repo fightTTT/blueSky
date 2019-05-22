@@ -997,13 +997,29 @@ void Character::Draw(void)
 	{
 		hpColor = 0x00ff00;
 	}
-	DrawFormatString(110, 25, 0xffffff, "playerの残りHP %d \n", playerHP);
-	DrawBox(100, 65, 100 + 300, 85, 0x000000, true);
-	DrawBox(100, 65, 100 + (playerHPOld * 3), 85, 0xff0000, true);
-	DrawBox(100, 65, 100 + (playerHP * 3), 85, hpColor, true);
-	DrawGraph(70, 55, IMAGE_ID("image/ゲームシーン用/hpGage.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(2P)の描画
 
-	DrawGraph(0, 5, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
+	if (padID == PAD_1)
+	{
+		DrawFormatString(110, 25, 0xffffff, "playerの残りHP %d \n", playerHP);
+		DrawBox(100, 65, 100 + 300, 85, 0x000000, true);
+		DrawBox(100 + (300 - playerHPOld * 3), 65, 100 + 300 /*+ (playerHPOld * 3)*/, 85, 0xff0000, true);
+		DrawBox(100 + (300 - playerHP * 3), 65, 100 + 300 /*+ (playerHP * 3)*/, 85, hpColor, true);
+		DrawGraph(70, 55, IMAGE_ID("image/ゲームシーン用/hpGage.png")[0], true);
+		DrawGraph(0, 5, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
+	}
+	else if (padID == PAD_2)
+	{
+		DrawFormatString(ssize.x - 410, 25, 0xffffff, "AIの残りHP %d \n", playerHP);
+		DrawBox(ssize.x - 410, 65, ssize.x - 410 + 300, 85, 0x000000, true);
+		DrawBox(ssize.x - 410, 65, ssize.x - 410 + (playerHPOld * 3), 85, 0xff0000, true);
+		DrawBox(ssize.x - 410, 65, ssize.x - 410 + (playerHP * 3), 85, hpColor, true);
+		DrawTurnGraph((ssize.x - 430), 55, IMAGE_ID("image/ゲームシーン用/hpGage.png")[0], true);
+		DrawTurnGraph(ssize.x - 400 + 300, 5, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
+	}
+	else
+	{
+		// なにもしない
+	}
 
 	if (!animStopFlag)
 	{
