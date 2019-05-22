@@ -544,6 +544,34 @@ void GameScene::BgPosUpDate(void)
 	}
 }
 
+void GameScene::ExtrusionUpdata()
+{
+	VECTOR2 charactorPos[2] = { charaObj[0].charaObj->GetPos(),charaObj[0].charaObj->GetPos() };
+	std::string charAnim[2] = { charaObj[0].charaObj->GetAnim(),charaObj[0].charaObj->GetAnim() };
+	VECTOR2 charAnimOffset[2] = { charaObj[0].charaObj->GetAnimOffSet(charAnim[0]),charaObj[1].charaObj->GetAnimOffSet(charAnim[1]) };
+
+	VECTOR2 startPos[2];
+	VECTOR2 endPos[2];
+
+	// ‰Ÿ‚µo‚µ‚Ì“–‚½‚è”ÍˆÍ
+	for (int i = 0; i < 2; i++)
+	{
+		startPos[i].x = charactorPos[i].x + charAnimOffset[i].x - (STICK_HUMAN_IMAGE_SIZE_X / 4);
+		startPos[i].y = charactorPos[i].y + charAnimOffset[i].y - (STICK_HUMAN_IMAGE_SIZE_Y / 4);
+		endPos[i].x = charactorPos[i].x + charAnimOffset[i].x + (STICK_HUMAN_IMAGE_SIZE_X / 4);
+		endPos[i].y = charactorPos[i].y + charAnimOffset[i].y + (STICK_HUMAN_IMAGE_SIZE_Y / 4);
+	}
+
+	
+	/*if (endPos[0].x >= startPos[1].x
+		&& startPos[0].x <= endPos[1].x
+		&& endPos[0].y >= startPos[1].y
+		&& startPos[0].y <= endPos[1].y)
+	{
+
+	}*/
+}
+
 bool GameScene::CheckGameEnd()
 {
 	if (charaObj[0].winCount >= 2 || charaObj[1].winCount >= 2)
