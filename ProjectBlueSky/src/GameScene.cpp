@@ -129,9 +129,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				charaObj[1].charaObj->SetAnim("ƒK[ƒh_‚µ‚á‚ª‚Ý");
 			}
 		}
-		if ((charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SMALL)
-		 || (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
-		 || (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
+		if ((charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SMALL)
+		 || (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
+		 || (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
 		{
 			if (charaObj[0].charaObj->GetAnim() == "Œã‚ëˆÚ“®")
 			{
