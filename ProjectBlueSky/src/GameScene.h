@@ -17,9 +17,8 @@ public:
 private:
 	int Init(void);
 	void BgPosUpDate(void);		// 背景の位置座標の更新と、それに伴うｷｬﾗｸﾗｰの再配置
-	void ExtrusionUpdata(void);
-
-	bool CheckGameEnd();		// 勝敗をチェック
+	bool CheckGameEnd();		// 勝敗をチェック		
+	void ExtrusionUpdata(VECTOR2 beforPos[2], VECTOR2 afterPos[2]);				// 押し出しの当たり判定
 
 	// キャラクターのObj情報
 	struct CharacterObj
