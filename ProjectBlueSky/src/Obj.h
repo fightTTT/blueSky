@@ -61,7 +61,7 @@ struct EnemyState
 	void pushBackShotData(ShotData data) { shotData.push_back(data); }
 
 	VECTOR2 enemyPos;
-	ANIM_ATTRIBUTE enemyAnimAttribute[2];
+	ANIM_ATTRIBUTE enemyAnimAttribute[3];
 	std::vector<ShotData> shotData;
 };
 
@@ -175,6 +175,6 @@ protected:
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;				// ±ÆÒ°¼®İî•ñ
 	std::string animName;											// •\¦±ÆÒ°¼®İ–¼
-	ANIM_ATTRIBUTE animAttribute[2];								// ±ÆÒ°¼®İ‚Ì‘®«
+	ANIM_ATTRIBUTE animAttribute[3];								// ±ÆÒ°¼®İ‚Ì‘®«
 	std::map<std::string, ANIM_ATTRIBUTE[3]> animAttributeTbl;		// ±ÆÒ°¼®İ‚Ì‘®«‚ÌÃ°ÌŞÙ
 };

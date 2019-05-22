@@ -14,6 +14,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackType[0] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["波動"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["波動"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["波動"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_RIGHT_DOWN, COM_DIR_RIGHT };
@@ -26,6 +27,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackType[1] = SKILL_TYPE_KICK;
 		animAttributeTbl["百裂脚"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["百裂脚"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["百裂脚"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[1][DIR_RIGHT].resize(2);
 		spAttackCommand[1][DIR_RIGHT] = { COM_DIR_CENTER, COM_DIR_ACCUMULATE };
@@ -37,7 +39,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[2] = "shoryu";
 		spAttackType[2] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["昇竜"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["昇竜"][1] = ANIM_ATTRIBUTE_INVINCIBLE;
+		animAttributeTbl["昇竜"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["昇竜"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
 		spAttackCommand[2][DIR_RIGHT].resize(3);
 		spAttackCommand[2][DIR_RIGHT] = { COM_DIR_RIGHT, COM_DIR_DOWN, COM_DIR_RIGHT_DOWN };
@@ -53,6 +56,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackType[0] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["刺突砲"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["刺突砲"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["刺突砲"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_RIGHT_DOWN, COM_DIR_RIGHT };
@@ -65,6 +69,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackType[1] = SKILL_TYPE_KICK;
 		animAttributeTbl["ウマキック"][0] = ANIM_ATTRIBUTE_SQUAT;
 		animAttributeTbl["ウマキック"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["ウマキック"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[1][DIR_RIGHT].resize(3);
 		spAttackCommand[1][DIR_RIGHT] = { COM_DIR_LEFT, COM_DIR_LEFT_DOWN, COM_DIR_DOWN };
@@ -77,6 +82,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackType[2] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["ローリングアタック"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["ローリングアタック"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["ローリングアタック"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[2][DIR_RIGHT].resize(4);
 		spAttackCommand[2][DIR_RIGHT] = { COM_DIR_LEFT, COM_DIR_ACCUMULATE, COM_DIR_CENTER, COM_DIR_RIGHT };
@@ -92,6 +98,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackType[0] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["気功拳"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["気功拳"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["気功拳"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_RIGHT_DOWN, COM_DIR_RIGHT };
@@ -113,7 +120,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[2] = "kung";
 		spAttackType[2] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["カンフーキック"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["カンフーキック"][1] = ANIM_ATTRIBUTE_INVINCIBLE;
+		animAttributeTbl["カンフーキック"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["カンフーキック"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[2][DIR_RIGHT].resize(3);
 		spAttackCommand[2][DIR_RIGHT] = { COM_DIR_RIGHT, COM_DIR_DOWN, COM_DIR_RIGHT_DOWN };
@@ -129,6 +137,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackType[0] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["かめはめ波"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["かめはめ波"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["かめはめ波"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_RIGHT_DOWN, COM_DIR_RIGHT };
@@ -150,7 +159,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[2] = "roundKick";
 		spAttackType[2] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["回し蹴り"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["回し蹴り"][1] = ANIM_ATTRIBUTE_INVINCIBLE;
+		animAttributeTbl["回し蹴り"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["回し蹴り"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[2][DIR_RIGHT].resize(3);
 		spAttackCommand[2][DIR_RIGHT] = { COM_DIR_RIGHT, COM_DIR_DOWN, COM_DIR_RIGHT_DOWN };
@@ -166,6 +176,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackType[0] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["ソニックブーム"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["ソニックブーム"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["ソニックブーム"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_RIGHT_DOWN, COM_DIR_RIGHT };
@@ -187,7 +198,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[2] = "missile";
 		spAttackType[2] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["ミサイルアロー"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["ミサイルアロー"][1] = ANIM_ATTRIBUTE_INVINCIBLE;
+		animAttributeTbl["ミサイルアロー"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["ミサイルアロー"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[2][DIR_RIGHT].resize(3);
 		spAttackCommand[2][DIR_RIGHT] = { COM_DIR_RIGHT, COM_DIR_DOWN, COM_DIR_RIGHT_DOWN };
@@ -203,6 +215,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackType[0] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["岩投げ"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["岩投げ"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["岩投げ"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_RIGHT_DOWN, COM_DIR_RIGHT };
@@ -224,7 +237,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[2] = "tackle";
 		spAttackType[2] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["タックル"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["タックル"][1] = ANIM_ATTRIBUTE_INVINCIBLE;
+		animAttributeTbl["タックル"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["タックル"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[2][DIR_RIGHT].resize(3);
 		spAttackCommand[2][DIR_RIGHT] = { COM_DIR_RIGHT, COM_DIR_DOWN, COM_DIR_RIGHT_DOWN };
@@ -240,6 +254,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackType[0] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["サイコカッター"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["サイコカッター"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["サイコカッター"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_RIGHT_DOWN, COM_DIR_RIGHT };
@@ -261,7 +276,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[2] = "heeldrop";
 		spAttackType[2] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["かかと落とし"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["かかと落とし"][1] = ANIM_ATTRIBUTE_INVINCIBLE;
+		animAttributeTbl["かかと落とし"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["かかと落とし"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[2][DIR_RIGHT].resize(3);
 		spAttackCommand[2][DIR_RIGHT] = { COM_DIR_RIGHT, COM_DIR_DOWN, COM_DIR_RIGHT_DOWN };
@@ -277,6 +293,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackType[0] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["竜の息吹"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["竜の息吹"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["竜の息吹"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { COM_DIR_DOWN, COM_DIR_RIGHT_DOWN, COM_DIR_RIGHT };
@@ -298,7 +315,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[2] = "accele";
 		spAttackType[2] = SKILL_TYPE_PUNCH;
 		animAttributeTbl["アクセル"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["アクセル"][1] = ANIM_ATTRIBUTE_INVINCIBLE;
+		animAttributeTbl["アクセル"][1] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["アクセル"][2] = ANIM_ATTRIBUTE_NON;
 
 		spAttackCommand[2][DIR_RIGHT].resize(3);
 		spAttackCommand[2][DIR_RIGHT] = { COM_DIR_RIGHT, COM_DIR_DOWN, COM_DIR_RIGHT_DOWN };

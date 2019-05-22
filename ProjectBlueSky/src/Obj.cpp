@@ -26,6 +26,7 @@ bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, bool turn)
 	turnFlag = turn;
 	animAttribute[0] = ANIM_ATTRIBUTE_NON;
 	animAttribute[1] = ANIM_ATTRIBUTE_NON;
+	animAttribute[2] = ANIM_ATTRIBUTE_NON;
 	playerHP = 100;
 	playerHPOld = 100;
 	DrawHPCount = 0.0f;
@@ -158,11 +159,13 @@ bool Obj::SetAnim(std::string animName)
 		// Ã°ÌŞÙ‚ª’è‹`‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Í‹­§“I‚ÉNON‚ğ“ü‚ê‚Ä‚¨‚­
 		animAttribute[0] = ANIM_ATTRIBUTE_NON;
 		animAttribute[1] = ANIM_ATTRIBUTE_NON;
+		animAttribute[2] = ANIM_ATTRIBUTE_NON;
 	}
 	else
 	{
 		animAttribute[0] = animAttributeTbl[animName][0];
 		animAttribute[1] = animAttributeTbl[animName][1];
+		animAttribute[2] = animAttributeTbl[animName][2];
 	}
 
 	return true;

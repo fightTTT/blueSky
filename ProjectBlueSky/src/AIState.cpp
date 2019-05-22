@@ -22,7 +22,7 @@ void AIState::CheckHitFlag(AICharacter * character)
 
 	auto hitFlag = hitData.hitFlag && hitData.colType == COLTYPE_HIT;
 
-	if(hitFlag && character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_INVINCIBLE)
+	if(hitFlag && character->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
 	{
 		WaitTimer(WAIT_TIMER_COUNT);
 		character->AddPlayerHP(-10);

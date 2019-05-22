@@ -115,7 +115,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		}
 
 		// 一人が後ろ歩きでもう一人が攻撃系のアニメーションの時に、後ろ歩きをしている方をガード状態にする
-		if (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK)
+		if ((charaObj[0].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_NON)
+		 && (charaObj[0].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_MOVE))
 		{
 			if (charaObj[1].charaObj->GetAnim() == "後ろ移動")
 			{
@@ -127,7 +128,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				charaObj[1].charaObj->SetAnim("ガード_しゃがみ");
 			}
 		}
-		if (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK)
+		if ((charaObj[1].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_NON)
+		 && (charaObj[1].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_MOVE))
 		{
 			if (charaObj[0].charaObj->GetAnim() == "後ろ移動")
 			{
@@ -148,6 +150,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				eState.enemyPos = charaObj[0].charaObj->GetPos();
 				eState.enemyAnimAttribute[0] = charaObj[0].charaObj->GetAnimAttribute(0);
 				eState.enemyAnimAttribute[1] = charaObj[0].charaObj->GetAnimAttribute(1);
+				eState.enemyAnimAttribute[2] = charaObj[0].charaObj->GetAnimAttribute(2);
 				charaObj[1].charaObj->SetEnemyState(eState);
 			}
 			else
@@ -155,6 +158,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				eState.enemyPos = charaObj[1].charaObj->GetPos();
 				eState.enemyAnimAttribute[0] = charaObj[1].charaObj->GetAnimAttribute(0);
 				eState.enemyAnimAttribute[1] = charaObj[1].charaObj->GetAnimAttribute(1);
+				eState.enemyAnimAttribute[2] = charaObj[1].charaObj->GetAnimAttribute(2);
 				charaObj[0].charaObj->SetEnemyState(eState);
 			}
 		}
