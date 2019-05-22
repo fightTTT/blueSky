@@ -112,9 +112,9 @@ void MoveState::Update(AICharacter * character)
 	}
 
 	if (abs(vec.x) < ATTACK_RANGE
-	 && (enemy.enemyAnimAttribute[1] != ANIM_ATTRIBUTE_ATTACK_SMALL)
-	 && (enemy.enemyAnimAttribute[1] != ANIM_ATTRIBUTE_ATTACK_BIG)
-	 && (enemy.enemyAnimAttribute[1] != ANIM_ATTRIBUTE_ATTACK_SP))
+	 && ((enemy.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SMALL)
+	 || (enemy.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_BIG)
+	 || (enemy.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SP)))
 	{
 		changeGuardCount++;
 	}
