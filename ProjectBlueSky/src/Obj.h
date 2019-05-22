@@ -23,7 +23,10 @@ enum ANIM_ATTRIBUTE
 	ANIM_ATTRIBUTE_STAND,
 	ANIM_ATTRIBUTE_SQUAT,
 	ANIM_ATTRIBUTE_AIR,
-	ANIM_ATTRIBUTE_ATTACK,
+	ANIM_ATTRIBUTE_MOVE,
+	ANIM_ATTRIBUTE_ATTACK_SMALL,
+	ANIM_ATTRIBUTE_ATTACK_BIG,
+	ANIM_ATTRIBUTE_ATTACK_SP,
 	ANIM_ATTRIBUTE_GUARD,
 	ANIM_ATTRIBUTE_INVINCIBLE,
 	ANIM_ATTRIBUTE_MAX
@@ -173,5 +176,5 @@ protected:
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;				// ±∆“∞ºÆ›èÓïÒ
 	std::string animName;											// ï\é¶±∆“∞ºÆ›ñº
 	ANIM_ATTRIBUTE animAttribute[2];								// ±∆“∞ºÆ›ÇÃëÆê´
-	std::map<std::string, ANIM_ATTRIBUTE[2]> animAttributeTbl;		// ±∆“∞ºÆ›ÇÃëÆê´ÇÃ√∞ÃﬁŸ
+	std::map<std::string, ANIM_ATTRIBUTE[3]> animAttributeTbl;		// ±∆“∞ºÆ›ÇÃëÆê´ÇÃ√∞ÃﬁŸ
 };
