@@ -675,132 +675,132 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				dir = tmpDir;
 
-				if (ctl.GetPadDataTrg(padID, THUMB_L_UP))		// ジャンプ
+				if (CheckCommand(2))
 				{
-					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-					{
-						jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
-
-						if (dir == DIR_LEFT)
-						{
-							SetAnim("ジャンプ_後ろ");
-						}
-						else
-						{
-							SetAnim("ジャンプ_前");
-						}
-					}
-					else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-					{
-						jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
-
-						if (dir == DIR_LEFT)
-						{
-							SetAnim("ジャンプ_前");
-						}
-						else
-						{
-							SetAnim("ジャンプ_後ろ");
-						}
-					}
-					else
-					{
-						jumpSpeed = { 0, -JUMP_SPEED_Y };
-						SetAnim("ジャンプ_上");
-					}
+					SetAnim(spAttackAnimName[2]);
 				}
-				else if (ctl.GetPadData(padID, THUMB_L_DOWN))		// しゃがみ
+				else if (CheckCommand(1))
 				{
-					if (animAttribute[0] == ANIM_ATTRIBUTE_SQUAT)
+					SetAnim(spAttackAnimName[1]);
+				}
+				else if (CheckCommand(0))
+				{
+					SetAnim(spAttackAnimName[0]);
+				}
+				else
+				{
+					if (ctl.GetPadDataTrg(padID, THUMB_L_UP))		// ジャンプ
 					{
 						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 						{
+							jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
+
 							if (dir == DIR_LEFT)
 							{
-								SetAnim("しゃがみ_後ろ");
+								SetAnim("ジャンプ_後ろ");
 							}
 							else
 							{
-								SetAnim("しゃがみ");
+								SetAnim("ジャンプ_前");
 							}
 						}
 						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
 						{
+							jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
+
 							if (dir == DIR_LEFT)
 							{
-								SetAnim("しゃがみ");
+								SetAnim("ジャンプ_前");
 							}
 							else
 							{
-								SetAnim("しゃがみ_後ろ");
+								SetAnim("ジャンプ_後ろ");
 							}
 						}
 						else
 						{
-							SetAnim("しゃがみ");
+							jumpSpeed = { 0, -JUMP_SPEED_Y };
+							SetAnim("ジャンプ_上");
 						}
 					}
-					else
+					else if (ctl.GetPadData(padID, THUMB_L_DOWN))		// しゃがみ
 					{
-						SetAnim("しゃがみ始め");
-					}
-				}
-				else
-				{
-					// 移動
-					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-					{
-						if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+						if (animAttribute[0] == ANIM_ATTRIBUTE_SQUAT)
 						{
-							pos.x += 4;
-						}
-						if (dir == DIR_LEFT)
-						{
-							SetAnim("後ろ移動");
+							if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+							{
+								if (dir == DIR_LEFT)
+								{
+									SetAnim("しゃがみ_後ろ");
+								}
+								else
+								{
+									SetAnim("しゃがみ");
+								}
+							}
+							else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+							{
+								if (dir == DIR_LEFT)
+								{
+									SetAnim("しゃがみ");
+								}
+								else
+								{
+									SetAnim("しゃがみ_後ろ");
+								}
+							}
+							else
+							{
+								SetAnim("しゃがみ");
+							}
 						}
 						else
 						{
-							SetAnim("前移動");
+							SetAnim("しゃがみ始め");
 						}
 					}
-					else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+					else
 					{
-						if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+						// 移動
+						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 						{
-							pos.x -= 4;
+							if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+							{
+								pos.x += 4;
+							}
+							if (dir == DIR_LEFT)
+							{
+								SetAnim("後ろ移動");
+							}
+							else
+							{
+								SetAnim("前移動");
+							}
 						}
-						if (dir == DIR_LEFT)
+						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
 						{
-							SetAnim("前移動");
+							if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+							{
+								pos.x -= 4;
+							}
+							if (dir == DIR_LEFT)
+							{
+								SetAnim("前移動");
+							}
+							else
+							{
+								SetAnim("後ろ移動");
+							}
+
 						}
 						else
 						{
-							SetAnim("後ろ移動");
+							SetAnim("待機");
 						}
+					}
 
-					}
-					else
-					{
-						SetAnim("待機");
-					}
-				}
-
-				// 攻撃
-				if (ctl.GetPadDataTrg(padID, BUTTON_A))
-				{
-					if (CheckCommand(2))
-					{
-						SetAnim(spAttackAnimName[2]);
-					}
-					else if (CheckCommand(1))
-					{
-						SetAnim(spAttackAnimName[1]);
-					}
-					else if (CheckCommand(0))
-					{
-						SetAnim(spAttackAnimName[0]);
-					}
-					else
+					// 攻撃
+					if (ctl.GetPadDataTrg(padID, BUTTON_A))
 					{
 						if (ctl.GetPadData(padID, THUMB_L_DOWN))
 						{
@@ -811,22 +811,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 							SetAnim("パンチ_小");
 						}
 					}
-				}
-				else if (ctl.GetPadDataTrg(padID, BUTTON_B))
-				{
-					if (CheckCommand(2))
-					{
-						SetAnim(spAttackAnimName[2]);
-					}
-					else if (CheckCommand(1))
-					{
-						SetAnim(spAttackAnimName[1]);
-					}
-					else if (CheckCommand(0))
-					{
-						SetAnim(spAttackAnimName[0]);
-					}
-					else
+					else if (ctl.GetPadDataTrg(padID, BUTTON_B))
 					{
 						if (ctl.GetPadData(padID, THUMB_L_DOWN))
 						{
@@ -837,22 +822,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 							SetAnim("パンチ_大");
 						}
 					}
-				}
-				else if (ctl.GetPadDataTrg(padID, BUTTON_X))
-				{
-					if (CheckCommand(2))
-					{
-						SetAnim(spAttackAnimName[2]);
-					}
-					else if (CheckCommand(1))
-					{
-						SetAnim(spAttackAnimName[1]);
-					}
-					else if (CheckCommand(0))
-					{
-						SetAnim(spAttackAnimName[0]);
-					}
-					else
+					else if (ctl.GetPadDataTrg(padID, BUTTON_X))
 					{
 						if (ctl.GetPadData(padID, THUMB_L_DOWN))
 						{
@@ -863,22 +833,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 							SetAnim("キック_小");
 						}
 					}
-				}
-				else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
-				{
-					if (CheckCommand(2))
-					{
-						SetAnim(spAttackAnimName[2]);
-					}
-					else if (CheckCommand(1))
-					{
-						SetAnim(spAttackAnimName[1]);
-					}
-					else if (CheckCommand(0))
-					{
-						SetAnim(spAttackAnimName[0]);
-					}
-					else
+					else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
 					{
 						if (ctl.GetPadData(padID, THUMB_L_DOWN))
 						{
@@ -889,10 +844,10 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 							SetAnim("キック_大");
 						}
 					}
-				}
-				else
-				{
-					// 何もしない
+					else
+					{
+						// 何もしない
+					}
 				}
 			}
 		}
