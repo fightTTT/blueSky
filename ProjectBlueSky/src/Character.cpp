@@ -886,7 +886,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 void Character::CheckHitFlag(void)
 {
-	if (animAttribute[1] != ANIM_ATTRIBUTE_INVINCIBLE)
+	if (animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE)
 	{
 		if (hitData.hitFlag && (hitData.colType == COLTYPE_HIT))
 		{
