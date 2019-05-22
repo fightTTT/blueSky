@@ -25,7 +25,16 @@ void AIState::CheckHitFlag(AICharacter * character)
 	if(hitFlag && character->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
 	{
 		WaitTimer(WAIT_TIMER_COUNT);
-		character->AddPlayerHP(-10);
+
+		if (character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SMALL)
+		{
+			character->AddPlayerHP(-5);
+		}
+		else if(character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_BIG)
+		{
+			character->AddPlayerHP(-10);
+		}
+
 		character->ChangeState(DamageState::GetInstance());
 	}
 }

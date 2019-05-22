@@ -28,6 +28,8 @@ public:
 
 	void ChangeState(AIState* s);
 
+	std::string GetSPAttackName(int idx);
+
 	// 遠距離攻撃フラグセット
 	void SetLongAttackFlag(bool flag) { longAttackFlag = flag; }
 

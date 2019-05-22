@@ -8,26 +8,24 @@
 
 enum PAD_ID;
 
-enum SKILL_TYPE
+enum SP_COM
 {
-	SKILL_TYPE_PUNCH,
-	SKILL_TYPE_KICK,
-	SKILL_TYPE_MAX
-};
+	SP_COM_CENTER,
+	SP_COM_UP,
+	SP_COM_RIGHT_UP,
+	SP_COM_RIGHT,
+	SP_COM_RIGHT_DOWN,
+	SP_COM_DOWN,
+	SP_COM_LEFT_DOWN,
+	SP_COM_LEFT,
+	SP_COM_LEFT_UP,
 
-enum COM_DIR
-{
-	COM_DIR_CENTER,
-	COM_DIR_UP,
-	COM_DIR_RIGHT_UP,
-	COM_DIR_RIGHT,
-	COM_DIR_RIGHT_DOWN,
-	COM_DIR_DOWN,
-	COM_DIR_LEFT_DOWN,
-	COM_DIR_LEFT,
-	COM_DIR_LEFT_UP,
-	COM_DIR_ACCUMULATE,
-	COM_DIR_MAX
+	SP_COM_ACCUMULATE,
+
+	SP_COM_PUNCH,
+	SP_COM_KICK,
+
+	SP_COM_MAX
 };
 
 class Character :
@@ -53,9 +51,9 @@ private:
 
 	std::map<std::string, std::string> animFileName;		// ｱﾆﾒｰｼｮﾝの画像ﾌｧｲﾙ名 (ｷｰ: ｱﾆﾒｰｼｮﾝ名)
 
-	std::list<COM_DIR> comList;
-	COM_DIR comDir;
-	COM_DIR comDirOld;
+	std::list<SP_COM> comList;
+	SP_COM spCom;
+	SP_COM spComOld;
 	int comClearCnt;
 
 	int comboCnt;
@@ -73,7 +71,6 @@ protected:
 	std::string characterName;
 	std::string spAttackAnimName[3] = {"技1", "技2" , "技3" };
 	std::string spAttackAnimFileName[3] = { "waza_1", "waza_2" , "waza_3" };
-	SKILL_TYPE spAttackType[3] = { SKILL_TYPE_MAX,SKILL_TYPE_MAX,SKILL_TYPE_MAX };
-	std::array<std::array<std::vector<COM_DIR>, DIR_MAX>, 3> spAttackCommand;		// spAttackCommand[技番号][自分の方向][コマンド]
+	std::array<std::array<std::vector<SP_COM>, DIR_MAX>, 3> spAttackCommand;		// spAttackCommand[技番号][自分の方向][コマンド]
 };
 

@@ -106,9 +106,7 @@ void AICharacter::Draw()
 
 	if (visible)
 	{
-		SetDrawBright(100, 255, 100);
 		DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
-		SetDrawBright(255, 255, 255);
 	}
 
 	if (lpColMng.GetColFlag(animName))
@@ -161,8 +159,8 @@ void AICharacter::Draw()
 	DrawBox(ssize.x - 410, 65, ssize.x - 410 + (playerHPOld * 3), 85, 0xff0000, true);
 	DrawBox(ssize.x - 410, 65, ssize.x - 410 + (playerHP * 3), 85, hpColor, true);
 	DrawTurnGraph((ssize.x - 430), 55, IMAGE_ID("image/ゲームシーン用/hpGage.png")[0], true);
-
-	DrawTurnGraph(ssize.x - 400 + 300, 5, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
+	DrawGraph((ssize.x - 130), 0, IMAGE_ID("image/ゲームシーン用/iconFrame2.png")[0], true);
+	DrawTurnGraph(ssize.x - 400 + 275, 10, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
 
 	if (!animStopFlag)
 	{
@@ -174,6 +172,11 @@ void AICharacter::ChangeState(AIState * s)
 {
 	state = s;
 	state->Init(this);
+}
+
+std::string AICharacter::GetSPAttackName(int idx)
+{
+	return spAttackAnimName[idx];
 }
 
 HitData AICharacter::GetHitData() const

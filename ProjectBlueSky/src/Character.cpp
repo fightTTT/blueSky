@@ -238,8 +238,8 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 		comList.clear();
 	}
 
-	comDir = COM_DIR_CENTER;
-	comDirOld = COM_DIR_CENTER;
+	spCom = SP_COM_CENTER;
+	spComOld = SP_COM_CENTER;
 	comClearCnt = DEF_COM_CLEAR_CNT;
 
 	return true;
@@ -282,64 +282,76 @@ void Character::CommandUpDate(const GameCtrl & ctl)
 {
 	if (comList.empty())
 	{
-		comList.push_back(COM_DIR_CENTER);
+		comList.push_back(SP_COM_CENTER);
 	}
 
 	// 入力方向の情報を更新
-	comDirOld = comDir;
+	spComOld = spCom;
 
 	if (ctl.GetPadData(padID, THUMB_L_UP))
 	{
 		if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 		{
-			comDir = COM_DIR_RIGHT_UP;
+			spCom = SP_COM_RIGHT_UP;
 		}
 		else if (ctl.GetPadData(padID, THUMB_L_LEFT))
 		{
-			comDir = COM_DIR_LEFT_UP;
+			spCom = SP_COM_LEFT_UP;
 		}
 		else
 		{
-			comDir = COM_DIR_UP;
+			spCom = SP_COM_UP;
 		}
 	}
 	else if (ctl.GetPadData(padID, THUMB_L_DOWN))
 	{
 		if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 		{
-			comDir = COM_DIR_RIGHT_DOWN;
+			spCom = SP_COM_RIGHT_DOWN;
 		}
 		else if (ctl.GetPadData(padID, THUMB_L_LEFT))
 		{
-			comDir = COM_DIR_LEFT_DOWN;
+			spCom = SP_COM_LEFT_DOWN;
 		}
 		else
 		{
-			comDir = COM_DIR_DOWN;
+			spCom = SP_COM_DOWN;
 		}
 	}
 	else
 	{
 		if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 		{
-			comDir = COM_DIR_RIGHT;
+			spCom = SP_COM_RIGHT;
 		}
 		else if (ctl.GetPadData(padID, THUMB_L_LEFT))
 		{
-			comDir = COM_DIR_LEFT;
+			spCom = SP_COM_LEFT;
 		}
 		else
 		{
-			comDir = COM_DIR_CENTER;
+			spCom = SP_COM_CENTER;
+		}
+	}
+
+	if ((ctl.GetPadData(padID, BUTTON_A)) || (ctl.GetPadData(padID, BUTTON_B)))
+	{
+		spCom = SP_COM_PUNCH;
+	}
+	else
+	{
+		if ((ctl.GetPadData(padID, BUTTON_X)) || (ctl.GetPadData(padID, BUTTON_Y)))
+		{
+			spCom = SP_COM_KICK;
 		}
 	}
 
 	// リストに入れる
-	if (comDir != comDirOld)
+	if (spCom != spComOld)
 	{
-		if (comDirOld != COM_DIR_ACCUMULATE)
+		if (spComOld != SP_COM_ACCUMULATE)
 		{
-			comList.push_back(comDir);
+			comList.push_back(spCom);
 			comClearCnt = DEF_COM_CLEAR_CNT;
 		}
 	}
@@ -351,9 +363,9 @@ void Character::CommandUpDate(const GameCtrl & ctl)
 			{
 				auto itr = comList.end();
 				itr--;
-				if ((*itr) != COM_DIR_ACCUMULATE)
+				if ((*itr) != SP_COM_ACCUMULATE)
 				{
-					comList.push_back(COM_DIR_ACCUMULATE);
+					comList.push_back(SP_COM_ACCUMULATE);
 				}
 				comClearCnt = DEF_COM_CLEAR_CNT;
 			}
@@ -379,9 +391,9 @@ bool Character::CheckCommand(int skillNum)
 		auto itr = comList.end();
 		int comNum = 0;
 
-		COM_DIR com;
-		COM_DIR leftSideCom;
-		COM_DIR rightSideCom;
+		SP_COM com;
+		SP_COM leftSideCom;
+		SP_COM rightSideCom;
 
 		// コマンド数分だけ戻す
 		for (unsigned int buckCnt = 0; buckCnt < spAttackCommand[skillNum][dir].size(); buckCnt++)
@@ -393,18 +405,21 @@ bool Character::CheckCommand(int skillNum)
 		while (itr != comList.end())
 		{
 			com = (*itr);
-			if ((com != COM_DIR_CENTER) && (com != COM_DIR_ACCUMULATE))
+			if ((com != SP_COM_CENTER)
+			 && (com != SP_COM_ACCUMULATE)
+			 && (com != SP_COM_PUNCH)
+			 && (com != SP_COM_KICK))
 			{
-				leftSideCom = (COM_DIR)(com - 1);
-				if (leftSideCom == COM_DIR_CENTER)
+				leftSideCom = (SP_COM)(com - 1);
+				if (leftSideCom == SP_COM_CENTER)
 				{
-					leftSideCom = COM_DIR_LEFT_UP;
+					leftSideCom = SP_COM_LEFT_UP;
 				}
 
-				rightSideCom = (COM_DIR)(com + 1);
-				if (rightSideCom == COM_DIR_ACCUMULATE)
+				rightSideCom = (SP_COM)(com + 1);
+				if (rightSideCom == SP_COM_ACCUMULATE)
 				{
-					rightSideCom = COM_DIR_UP;
+					rightSideCom = SP_COM_UP;
 				}
 			}
 			else
@@ -660,132 +675,132 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				dir = tmpDir;
 
-				if (ctl.GetPadDataTrg(padID, THUMB_L_UP))		// ジャンプ
+				if (CheckCommand(2))
 				{
-					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-					{
-						jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
-
-						if (dir == DIR_LEFT)
-						{
-							SetAnim("ジャンプ_後ろ");
-						}
-						else
-						{
-							SetAnim("ジャンプ_前");
-						}
-					}
-					else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-					{
-						jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
-
-						if (dir == DIR_LEFT)
-						{
-							SetAnim("ジャンプ_前");
-						}
-						else
-						{
-							SetAnim("ジャンプ_後ろ");
-						}
-					}
-					else
-					{
-						jumpSpeed = { 0, -JUMP_SPEED_Y };
-						SetAnim("ジャンプ_上");
-					}
+					SetAnim(spAttackAnimName[2]);
 				}
-				else if (ctl.GetPadData(padID, THUMB_L_DOWN))		// しゃがみ
+				else if (CheckCommand(1))
 				{
-					if (animAttribute[0] == ANIM_ATTRIBUTE_SQUAT)
+					SetAnim(spAttackAnimName[1]);
+				}
+				else if (CheckCommand(0))
+				{
+					SetAnim(spAttackAnimName[0]);
+				}
+				else
+				{
+					if (ctl.GetPadDataTrg(padID, THUMB_L_UP))		// ジャンプ
 					{
 						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 						{
+							jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
+
 							if (dir == DIR_LEFT)
 							{
-								SetAnim("しゃがみ_後ろ");
+								SetAnim("ジャンプ_後ろ");
 							}
 							else
 							{
-								SetAnim("しゃがみ");
+								SetAnim("ジャンプ_前");
 							}
 						}
 						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
 						{
+							jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
+
 							if (dir == DIR_LEFT)
 							{
-								SetAnim("しゃがみ");
+								SetAnim("ジャンプ_前");
 							}
 							else
 							{
-								SetAnim("しゃがみ_後ろ");
+								SetAnim("ジャンプ_後ろ");
 							}
 						}
 						else
 						{
-							SetAnim("しゃがみ");
+							jumpSpeed = { 0, -JUMP_SPEED_Y };
+							SetAnim("ジャンプ_上");
 						}
 					}
-					else
+					else if (ctl.GetPadData(padID, THUMB_L_DOWN))		// しゃがみ
 					{
-						SetAnim("しゃがみ始め");
-					}
-				}
-				else
-				{
-					// 移動
-					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-					{
-						if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+						if (animAttribute[0] == ANIM_ATTRIBUTE_SQUAT)
 						{
-							pos.x += 4;
-						}
-						if (dir == DIR_LEFT)
-						{
-							SetAnim("後ろ移動");
+							if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+							{
+								if (dir == DIR_LEFT)
+								{
+									SetAnim("しゃがみ_後ろ");
+								}
+								else
+								{
+									SetAnim("しゃがみ");
+								}
+							}
+							else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+							{
+								if (dir == DIR_LEFT)
+								{
+									SetAnim("しゃがみ");
+								}
+								else
+								{
+									SetAnim("しゃがみ_後ろ");
+								}
+							}
+							else
+							{
+								SetAnim("しゃがみ");
+							}
 						}
 						else
 						{
-							SetAnim("前移動");
+							SetAnim("しゃがみ始め");
 						}
 					}
-					else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+					else
 					{
-						if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+						// 移動
+						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 						{
-							pos.x -= 4;
+							if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+							{
+								pos.x += 4;
+							}
+							if (dir == DIR_LEFT)
+							{
+								SetAnim("後ろ移動");
+							}
+							else
+							{
+								SetAnim("前移動");
+							}
 						}
-						if (dir == DIR_LEFT)
+						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
 						{
-							SetAnim("前移動");
+							if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+							{
+								pos.x -= 4;
+							}
+							if (dir == DIR_LEFT)
+							{
+								SetAnim("前移動");
+							}
+							else
+							{
+								SetAnim("後ろ移動");
+							}
+
 						}
 						else
 						{
-							SetAnim("後ろ移動");
+							SetAnim("待機");
 						}
+					}
 
-					}
-					else
-					{
-						SetAnim("待機");
-					}
-				}
-
-				// 攻撃
-				if (ctl.GetPadDataTrg(padID, BUTTON_A))
-				{
-					if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
-					{
-						SetAnim(spAttackAnimName[2]);
-					}
-					else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && CheckCommand(1))
-					{
-						SetAnim(spAttackAnimName[1]);
-					}
-					else if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
-					{
-						SetAnim(spAttackAnimName[0]);
-					}
-					else
+					// 攻撃
+					if (ctl.GetPadDataTrg(padID, BUTTON_A))
 					{
 						if (ctl.GetPadData(padID, THUMB_L_DOWN))
 						{
@@ -796,22 +811,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 							SetAnim("パンチ_小");
 						}
 					}
-				}
-				else if (ctl.GetPadDataTrg(padID, BUTTON_B))
-				{
-					if ((spAttackType[2] == SKILL_TYPE_PUNCH) && CheckCommand(2))
-					{
-						SetAnim(spAttackAnimName[2]);
-					}
-					else if ((spAttackType[1] == SKILL_TYPE_PUNCH) && CheckCommand(1))
-					{
-						SetAnim(spAttackAnimName[1]);
-					}
-					else if ((spAttackType[0] == SKILL_TYPE_PUNCH) && CheckCommand(0))
-					{
-						SetAnim(spAttackAnimName[0]);
-					}
-					else
+					else if (ctl.GetPadDataTrg(padID, BUTTON_B))
 					{
 						if (ctl.GetPadData(padID, THUMB_L_DOWN))
 						{
@@ -822,22 +822,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 							SetAnim("パンチ_大");
 						}
 					}
-				}
-				else if (ctl.GetPadDataTrg(padID, BUTTON_X))
-				{
-					if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
-					{
-						SetAnim(spAttackAnimName[2]);
-					}
-					else if ((spAttackType[1] == SKILL_TYPE_KICK) && CheckCommand(1))
-					{
-						SetAnim(spAttackAnimName[1]);
-					}
-					else if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
-					{
-						SetAnim(spAttackAnimName[0]);
-					}
-					else
+					else if (ctl.GetPadDataTrg(padID, BUTTON_X))
 					{
 						if (ctl.GetPadData(padID, THUMB_L_DOWN))
 						{
@@ -848,22 +833,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 							SetAnim("キック_小");
 						}
 					}
-				}
-				else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
-				{
-					if ((spAttackType[2] == SKILL_TYPE_KICK) && CheckCommand(2))
-					{
-						SetAnim(spAttackAnimName[2]);
-					}
-					else if ((spAttackType[1] == SKILL_TYPE_KICK) && CheckCommand(1))
-					{
-						SetAnim(spAttackAnimName[1]);
-					}
-					else if ((spAttackType[0] == SKILL_TYPE_KICK) && CheckCommand(0))
-					{
-						SetAnim(spAttackAnimName[0]);
-					}
-					else
+					else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
 					{
 						if (ctl.GetPadData(padID, THUMB_L_DOWN))
 						{
@@ -874,10 +844,10 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 							SetAnim("キック_大");
 						}
 					}
-				}
-				else
-				{
-					// 何もしない
+					else
+					{
+						// 何もしない
+					}
 				}
 			}
 		}
@@ -1059,7 +1029,8 @@ void Character::Draw(void)
 		DrawBox(100 + (300 - playerHPOld * 3), 65, 100 + 300 /*+ (playerHPOld * 3)*/, 85, 0xff0000, true);
 		DrawBox(100 + (300 - playerHP * 3), 65, 100 + 300 /*+ (playerHP * 3)*/, 85, hpColor, true);
 		DrawGraph(70, 55, IMAGE_ID("image/ゲームシーン用/hpGage.png")[0], true);
-		DrawGraph(0, 5, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
+		DrawGraph(0, 0, IMAGE_ID("image/ゲームシーン用/iconFrame1.png")[0], true);
+		DrawGraph(25, 10, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
 	}
 	else if (padID == PAD_2)
 	{
@@ -1068,7 +1039,8 @@ void Character::Draw(void)
 		DrawBox(ssize.x - 410, 65, ssize.x - 410 + (playerHPOld * 3), 85, 0xff0000, true);
 		DrawBox(ssize.x - 410, 65, ssize.x - 410 + (playerHP * 3), 85, hpColor, true);
 		DrawTurnGraph((ssize.x - 430), 55, IMAGE_ID("image/ゲームシーン用/hpGage.png")[0], true);
-		DrawTurnGraph(ssize.x - 400 + 300, 5, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
+		DrawGraph((ssize.x-130), 0, IMAGE_ID("image/ゲームシーン用/iconFrame2.png")[0], true);
+		DrawTurnGraph(ssize.x - 400 + 275, 10, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
 	}
 	else
 	{
@@ -1085,35 +1057,41 @@ void Character::Draw(void)
 	{
 		switch (data)
 		{
-		case COM_DIR_CENTER:
+		case SP_COM_CENTER:
 			DrawString((i * 40) + 15, 200, "中", 0xffffff);
 			break;
-		case COM_DIR_UP:
+		case SP_COM_UP:
 			DrawString((i * 40) + 15, 200, "上", 0xffffff);
 			break;
-		case COM_DIR_RIGHT_UP:
+		case SP_COM_RIGHT_UP:
 			DrawString((i * 40) + 15, 200, "右上", 0xffffff);
 			break;
-		case COM_DIR_RIGHT:
+		case SP_COM_RIGHT:
 			DrawString((i * 40) + 15, 200, "右", 0xffffff);
 			break;
-		case COM_DIR_RIGHT_DOWN:
+		case SP_COM_RIGHT_DOWN:
 			DrawString((i * 40) + 15, 200, "右下", 0xffffff);
 			break;
-		case COM_DIR_DOWN:
+		case SP_COM_DOWN:
 			DrawString((i * 40) + 15, 200, "下", 0xffffff);
 			break;
-		case COM_DIR_LEFT_DOWN:
+		case SP_COM_LEFT_DOWN:
 			DrawString((i * 40) + 15, 200, "左下", 0xffffff);
 			break;
-		case COM_DIR_LEFT:
+		case SP_COM_LEFT:
 			DrawString((i * 40) + 15, 200, "左", 0xffffff);
 			break;
-		case COM_DIR_LEFT_UP:
+		case SP_COM_LEFT_UP:
 			DrawString((i * 40) + 15, 200, "左上", 0xffffff);
 			break;
-		case COM_DIR_ACCUMULATE:
+		case SP_COM_ACCUMULATE:
 			DrawString((i * 40) + 15, 200, "タメ", 0xffffff);
+			break;
+		case SP_COM_PUNCH:
+			DrawString((i * 40) + 15, 200, "P", 0xffffff);
+			break;
+		case SP_COM_KICK:
+			DrawString((i * 40) + 15, 200, "K", 0xffffff);
 			break;
 		default:
 			break;

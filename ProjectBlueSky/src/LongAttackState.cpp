@@ -17,7 +17,7 @@ LongAttackState::~LongAttackState()
 void LongAttackState::Init(AICharacter * character)
 {
 	shotCount = 0;
-	character->SetAnim("”g“®");
+	character->SetAnim(character->GetSPAttackName(0));
 }
 
 void LongAttackState::Update(AICharacter * character)

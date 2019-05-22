@@ -22,7 +22,10 @@ void GuardState::Init(AICharacter * character)
 
 void GuardState::Update(AICharacter * character)
 {
-	if (((character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_NON) || (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_MOVE)) && knockBackSpeed == 0)
+	if ((character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_ATTACK_SMALL)
+	 && (character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_ATTACK_BIG)
+	 && (character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_ATTACK_SP)
+	 && knockBackSpeed == 0)
 	{
 		character->ChangeState(MoveState::GetInstance());
 		character->SetAnim("Œã‚ëˆÚ“®");
