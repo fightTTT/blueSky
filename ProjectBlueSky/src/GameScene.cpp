@@ -583,10 +583,19 @@ bool GameScene::CheckGameEnd()
 	{
 		if (hitStopFlag)
 		{
-			
-			if (charaObj[0].charaObj->GetAnim() == "ダメージ_ダウン" && charaObj[0].charaObj->GetAnimEndFlag())
+			if (drawflag)
 			{
-				return true;
+				if (charaObj[0].charaObj->GetAnim() == "ダメージ_ダウン" && charaObj[0].charaObj->GetAnimEndFlag())
+				{
+					return true;
+				}
+			}
+			else
+			{
+				if (charaObj[loseCharacter].charaObj->GetAnim() == "ダメージ_ダウン" && charaObj[loseCharacter].charaObj->GetAnimEndFlag())
+				{
+					return true;
+				}
 			}
 			
 			WaitTimer(50);
