@@ -18,7 +18,7 @@ private:
 	int Init(void);
 	void BgPosUpDate(void);		// 背景の位置座標の更新と、それに伴うｷｬﾗｸﾗｰの再配置
 	bool CheckGameEnd();		// 勝敗をチェック		
-	void ExtrusionUpdata(VECTOR2 beforPos[2], VECTOR2 afterPos[2]);				// 押し出しの当たり判定
+	void ExtrusionUpdata();				// 押し出しの当たり判定
 
 	// キャラクターのObj情報
 	struct CharacterObj
@@ -34,7 +34,8 @@ private:
 	VECTOR2 ssize;				// 画面ｻｲｽﾞ
 	VECTOR2 bgPos;				// 背景の位置座標
 	VECTOR2 bgPosOld;			// 1ﾌﾚｰﾑ前の背景の位置座標
-
+	VECTOR2 beforPos[2];
+	VECTOR2 afterPos[2];
 	bool GameDraw(void);		// 描画処理
 	int id[2];					// 当たり判定のフレーム数
 

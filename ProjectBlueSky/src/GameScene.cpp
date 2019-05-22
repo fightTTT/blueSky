@@ -79,6 +79,12 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 	}
 	else
 	{
+
+		for (int i = 0; i < 2; i++)
+		{
+			beforPos[i] = charaObj[i].charaObj->GetPos();
+		}
+
 		// 情報更新
 		for (auto& data : *objList)
 		{
@@ -87,6 +93,12 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 		auto deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
 		objList->erase(deth_itr, objList->end());
+
+
+		for (int i = 0; i < 2; i++)
+		{
+			afterPos[i] = charaObj[i].charaObj->GetPos();
+		}
 
 		// shotの情報をセット
 		sharedObj shotObj;
@@ -340,8 +352,10 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				data->AddPos(bgPos - bgPosOld);
 			}
 		}
-	}
 
+		ExtrusionUpdata();
+	}
+	
 
 	// 描画処理
 	GameDraw();
@@ -549,24 +563,73 @@ void GameScene::BgPosUpDate(void)
 	}
 }
 
-void GameScene::ExtrusionUpdata(VECTOR2 beforPos[2], VECTOR2 afterPos[2])
+void GameScene::ExtrusionUpdata()
 {
-	int difPosX[2];
+	int leftCharacter;		// 左にいる方のcharacterPosのindex
+	int rightCharacter;		// 右にいる方のcharacterPosのindex
 
-	for (int i = 0; i < 0; i++)
+	if (afterPos[0].x < afterPos[1].x)
 	{
-		difPosX[i] = afterPos[i].x - beforPos[i].x;
+		leftCharacter = 0;
+		rightCharacter = 1;
+	}
+	else
+	{
+		leftCharacter = 1;
+		rightCharacter = 0;
 	}
 
-	for (int i = 0; i < 0; i++)
+	if ((afterPos[leftCharacter].x + (STICK_HUMAN_IMAGE_SIZE_X / 8)) > (afterPos[rightCharacter].x - (STICK_HUMAN_IMAGE_SIZE_X / 8)))
 	{
-		if (difPosX[i])
-		{
+		int highCharacter;		// 上にいる方のcharacterPosのindex
+		int lowCharacter;		// 下にいる方のcharacterPosのindex
 
+		if (afterPos[0].y < afterPos[1].y)
+		{
+			highCharacter = 0;
+			lowCharacter = 1;
+		}
+		else
+		{
+			highCharacter = 1;
+			lowCharacter = 0;
+		}
+
+		if (afterPos[highCharacter].y > (afterPos[lowCharacter].y - (STICK_HUMAN_IMAGE_SIZE_Y * 3 / 5)))
+		{
+			// ここまで来たら押し出し
+			int moveSum = (afterPos[leftCharacter].x - beforPos[leftCharacter].x) + (afterPos[rightCharacter].x - beforPos[rightCharacter].x);
+			int addPosX = (afterPos[leftCharacter].x + (STICK_HUMAN_IMAGE_SIZE_X / 8)) - (afterPos[rightCharacter].x - (STICK_HUMAN_IMAGE_SIZE_X / 8));
+
+			if (moveSum > 0)
+			{
+				charaObj[rightCharacter].charaObj->AddPos({ addPosX, 0 });
+
+				if (charaObj[rightCharacter].charaObj->GetPos().x > (ssize.x * 4 / 5))
+				{
+					charaObj[rightCharacter].charaObj->SetPos({ (ssize.x * 4 / 5), afterPos[rightCharacter].y });
+					charaObj[leftCharacter].charaObj->SetPos({ (ssize.x * 4 / 5) - (STICK_HUMAN_IMAGE_SIZE_X / 4), afterPos[leftCharacter].y });
+				}
+			}
+			else if (moveSum < 0)
+			{
+				charaObj[leftCharacter].charaObj->AddPos({ -addPosX, 0 });
+
+				if (charaObj[leftCharacter].charaObj->GetPos().x < (ssize.x / 5))
+				{
+					charaObj[leftCharacter].charaObj->SetPos({ (ssize.x / 5), afterPos[leftCharacter].y });
+					charaObj[rightCharacter].charaObj->SetPos({ (ssize.x / 5) + (STICK_HUMAN_IMAGE_SIZE_X / 4), afterPos[rightCharacter].y });
+				}
+			}
+			else
+			{
+				addPosX /= 2;
+
+				charaObj[rightCharacter].charaObj->AddPos({ addPosX, 0 });
+				charaObj[leftCharacter].charaObj->AddPos({ -addPosX, 0 });
+			}
 		}
 	}
-
-	
 }
 
 bool GameScene::CheckGameEnd()
