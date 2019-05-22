@@ -115,8 +115,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		}
 
 		// 一人が後ろ歩きでもう一人が攻撃系のアニメーションの時に、後ろ歩きをしている方をガード状態にする
-		if ((charaObj[0].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_NON)
-		 && (charaObj[0].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_MOVE))
+		if ((charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SMALL)
+		 || (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
+		 || (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
 		{
 			if (charaObj[1].charaObj->GetAnim() == "後ろ移動")
 			{
@@ -128,8 +129,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				charaObj[1].charaObj->SetAnim("ガード_しゃがみ");
 			}
 		}
-		if ((charaObj[1].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_NON)
-		 && (charaObj[1].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_MOVE))
+		if ((charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SMALL)
+		 || (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
+		 || (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
 		{
 			if (charaObj[0].charaObj->GetAnim() == "後ろ移動")
 			{
