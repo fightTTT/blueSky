@@ -44,12 +44,10 @@ void WaitState::Update(AICharacter * character)
 		if (distance > 10)
 		{
 			character->ChangeState(LongAttackState::GetInstance());
-			return;
 		}
 		else
 		{
 			character->ChangeState(MoveState::GetInstance());
-			return;
 		}
 	}
 
