@@ -68,60 +68,114 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	animFileName["ダメージ_ダウン"] = "damage_down";
 	animFileName["起き上がり"] = "get_up";
 
+	// ｱﾆﾒｰｼｮﾝの属性のﾃｰﾌﾞﾙ
 	animAttributeTbl["待機"][0] = ANIM_ATTRIBUTE_STAND;
 	animAttributeTbl["待機"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["待機"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["前移動"][0] = ANIM_ATTRIBUTE_STAND;
-	animAttributeTbl["前移動"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["前移動"][1] = ANIM_ATTRIBUTE_MOVE;
+	animAttributeTbl["前移動"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["後ろ移動"][0] = ANIM_ATTRIBUTE_STAND;
-	animAttributeTbl["後ろ移動"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["後ろ移動"][1] = ANIM_ATTRIBUTE_MOVE;
+	animAttributeTbl["後ろ移動"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["ジャンプ_上"][0] = ANIM_ATTRIBUTE_AIR;
-	animAttributeTbl["ジャンプ_上"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["ジャンプ_上"][1] = ANIM_ATTRIBUTE_MOVE;
+	animAttributeTbl["ジャンプ_上"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["ジャンプ_前"][0] = ANIM_ATTRIBUTE_AIR;
-	animAttributeTbl["ジャンプ_前"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["ジャンプ_前"][1] = ANIM_ATTRIBUTE_MOVE;
+	animAttributeTbl["ジャンプ_前"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["ジャンプ_後ろ"][0] = ANIM_ATTRIBUTE_AIR;
-	animAttributeTbl["ジャンプ_後ろ"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["ジャンプ_後ろ"][1] = ANIM_ATTRIBUTE_MOVE;
+	animAttributeTbl["ジャンプ_後ろ"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["しゃがみ"][0] = ANIM_ATTRIBUTE_SQUAT;
 	animAttributeTbl["しゃがみ"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["しゃがみ"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["しゃがみ_後ろ"][0] = ANIM_ATTRIBUTE_SQUAT;
 	animAttributeTbl["しゃがみ_後ろ"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["しゃがみ_後ろ"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["しゃがみ始め"][0] = ANIM_ATTRIBUTE_SQUAT;
 	animAttributeTbl["しゃがみ始め"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["しゃがみ始め"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["立ち始め"][0] = ANIM_ATTRIBUTE_STAND;
 	animAttributeTbl["立ち始め"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["立ち始め"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["パンチ_小"][0] = ANIM_ATTRIBUTE_STAND;
-	animAttributeTbl["パンチ_小"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["パンチ_小"][1] = ANIM_ATTRIBUTE_ATTACK_SMALL;
+	animAttributeTbl["パンチ_小"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["パンチ_大"][0] = ANIM_ATTRIBUTE_STAND;
-	animAttributeTbl["パンチ_大"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["パンチ_大"][1] = ANIM_ATTRIBUTE_ATTACK_BIG;
+	animAttributeTbl["パンチ_大"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["パンチ_小_空中"][0] = ANIM_ATTRIBUTE_AIR;
-	animAttributeTbl["パンチ_小_空中"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["パンチ_小_空中"][1] = ANIM_ATTRIBUTE_ATTACK_SMALL;
+	animAttributeTbl["パンチ_小_空中"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["パンチ_大_空中"][0] = ANIM_ATTRIBUTE_AIR;
-	animAttributeTbl["パンチ_大_空中"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["パンチ_大_空中"][1] = ANIM_ATTRIBUTE_ATTACK_BIG;
+	animAttributeTbl["パンチ_大_空中"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["パンチ_小_しゃがみ"][0] = ANIM_ATTRIBUTE_SQUAT;
-	animAttributeTbl["パンチ_小_しゃがみ"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["パンチ_小_しゃがみ"][1] = ANIM_ATTRIBUTE_ATTACK_SMALL;
+	animAttributeTbl["パンチ_小_しゃがみ"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["パンチ_大_しゃがみ"][0] = ANIM_ATTRIBUTE_SQUAT;
-	animAttributeTbl["パンチ_大_しゃがみ"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["パンチ_大_しゃがみ"][1] = ANIM_ATTRIBUTE_ATTACK_BIG;
+	animAttributeTbl["パンチ_大_しゃがみ"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["キック_小"][0] = ANIM_ATTRIBUTE_STAND;
-	animAttributeTbl["キック_小"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["キック_小"][1] = ANIM_ATTRIBUTE_ATTACK_SMALL;
+	animAttributeTbl["キック_小"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["キック_大"][0] = ANIM_ATTRIBUTE_STAND;
-	animAttributeTbl["キック_大"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["キック_大"][1] = ANIM_ATTRIBUTE_ATTACK_BIG;
+	animAttributeTbl["キック_大"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["キック_小_空中"][0] = ANIM_ATTRIBUTE_AIR;
-	animAttributeTbl["キック_小_空中"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["キック_小_空中"][1] = ANIM_ATTRIBUTE_ATTACK_SMALL;
+	animAttributeTbl["キック_小_空中"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["キック_大_空中"][0] = ANIM_ATTRIBUTE_AIR;
-	animAttributeTbl["キック_大_空中"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["キック_大_空中"][1] = ANIM_ATTRIBUTE_ATTACK_BIG;
+	animAttributeTbl["キック_大_空中"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["キック_小_しゃがみ"][0] = ANIM_ATTRIBUTE_SQUAT;
-	animAttributeTbl["キック_小_しゃがみ"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["キック_小_しゃがみ"][1] = ANIM_ATTRIBUTE_ATTACK_SMALL;
+	animAttributeTbl["キック_小_しゃがみ"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["キック_大_しゃがみ"][0] = ANIM_ATTRIBUTE_SQUAT;
-	animAttributeTbl["キック_大_しゃがみ"][1] = ANIM_ATTRIBUTE_ATTACK;
+	animAttributeTbl["キック_大_しゃがみ"][1] = ANIM_ATTRIBUTE_ATTACK_BIG;
+	animAttributeTbl["キック_大_しゃがみ"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["ガード_立ち"][0] = ANIM_ATTRIBUTE_STAND;
 	animAttributeTbl["ガード_立ち"][1] = ANIM_ATTRIBUTE_GUARD;
+	animAttributeTbl["ガード_立ち"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["ガード_しゃがみ"][0] = ANIM_ATTRIBUTE_SQUAT;
 	animAttributeTbl["ガード_しゃがみ"][1] = ANIM_ATTRIBUTE_GUARD;
+	animAttributeTbl["ガード_しゃがみ"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["ダメージ_立ち"][0] = ANIM_ATTRIBUTE_STAND;
 	animAttributeTbl["ダメージ_立ち"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["ダメージ_立ち"][2] = ANIM_ATTRIBUTE_NON;
+
 	animAttributeTbl["ダメージ_ダウン"][0] = ANIM_ATTRIBUTE_AIR;
-	animAttributeTbl["ダメージ_ダウン"][1] = ANIM_ATTRIBUTE_INVINCIBLE;
+	animAttributeTbl["ダメージ_ダウン"][1] = ANIM_ATTRIBUTE_MOVE;
+	animAttributeTbl["ダメージ_ダウン"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
+
 	animAttributeTbl["起き上がり"][0] = ANIM_ATTRIBUTE_STAND;
-	animAttributeTbl["起き上がり"][1] = ANIM_ATTRIBUTE_INVINCIBLE;
+	animAttributeTbl["起き上がり"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["起き上がり"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
 	std::vector<std::string> animName = { "待機",
 										  "前移動",
