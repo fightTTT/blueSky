@@ -17,6 +17,7 @@ public:
 private:
 	int Init(void);
 	void BgPosUpDate(void);		// 背景の位置座標の更新と、それに伴うｷｬﾗｸﾗｰの再配置
+	void ExtrusionUpdata(void);
 
 	bool CheckGameEnd();		// 勝敗をチェック
 
