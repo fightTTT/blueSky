@@ -111,7 +111,10 @@ void MoveState::Update(AICharacter * character)
 		moveDirFlag = !moveDirFlag;
 	}
 
-	if (abs(vec.x) < ATTACK_RANGE && ((enemy.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_NON) || (enemy.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_MOVE)))
+	if (abs(vec.x) < ATTACK_RANGE
+	 && (enemy.enemyAnimAttribute[1] != ANIM_ATTRIBUTE_ATTACK_SMALL)
+	 && (enemy.enemyAnimAttribute[1] != ANIM_ATTRIBUTE_ATTACK_BIG)
+	 && (enemy.enemyAnimAttribute[1] != ANIM_ATTRIBUTE_ATTACK_SP))
 	{
 		changeGuardCount++;
 	}
