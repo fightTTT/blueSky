@@ -182,7 +182,10 @@ int CharSelCursor::Init(void)
 
 void CharSelCursor::Draw(void)
 {
-	//DrawGraph(posTbl[charID].x, posTbl[charID].y, IMAGE_DIV_ID("image/キャラセレ用/frame.png", VECTOR2(100, 100), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);		// 選択用ｶｰｿﾙを描画
+	if (lpSceneMng.GetDecidFlag(padID))
+	{
+		DrawGraph(posTbl[charID].x, posTbl[charID].y, IMAGE_DIV_ID("image/キャラセレ用/frame.png", VECTOR2(100, 100), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);		// 選択用ｶｰｿﾙを描画
+	}
 
 	CreateMaskScreen();     // ﾏｽｸ開始
 	DrawMask(posTbl[charID].x-40, posTbl[charID].y-40, mMask, DX_MASKTRANS_BLACK); // 黒色の場所だけ描画
