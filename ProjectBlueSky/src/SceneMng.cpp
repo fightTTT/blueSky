@@ -71,6 +71,26 @@ void SceneMng::SetCharID(PAD_ID padID,int id)
 	charID[charIdIndex] = id;
 }
 
+bool SceneMng::GetSceneBackFlag(void)
+{
+	return sceneBackFlag;
+}
+
+void SceneMng::SetSceneBackFlag(bool sceneBackFlag)
+{
+	this->sceneBackFlag = sceneBackFlag;
+}
+
+bool SceneMng::GetTitleChangeFlag(void)
+{
+	return titleChangeFlag;
+}
+
+void SceneMng::SetTitleChangeFlag(bool titleChangeFlag)
+{
+	this->titleChangeFlag = titleChangeFlag;
+}
+
 bool SceneMng::GetDecidFlag(PAD_ID padID)
 {
 	return decidFlag[static_cast<int>(padID)];
@@ -108,6 +128,8 @@ bool SceneMng::SysInit(void)
 	}
 
 	mode = MODE_1PLAYER;
+	sceneBackFlag = false;
+	titleChangeFlag = false;
 
 	return true;
 }

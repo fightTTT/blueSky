@@ -63,6 +63,8 @@ int TitleScene::Init()
 
 	posTbl = { VECTOR2(210,420),
 			   VECTOR2(210,520) };
+	lpSceneMng.SetTitleChangeFlag(false);
+	lpSceneMng.SetSceneBackFlag(false);
 	return 0;
 }
 

@@ -1,8 +1,10 @@
 #include "CharSelCursor.h"
 #include "SceneMng.h"
 #include "DxLib.h"
+#include "GameCtrl.h"
 #include "SelectScene.h"
 #include "ImageMng.h"
+#include "TitleScene.h"
 
 #define BOX_SIZE_X (100)		// ｷｬﾗｱｲｺﾝのX軸ｻｲｽﾞ
 #define BOX_SIZE_Y (100)		// ｷｬﾗｱｲｺﾝのY軸ｻｲｽﾞ
@@ -22,115 +24,176 @@ CharSelCursor::~CharSelCursor()
 void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	mCount++;
-
+	/* ｷｬﾗを未選択のとき */
 	if (!decidFlag)
 	{
-		/* ｶｰｿﾙの移動 */
-		//PL1
-		PAD_ID tmpEnemyId;
-		if (lpSceneMng.GetMode() == MODE_2PLAYER)
+		/* ﾀｲﾄﾙ遷移ｳｨﾝﾄﾞｳが起動してないとき */
+		if (!lpSceneMng.GetSceneBackFlag())
 		{
-			if (padID == PAD_1)
+			/* BﾎﾞﾀﾝでｳｨﾝﾄﾞｳﾌﾗｸﾞをON */
+			if (ctl.GetPadDataTrg(padID, BUTTON_B))
 			{
-				tmpEnemyId = PAD_2;
+				lpSceneMng.SetSceneBackFlag(true);
 			}
-			else if (padID == PAD_2)
-			{
-				tmpEnemyId = PAD_1;
-			}
-			else
-			{
-				// なにもしない
-			}
-		}
 
-		if (ctl.GetPadDataTrg(padID, THUMB_L_UP) || ctl.GetPadDataTrg(padID, BUTTON_UP))
-		{
-			if (charID >= 4)
+			/*-----ｶｰｿﾙの移動-----*/
+			/* 相手のIDを取得 */
+			PAD_ID tmpEnemyId;
+			if (lpSceneMng.GetMode() == MODE_2PLAYER)
 			{
-				charID -= 4;
-				if (lpSceneMng.GetMode() == MODE_2PLAYER)
+				if (padID == PAD_1)
 				{
-					if (charID == lpSceneMng.GetCharID(tmpEnemyId))
-					{
-						charID += 4;
-					}
+					tmpEnemyId = PAD_2;
 				}
-			}
-		}
-		if (ctl.GetPadDataTrg(padID, THUMB_L_RIGHT) || ctl.GetPadDataTrg(padID, BUTTON_RIGHT))
-		{
-			if ((charID % 4) != 3)
-			{
-				if (lpSceneMng.GetMode() == MODE_1PLAYER)
+				else if (padID == PAD_2)
 				{
-					charID += 1;
-				}
-				else if (lpSceneMng.GetMode() == MODE_2PLAYER)
-				{
-					if ((charID + 1) == (lpSceneMng.GetCharID(tmpEnemyId)) && (lpSceneMng.GetCharID(tmpEnemyId) % 4) != 3)
-					{
-						charID += 1;
-					}
-					if ((charID + 1) != (lpSceneMng.GetCharID(tmpEnemyId)))
-					{
-						charID += 1;
-					}
-				}
-				else 
-				{
-					// なにもしない
-				}
-			}
-		}
-		if (ctl.GetPadDataTrg(padID, THUMB_L_DOWN) || ctl.GetPadDataTrg(padID, BUTTON_DOWN))
-		{
-			if (charID < 4)
-			{
-				charID += 4;
-				if (lpSceneMng.GetMode() == MODE_2PLAYER)
-				{
-					if (charID == lpSceneMng.GetCharID(tmpEnemyId))
-					{
-						charID -= 4;
-					}
-				}
-			}
-		}
-		if (ctl.GetPadDataTrg(padID, THUMB_L_LEFT) || ctl.GetPadDataTrg(padID, BUTTON_LEFT))
-		{
-			if ((charID % 4) != 0)
-			{
-				if (lpSceneMng.GetMode() == MODE_1PLAYER)
-				{
-					charID -= 1;
-				}
-				else if (lpSceneMng.GetMode() == MODE_2PLAYER)
-				{
-					if ((charID - 1) == (lpSceneMng.GetCharID(tmpEnemyId)) && (lpSceneMng.GetCharID(tmpEnemyId) % 4) != 0)
-					{
-						charID -= 1;
-					}
-					if ((charID - 1) != (lpSceneMng.GetCharID(tmpEnemyId)))
-					{
-						charID -= 1;
-					}
+					tmpEnemyId = PAD_1;
 				}
 				else
 				{
 					// なにもしない
 				}
 			}
-		}
-		lpSceneMng.SetCharID(padID, charID);
+			
+			/* 上移動 */
+			if (ctl.GetPadDataTrg(padID, THUMB_L_UP) || ctl.GetPadDataTrg(padID, BUTTON_UP))
+			{
+				if (charID >= 4)
+				{
+					charID -= 4;
+					if (lpSceneMng.GetMode() == MODE_2PLAYER)
+					{
+						if (charID == lpSceneMng.GetCharID(tmpEnemyId))
+						{
+							charID += 4;
+						}
+					}
+				}
+			}
+			/* 右移動 */
+			if (ctl.GetPadDataTrg(padID, THUMB_L_RIGHT) || ctl.GetPadDataTrg(padID, BUTTON_RIGHT))
+			{
+				if ((charID % 4) != 3)
+				{
+					if (lpSceneMng.GetMode() == MODE_1PLAYER)
+					{
+						charID += 1;
+					}
+					else if (lpSceneMng.GetMode() == MODE_2PLAYER)
+					{
+						if ((charID + 1) == (lpSceneMng.GetCharID(tmpEnemyId)) && (lpSceneMng.GetCharID(tmpEnemyId) % 4) != 3)
+						{
+							charID += 1;
+						}
+						if ((charID + 1) != (lpSceneMng.GetCharID(tmpEnemyId)))
+						{
+							charID += 1;
+						}
+					}
+					else
+					{
+						// なにもしない
+					}
+				}
+			}
+			/* 下移動 */
+			if (ctl.GetPadDataTrg(padID, THUMB_L_DOWN) || ctl.GetPadDataTrg(padID, BUTTON_DOWN))
+			{
+				if (charID < 4)
+				{
+					charID += 4;
+					if (lpSceneMng.GetMode() == MODE_2PLAYER)
+					{
+						if (charID == lpSceneMng.GetCharID(tmpEnemyId))
+						{
+							charID -= 4;
+						}
+					}
+				}
+			}
+			/* 左移動 */
+			if (ctl.GetPadDataTrg(padID, THUMB_L_LEFT) || ctl.GetPadDataTrg(padID, BUTTON_LEFT))
+			{
+				if ((charID % 4) != 0)
+				{
+					if (lpSceneMng.GetMode() == MODE_1PLAYER)
+					{
+						charID -= 1;
+					}
+					else if (lpSceneMng.GetMode() == MODE_2PLAYER)
+					{
+						if ((charID - 1) == (lpSceneMng.GetCharID(tmpEnemyId)) && (lpSceneMng.GetCharID(tmpEnemyId) % 4) != 0)
+						{
+							charID -= 1;
+						}
+						if ((charID - 1) != (lpSceneMng.GetCharID(tmpEnemyId)))
+						{
+							charID -= 1;
+						}
+					}
+					else
+					{
+						// なにもしない
+					}
+				}
+			}
+			/* ﾊﾟｯﾄﾞIDとｷｬﾗIDを紐づけ */
+			lpSceneMng.SetCharID(padID, charID);
 
-		// 決定
-		if (ctl.GetPadDataTrg(padID, BUTTON_A))
-		{
-			decidFlag = true;
-			lpSceneMng.SetDecidFlag(padID, decidFlag);
+			/* ｷｬﾗを決定 */
+			if (ctl.GetPadDataTrg(padID, BUTTON_A))
+			{
+				decidFlag = true;
+				lpSceneMng.SetDecidFlag(padID, decidFlag);
+			}
+
 		}
+
+		/* ｳｨﾝﾄﾞｳが起動しているとき */
+		else if(lpSceneMng.GetSceneBackFlag())
+		{
+			if (ctl.GetPadDataTrg(padID, THUMB_L_RIGHT) || ctl.GetPadDataTrg(padID, BUTTON_RIGHT))
+			{
+				if (backCurID != 1)
+				{
+					backCurID += 1;
+				}
+			}
+			if (ctl.GetPadDataTrg(padID, THUMB_L_LEFT) || ctl.GetPadDataTrg(padID, BUTTON_LEFT))
+			{
+				if (backCurID != 0)
+				{
+					backCurID -= 1;
+				}
+			}
+
+			/* Aﾎﾞﾀﾝでﾀｲﾄﾙｼｰﾝに戻るﾌﾗｸﾞを立てる */
+			if (ctl.GetPadDataTrg(padID, BUTTON_A))
+			{
+				if (backCurID == 0)
+				{
+					lpSceneMng.SetTitleChangeFlag(true);
+				}
+				else
+				{
+					lpSceneMng.SetSceneBackFlag(false);
+				}
+			}
+
+			/* Bﾎﾞﾀﾝでｳｨﾝﾄﾞｳを閉じる */
+			if (ctl.GetPadDataTrg(padID, BUTTON_B))
+			{
+				lpSceneMng.SetSceneBackFlag(false);
+			}
+		}
+		else
+		{
+			// なにもしない
+		}
+
 	}
+
+	/* ｷｬﾗを選択してるとき */
 	else
 	{
 		// 決定取り消し確認
@@ -140,7 +203,6 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			lpSceneMng.SetDecidFlag(padID, false);
 		}
 	}
-
 
 }
 
@@ -163,8 +225,10 @@ int CharSelCursor::Init(void)
 	}
 	lpSceneMng.SetCharID(padID, charID);
 
+	backCurID = 0;
+
 	// ﾃｰﾌﾞﾙ
-	posTbl = { VECTOR2((sSize.x / 2) - (BOX_SIZE_X * 2),	(sSize.y * 3 / 5)),
+	charSelPosTbl = { VECTOR2((sSize.x / 2) - (BOX_SIZE_X * 2),	(sSize.y * 3 / 5)),
 			   VECTOR2((sSize.x / 2) - (BOX_SIZE_X),		(sSize.y * 3 / 5)),
 			   VECTOR2((sSize.x / 2),						(sSize.y * 3 / 5)),
 			   VECTOR2((sSize.x / 2) + BOX_SIZE_X,			(sSize.y * 3 / 5)),
@@ -173,26 +237,49 @@ int CharSelCursor::Init(void)
 			   VECTOR2((sSize.x / 2),						(sSize.y * 3 / 5) + BOX_SIZE_Y),
 			   VECTOR2((sSize.x / 2) + BOX_SIZE_X,			(sSize.y * 3 / 5) + BOX_SIZE_Y) };
 
+	sceneCurPosTbl = { VECTOR2((sSize.x / 2) - 300, (sSize.y / 2) + 50),
+					  VECTOR2((sSize.x / 2) + 50, (sSize.y / 2) + 50) };
+
 	colorTbl = {0xff0000, 0x00ffff};
 
 	mCount = 0;
-	mMask = LoadMask("image/キャラセレ用/selected_mask.png");
+	charCurMask = LoadMask("image/キャラセレ用/selected_mask.png");
+	sceneCurMask = LoadMask("image/キャラセレ用/back_mask.png");
 	return 0;
 }
 
 void CharSelCursor::Draw(void)
 {
-	if (lpSceneMng.GetDecidFlag(padID))
+	if (!lpSceneMng.GetSceneBackFlag())
 	{
-		DrawGraph(posTbl[charID].x, posTbl[charID].y, IMAGE_DIV_ID("image/キャラセレ用/frame.png", VECTOR2(100, 100), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);		// 選択用ｶｰｿﾙを描画
+		DrawGraph(charSelPosTbl[charID].x, charSelPosTbl[charID].y, IMAGE_DIV_ID("image/キャラセレ用/frame.png", VECTOR2(100, 100), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);		// 選択用ｶｰｿﾙを描画
+		CreateMaskScreen();     // ﾏｽｸ開始
+		DrawMask(charSelPosTbl[charID].x - 40, charSelPosTbl[charID].y - 40, charCurMask, DX_MASKTRANS_BLACK); // 黒色の場所だけ描画
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 255);               // 加算ブレンドに設定
+		DrawRotaGraph2((charSelPosTbl[charID].x + 50), (charSelPosTbl[charID].y + 50), 50, 50, 1.0, PI2 / 240 * mCount, IMAGE_DIV_ID("image/キャラセレ用/selected.png", VECTOR2(130, 61), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);			// ｶｰｿﾙをﾏｽの中心で画像の中心を軸に回転
+		DrawRotaGraph2((charSelPosTbl[charID].x + 50), (charSelPosTbl[charID].y + 50), 50, 50, 1.0, PI2 / 240 * (mCount - 120), IMAGE_DIV_ID("image/キャラセレ用/selected.png", VECTOR2(130, 61), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);	// 対角線上にもう一つ
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);     // ﾌﾞﾚﾝﾄﾞをﾘｾｯﾄ
+		DeleteMaskScreen();		// ﾏｽｸ終了
 	}
 
-	CreateMaskScreen();     // ﾏｽｸ開始
-	DrawMask(posTbl[charID].x-40, posTbl[charID].y-40, mMask, DX_MASKTRANS_BLACK); // 黒色の場所だけ描画
-	SetDrawBlendMode(DX_BLENDMODE_ADD, 255);               // 加算ブレンドに設定
-	DrawRotaGraph2((posTbl[charID].x + 50), (posTbl[charID].y + 50), 50, 50, 1.0, PI2 / 240 * mCount, IMAGE_DIV_ID("image/キャラセレ用/selected.png", VECTOR2(130, 61), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);			// ｶｰｿﾙをﾏｽの中心で画像の中心を軸に回転
-	DrawRotaGraph2((posTbl[charID].x + 50), (posTbl[charID].y + 50), 50, 50, 1.0, PI2 / 240 * (mCount - 120), IMAGE_DIV_ID("image/キャラセレ用/selected.png", VECTOR2(130, 61), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);	// 対角線上にもう一つ
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);     // ﾌﾞﾚﾝﾄﾞをﾘｾｯﾄ
-	DeleteMaskScreen(); // ﾏｽｸ終了
+	else if (lpSceneMng.GetSceneBackFlag())
+	{
+		CreateMaskScreen();     // ﾏｽｸ開始
+		DrawMask(sceneCurPosTbl[backCurID].x - 40, sceneCurPosTbl[backCurID].y - 100, sceneCurMask, DX_MASKTRANS_BLACK); // 黒色の場所だけ描画
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 255);               // 加算ブレンドに設定
+		DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * mCount, IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);			// ｶｰｿﾙをﾏｽの中心で画像の中心を軸に回転
+		DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * (mCount - 120), IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);	// 対角線上にもう一つ
+		DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * (mCount - 60), IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);	// 対角線上にもう一つ
+		DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * (mCount - 180), IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);	// 対角線上にもう一つ
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);     // ﾌﾞﾚﾝﾄﾞをﾘｾｯﾄ
+		DeleteMaskScreen();		// ﾏｽｸ終了
+		DrawGraph((sSize.x / 2) - 300, (sSize.y / 2) + 50, IMAGE_ID("image/キャラセレ用/yes.png")[0], true);		// はい
+		DrawGraph((sSize.x / 2) + 50, (sSize.y / 2) + 50, IMAGE_ID("image/キャラセレ用/no.png")[0], true);		// いいえ
+	}
+
+	else
+	{
+		// なにもしない
+	}
 }
 

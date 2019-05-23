@@ -21,7 +21,7 @@ private:
 	int flamCnt;			// 点滅用
 	bool sceneChangeFlag;	// ｼｰﾝを変更するﾌﾗｸﾞ
 	int Init(void);
-	void SelectDraw(void);
+	void SelectDraw(const GameCtrl & controller);
 	sharedListObj objList;
 
 	std::array<std::array<char, 12>, CHAR_CNT_MAX> charNameTbl;				// ｷｬﾗIDに対応した名前のﾃｰﾌﾞﾙ
