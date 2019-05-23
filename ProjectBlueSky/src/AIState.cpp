@@ -24,6 +24,8 @@ void AIState::CheckHitFlag(AICharacter * character)
 
 	if(hitFlag && character->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
 	{
+		dir = character->GetTmpDir();
+
 		WaitTimer(WAIT_TIMER_COUNT);
 
 		if (character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SMALL)

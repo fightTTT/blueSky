@@ -114,6 +114,7 @@ public:
 
 	// Œü‚¢‚Ä‚¢‚é•ûŒüƒZƒbƒg
 	void SetDir(DIR d);
+	DIR GetTmpDir() const { return tmpDir; }
 	// Œü‚¢‚Ä‚¢‚é•ûŒüæ“¾
 	DIR GetDir() const { return dir; }
 
