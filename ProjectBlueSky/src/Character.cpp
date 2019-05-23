@@ -38,6 +38,8 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	comboCnt = 0;
 	knockBackSpeed = 0;
 	knockBackFlag = false;
+	spEndCnt = 0;
+	jumpInterval = 0;
 
 	// 通常のアクション
 	animFileName["待機"] = "stand";
@@ -609,6 +611,45 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("待機");
 		}
 	}
+	else if (animName == "ミサイルアロー")
+	{
+		if (animStopFlag)
+		{
+			spEndCnt++;
+
+			if (spEndCnt < 45)
+			{
+				if (spEndCnt > 4)
+				{
+					if (dir == DIR_RIGHT)
+					{
+						pos.x += 20;
+					}
+					else
+					{
+						pos.x -= 20;
+					}
+				}
+			}
+			else
+			{
+				animStopFlag = false;
+			}
+		}
+		else
+		{
+			if (animCnt == 9)
+			{
+				animStopFlag = true;
+				spEndCnt = 0;
+			}
+		}
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
 	else if (animName == "ワープ")
 	{
 		if (animCnt == 31)
@@ -656,85 +697,98 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		// キャラクター操作
 		if (animAttribute[0] == ANIM_ATTRIBUTE_AIR)
 		{
-			if (animTable[animName][ANIM_TBL_LOOP])
+			if (animName == "ランキャク")
 			{
-				if (ctl.GetPadDataTrg(padID, BUTTON_A))
+				pos.x += 2;
+				pos.y += 3;
+
+				if (animEndFlag)
 				{
-					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-					{
-						dir = DIR_RIGHT;
-					}
-					else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-					{
-						dir = DIR_LEFT;
-					}
-					else
-					{
-						// そのままの方向
-					}
-					SetAnim("パンチ_小_空中");
-				}
-				else if (ctl.GetPadDataTrg(padID, BUTTON_B))
-				{
-					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-					{
-						dir = DIR_RIGHT;
-					}
-					else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-					{
-						dir = DIR_LEFT;
-					}
-					else
-					{
-						// そのままの方向
-					}
-					SetAnim("パンチ_大_空中");
-				}
-				else if (ctl.GetPadDataTrg(padID, BUTTON_X))
-				{
-					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-					{
-						dir = DIR_RIGHT;
-					}
-					else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-					{
-						dir = DIR_LEFT;
-					}
-					else
-					{
-						// そのままの方向
-					}
-					SetAnim("キック_小_空中");
-				}
-				else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
-				{
-					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-					{
-						dir = DIR_RIGHT;
-					}
-					else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-					{
-						dir = DIR_LEFT;
-					}
-					else
-					{
-						// そのままの方向
-					}
-					SetAnim("キック_大_空中");
-				}
-				else
-				{
-					// 何もしない
+					SetAnim("待機");
 				}
 			}
-
-			// ジャンプ中
-			jumpSpeed.y += 1;
-			pos += jumpSpeed;
-
-			if (jumpSpeed.y == JUMP_SPEED_Y)
+			else
 			{
-				SetAnim("待機");
+				if (animTable[animName][ANIM_TBL_LOOP])
+				{
+					if (ctl.GetPadDataTrg(padID, BUTTON_A))
+					{
+						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+						{
+							dir = DIR_RIGHT;
+						}
+						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+						{
+							dir = DIR_LEFT;
+						}
+						else
+						{
+							// そのままの方向
+						}
+						SetAnim("パンチ_小_空中");
+					}
+					else if (ctl.GetPadDataTrg(padID, BUTTON_B))
+					{
+						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+						{
+							dir = DIR_RIGHT;
+						}
+						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+						{
+							dir = DIR_LEFT;
+						}
+						else
+						{
+							// そのままの方向
+						}
+						SetAnim("パンチ_大_空中");
+					}
+					else if (ctl.GetPadDataTrg(padID, BUTTON_X))
+					{
+						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+						{
+							dir = DIR_RIGHT;
+						}
+						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+						{
+							dir = DIR_LEFT;
+						}
+						else
+						{
+							// そのままの方向
+						}
+						SetAnim("キック_小_空中");
+					}
+					else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
+					{
+						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+						{
+							dir = DIR_RIGHT;
+						}
+						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+						{
+							dir = DIR_LEFT;
+						}
+						else
+						{
+							// そのままの方向
+						}
+						SetAnim("キック_大_空中");
+					}
+					else
+					{
+						// 何もしない
+					}
+				}
+
+				// ジャンプ中
+				jumpSpeed.y += 1;
+				pos += jumpSpeed;
+
+				if (jumpSpeed.y == JUMP_SPEED_Y)
+				{
+					SetAnim("待機");
+				}
 			}
 		}
 		else
@@ -757,42 +811,61 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 				else
 				{
-					if (ctl.GetPadDataTrg(padID, THUMB_L_UP))		// ジャンプ
+					if (ctl.GetPadData(padID, THUMB_L_UP))		// ジャンプ
 					{
-						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+						if (jumpInterval == 0)
 						{
-							jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
-
-							if (dir == DIR_LEFT)
+							if (ctl.GetPadDataTrg(padID, THUMB_L_UP))		// ジャンプ
 							{
-								SetAnim("ジャンプ_後ろ");
-							}
-							else
-							{
-								SetAnim("ジャンプ_前");
-							}
-						}
-						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-						{
-							jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
-
-							if (dir == DIR_LEFT)
-							{
-								SetAnim("ジャンプ_前");
-							}
-							else
-							{
-								SetAnim("ジャンプ_後ろ");
+								jumpInterval++;
 							}
 						}
 						else
 						{
-							jumpSpeed = { 0, -JUMP_SPEED_Y };
-							SetAnim("ジャンプ_上");
+							jumpInterval++;
+
+							if (jumpInterval > 4)
+							{
+								jumpInterval = 0;
+
+								if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+								{
+									jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
+
+									if (dir == DIR_LEFT)
+									{
+										SetAnim("ジャンプ_後ろ");
+									}
+									else
+									{
+										SetAnim("ジャンプ_前");
+									}
+								}
+								else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+								{
+									jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
+
+									if (dir == DIR_LEFT)
+									{
+										SetAnim("ジャンプ_前");
+									}
+									else
+									{
+										SetAnim("ジャンプ_後ろ");
+									}
+								}
+								else
+								{
+									jumpSpeed = { 0, -JUMP_SPEED_Y };
+									SetAnim("ジャンプ_上");
+								}
+							}
 						}
 					}
 					else if (ctl.GetPadData(padID, THUMB_L_DOWN))		// しゃがみ
 					{
+						jumpInterval = 0;
+
 						if (animAttribute[0] == ANIM_ATTRIBUTE_SQUAT)
 						{
 							if (ctl.GetPadData(padID, THUMB_L_RIGHT))
@@ -829,6 +902,8 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					}
 					else
 					{
+						jumpInterval = 0;
+
 						// 移動
 						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 						{

@@ -190,7 +190,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[0][DIR_LEFT].resize(4);
 		spAttackCommand[0][DIR_LEFT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_PUNCH };
 
-		AddAnim("ミサイルアロー", 0, 0, 6, 4, false, 0, 0);
+		AddAnim("ミサイルアロー", 0, 0, 6, 4, false, 0, -16);
 		spAttackAnimName[1] = "ミサイルアロー";
 		spAttackAnimFileName[1] = "missile";
 		animAttributeTbl["ミサイルアロー"][0] = ANIM_ATTRIBUTE_STAND;
@@ -202,17 +202,17 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[1][DIR_LEFT].resize(5);
 		spAttackCommand[1][DIR_LEFT] = { SP_COM_RIGHT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_LEFT, SP_COM_PUNCH };
 
-		AddAnim("ランキャク", 0, 0, 10, 4, false, 0, 0);
+		AddAnim("ランキャク", 0, 0, 10, 4, false, 0, -16);
 		spAttackAnimName[2] = "ランキャク";
 		spAttackAnimFileName[2] = "cutterKick";
-		animAttributeTbl["ランキャク"][0] = ANIM_ATTRIBUTE_STAND;
+		animAttributeTbl["ランキャク"][0] = ANIM_ATTRIBUTE_AIR;
 		animAttributeTbl["ランキャク"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ランキャク"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
-		spAttackCommand[2][DIR_RIGHT].resize(4);
-		spAttackCommand[2][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_KICK };
-		spAttackCommand[2][DIR_LEFT].resize(4);
-		spAttackCommand[2][DIR_LEFT] = { SP_COM_LEFT, SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_KICK };
+		spAttackCommand[2][DIR_RIGHT].resize(5);
+		spAttackCommand[2][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_UP, SP_COM_KICK };
+		spAttackCommand[2][DIR_LEFT].resize(5);
+		spAttackCommand[2][DIR_LEFT] = { SP_COM_DOWN, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_UP, SP_COM_KICK };
 		break;
 
 	case 5:
