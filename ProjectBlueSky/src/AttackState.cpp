@@ -20,7 +20,8 @@ AttackState::~AttackState()
 
 void AttackState::Init(AICharacter * character)
 {
-	if (character->GetAnim() == "ワープ")
+	auto charaAnim = character->GetAnim();
+	if (charaAnim == "ワープ")
 	{
 		warpFlag = true;
 		character->SetDirChange(false);
@@ -29,6 +30,12 @@ void AttackState::Init(AICharacter * character)
 	else
 	{
 		warpFlag = false;
+	}
+
+	// すでに攻撃アニメーションがセットされていた場合return
+	if (charaAnim != "前移動" && charaAnim != "後ろ移動" && charaAnim != "待機")
+	{
+		return;
 	}
 
 	if (attackCount >= static_cast<unsigned int>(GetRand(30) + 4))

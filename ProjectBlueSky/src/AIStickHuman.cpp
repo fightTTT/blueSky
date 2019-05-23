@@ -144,7 +144,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		animAttributeTbl["ランキャク"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ランキャク"][2] = ANIM_ATTRIBUTE_NON;
 
-		shotCreateCount = 30;
+		shotCreateCount = 22;
 
 		break;
 
@@ -171,7 +171,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		animAttributeTbl["タックル"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["タックル"][2] = ANIM_ATTRIBUTE_NON;
 
-		shotCreateCount = 30;
+		shotCreateCount = 45;
 
 		break;
 
@@ -198,7 +198,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		animAttributeTbl["ワープ"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ワープ"][2] = ANIM_ATTRIBUTE_NON;
 
-		shotCreateCount = 30;
+		shotCreateCount = 22;
 
 		break;
 
@@ -225,7 +225,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		animAttributeTbl["アクセル"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["アクセル"][2] = ANIM_ATTRIBUTE_NON;
 
-		shotCreateCount = 30;
+		shotCreateCount = 26;
 
 		break;
 
