@@ -4,6 +4,15 @@
 
 StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : Character(offset)
 {
+
+	spAttackAnimName[0] = "技1";
+	spAttackAnimName[1] = "技2";
+	spAttackAnimName[2] = "技3";
+	spAttackAnimFileName[0] = "waza_1";
+	spAttackAnimFileName[1] = "waza_2";
+	spAttackAnimFileName[2] = "waza_3";
+	shotCreateCnt = 0;
+
 	switch (lpSceneMng.GetCharID(id))
 	{
 	case 0:
@@ -13,7 +22,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[0] = "hadou";
 		animAttributeTbl["波動"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["波動"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["波動"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["波動"][2] = ANIM_ATTRIBUTE_SHOT;
+		shotCreateCnt = 30;
 
 		spAttackCommand[0][DIR_RIGHT].resize(4);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_PUNCH };
@@ -52,7 +62,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[0] = "sitotsu";
 		animAttributeTbl["刺突砲"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["刺突砲"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["刺突砲"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["刺突砲"][2] = ANIM_ATTRIBUTE_SHOT;
+		shotCreateCnt = 30;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
@@ -91,7 +102,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[0] = "kikoh";
 		animAttributeTbl["気功拳"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["気功拳"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["気功拳"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["気功拳"][2] = ANIM_ATTRIBUTE_SHOT;
+		shotCreateCnt = 30;
 
 		spAttackCommand[0][DIR_RIGHT].resize(4);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_PUNCH };
@@ -130,7 +142,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[0] = "kamehame";
 		animAttributeTbl["かめはめ波"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["かめはめ波"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["かめはめ波"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["かめはめ波"][2] = ANIM_ATTRIBUTE_SHOT;
+		shotCreateCnt = 30;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
@@ -169,7 +182,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[0] = "sonic";
 		animAttributeTbl["ソニックブーム"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["ソニックブーム"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["ソニックブーム"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["ソニックブーム"][2] = ANIM_ATTRIBUTE_SHOT;
+		shotCreateCnt = 28;
 
 		spAttackCommand[0][DIR_RIGHT].resize(4);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_PUNCH };
@@ -208,7 +222,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[0] = "throw";
 		animAttributeTbl["岩投げ"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["岩投げ"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["岩投げ"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["岩投げ"][2] = ANIM_ATTRIBUTE_SHOT;
+		shotCreateCnt = 30;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
@@ -247,7 +262,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[0] = "psycho";
 		animAttributeTbl["サイコカッター"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["サイコカッター"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["サイコカッター"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["サイコカッター"][2] = ANIM_ATTRIBUTE_SHOT;
+		shotCreateCnt = 30;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
@@ -286,7 +302,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackAnimFileName[0] = "ibuki";
 		animAttributeTbl["竜の息吹"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["竜の息吹"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["竜の息吹"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["竜の息吹"][2] = ANIM_ATTRIBUTE_SHOT;
+		shotCreateCnt = 30;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };

@@ -69,8 +69,10 @@ protected:
 	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn, PAD_ID id);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標, 反転ﾌﾗｸﾞ, パッド番号
 
 	std::string characterName;
-	std::string spAttackAnimName[3] = {"技1", "技2" , "技3" };
-	std::string spAttackAnimFileName[3] = { "waza_1", "waza_2" , "waza_3" };
+	std::string spAttackAnimName[3];
+	std::string spAttackAnimFileName[3];
 	std::array<std::array<std::vector<SP_COM>, DIR_MAX>, 3> spAttackCommand;		// spAttackCommand[技番号][自分の方向][コマンド]
+
+	int shotCreateCnt;		// ｼｮｯﾄを生成するまでのｶｳﾝﾄ
 };
 

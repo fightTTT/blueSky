@@ -15,35 +15,35 @@ Shot::Shot(VECTOR2 pos, VECTOR2 offset, DIR dir, PAD_ID id) : Obj(offset)
 	switch (lpSceneMng.GetCharID(padID))
 	{
 	case 0:
-		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir == DIR_RIGHT);
+		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 1:
-		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir == DIR_RIGHT);
+		Init("image/ショット系/sitotsu.png", VECTOR2(240, 240), VECTOR2(5, 2), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 2:
-		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir == DIR_RIGHT);
+		Init("image/ショット系/kikoh.png", VECTOR2(240, 240), VECTOR2(5, 2), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 3:
-		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir == DIR_RIGHT);
+		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 4:
-		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir == DIR_RIGHT);
+		Init("image/ショット系/sonic.png", VECTOR2(240, 240), VECTOR2(4, 2), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 5:
-		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir == DIR_RIGHT);
+		Init("image/ショット系/rock.png", VECTOR2(240, 240), VECTOR2(5, 4), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 6:
-		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir == DIR_RIGHT);
+		Init("image/ショット系/psycocutter.png", VECTOR2(400, 400), VECTOR2(6, 1), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 7:
-		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir == DIR_RIGHT);
+		Init("image/ショット系/ibuki.png", VECTOR2(280, 280), VECTOR2(5, 2), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	default:
