@@ -535,11 +535,11 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		{
 			if (dir == DIR_RIGHT)
 			{
-				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(256,64), drawOffset, dir, padID));
+				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(256 - 30,64), drawOffset, dir, padID));
 			}
 			else
 			{
-				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(-128, 64), drawOffset, dir, padID));
+				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(-128 + 30, 64), drawOffset, dir, padID));
 			}
 		}
 

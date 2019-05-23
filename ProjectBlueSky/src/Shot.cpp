@@ -3,7 +3,7 @@
 #include "Shot.h"
 
 
-#define MOVE_SPPED (7)
+#define MOVE_SPPED (8)
 
 Shot::Shot(VECTOR2 pos, VECTOR2 offset, DIR dir, PAD_ID id) : Obj(offset)
 {
@@ -12,6 +12,8 @@ Shot::Shot(VECTOR2 pos, VECTOR2 offset, DIR dir, PAD_ID id) : Obj(offset)
 
 	padID = id;
 
+	interval = 4;
+
 	switch (lpSceneMng.GetCharID(padID))
 	{
 	case 0:
@@ -19,36 +21,41 @@ Shot::Shot(VECTOR2 pos, VECTOR2 offset, DIR dir, PAD_ID id) : Obj(offset)
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 1:
-		Init("image/ショット系/sitotsu.png", VECTOR2(240, 240), VECTOR2(5, 2), pos, dir != DIR_RIGHT);
+		Init("image/ショット系/sitotsu.png", VECTOR2(128, 128), VECTOR2(5, 2), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 2:
-		Init("image/ショット系/kikoh.png", VECTOR2(240, 240), VECTOR2(5, 2), pos, dir != DIR_RIGHT);
+		Init("image/ショット系/kikoh.png", VECTOR2(128, 128), VECTOR2(5, 2), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 3:
-		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir != DIR_RIGHT);
+		Init("image/ショット系/kamehameha.png", VECTOR2(128, 128), VECTOR2(4, 1), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 4:
-		Init("image/ショット系/sonic.png", VECTOR2(240, 240), VECTOR2(4, 2), pos, dir != DIR_RIGHT);
+		Init("image/ショット系/sonic.png", VECTOR2(128, 128), VECTOR2(4, 2), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
+		interval = 2;
 		break;
 	case 5:
-		Init("image/ショット系/rock.png", VECTOR2(240, 240), VECTOR2(5, 4), pos, dir != DIR_RIGHT);
+		Init("image/ショット系/rock.png", VECTOR2(128, 128), VECTOR2(5, 4), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 6:
-		Init("image/ショット系/psycocutter.png", VECTOR2(400, 400), VECTOR2(6, 1), pos, dir != DIR_RIGHT);
+		Init("image/ショット系/psycocutter.png", VECTOR2(128, 128), VECTOR2(6, 1), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 7:
-		Init("image/ショット系/ibuki.png", VECTOR2(280, 280), VECTOR2(5, 2), pos, dir != DIR_RIGHT);
+		Init("image/ショット系/ibuki.png", VECTOR2(128, 128), VECTOR2(5, 2), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
+		interval = 3;
 		break;
 	default:
 		break;
 	}
+
+	AddAnim("移動", 0, 0, (divCut.x * divCut.y), interval, true, 0, 0);
+	SetAnim("移動");
 
 	if (dir == DIR_RIGHT)
 	{
