@@ -263,7 +263,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["サイコカッター"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["サイコカッター"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["サイコカッター"][2] = ANIM_ATTRIBUTE_SHOT;
-		shotCreateCnt = 30;
+		shotCreateCnt = 22;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
@@ -303,7 +303,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["竜の息吹"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["竜の息吹"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["竜の息吹"][2] = ANIM_ATTRIBUTE_SHOT;
-		shotCreateCnt = 30;
+		shotCreateCnt = 26;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
