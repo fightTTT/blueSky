@@ -70,7 +70,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[0][DIR_LEFT].resize(3);
 		spAttackCommand[0][DIR_LEFT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
 
-		AddAnim("ウマキック", 0, 0, 7, 4, false, 0, 0);
+		AddAnim("ウマキック", 0, 0, 7, 5, false, 0, 0);
 		spAttackAnimName[1] = "ウマキック";
 		spAttackAnimFileName[1] = "horseKick";
 		animAttributeTbl["ウマキック"][0] = ANIM_ATTRIBUTE_SQUAT;
@@ -82,7 +82,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[1][DIR_LEFT].resize(4);
 		spAttackCommand[1][DIR_LEFT] = { SP_COM_RIGHT, SP_COM_RIGHT_DOWN, SP_COM_DOWN, SP_COM_KICK };
 
-		AddAnim("ローリングアタック", 0, 0, 6, 4, false, 0, 0);
+		AddAnim("ローリングアタック", 0, 0, 6, 1, true, 0, -16);
 		spAttackAnimName[2] = "ローリングアタック";
 		spAttackAnimFileName[2] = "rolling";
 		animAttributeTbl["ローリングアタック"][0] = ANIM_ATTRIBUTE_STAND;

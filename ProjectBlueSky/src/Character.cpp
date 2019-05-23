@@ -548,6 +548,25 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("待機");
 		}
 	}
+	else if (animName == "ローリングアタック")
+	{
+		if (animCnt > 20)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 20;
+			}
+			else
+			{
+				pos.x -= 20;
+			}
+		}
+
+		if (animCnt > 60)
+		{
+			SetAnim("待機");
+		}
+	}
 	else if (animName == "旋風脚")
 	{
 		if (dir == DIR_RIGHT)
