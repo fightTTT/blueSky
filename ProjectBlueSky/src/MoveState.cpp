@@ -132,12 +132,30 @@ void MoveState::Update(AICharacter * character)
 	if (abs(vec.x) < ATTACK_RANGE - GetRand(120))
 	{
 		rand = GetRand(100);
-		if (rand <= 5)
+		if (rand >= 95)
 		{
 			character->SetJumpType(JUMP_TYPE_FRONT);
 			character->ChangeState(JumpState::GetInstance());
 			moveDirFlag = true;
 			return;
+		}
+		else if (rand <= 40)
+		{
+			// ‹ß‹——£‚Ì•KŽE‹Z‚Ì‚ÝŽÀs
+			for (int i = 1; i < 3; ++i)
+			{
+				if (!(character->isSPLongAttack(character->GetSPAttackName(i))))
+				{
+					rand = GetRand(2);
+					if (rand == 0)
+					{
+						character->SetAnim(character->GetSPAttackName(i));
+						character->ChangeState(AttackState::GetInstance());
+						notAttackCount = 0;
+						return;
+					}
+				}
+			}
 		}
 		character->ChangeState(AttackState::GetInstance());
 		notAttackCount = 0;
@@ -154,15 +172,22 @@ void MoveState::Update(AICharacter * character)
 			notAttackCount = 0;
 			return;
 		}
-		else if (rand >= 1)
+		else if (rand <= 8)
 		{
-			rand = GetRand(100);
-			if (rand == 0)
+			// ‰“‹——£‚Ì•KŽE‹Z‚Ì‚ÝŽÀs
+			for (int i = 1; i < 3; ++i)
 			{
-				character->SetAnim(character->GetSPAttackName(2));
-				character->ChangeState(AttackState::GetInstance());
-				notAttackCount = 0;
-				return;
+				if (character->isSPLongAttack(character->GetSPAttackName(i)))
+				{
+					rand = GetRand(20);
+					if (rand == 0)
+					{
+						character->SetAnim(character->GetSPAttackName(i));
+						character->ChangeState(AttackState::GetInstance());
+						notAttackCount = 0;
+						return;
+					}
+				}
 			}
 		}
 	}

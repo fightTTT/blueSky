@@ -189,6 +189,17 @@ void AICharacter::CheckHitFlag()
 	state->CheckHitFlag(this);
 }
 
+bool AICharacter::isSPLongAttack(std::string spAnimName)
+{
+	if (spAnimName == "ローリングアタック"
+		|| spAnimName == "ミサイルアロー"
+		|| spAnimName == "ワープ")
+	{
+		return true;
+	}
+	return false;
+}
+
 bool AICharacter::InitAnim(void)
 {
 	AddAnim("待機", 0, 0, 6, 4, true, 0, 0);

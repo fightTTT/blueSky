@@ -48,6 +48,8 @@ public:
 	// ’e”­ŽË‚Ü‚Å‚ÌƒJƒEƒ“ƒg‚ðŽæ“¾
 	const int GetShotCreateCount() const { return shotCreateCount; }
 
+	bool isSPLongAttack(std::string spAnimName);
+
 private:
 
 	bool InitAnim(void);
