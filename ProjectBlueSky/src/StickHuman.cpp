@@ -110,7 +110,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[0][DIR_LEFT].resize(4);
 		spAttackCommand[0][DIR_LEFT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_PUNCH };
 
-		AddAnim("旋風脚", 0, 0, 4, 4, true, 0, 0);
+		AddAnim("旋風脚", 0, 0, 4, 3, true, 0, -16);
 		spAttackAnimName[1] = "旋風脚";
 		spAttackAnimFileName[1] = "senpu";
 		animAttributeTbl["旋風脚"][0] = ANIM_ATTRIBUTE_STAND;
@@ -122,7 +122,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[1][DIR_LEFT].resize(4);
 		spAttackCommand[1][DIR_LEFT] = { SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_KICK };
 
-		AddAnim("カンフーキック", 0, 0, 17, 4, false, 0, 0);
+		AddAnim("カンフーキック", 0, 0, 17, 3, false, 0, 0);
 		spAttackAnimName[2] = "カンフーキック";
 		spAttackAnimFileName[2] = "kung";
 		animAttributeTbl["カンフーキック"][0] = ANIM_ATTRIBUTE_STAND;
@@ -150,7 +150,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[0][DIR_LEFT].resize(3);
 		spAttackCommand[0][DIR_LEFT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
 
-		AddAnim("ラッシュ", 0, 0, 15, 4, false, 0, 0);
+		AddAnim("ラッシュ", 0, 0, 15, 1, true, 0, 0);
 		spAttackAnimName[1] = "ラッシュ";
 		spAttackAnimFileName[1] = "rush";
 		animAttributeTbl["ラッシュ"][0] = ANIM_ATTRIBUTE_STAND;
@@ -162,7 +162,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[1][DIR_LEFT].resize(8);
 		spAttackCommand[1][DIR_LEFT] = { SP_COM_CENTER, SP_COM_PUNCH, SP_COM_CENTER, SP_COM_PUNCH, SP_COM_CENTER, SP_COM_PUNCH, SP_COM_CENTER, SP_COM_PUNCH };
 
-		AddAnim("回し蹴り", 0, 0, 26, 4, false, 0, 0);
+		AddAnim("回し蹴り", 0, 0, 26, 3, false, 0, 0);
 		spAttackAnimName[2] = "回し蹴り";
 		spAttackAnimFileName[2] = "roundKick";
 		animAttributeTbl["回し蹴り"][0] = ANIM_ATTRIBUTE_STAND;

@@ -583,6 +583,32 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("待機");
 		}
 	}
+	else if (animName == "カンフーキック")
+	{
+		if (animCnt < 4)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 6;
+			}
+			else
+			{
+				pos.x -= 6;
+			}
+		}
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
+	else if (animName == "ラッシュ")
+	{
+		if (animCnt > 40)
+		{
+			SetAnim("待機");
+		}
+	}
 	else if (animName == "ワープ")
 	{
 		if (animCnt == 31)
