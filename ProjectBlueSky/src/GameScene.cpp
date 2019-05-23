@@ -219,7 +219,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						colData[i].hitBox[a].rect.startPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
 						colData[i].hitBox[a].rect.endPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
 
-						int b;
+						int oneTimePos;
 
 						colData[i].hitBox[a].rect.startPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
 						colData[i].hitBox[a].rect.endPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
@@ -227,15 +227,15 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						// startPosがendPosよりも大きかった場合、座標を交換する
 						if (colData[i].hitBox[a].rect.startPos.x > colData[i].hitBox[a].rect.endPos.x)
 						{
-							b = colData[i].hitBox[a].rect.endPos.x;
+							oneTimePos = colData[i].hitBox[a].rect.endPos.x;
 							colData[i].hitBox[a].rect.endPos.x = colData[i].hitBox[a].rect.startPos.x;
-							colData[i].hitBox[a].rect.startPos.x = b;
+							colData[i].hitBox[a].rect.startPos.x = oneTimePos;
 						}
 						if (colData[i].hitBox[a].rect.startPos.y > colData[i].hitBox[a].rect.endPos.y)
 						{
-							b = colData[i].hitBox[a].rect.endPos.y;
+							oneTimePos = colData[i].hitBox[a].rect.endPos.y;
 							colData[i].hitBox[a].rect.endPos.y = colData[i].hitBox[a].rect.startPos.y;
-							colData[i].hitBox[a].rect.startPos.y = b;
+							colData[i].hitBox[a].rect.startPos.y = oneTimePos;
 						}
 
 						// 現在のプレイヤーのpos
