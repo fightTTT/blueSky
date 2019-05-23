@@ -4,8 +4,6 @@
 #include "DamageState.h"
 #include "Collision.h"
 
-#define SHOT_INV (30)
-
 LongAttackState::LongAttackState()
 {
 }
@@ -27,7 +25,7 @@ void LongAttackState::Update(AICharacter * character)
 		character->ChangeState(MoveState::GetInstance());
 	}
 
-	if (shotCount == SHOT_INV)
+	if (shotCount == character->GetShotCreateCount())
 	{
 		character->SetLongAttackFlag(true);
 	}

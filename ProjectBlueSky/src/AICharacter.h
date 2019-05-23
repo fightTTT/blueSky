@@ -28,6 +28,8 @@ public:
 
 	void ChangeState(AIState* s);
 
+	void CheckHitFlag();
+
 	std::string GetSPAttackName(int idx);
 
 	// 遠距離攻撃フラグセット
@@ -36,12 +38,15 @@ public:
 	// 方向変更フラグセット
 	void SetDirChange(bool flag) { dirChangeFlag = flag; }
 
+	// ジャンプのタイプ
 	void SetJumpType(JUMP_TYPE type) { jumpType = type; }
 	JUMP_TYPE GetJumpType() { return jumpType; }
 
+	// 当たり判定情報を取得
 	HitData GetHitData() const;
 
-	void CheckHitFlag();
+	// 弾発射までのカウントを取得
+	const int GetShotCreateCount() const { return shotCreateCount; }
 
 private:
 

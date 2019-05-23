@@ -94,11 +94,12 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		auto deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
 		objList->erase(deth_itr, objList->end());
 
-
 		for (int i = 0; i < 2; i++)
 		{
 			afterPos[i] = charaObj[i].charaObj->GetPos();
 		}
+
+		ExtrusionUpdata();
 
 		// shot‚Ìî•ñ‚ðƒZƒbƒg
 		sharedObj shotObj;
@@ -354,8 +355,6 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				data->AddPos(bgPos - bgPosOld);
 			}
 		}
-
-		ExtrusionUpdata();
 	}
 	
 

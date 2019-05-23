@@ -130,19 +130,19 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		animAttributeTbl["ソニックブーム"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ソニックブーム"][2] = ANIM_ATTRIBUTE_NON;
 
-		AddAnim("ランキャク", 0, 0, 10, 4, false, 0, 0);
-		spAttackAnimName[1] = "ランキャク";
-		spAttackAnimFileName[1] = "cutterKick";
-		animAttributeTbl["ランキャク"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["ランキャク"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["ランキャク"][2] = ANIM_ATTRIBUTE_NON;
-
 		AddAnim("ミサイルアロー", 0, 0, 6, 4, false, 0, 0);
-		spAttackAnimName[2] = "ミサイルアロー";
-		spAttackAnimFileName[2] = "missile";
+		spAttackAnimName[1] = "ミサイルアロー";
+		spAttackAnimFileName[1] = "missile";
 		animAttributeTbl["ミサイルアロー"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["ミサイルアロー"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ミサイルアロー"][2] = ANIM_ATTRIBUTE_NON;
+
+		AddAnim("ランキャク", 0, 0, 10, 4, false, 0, 0);
+		spAttackAnimName[2] = "ランキャク";
+		spAttackAnimFileName[2] = "cutterKick";
+		animAttributeTbl["ランキャク"][0] = ANIM_ATTRIBUTE_STAND;
+		animAttributeTbl["ランキャク"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
+		animAttributeTbl["ランキャク"][2] = ANIM_ATTRIBUTE_NON;
 
 		shotCreateCount = 30;
 
@@ -184,19 +184,19 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		animAttributeTbl["サイコカッター"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["サイコカッター"][2] = ANIM_ATTRIBUTE_NON;
 
-		AddAnim("ワープ", 0, 0, 11, 4, false, 0, 0);
-		spAttackAnimName[1] = "ワープ";
-		spAttackAnimFileName[1] = "warp";
-		animAttributeTbl["ワープ"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["ワープ"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["ワープ"][2] = ANIM_ATTRIBUTE_NON;
-
 		AddAnim("かかと落とし", 0, 0, 14, 4, false, 0, 0);
-		spAttackAnimName[2] = "かかと落とし";
-		spAttackAnimFileName[2] = "heeldrop";
+		spAttackAnimName[1] = "かかと落とし";
+		spAttackAnimFileName[1] = "heeldrop";
 		animAttributeTbl["かかと落とし"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["かかと落とし"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["かかと落とし"][2] = ANIM_ATTRIBUTE_NON;
+
+		AddAnim("ワープ", 0, 0, 11, 4, false, 0, 0);
+		spAttackAnimName[2] = "ワープ";
+		spAttackAnimFileName[2] = "warp";
+		animAttributeTbl["ワープ"][0] = ANIM_ATTRIBUTE_STAND;
+		animAttributeTbl["ワープ"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
+		animAttributeTbl["ワープ"][2] = ANIM_ATTRIBUTE_NON;
 
 		shotCreateCount = 30;
 
