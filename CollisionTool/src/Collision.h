@@ -19,7 +19,6 @@ struct HitBox
 	bool rectFlag;	// “–‚½‚è”»’è‚ª‹éŒ`‚©‰~‚©
 
 	Rect rect;
-	Circle circle;
 };
 
 struct ColInfo

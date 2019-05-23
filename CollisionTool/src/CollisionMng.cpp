@@ -27,34 +27,14 @@ bool CollisionMng::ColLoad(std::string pasName, std::string animName)
 		return false;
 	}
 
-	/*auto tmp = sizeof(header);
-
-	 
-
-	std::vector<int> vec;
-	vec.resize(14);*/
-
 	
-
-	//auto aaa = sizeof(int) + sizeof(int)*header.hitBoxNum.size();
-
-	//fread(&header, (sizeof(int) + sizeof(int)*header.hitBoxNum.size()), 1, file);
 
 	fread(&header.animNum, sizeof(int), 1, file);
 
 	fread(&header.hitBoxNum[0], sizeof(int)*header.hitBoxNum.size(), 1, file);
 
 
-	//for (int i = 0; i < data.size(); ++i)
-	//{
-	//	//data[i].hitBox.clear();
-	//	//auto b = header.hitBoxNum[i];
 
-	//	data[i].hitBox.resize(header.hitBoxNum[i]);
-	//	// read
-	//	fread(&data[i].hitBox, sizeof(data[i].hitBox),data[i].hitBox.size(), file);
-	//	
-	//}
 
 	for (int i = 0; i < data.size(); ++i)
 	{
@@ -62,7 +42,7 @@ bool CollisionMng::ColLoad(std::string pasName, std::string animName)
 
 		for (int a = 0; a < data[i].hitBox.size(); a++)
 		{
-			
+		
 
 			fread(&oneTimeData, sizeof(oneTimeData), 1, file);
 
@@ -70,13 +50,7 @@ bool CollisionMng::ColLoad(std::string pasName, std::string animName)
 		}
 	}
 
-	/*fread(&header.hitBoxNum[frameNum], sizeof(header.hitBoxNum[frameNum]), 1, file);
 
-	data[frameNum].hitBox.clear();
-
-	data[frameNum].hitBox.resize(header.hitBoxNum[frameNum]);
-
-	fread(&data[frameNum].hitBox, sizeof(data[frameNum].hitBox), data[frameNum].hitBox.size(), file);*/
 	
 
 	fclose(file);
@@ -243,8 +217,8 @@ void CollisionMng::Update(void)
 	{
 		colData.rect.endPos = mousePos;
 
-		colData.rect.startPos -= VECTOR2(IMAGE_OFFSET_X, IMAGE_OFFSET_Y);
-		colData.rect.endPos -= VECTOR2(IMAGE_OFFSET_X, IMAGE_OFFSET_Y);
+		colData.rect.startPos -= VECTOR2(IMAGE_OFFSET_X+ (256 / 2), IMAGE_OFFSET_Y + 256);
+		colData.rect.endPos -= VECTOR2(IMAGE_OFFSET_X + (256 / 2), IMAGE_OFFSET_Y + 256);
 
 		data[frameNum].hitBox.push_back(colData);
 	}
@@ -328,11 +302,23 @@ void CollisionMng::Update(void)
 
 void CollisionMng::Draw(void)
 {
-	VECTOR2 offset = VECTOR2(IMAGE_OFFSET_X, IMAGE_OFFSET_Y);
+	VECTOR2 offset = VECTOR2(IMAGE_OFFSET_X + (256 / 2), IMAGE_OFFSET_Y + 256);
 
-	int colColor = (colData.type == COLTYPE_ATTACK ? 0xff0000 : (colData.type == COLTYPE_HIT ? 0x0000ff:0x00ff00));
+	int colColor = (colData.type == COLTYPE_ATTACK ? 0xff0000 : (colData.type == COLTYPE_HIT ? 0x87CEEB:0x00ff00));
 
 	auto mousePos = inputData.MousePos();
+
+	if (inputFlag)
+	{
+		if (animFram[frameNum] != -1)
+		{
+			DrawGraph(IMAGE_OFFSET_X, IMAGE_OFFSET_Y, animFram[frameNum], true);
+		}
+	}
+	else
+	{
+		DrawString(200, IMAGE_OFFSET_Y, "画像ファイルをドラッグ&ドロップしてください", 0xffffff);
+	}
 	
 	// 現在の
 	if (!(colData.rect.startPos.x == -1 && colData.rect.startPos.y == -1))
@@ -349,24 +335,14 @@ void CollisionMng::Draw(void)
 				break;
 			}
 
-			int tmpColor = ((*col).type == COLTYPE_ATTACK ? 0xff0000 : ((*col).type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
+			int tmpColor = ((*col).type == COLTYPE_ATTACK ? 0xff0000 : ((*col).type == COLTYPE_HIT ? 0x87CEEB : 0x00ff00));
 
 			DrawBox((*col).rect.startPos.x + offset.x, (*col).rect.startPos.y + offset.y, (*col).rect.endPos.x + offset.x, (*col).rect.endPos.y + offset.y, tmpColor, false);
 		}
 	}
 	
 
-	if (inputFlag)
-	{
-		if (animFram[frameNum] != -1)
-		{
-			DrawGraph(IMAGE_OFFSET_X, IMAGE_OFFSET_Y, animFram[frameNum], true);
-		}
-	}
-	else
-	{
-		DrawString(200, IMAGE_OFFSET_Y, "画像ファイルをドラッグ&ドロップしてください", 0xffffff);
-	}
+	
 }
 
 CollisionMng::CollisionMng()
@@ -437,9 +413,6 @@ void CollisionMng::Init(void)
 	data.clear();
 	colData.rect.startPos = { -1,-1 };
 	colData.rect.endPos   = { -1,-1 };
-	colData.rectFlag = false;
-	colData.circle.center = { -1,-1 };
-	colData.circle.r = 1;
 	inputFlag = false;
 	loadFlag = false;
 	saveFlag = false;
