@@ -202,7 +202,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[1][DIR_LEFT].resize(5);
 		spAttackCommand[1][DIR_LEFT] = { SP_COM_RIGHT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_LEFT, SP_COM_PUNCH };
 
-		AddAnim("ランキャク", 0, 0, 10, 4, false, 0, -16);
+		AddAnim("ランキャク", 0, 0, 10, 3, false, 0, -16);
 		spAttackAnimName[2] = "ランキャク";
 		spAttackAnimFileName[2] = "cutterKick";
 		animAttributeTbl["ランキャク"][0] = ANIM_ATTRIBUTE_AIR;

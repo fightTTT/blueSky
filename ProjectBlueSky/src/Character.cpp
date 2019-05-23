@@ -699,8 +699,16 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		{
 			if (animName == "ランキャク")
 			{
-				pos.x += 2;
-				pos.y += 3;
+				if (dir == DIR_RIGHT)
+				{
+					pos.x++;
+				}
+				else
+				{
+					pos.x--;
+				}
+
+				pos.y--;
 
 				if (animEndFlag)
 				{
@@ -815,7 +823,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					{
 						if (jumpInterval == 0)
 						{
-							if (ctl.GetPadDataTrg(padID, THUMB_L_UP))		// ジャンプ
+							if (ctl.GetPadDataTrg(padID, THUMB_L_UP))
 							{
 								jumpInterval++;
 							}
