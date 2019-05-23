@@ -405,10 +405,15 @@ bool Character::CheckCommand(int skillNum)
 		while (itr != comList.end())
 		{
 			com = (*itr);
-			if ((com != SP_COM_CENTER)
-			 && (com != SP_COM_ACCUMULATE)
-			 && (com != SP_COM_PUNCH)
-			 && (com != SP_COM_KICK))
+			if ((com == SP_COM_CENTER)
+			 || (com == SP_COM_ACCUMULATE)
+			 || (com == SP_COM_PUNCH)
+			 || (com == SP_COM_KICK))
+			{
+				leftSideCom = com;
+				rightSideCom = com;
+			}
+			else
 			{
 				leftSideCom = (SP_COM)(com - 1);
 				if (leftSideCom == SP_COM_CENTER)
@@ -422,15 +427,10 @@ bool Character::CheckCommand(int skillNum)
 					rightSideCom = SP_COM_UP;
 				}
 			}
-			else
-			{
-				leftSideCom = com;
-				rightSideCom = com;
-			}
 
-			if (com			 != spAttackCommand[skillNum][dir][comNum]
-			 && leftSideCom	 != spAttackCommand[skillNum][dir][comNum]
-			 && rightSideCom != spAttackCommand[skillNum][dir][comNum])
+			if ((com			 != spAttackCommand[skillNum][dir][comNum])
+			 && (leftSideCom	 != spAttackCommand[skillNum][dir][comNum])
+			 && (rightSideCom	 != spAttackCommand[skillNum][dir][comNum]))
 			{
 				break;
 			}
@@ -461,7 +461,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	CommandUpDate(ctl);
 
-	if ((knockBackFlag) || (GetAnim() == "ダメージ_立ち"))
+	if ((knockBackFlag) || (animName == "ダメージ_立ち"))
 	{
 		if (dir == DIR_RIGHT)
 		{
@@ -490,7 +490,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			}
 		}
 	}
-	else if (GetAnim() == "ダメージ_ダウン")
+	else if (animName == "ダメージ_ダウン")
 	{
 		fallSpeed.y++;
 		pos.y += fallSpeed.y;
@@ -522,7 +522,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("起き上がり");
 		}
 	}
-	else if (GetAnim() == "起き上がり")
+	else if (animName == "起き上がり")
 	{
 		if (animEndFlag)
 		{
@@ -548,7 +548,26 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("待機");
 		}
 	}
-	else if (GetAnim() == "旋風脚")
+	else if (animName == "ローリングアタック")
+	{
+		if (animCnt > 20)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 20;
+			}
+			else
+			{
+				pos.x -= 20;
+			}
+		}
+
+		if (animCnt > 60)
+		{
+			SetAnim("待機");
+		}
+	}
+	else if (animName == "旋風脚")
 	{
 		if (dir == DIR_RIGHT)
 		{
@@ -564,12 +583,80 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("待機");
 		}
 	}
+	else if (animName == "カンフーキック")
+	{
+		if (animCnt < 4)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 6;
+			}
+			else
+			{
+				pos.x -= 6;
+			}
+		}
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
+	else if (animName == "ラッシュ")
+	{
+		if (animCnt > 40)
+		{
+			SetAnim("待機");
+		}
+	}
+	else if (animName == "ワープ")
+	{
+		if (animCnt == 31)
+		{
+			animStopFlag = true;
+		}
+
+		if (animStopFlag)
+		{
+			pos.y = (ssize.y * 2);
+
+			if (dir == DIR_RIGHT)
+			{
+				if (pos.x > ((ssize.x * 3) / 5))
+				{
+					dir = tmpDir;
+					animStopFlag = false;
+				}
+				else
+				{
+					pos.x += 30;
+				}
+			}
+			else
+			{
+				if (pos.x < ((ssize.x * 2) / 5))
+				{
+					dir = tmpDir;
+					animStopFlag = false;
+				}
+				else
+				{
+					pos.x -= 30;
+				}
+			}
+		}
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
 	else
 	{
 		// キャラクター操作
 		if (animAttribute[0] == ANIM_ATTRIBUTE_AIR)
 		{
-			if (animTable[GetAnim()][ANIM_TBL_LOOP])
+			if (animTable[animName][ANIM_TBL_LOOP])
 			{
 				if (ctl.GetPadDataTrg(padID, BUTTON_A))
 				{
@@ -652,7 +739,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		}
 		else
 		{
-			if ((animTable[GetAnim()][ANIM_TBL_LOOP]) || animEndFlag)
+			if ((animTable[animName][ANIM_TBL_LOOP]) || animEndFlag)
 			{
 				dir = tmpDir;
 
@@ -843,7 +930,7 @@ void Character::CheckHitFlag(void)
 		{
 			dir = tmpDir;
 
-			if (GetAnim() != "ダメージ_立ち")
+			if (animName != "ダメージ_立ち")
 			{
 				AddPlayerHP(-10);
 				WaitTimer(65);

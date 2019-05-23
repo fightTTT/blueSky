@@ -46,6 +46,11 @@ void MoveState::Update(AICharacter * character)
 	int rand = 0;
 	notAttackCount++;
 
+	if (character->GetAnim() == "ƒ[ƒv")
+	{
+
+	}
+
 	if (guardHitCount >= 50)
 	{
 		character->SetJumpType(JUMP_TYPE_FRONT);
@@ -148,6 +153,17 @@ void MoveState::Update(AICharacter * character)
 			character->ChangeState(LongAttackState::GetInstance());
 			notAttackCount = 0;
 			return;
+		}
+		else if (rand >= 1)
+		{
+			rand = GetRand(100);
+			if (rand == 0)
+			{
+				character->SetAnim(character->GetSPAttackName(2));
+				character->ChangeState(AttackState::GetInstance());
+				notAttackCount = 0;
+				return;
+			}
 		}
 	}
 

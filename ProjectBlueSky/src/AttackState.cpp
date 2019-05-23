@@ -4,12 +4,14 @@
 #include "Collision.h"
 #include "DamageState.h"
 #include "JumpState.h"
+#include "SceneMng.h"
 
 #include "DxLib.h"
 
 AttackState::AttackState()
 {
 	attackCount = 0;
+	warpFlag = false;
 }
 
 AttackState::~AttackState()
@@ -18,7 +20,16 @@ AttackState::~AttackState()
 
 void AttackState::Init(AICharacter * character)
 {
-	character->SetDirChange(false);
+	if (character->GetAnim() == "ワープ")
+	{
+		warpFlag = true;
+		character->SetDirChange(false);
+		return;
+	}
+	else
+	{
+		warpFlag = false;
+	}
 
 	if (attackCount >= static_cast<unsigned int>(GetRand(30) + 4))
 	{
@@ -66,6 +77,8 @@ void AttackState::Init(AICharacter * character)
 	{
 		character->SetAnim("キック_大_しゃがみ");
 	}
+
+	character->SetDirChange(false);
 }
 
 void AttackState::Update(AICharacter * character)
@@ -73,6 +86,52 @@ void AttackState::Update(AICharacter * character)
 	if (character->GetAnimEndFlag())
 	{
 		character->SetDirChange(true);
+		character->SetAnim("待機");
 		character->ChangeState(MoveState::GetInstance());
+		return;
 	}
+
+	auto ssize = lpSceneMng.GetScreenSize();
+	auto pos = character->GetPos();
+	auto dir = character->GetDir();
+
+	if (warpFlag)
+	{
+		if (character->GetFrame() == 6)
+		{
+			character->SetAnimStopFlag(true);
+		}
+
+		if (character->GetAnimStopFlag())
+		{
+			pos.y = (ssize.y * 2);
+
+			if (dir == DIR_RIGHT)
+			{
+				if (pos.x > ((ssize.x * 3) / 5))
+				{
+					dir = character->GetTmpDir();
+					character->SetAnimStopFlag(false);
+				}
+				else
+				{
+					pos.x += 30;
+				}
+			}
+			else
+			{
+				if (pos.x < ((ssize.x * 2) / 5))
+				{
+					dir = character->GetTmpDir();
+					character->SetAnimStopFlag(false);
+				}
+				else
+				{
+					pos.x -= 30;
+				}
+			}
+		}
+	}
+
+	character->SetPos(pos);
 }

@@ -238,11 +238,9 @@ const VECTOR2 Obj::GetAnimOffSet(std::string animName)
 	return VECTOR2(animTable[animName][ANIM_TBL_OFFSET_X], animTable[animName][ANIM_TBL_OFFSET_Y]);
 }
 
-int Obj::GetCount(std::string animName)
+int Obj::GetFrame()
 {
-	int a = animCnt / animTable[animName][ANIM_TBL_INV];
-
-	return a % animTable[animName][ANIM_TBL_FRAME];
+	return animCnt / animTable[animName][ANIM_TBL_INV] % animTable[animName][ANIM_TBL_FRAME];
 }
 
 void Obj::CheckHitFlag(void)

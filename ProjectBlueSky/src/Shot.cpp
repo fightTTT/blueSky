@@ -17,7 +17,7 @@ Shot::Shot(VECTOR2 pos, VECTOR2 offset, DIR dir, PAD_ID id) : Obj(offset)
 	switch (lpSceneMng.GetCharID(padID))
 	{
 	case 0:
-		Init("image/ショット系/kari.png", VECTOR2(128, 128), VECTOR2(1, 1), pos, dir != DIR_RIGHT);
+		Init("image/ショット系/hado.png", VECTOR2(128, 128), VECTOR2(4, 2), pos, dir != DIR_RIGHT);
 		hitBoxSize = VECTOR2(100, 100);
 		break;
 	case 1:
