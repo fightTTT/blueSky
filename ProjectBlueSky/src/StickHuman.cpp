@@ -183,36 +183,36 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["ソニックブーム"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["ソニックブーム"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ソニックブーム"][2] = ANIM_ATTRIBUTE_SHOT;
-		shotCreateCnt = 28;
+		shotCreateCnt = 22;
 
 		spAttackCommand[0][DIR_RIGHT].resize(4);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_PUNCH };
 		spAttackCommand[0][DIR_LEFT].resize(4);
 		spAttackCommand[0][DIR_LEFT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_PUNCH };
 
-		AddAnim("ランキャク", 0, 0, 10, 4, false, 0, 0);
-		spAttackAnimName[1] = "ランキャク";
-		spAttackAnimFileName[1] = "cutterKick";
-		animAttributeTbl["ランキャク"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["ランキャク"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["ランキャク"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
-
-		spAttackCommand[1][DIR_RIGHT].resize(4);
-		spAttackCommand[1][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_KICK };
-		spAttackCommand[1][DIR_LEFT].resize(4);
-		spAttackCommand[1][DIR_LEFT] = { SP_COM_LEFT, SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_KICK };
-
 		AddAnim("ミサイルアロー", 0, 0, 6, 4, false, 0, 0);
-		spAttackAnimName[2] = "ミサイルアロー";
-		spAttackAnimFileName[2] = "missile";
+		spAttackAnimName[1] = "ミサイルアロー";
+		spAttackAnimFileName[1] = "missile";
 		animAttributeTbl["ミサイルアロー"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["ミサイルアロー"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ミサイルアロー"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackCommand[2][DIR_RIGHT].resize(5);
-		spAttackCommand[2][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_RIGHT, SP_COM_PUNCH };
-		spAttackCommand[2][DIR_LEFT].resize(5);
-		spAttackCommand[2][DIR_LEFT] = { SP_COM_RIGHT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_LEFT, SP_COM_PUNCH };
+		spAttackCommand[1][DIR_RIGHT].resize(5);
+		spAttackCommand[1][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_RIGHT, SP_COM_PUNCH };
+		spAttackCommand[1][DIR_LEFT].resize(5);
+		spAttackCommand[1][DIR_LEFT] = { SP_COM_RIGHT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_LEFT, SP_COM_PUNCH };
+
+		AddAnim("ランキャク", 0, 0, 10, 4, false, 0, 0);
+		spAttackAnimName[2] = "ランキャク";
+		spAttackAnimFileName[2] = "cutterKick";
+		animAttributeTbl["ランキャク"][0] = ANIM_ATTRIBUTE_STAND;
+		animAttributeTbl["ランキャク"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
+		animAttributeTbl["ランキャク"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
+
+		spAttackCommand[2][DIR_RIGHT].resize(4);
+		spAttackCommand[2][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_KICK };
+		spAttackCommand[2][DIR_LEFT].resize(4);
+		spAttackCommand[2][DIR_LEFT] = { SP_COM_LEFT, SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_KICK };
 		break;
 
 	case 5:
@@ -223,7 +223,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["岩投げ"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["岩投げ"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["岩投げ"][2] = ANIM_ATTRIBUTE_SHOT;
-		shotCreateCnt = 30;
+		shotCreateCnt = 45;
 
 		spAttackCommand[0][DIR_RIGHT].resize(3);
 		spAttackCommand[0][DIR_RIGHT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
@@ -270,30 +270,30 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[0][DIR_LEFT].resize(3);
 		spAttackCommand[0][DIR_LEFT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
 
-		AddAnim("ワープ", 0, 0, 11, 4, false, 0, 0);
-		spAttackAnimName[1] = "ワープ";
-		spAttackAnimFileName[1] = "warp";
-		animAttributeTbl["ワープ"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["ワープ"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["ワープ"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
-
-		spAttackCommand[1][DIR_RIGHT].resize(7);
-		spAttackCommand[1][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_KICK };
-		spAttackCommand[1][DIR_LEFT].resize(7);
-		spAttackCommand[1][DIR_LEFT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
-
 		AddAnim("かかと落とし", 0, 0, 14, 4, false, 0, 0);
-		spAttackAnimName[2] = "かかと落とし";
-		spAttackAnimFileName[2] = "heeldrop";
+		spAttackAnimName[1] = "かかと落とし";
+		spAttackAnimFileName[1] = "heeldrop";
 		animAttributeTbl["かかと落とし"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["かかと落とし"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["かかと落とし"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackCommand[2][DIR_RIGHT].resize(4);
-		spAttackCommand[2][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_RIGHT_DOWN, SP_COM_DOWN, SP_COM_KICK };
-		spAttackCommand[2][DIR_LEFT].resize(4);
-		spAttackCommand[2][DIR_LEFT] = { SP_COM_LEFT, SP_COM_LEFT_DOWN, SP_COM_DOWN, SP_COM_KICK };
+		spAttackCommand[1][DIR_RIGHT].resize(4);
+		spAttackCommand[1][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_RIGHT_DOWN, SP_COM_DOWN, SP_COM_KICK };
+		spAttackCommand[1][DIR_LEFT].resize(4);
+		spAttackCommand[1][DIR_LEFT] = { SP_COM_LEFT, SP_COM_LEFT_DOWN, SP_COM_DOWN, SP_COM_KICK };
 		break;
+
+		AddAnim("ワープ", 0, 0, 11, 4, false, 0, 0);
+		spAttackAnimName[2] = "ワープ";
+		spAttackAnimFileName[2] = "warp";
+		animAttributeTbl["ワープ"][0] = ANIM_ATTRIBUTE_STAND;
+		animAttributeTbl["ワープ"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
+		animAttributeTbl["ワープ"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
+
+		spAttackCommand[2][DIR_RIGHT].resize(7);
+		spAttackCommand[2][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_KICK };
+		spAttackCommand[2][DIR_LEFT].resize(7);
+		spAttackCommand[2][DIR_LEFT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
 
 	case 7:
 		characterName = "棒人間_水色";

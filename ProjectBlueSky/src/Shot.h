@@ -25,5 +25,7 @@ private:
 	PAD_ID padID;				// 発射したキャラクターのPADID
 
 	VECTOR2 hitBoxSize;			// 当たり判定の矩形のｻｲｽﾞ
+
+	int interval;
 };
 
