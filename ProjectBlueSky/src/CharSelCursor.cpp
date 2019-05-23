@@ -141,7 +141,7 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			lpSceneMng.SetCharID(padID, charID);
 
 			/* ·¬×‚ðŒˆ’è */
-			if (ctl.GetPadDataTrg(padID, BUTTON_A))
+			if (ctl.GetPadDataTrg(padID, BUTTON_A) && !lpSceneMng.GetSceneBackFlag())
 			{
 				decidFlag = true;
 				lpSceneMng.SetDecidFlag(padID, decidFlag);
