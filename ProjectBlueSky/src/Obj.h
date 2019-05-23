@@ -133,6 +133,7 @@ public:
 
 	// アニメーションを止めるフラグをセット
 	void SetAnimStopFlag(bool flag) { animStopFlag = flag; }
+	bool GetAnimStopFlag() const { return animStopFlag; }
 
 	// アニメーションが終了しているか
 	bool GetAnimEndFlag() const { return animEndFlag; }
@@ -144,7 +145,8 @@ public:
 
 	const VECTOR2 GetAnimOffSet(std::string animName);
 
-	int GetCount(std::string animName);
+	// 現在のアニメーションのフレームを取得
+	int GetFrame();
 
 	// 当たり判定の情報のﾁｪｯｸと、それに伴い追加で行う処理
 	virtual void CheckHitFlag(void);

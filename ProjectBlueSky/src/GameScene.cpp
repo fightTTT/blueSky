@@ -198,7 +198,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				// 当たり判定の情報を取得
 				for (int i = 0; i < 2; i++)
 				{
-					id[i] = charaObj[i].charaObj->GetCount(charaObj[i].charaObj->GetAnim());
+					id[i] = charaObj[i].charaObj->GetFrame();
 					if (id[i] < charaObj[i].charaObj->GetAnimFrame(charaObj[i].charaObj->GetAnim()))
 					{
 						colData[i] = lpColMng.GetCollisionData("棒人間", charaObj[i].charaObj->GetAnim(), id[i]);
@@ -704,6 +704,8 @@ bool GameScene::GameDraw(void)
 	}
 
 	DrawFormatString(0, 300, 0xff0000, "chara 0 : winCount %d\nchara 1 : winCount %d\n", charaObj[0].winCount, charaObj[1].winCount);
+
+	DrawGraph(500, 40, IMAGE_ID("image/ゲームシーン用/star1.png")[0], true);
 
 	return true;
 }
