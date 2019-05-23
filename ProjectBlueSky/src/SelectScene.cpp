@@ -8,6 +8,7 @@
 #include "DxLib.h"
 #include "CharSelCursor.h"
 #include "ImageMng.h"
+#include "TitleScene.h"
 
 #define BOX_SIZE_X (100)
 #define BOX_SIZE_Y (100)
@@ -77,7 +78,13 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 		}
 	}
 
-	SelectDraw();
+	/* ﾀｲﾄﾙｼｰﾝへ移動 */
+	if (lpSceneMng.GetTitleChangeFlag())
+	{
+		return std::make_unique<TitleScene>();
+	}
+
+	SelectDraw(controller);
 	return std::move(own);
 }
 
@@ -113,17 +120,16 @@ int SelectScene::Init()
 					"チャ" };
 
 	sceneChangeFlag = false;
-
 	return 0;
 }
 
-void SelectScene::SelectDraw()
+void SelectScene::SelectDraw(const GameCtrl & controller)
 {
 	DrawGraph(0, 0, IMAGE_ID("image/キャラセレ用/charSelBG.png")[0], true);		// haikei
 
 	DrawGraph((scSize.x / 2) - (BOX_SIZE_X * 2), (scSize.y * 3 / 5), IMAGE_ID("image/キャラセレ用/charSel.png")[0], true);		// ｷｬﾗ一覧を描画
 			
-	// PL1のｷｬﾗ名
+	/* PL1のｷｬﾗ名 */
 	const int id[2] = { lpSceneMng.GetCharID(PAD_1) , lpSceneMng.GetCharID(PAD_2) };
 	DrawGraph(150, (scSize.y / 4), IMAGE_ID("image/キャラセレ用/1p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(1P)の描画
 	if (id[0] != -1)
@@ -136,6 +142,12 @@ void SelectScene::SelectDraw()
 		DrawGraph((scSize.x-150), (scSize.y / 4), IMAGE_ID("image/キャラセレ用/2p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(2P)の描画
 		DrawTurnGraph((scSize.x - 400), (scSize.y - 400), IMAGE_DIV_ID("image/キャラセレ用/charIcon.png", VECTOR2(400, 400), VECTOR2(CHAR_CNT_MAX, 1))[id[1]], true);		// ｷｬﾗのｱｲｺﾝを描画
 		DrawFormatString(1200, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[1]]);
+	}
+
+	/* 確認ｳｨﾝﾄﾞｳ */
+	if (lpSceneMng.GetSceneBackFlag())
+	{
+		DrawGraph((scSize.x / 2) - 400, (scSize.y / 5), IMAGE_ID("image/キャラセレ用/backWindow.png")[0], true);		// 確認ｳｨﾝﾄﾞｳ
 	}
 
 	for (auto &data : (*objList))
@@ -190,4 +202,5 @@ void SelectScene::SelectDraw()
 	{
 		// 何もしない
 	}
+
 }
