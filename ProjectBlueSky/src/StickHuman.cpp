@@ -281,9 +281,8 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_RIGHT_DOWN, SP_COM_DOWN, SP_COM_KICK };
 		spAttackCommand[1][DIR_LEFT].resize(4);
 		spAttackCommand[1][DIR_LEFT] = { SP_COM_LEFT, SP_COM_LEFT_DOWN, SP_COM_DOWN, SP_COM_KICK };
-		break;
 
-		AddAnim("ワープ", 0, 0, 11, 4, false, 0, 0);
+		AddAnim("ワープ", 0, 0, 12, 5, false, 0, 0);
 		spAttackAnimName[2] = "ワープ";
 		spAttackAnimFileName[2] = "warp";
 		animAttributeTbl["ワープ"][0] = ANIM_ATTRIBUTE_STAND;
@@ -294,6 +293,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_KICK };
 		spAttackCommand[2][DIR_LEFT].resize(7);
 		spAttackCommand[2][DIR_LEFT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
+		break;
 
 	case 7:
 		characterName = "棒人間_水色";
