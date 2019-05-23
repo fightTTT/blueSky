@@ -611,7 +611,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("待機");
 		}
 	}
-	else if (animName == "ミサイルアロー")
+	else if ((animName == "ミサイルアロー") || (animName == "タックル"))
 	{
 		if (animStopFlag)
 		{
@@ -709,6 +709,31 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 				}
 
 				pos.y--;
+
+				if (animEndFlag)
+				{
+					SetAnim("待機");
+				}
+			}
+			else if ((animName == "地面割") || (animName == "かかと落とし"))		// 地面割はｴﾌｪｸﾄが付いた状態の画像を用意してそれに当たり判定を付ける必要あり
+			{
+				if (animCnt < 30)
+				{
+					if (dir == DIR_RIGHT)
+					{
+						pos.x++;
+					}
+					else
+					{
+						pos.x--;
+					}
+
+					pos.y -= 8;
+				}
+				else
+				{
+					pos.y += 20;
+				}
 
 				if (animEndFlag)
 				{

@@ -129,10 +129,10 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["カンフーキック"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["カンフーキック"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
-		spAttackCommand[2][DIR_RIGHT].resize(4);
-		spAttackCommand[2][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_KICK };
-		spAttackCommand[2][DIR_LEFT].resize(4);
-		spAttackCommand[2][DIR_LEFT] = { SP_COM_LEFT, SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_KICK };
+		spAttackCommand[2][DIR_RIGHT].resize(5);
+		spAttackCommand[2][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_UP, SP_COM_KICK };
+		spAttackCommand[2][DIR_LEFT].resize(5);
+		spAttackCommand[2][DIR_LEFT] = { SP_COM_DOWN, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_UP, SP_COM_KICK };
 		break;
 
 	case 3:
@@ -233,7 +233,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		AddAnim("地面割", 0, 0, 15, 4, false, 0, 0);
 		spAttackAnimName[1] = "地面割";
 		spAttackAnimFileName[1] = "split";
-		animAttributeTbl["地面割"][0] = ANIM_ATTRIBUTE_STAND;
+		animAttributeTbl["地面割"][0] = ANIM_ATTRIBUTE_AIR;
 		animAttributeTbl["地面割"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["地面割"][2] = ANIM_ATTRIBUTE_NON;
 
@@ -273,7 +273,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		AddAnim("かかと落とし", 0, 0, 14, 4, false, 0, 0);
 		spAttackAnimName[1] = "かかと落とし";
 		spAttackAnimFileName[1] = "heeldrop";
-		animAttributeTbl["かかと落とし"][0] = ANIM_ATTRIBUTE_STAND;
+		animAttributeTbl["かかと落とし"][0] = ANIM_ATTRIBUTE_AIR;
 		animAttributeTbl["かかと落とし"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["かかと落とし"][2] = ANIM_ATTRIBUTE_NON;
 
