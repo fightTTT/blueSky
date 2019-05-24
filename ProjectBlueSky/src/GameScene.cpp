@@ -713,7 +713,8 @@ bool GameScene::GameDraw(void)
 
 				colColor = (colData[charNum].hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData[charNum].hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
 
-				DrawBox(colData[charNum].hitBox[i].rect.startPos.x,colData[charNum].hitBox[i].rect.startPos.y,colData[charNum].hitBox[i].rect.endPos.x,colData[charNum].hitBox[i].rect.endPos.y, colColor, false);
+				DrawBox(charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.startPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.startPos.y,
+						charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.endPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.endPos.y, colColor, false);
 			}
 		}
 	}
