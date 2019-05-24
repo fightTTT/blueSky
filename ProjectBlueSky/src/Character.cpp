@@ -168,11 +168,11 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	animAttributeTbl["ガード_しゃがみ"][2] = ANIM_ATTRIBUTE_NON;
 
 	animAttributeTbl["ダメージ_立ち"][0] = ANIM_ATTRIBUTE_STAND;
-	animAttributeTbl["ダメージ_立ち"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["ダメージ_立ち"][1] = ANIM_ATTRIBUTE_DAMAGE;
 	animAttributeTbl["ダメージ_立ち"][2] = ANIM_ATTRIBUTE_NON;
 
 	animAttributeTbl["ダメージ_ダウン"][0] = ANIM_ATTRIBUTE_AIR;
-	animAttributeTbl["ダメージ_ダウン"][1] = ANIM_ATTRIBUTE_MOVE;
+	animAttributeTbl["ダメージ_ダウン"][1] = ANIM_ATTRIBUTE_DAMAGE;
 	animAttributeTbl["ダメージ_ダウン"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
 	animAttributeTbl["起き上がり"][0] = ANIM_ATTRIBUTE_STAND;
@@ -564,7 +564,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			}
 		}
 
-		if (animCnt > 60)
+		if (animCnt > 60 || (enemyState.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_DAMAGE))
 		{
 			SetAnim("待機");
 		}
