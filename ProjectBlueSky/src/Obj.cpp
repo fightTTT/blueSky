@@ -246,7 +246,7 @@ int Obj::GetFrame()
 
 		if (animCnt >= animCntMax)
 		{
-			animCnt = animCntMax - 1;
+			return (animCntMax - 1);
 		}
 	}
 
