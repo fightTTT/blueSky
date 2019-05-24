@@ -692,6 +692,26 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("待機");
 		}
 	}
+	else if (animName == "アクセル")
+	{
+		if (animCnt < 60)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 5;
+			}
+			else
+			{
+				pos.x -= 5;
+			}
+		}
+		
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
 	else
 	{
 		// キャラクター操作
@@ -1152,7 +1172,7 @@ void Character::Draw(void)
 		DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 
-	if (lpColMng.GetColFlag(animName))
+	/*if (lpColMng.GetColFlag(animName))
 	{
 		ColInfo colData = lpColMng.GetCollisionData("棒人間", animName, id);
 
@@ -1165,10 +1185,10 @@ void Character::Draw(void)
 
 			colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
 
-			DrawBox(drawOffset.x + animOffset.x +  pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, 
+			DrawBox(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, ]
 				drawOffset.x + animOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
 		}
-	}
+	}*/
 
 	int hpColor = 0;
 
