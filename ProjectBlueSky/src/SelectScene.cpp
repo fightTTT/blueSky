@@ -16,6 +16,8 @@
 SelectScene::SelectScene()
 {
 	Init();
+	lpSceneMng.SetDecidFlag(PAD_1, false);
+	lpSceneMng.SetDecidFlag(PAD_2, false);
 }
 
 SelectScene::~SelectScene()
@@ -155,6 +157,11 @@ void SelectScene::SelectDraw(const GameCtrl & controller)
 		(*data).Draw();
 	}
 
+	if (lpSceneMng.GetSceneBackFlag())
+	{
+		DrawGraph((scSize.x / 2) - 300, (scSize.y / 2) + 50, IMAGE_ID("image/キャラセレ用/yes.png")[0], true);		// はい
+		DrawGraph((scSize.x / 2) + 50, (scSize.y / 2) + 50, IMAGE_ID("image/キャラセレ用/no.png")[0], true);		// いいえ
+	}
 
 	if (lpSceneMng.GetMode() == MODE_1PLAYER)
 	{

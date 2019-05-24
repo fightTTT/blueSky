@@ -91,6 +91,16 @@ void SceneMng::SetTitleChangeFlag(bool titleChangeFlag)
 	this->titleChangeFlag = titleChangeFlag;
 }
 
+PAD_ID SceneMng::GetOpenBackWindowPadID(void)
+{
+	return openBackWindowPadID;
+}
+
+void SceneMng::SetOpenBackWindowPadID(PAD_ID openBackWindowPadID)
+{
+	this->openBackWindowPadID = openBackWindowPadID;
+}
+
 bool SceneMng::GetDecidFlag(PAD_ID padID)
 {
 	return decidFlag[static_cast<int>(padID)];
@@ -130,6 +140,7 @@ bool SceneMng::SysInit(void)
 	mode = MODE_1PLAYER;
 	sceneBackFlag = false;
 	titleChangeFlag = false;
+	openBackWindowPadID = PAD_1;
 
 	return true;
 }
