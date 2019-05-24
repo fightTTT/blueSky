@@ -1106,6 +1106,7 @@ void Character::CheckHitFlag(void)
 		if (hitData.hitFlag && (hitData.colType == COLTYPE_HIT))
 		{
 			dir = tmpDir;
+			animStopFlag = false;
 
 			if (animName != "É_ÉÅÅ[ÉW_óßÇø")
 			{
