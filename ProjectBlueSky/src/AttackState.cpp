@@ -11,7 +11,6 @@
 AttackState::AttackState()
 {
 	attackCount = 0;
-	warpFlag = false;
 }
 
 AttackState::~AttackState()
@@ -21,20 +20,11 @@ AttackState::~AttackState()
 void AttackState::Init(AICharacter * character)
 {
 	auto charaAnim = character->GetAnim();
-	if (charaAnim == "ワープ")
-	{
-		warpFlag = true;
-		character->SetDirChange(false);
-		return;
-	}
-	else
-	{
-		warpFlag = false;
-	}
 
 	// すでに攻撃アニメーションがセットされていた場合return
 	if (charaAnim != "前移動" && charaAnim != "後ろ移動" && charaAnim != "待機")
 	{
+		character->SetDirChange(false);
 		return;
 	}
 
@@ -101,8 +91,9 @@ void AttackState::Update(AICharacter * character)
 	auto ssize = lpSceneMng.GetScreenSize();
 	auto pos = character->GetPos();
 	auto dir = character->GetDir();
+	auto charaAnim = character->GetAnim();
 
-	if (warpFlag)
+	if (charaAnim == "ワープ")
 	{
 		if (character->GetFrame() == 6)
 		{
@@ -138,6 +129,65 @@ void AttackState::Update(AICharacter * character)
 				}
 			}
 		}
+	}
+	else if (charaAnim == "ローリングアタック")
+	{
+		if (character->GetAnimCount() > 20)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 20;
+			}
+			else
+			{
+				pos.x -= 20;
+			}
+		}
+
+		if (character->GetAnimCount() > 60)
+		{
+			character->SetDirChange(true);
+			character->SetAnim("待機");
+			character->ChangeState(MoveState::GetInstance());
+			return;
+		}
+	}
+	else if (charaAnim == "カンフーキック")
+	{
+		if (character->GetAnimCount() < 4)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 6;
+			}
+			else
+			{
+				pos.x -= 6;
+			}
+		}
+	}
+	else if (charaAnim == "ラッシュ")
+	{
+		if (character->GetAnimCount() > 40)
+		{
+			character->SetDirChange(true);
+			character->SetAnim("待機");
+			character->ChangeState(MoveState::GetInstance());
+			return;
+		}
+	}
+	else if (charaAnim == "ランキャク")
+	{
+		if (dir == DIR_RIGHT)
+		{
+			pos.x++;
+		}
+		else
+		{
+			pos.x--;
+		}
+
+		pos.y--;
 	}
 
 	character->SetPos(pos);

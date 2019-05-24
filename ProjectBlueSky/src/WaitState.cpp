@@ -43,7 +43,24 @@ void WaitState::Update(AICharacter * character)
 	{
 		if (distance > 10)
 		{
+			for (int i = 0; i < 3; ++i)
+			{
+				if (character->isSPLongAttack(character->GetSPAttackName(i)))
+				{
+					rand = GetRand(2);
+					if (rand == 0)
+					{
+						character->SetAnim(character->GetSPAttackName(i));
+						character->ChangeState(LongAttackState::GetInstance());
+						return;
+					}
+				}
+			}
+
+			// 何も選択されなかったらSHOTにセット
+			character->SetAnim(character->GetSPAttackName(0));
 			character->ChangeState(LongAttackState::GetInstance());
+			return;
 		}
 		else
 		{

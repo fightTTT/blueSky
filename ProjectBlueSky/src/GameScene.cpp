@@ -293,6 +293,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						}
 					}
 				}
+
+
+
 				for (int i = 0; i < 2; i++)
 				{
 					for (int a = 0; a < colData[i].hitBox.size(); a++)
