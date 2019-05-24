@@ -42,6 +42,7 @@ private:
 	//sharedObj sObj[2];			// キャラクターのObj変数保存
 	//OBJ_TYPE type[2];			// キャラクターのタイプ
 	CharacterObj charaObj[2];
+	ColInfo colData[2];			// 当たり判定の情報を格納する変数(2キャラ分)
 
 	bool hitStopFlag;			// ヒットストップ用のﾌﾗｸﾞ
 	bool gameEndFlag;			// ゲームの終了フラグ

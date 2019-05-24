@@ -21,6 +21,7 @@ private:
 	void Update(AICharacter* character);
 
 	int shotCount;		// 弾の発射カウント
+	int spEndCnt;		// 必殺技の終了カウント
 
 	LongAttackState(const LongAttackState&);
 	void operator=(const LongAttackState&) {}

@@ -190,7 +190,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 		// “–‚½‚è”»’èˆ—
 		{
-			ColInfo colData[2];			// “–‚½‚è”»’è‚Ìî•ñ‚ðŠi”[‚·‚é•Ï”(2ƒLƒƒƒ‰•ª)
+			
 
 			if (lpColMng.GetColFlag(charaObj[0].charaObj->GetAnim())
 				&& lpColMng.GetColFlag(charaObj[1].charaObj->GetAnim()))
@@ -293,6 +293,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						}
 					}
 				}
+
+
+
 				for (int i = 0; i < 2; i++)
 				{
 					for (int a = 0; a < colData[i].hitBox.size(); a++)
@@ -695,6 +698,24 @@ bool GameScene::GameDraw(void)
 	for (auto &data : (*objList))
 	{
 		(*data).Draw();
+	}
+	
+	std::string animName[2];
+
+	for (int charNum = 0; charNum < 2; charNum++)
+	{
+		animName[charNum] = charaObj[charNum].charaObj->GetAnim();
+		if (lpColMng.GetColFlag(charaObj[charNum].charaObj->GetAnim()))
+		{
+			int colColor;
+			for (int i = 0; i < colData[charNum].hitBox.size(); i++)
+			{
+
+				colColor = (colData[charNum].hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData[charNum].hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
+
+				DrawBox(colData[charNum].hitBox[i].rect.startPos.x,colData[charNum].hitBox[i].rect.startPos.y,colData[charNum].hitBox[i].rect.endPos.x,colData[charNum].hitBox[i].rect.endPos.y, colColor, false);
+			}
+		}
 	}
 
 	// KO‚Ì•¶Žš‚Ì•`‰æ

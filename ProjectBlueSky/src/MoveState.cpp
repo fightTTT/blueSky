@@ -161,36 +161,6 @@ void MoveState::Update(AICharacter * character)
 		notAttackCount = 0;
 		return;
 	}
-	// ‹——£‚ª‰“‚¢ê‡
-	else if (abs(vec.x) > 250)
-	{
-		rand = GetRand(100);
-
-		if (rand == 0 && notAttackCount > 180)
-		{
-			character->ChangeState(LongAttackState::GetInstance());
-			notAttackCount = 0;
-			return;
-		}
-		else if (rand <= 8)
-		{
-			// ‰“‹——£‚Ì•KŽE‹Z‚Ì‚ÝŽÀs
-			for (int i = 1; i < 3; ++i)
-			{
-				if (character->isSPLongAttack(character->GetSPAttackName(i)))
-				{
-					rand = GetRand(20);
-					if (rand == 0)
-					{
-						character->SetAnim(character->GetSPAttackName(i));
-						character->ChangeState(AttackState::GetInstance());
-						notAttackCount = 0;
-						return;
-					}
-				}
-			}
-		}
-	}
 
 	// UŒ‚‚µ‚Ä‚¢‚È‚¢ó‘Ô‚ª‘±‚¢‚½ê‡
 	if (notAttackCount >= 120)
