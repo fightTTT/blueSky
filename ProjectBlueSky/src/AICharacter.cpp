@@ -109,23 +109,6 @@ void AICharacter::Draw()
 		DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 
-	if (lpColMng.GetColFlag(animName))
-	{
-		ColInfo colData = lpColMng.GetCollisionData("ñ_êlä‘", animName, id);
-
-		int colColor;
-
-		for (int i = 0; i < colData.hitBox.size(); i++)
-		{
-			colData.hitBox[i].rect.startPos.x *= static_cast<int>(dir) * -2 + 1;
-			colData.hitBox[i].rect.endPos.x *= static_cast<int>(dir) * -2 + 1;
-
-			colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
-
-			DrawBox(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, drawOffset.x + animOffset.x +  pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
-		}
-	}
-
 	auto ssize = lpSceneMng.GetScreenSize();
 	int hpColor = 0;
 
