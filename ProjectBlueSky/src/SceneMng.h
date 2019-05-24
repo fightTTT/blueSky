@@ -37,6 +37,9 @@ public:
 	bool GetTitleChangeFlag(void);
 	void SetTitleChangeFlag(bool titleChangeFlag);
 
+	PAD_ID GetOpenBackWindowPadID(void);
+	void SetOpenBackWindowPadID(PAD_ID openBackWindowPadID);
+
 	//decidFlagの情報を取得する(引数：decidFlagを取得したいﾌﾟﾚｲﾔｰの番号)
 	bool GetDecidFlag(PAD_ID padID);
 	//decidFlagの情報をｾｯﾄする(引数：decidFlagをｾｯﾄしたいﾌﾟﾚｲﾔｰの番号, ｾｯﾄしたいflag)
@@ -64,6 +67,7 @@ private:
 	bool sceneBackFlag;								// 前のｼｰﾝに戻れるかのﾌﾗｸﾞ
 	bool titleChangeFlag;							// ﾀｲﾄﾙｼｰﾝに戻るﾌﾗｸﾞ
 	MODE mode;										// ｹﾞｰﾑﾓｰﾄﾞ格納用変数
+	PAD_ID openBackWindowPadID;							// 確認ｳｨﾝﾄﾞｳを開いたﾊﾟｯﾄﾞのID
 
 	bool SysInit(void);			// ｼｽﾃﾑ的な変数の初期化を行う
 };

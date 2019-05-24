@@ -686,6 +686,8 @@ bool GameScene::GameDraw(void)
 {
 	DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/bluesky_背景.png")[0], true);
 
+	DrawGraph((ssize.x/2)-175, 0, IMAGE_ID("image/ゲームシーン用/centerBer.png")[0], true);
+
 	//objListに登録されているｸﾗｽの描画処理を行う
 	for (auto &data : (*objList))
 	{
@@ -719,7 +721,27 @@ bool GameScene::GameDraw(void)
 
 	DrawFormatString(0, 300, 0xff0000, "chara 0 : winCount %d\nchara 1 : winCount %d\n", charaObj[0].winCount, charaObj[1].winCount);
 
-	DrawGraph(500, 40, IMAGE_ID("image/ゲームシーン用/star1.png")[0], true);
+	if (charaObj[0].winCount == 1)
+	{
+		DrawGraph((ssize.x / 2) - 175 +70, 69, IMAGE_ID("image/ゲームシーン用/winStar1.png")[0], true);
+	}
+	if (charaObj[0].winCount == 2)
+	{
+		DrawGraph((ssize.x / 2) - 175 +70, 69, IMAGE_ID("image/ゲームシーン用/winStar1.png")[0], true);
+		DrawGraph((ssize.x / 2) - 175 +20, 10, IMAGE_ID("image/ゲームシーン用/winStar2.png")[0], true);
+	}
+
+	if (charaObj[1].winCount == 1)
+	{
+		DrawGraph((ssize.x / 2) - 175 + 232, 69, IMAGE_ID("image/ゲームシーン用/winStar1.png")[0], true);
+	}
+	if (charaObj[1].winCount == 2)
+	{
+		DrawGraph((ssize.x / 2) - 175 + 232, 69, IMAGE_ID("image/ゲームシーン用/winStar1.png")[0], true);
+		DrawGraph((ssize.x / 2) - 175 + 262, 10, IMAGE_ID("image/ゲームシーン用/winStar2.png")[0], true);
+	}
+
+
 
 	return true;
 }

@@ -27,12 +27,14 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 	/* ｷｬﾗを未選択のとき */
 	if (!decidFlag)
 	{
-		/* ﾀｲﾄﾙ遷移ｳｨﾝﾄﾞｳが起動してないとき */
 		if (!lpSceneMng.GetSceneBackFlag())
 		{
+			/* ﾀｲﾄﾙ遷移ｳｨﾝﾄﾞｳが起動してないとき */
+
 			/* BﾎﾞﾀﾝでｳｨﾝﾄﾞｳﾌﾗｸﾞをON */
 			if (ctl.GetPadDataTrg(padID, BUTTON_B))
 			{
+				lpSceneMng.SetOpenBackWindowPadID(padID);
 				lpSceneMng.SetSceneBackFlag(true);
 			}
 
@@ -148,10 +150,10 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			}
 
 		}
-
-		/* ｳｨﾝﾄﾞｳが起動しているとき */
-		else if(lpSceneMng.GetSceneBackFlag())
+		else
 		{
+			/* ｳｨﾝﾄﾞｳが起動しているとき */
+
 			if (ctl.GetPadDataTrg(padID, THUMB_L_RIGHT) || ctl.GetPadDataTrg(padID, BUTTON_RIGHT))
 			{
 				if (backCurID != 1)
@@ -168,7 +170,7 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			}
 
 			/* Aﾎﾞﾀﾝでﾀｲﾄﾙｼｰﾝに戻るﾌﾗｸﾞを立てる */
-			if (ctl.GetPadDataTrg(padID, BUTTON_A))
+			if (ctl.GetPadDataTrg(lpSceneMng.GetOpenBackWindowPadID(), BUTTON_A))
 			{
 				if (backCurID == 0)
 				{
@@ -186,11 +188,6 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 				lpSceneMng.SetSceneBackFlag(false);
 			}
 		}
-		else
-		{
-			// なにもしない
-		}
-
 	}
 
 	/* ｷｬﾗを選択してるとき */
@@ -215,6 +212,7 @@ int CharSelCursor::Init(void)
 {
 	sSize = lpSceneMng.GetScreenSize();
 	decidFlag = false;
+	padIdFlag = true;
 	if (padID == PAD_1)
 	{
 		charID = 0;		// PL1のｷｬﾗID
@@ -261,25 +259,21 @@ void CharSelCursor::Draw(void)
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);     // ﾌﾞﾚﾝﾄﾞをﾘｾｯﾄ
 		DeleteMaskScreen();		// ﾏｽｸ終了
 	}
-
-	else if (lpSceneMng.GetSceneBackFlag())
-	{
-		CreateMaskScreen();     // ﾏｽｸ開始
-		DrawMask(sceneCurPosTbl[backCurID].x - 40, sceneCurPosTbl[backCurID].y - 100, sceneCurMask, DX_MASKTRANS_BLACK); // 黒色の場所だけ描画
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 255);               // 加算ブレンドに設定
-		DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * mCount, IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);			// ｶｰｿﾙをﾏｽの中心で画像の中心を軸に回転
-		DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * (mCount - 120), IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);	// 対角線上にもう一つ
-		DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * (mCount - 60), IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);	// 対角線上にもう一つ
-		DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * (mCount - 180), IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);	// 対角線上にもう一つ
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);     // ﾌﾞﾚﾝﾄﾞをﾘｾｯﾄ
-		DeleteMaskScreen();		// ﾏｽｸ終了
-		DrawGraph((sSize.x / 2) - 300, (sSize.y / 2) + 50, IMAGE_ID("image/キャラセレ用/yes.png")[0], true);		// はい
-		DrawGraph((sSize.x / 2) + 50, (sSize.y / 2) + 50, IMAGE_ID("image/キャラセレ用/no.png")[0], true);		// いいえ
-	}
-
 	else
 	{
-		// なにもしない
+		/* 自分がﾊﾞｯｸｳｨﾝﾄﾞｳを開いたとき */
+		if (lpSceneMng.GetOpenBackWindowPadID() == padID)
+		{
+			CreateMaskScreen();     // ﾏｽｸ開始
+			DrawMask(sceneCurPosTbl[backCurID].x - 40, sceneCurPosTbl[backCurID].y - 100, sceneCurMask, DX_MASKTRANS_BLACK); // 黒色の場所だけ描画
+			SetDrawBlendMode(DX_BLENDMODE_ADD, 255);               // 加算ブレンドに設定
+			DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * mCount, IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);			// ｶｰｿﾙをﾏｽの中心で画像の中心を軸に回転
+			DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * (mCount - 120), IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);	// 対角線上にもう一つ
+			DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * (mCount - 60), IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);	// 対角線上にもう一つ
+			DrawRotaGraph2((sceneCurPosTbl[backCurID].x + 120), (sceneCurPosTbl[backCurID].y + 50), 0, 35, 1.0, PI2 / 240 * (mCount - 180), IMAGE_DIV_ID("image/キャラセレ用/backCur.png", VECTOR2(150, 70), VECTOR2(PLAYER_CNT_MAX, 1))[padID], true);	// 対角線上にもう一つ
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);     // ﾌﾞﾚﾝﾄﾞをﾘｾｯﾄ
+			DeleteMaskScreen();		// ﾏｽｸ終了
+		}
 	}
 }
 
