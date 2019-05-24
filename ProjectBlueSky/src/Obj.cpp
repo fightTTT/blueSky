@@ -240,11 +240,9 @@ const VECTOR2 Obj::GetAnimOffSet(std::string animName)
 
 int Obj::GetFrame()
 {
-	int animCntMax = animTable[animName][ANIM_TBL_INV] * animTable[animName][ANIM_TBL_FRAME];
-
-	if (!animTable[animName][ANIM_TBL_LOOP] && animCnt >= animCntMax)
+	if (!animTable[animName][ANIM_TBL_LOOP] && ( animCnt >= (animTable[animName][ANIM_TBL_INV] * animTable[animName][ANIM_TBL_FRAME])))
 	{
-			return (animCntMax - 1) / animTable[animName][ANIM_TBL_INV] % animTable[animName][ANIM_TBL_FRAME];
+			return (animTable[animName][ANIM_TBL_FRAME]-1);
 	}
 
 	return animCnt / animTable[animName][ANIM_TBL_INV] % animTable[animName][ANIM_TBL_FRAME];
