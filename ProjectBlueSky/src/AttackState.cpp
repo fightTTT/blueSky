@@ -31,6 +31,7 @@ void AttackState::Init(AICharacter * character)
 	if (attackCount >= static_cast<unsigned int>(GetRand(30) + 4))
 	{
 		attackCount = 0;
+		character->SetDirChange(false);
 		character->SetJumpType(JUMP_TYPE_FRONT);
 		character->ChangeState(JumpState::GetInstance());
 		return;
@@ -93,44 +94,7 @@ void AttackState::Update(AICharacter * character)
 	auto dir = character->GetDir();
 	auto charaAnim = character->GetAnim();
 
-	if (charaAnim == "ワープ")
-	{
-		if (character->GetFrame() == 6)
-		{
-			character->SetAnimStopFlag(true);
-		}
-
-		if (character->GetAnimStopFlag())
-		{
-			pos.y = (ssize.y * 2);
-
-			if (dir == DIR_RIGHT)
-			{
-				if (pos.x > ((ssize.x * 3) / 5))
-				{
-					dir = character->GetTmpDir();
-					character->SetAnimStopFlag(false);
-				}
-				else
-				{
-					pos.x += 30;
-				}
-			}
-			else
-			{
-				if (pos.x < ((ssize.x * 2) / 5))
-				{
-					dir = character->GetTmpDir();
-					character->SetAnimStopFlag(false);
-				}
-				else
-				{
-					pos.x -= 30;
-				}
-			}
-		}
-	}
-	else if (charaAnim == "ローリングアタック")
+	if (charaAnim == "ローリングアタック")
 	{
 		if (character->GetAnimCount() > 20)
 		{
@@ -188,6 +152,26 @@ void AttackState::Update(AICharacter * character)
 		}
 
 		pos.y--;
+	}
+	else if (charaAnim == "地面割" || charaAnim == "かかと落とし")
+	{
+		if (character->GetAnimCount() < 30)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x++;
+			}
+			else
+			{
+				pos.x--;
+			}
+
+			pos.y -= 8;
+		}
+		else
+		{
+			pos.y += 20;
+		}
 	}
 
 	character->SetPos(pos);
