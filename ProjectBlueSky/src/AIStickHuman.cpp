@@ -11,8 +11,6 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 	spAttackAnimFileName[1] = { "waza_2"};
 	spAttackAnimFileName[2] = { "waza_3"};
 
-	lpSceneMng.SetCharID(PAD_AI, 6);
-
 	switch (lpSceneMng.GetCharID(PAD_AI))
 	{
 	case 0:

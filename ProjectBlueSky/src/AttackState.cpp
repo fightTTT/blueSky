@@ -94,29 +94,7 @@ void AttackState::Update(AICharacter * character)
 	auto dir = character->GetDir();
 	auto charaAnim = character->GetAnim();
 
-	if (charaAnim == "ローリングアタック")
-	{
-		if (character->GetAnimCount() > 20)
-		{
-			if (dir == DIR_RIGHT)
-			{
-				pos.x += 20;
-			}
-			else
-			{
-				pos.x -= 20;
-			}
-		}
-
-		if (character->GetAnimCount() > 60)
-		{
-			character->SetDirChange(true);
-			character->SetAnim("待機");
-			character->ChangeState(MoveState::GetInstance());
-			return;
-		}
-	}
-	else if (charaAnim == "カンフーキック")
+	if (charaAnim == "カンフーキック")
 	{
 		if (character->GetAnimCount() < 4)
 		{
