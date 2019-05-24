@@ -692,6 +692,26 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("待機");
 		}
 	}
+	else if (animName == "アクセル")
+	{
+		if (animCnt < 60)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 5;
+			}
+			else
+			{
+				pos.x -= 5;
+			}
+		}
+		
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
 	else
 	{
 		// キャラクター操作
