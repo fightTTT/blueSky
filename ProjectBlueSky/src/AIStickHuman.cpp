@@ -11,7 +11,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 	spAttackAnimFileName[1] = { "waza_2"};
 	spAttackAnimFileName[2] = { "waza_3"};
 
-	lpSceneMng.SetCharID(PAD_AI, 4);
+	lpSceneMng.SetCharID(PAD_AI, 6);
 
 	switch (lpSceneMng.GetCharID(PAD_AI))
 	{
@@ -162,7 +162,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		AddAnim("地面割", 0, 0, 15, 4, false, 0, 0);
 		spAttackAnimName[1] = "地面割";
 		spAttackAnimFileName[1] = "split";
-		animAttributeTbl["地面割"][0] = ANIM_ATTRIBUTE_STAND;
+		animAttributeTbl["地面割"][0] = ANIM_ATTRIBUTE_AIR;
 		animAttributeTbl["地面割"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["地面割"][2] = ANIM_ATTRIBUTE_NON;
 
@@ -189,7 +189,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		AddAnim("かかと落とし", 0, 0, 14, 4, false, 0, 0);
 		spAttackAnimName[1] = "かかと落とし";
 		spAttackAnimFileName[1] = "heeldrop";
-		animAttributeTbl["かかと落とし"][0] = ANIM_ATTRIBUTE_STAND;
+		animAttributeTbl["かかと落とし"][0] = ANIM_ATTRIBUTE_AIR;
 		animAttributeTbl["かかと落とし"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["かかと落とし"][2] = ANIM_ATTRIBUTE_NON;
 

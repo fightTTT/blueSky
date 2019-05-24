@@ -3,6 +3,7 @@
 #include "MoveState.h"
 #include "DamageState.h"
 #include "Collision.h"
+#include "SceneMng.h"
 
 LongAttackState::LongAttackState()
 {
@@ -16,6 +17,7 @@ void LongAttackState::Init(AICharacter * character)
 {
 	shotCount = 0;
 	spEndCnt = 0;
+	character->SetDirChange(false);
 }
 
 void LongAttackState::Update(AICharacter * character)
@@ -23,13 +25,52 @@ void LongAttackState::Update(AICharacter * character)
 	auto pos = character->GetPos();
 	auto dir = character->GetDir();
 	auto charaAnim = character->GetAnim();
+	auto ssize = lpSceneMng.GetScreenSize();
 
 	if (character->GetAnimEndFlag())
 	{
 		character->ChangeState(MoveState::GetInstance());
+		character->SetAnimStopFlag(false);
 	}
 
-	if(charaAnim == "ê˘ïóãr")
+	if (charaAnim == "ÉèÅ[Év")
+	{
+		if (character->GetAnimCount() == 31)
+		{
+			character->SetAnimStopFlag(true);
+		}
+
+		if (character->GetAnimStopFlag())
+		{
+			pos.y = (ssize.y * 2);
+
+			if (dir == DIR_RIGHT)
+			{
+				if (pos.x > ((ssize.x * 3) / 5))
+				{
+					dir = character->GetTmpDir();
+					character->SetAnimStopFlag(false);
+				}
+				else
+				{
+					pos.x += 30;
+				}
+			}
+			else
+			{
+				if (pos.x < ((ssize.x * 2) / 5))
+				{
+					dir = character->GetTmpDir();
+					character->SetAnimStopFlag(false);
+				}
+				else
+				{
+					pos.x -= 30;
+				}
+			}
+		}
+	}
+	else if(charaAnim == "ê˘ïóãr")
 	{
 		if (dir == DIR_RIGHT)
 		{
