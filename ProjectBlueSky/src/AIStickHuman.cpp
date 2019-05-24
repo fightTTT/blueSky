@@ -211,19 +211,19 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		animAttributeTbl["竜の息吹"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["竜の息吹"][2] = ANIM_ATTRIBUTE_NON;
 
-		AddAnim("ソーラン", 0, 0, 13, 4, false, 0, 0);
-		spAttackAnimName[1] = "ソーラン";
-		spAttackAnimFileName[1] = "soran";
-		animAttributeTbl["ソーラン"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["ソーラン"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["ソーラン"][2] = ANIM_ATTRIBUTE_NON;
-
 		AddAnim("アクセル", 0, 0, 21, 4, false, 0, 0);
-		spAttackAnimName[2] = "アクセル";
-		spAttackAnimFileName[2] = "accele";
+		spAttackAnimName[1] = "アクセル";
+		spAttackAnimFileName[1] = "accele";
 		animAttributeTbl["アクセル"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["アクセル"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["アクセル"][2] = ANIM_ATTRIBUTE_NON;
+
+		AddAnim("蹴り返し", 0, 0, 14, 3, false, 0, 0);
+		spAttackAnimName[2] = "蹴り返し";
+		spAttackAnimFileName[2] = "turn";
+		animAttributeTbl["蹴り返し"][0] = ANIM_ATTRIBUTE_AIR;
+		animAttributeTbl["蹴り返し"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
+		animAttributeTbl["蹴り返し"][2] = ANIM_ATTRIBUTE_NON;
 
 		shotCreateCount = 26;
 

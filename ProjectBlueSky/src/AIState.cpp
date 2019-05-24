@@ -37,6 +37,7 @@ void AIState::CheckHitFlag(AICharacter * character)
 			character->AddPlayerHP(-10);
 		}
 
+		character->SetAnimStopFlag(false);
 		character->ChangeState(DamageState::GetInstance());
 	}
 }

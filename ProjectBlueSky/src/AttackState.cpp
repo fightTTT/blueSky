@@ -151,6 +151,50 @@ void AttackState::Update(AICharacter * character)
 			pos.y += 20;
 		}
 	}
+	else if (charaAnim == "R‚è•Ô‚µ")
+	{
+		if (character->GetAnimCount() < 20)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 8;
+			}
+			else
+			{
+				pos.x -= 8;
+			}
+
+			if (character->GetAnimCount() < 10)
+			{
+				pos.y -= 5;
+			}
+			else
+			{
+				pos.y += 5;
+			}
+		}
+		else
+		{
+			// UŒ‚‚ª“–‚½‚Á‚½‚çˆÈ‰º‚Ì‚æ‚¤‚É–ß‚Á‚Ä‚­‚éˆ—‚ð“ü‚êA“–‚½‚ç‚È‚©‚Á‚½‚ç‚»‚Ì‚Ü‚Ü’n–Ê‚É—Ž‚¿‚Ä‚µ‚Ü‚¤‚æ‚¤‚É‚·‚é
+			if (dir == DIR_RIGHT)
+			{
+				pos.x -= 8;
+			}
+			else
+			{
+				pos.x += 8;
+			}
+
+			if (character->GetAnimCount() < 33)
+			{
+				pos.y -= 8;
+			}
+			else
+			{
+				pos.y += 8;
+			}
+		}
+	}
 
 	character->SetPos(pos);
 }

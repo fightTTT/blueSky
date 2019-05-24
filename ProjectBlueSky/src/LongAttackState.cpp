@@ -144,6 +144,20 @@ void LongAttackState::Update(AICharacter * character)
 			}
 		}
 	}
+	else if (charaAnim == "ƒAƒNƒZƒ‹")
+	{
+	if (character->GetAnimCount() < 60)
+	{
+		if (dir == DIR_RIGHT)
+		{
+			pos.x += 5;
+		}
+		else
+		{
+			pos.x -= 5;
+		}
+	}
+	}
 	else
 	{
 		shotCount++;

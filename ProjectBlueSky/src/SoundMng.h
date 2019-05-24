@@ -2,6 +2,8 @@
 
 #include <unordered_map>
 
+#define SOUND_ID(X) (SoundMng::GetInstance().GetID(X))
+
 class SoundMng
 {
 public:
@@ -11,7 +13,7 @@ public:
 		return s_Instance;
 	}
 
-
+	const int GetID(std::string filePath);
 
 private:
 
