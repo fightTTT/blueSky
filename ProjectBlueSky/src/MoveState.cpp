@@ -46,11 +46,6 @@ void MoveState::Update(AICharacter * character)
 	int rand = 0;
 	notAttackCount++;
 
-	if (character->GetAnim() == "ƒ[ƒv")
-	{
-
-	}
-
 	if (guardHitCount >= 50)
 	{
 		character->SetJumpType(JUMP_TYPE_FRONT);
