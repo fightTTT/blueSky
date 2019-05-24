@@ -193,7 +193,8 @@ bool AICharacter::isSPLongAttack(std::string spAnimName)
 {
 	if (spAnimName == "ローリングアタック"
 		|| spAnimName == "ミサイルアロー"
-		|| spAnimName == "ワープ")
+		|| spAnimName == "ワープ"
+		|| spAnimName == "旋風脚")
 	{
 		return true;
 	}

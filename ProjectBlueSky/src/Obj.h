@@ -138,6 +138,9 @@ public:
 	// アニメーションが終了しているか
 	bool GetAnimEndFlag() const { return animEndFlag; }
 
+	// アニメーションカウントを取得
+	const int GetAnimCount() const { return animCnt; }
+
 	void SetHitData(bool flag, ColType type);
 	bool GetHitFlag() const { return hitData.hitFlag; }
 
