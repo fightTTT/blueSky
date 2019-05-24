@@ -129,6 +129,9 @@
     <ClCompile Include="src\ResultScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\SoundMng.cpp">
+      <Filter>ソース ファイル\manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameCtrl.h">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="src\ResultScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SoundMng.h">
+      <Filter>ヘッダー ファイル\manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

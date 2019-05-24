@@ -692,6 +692,55 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			SetAnim("待機");
 		}
 	}
+	else if (animName == "蹴り返し")
+	{
+		if (animCnt < 20)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 8;
+			}
+			else
+			{
+				pos.x -= 8;
+			}
+
+			if (animCnt < 10)
+			{
+				pos.y -= 5;
+			}
+			else
+			{
+				pos.y += 5;
+			}
+		}
+		else
+		{
+			// 攻撃が当たったら以下のように戻ってくる処理を入れ、当たらなかったらそのまま地面に落ちてしまうようにする
+			if (dir == DIR_RIGHT)
+			{
+				pos.x -= 8;
+			}
+			else
+			{
+				pos.x += 8;
+			}
+
+			if (animCnt < 33)
+			{
+				pos.y -= 8;
+			}
+			else
+			{
+				pos.y += 8;
+			}
+		}
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
 	else if (animName == "アクセル")
 	{
 		if (animCnt < 60)
@@ -1057,6 +1106,7 @@ void Character::CheckHitFlag(void)
 		if (hitData.hitFlag && (hitData.colType == COLTYPE_HIT))
 		{
 			dir = tmpDir;
+			animStopFlag = false;
 
 			if (animName != "ダメージ_立ち")
 			{

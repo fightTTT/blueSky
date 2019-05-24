@@ -94,29 +94,7 @@ void AttackState::Update(AICharacter * character)
 	auto dir = character->GetDir();
 	auto charaAnim = character->GetAnim();
 
-	if (charaAnim == "ローリングアタック")
-	{
-		if (character->GetAnimCount() > 20)
-		{
-			if (dir == DIR_RIGHT)
-			{
-				pos.x += 20;
-			}
-			else
-			{
-				pos.x -= 20;
-			}
-		}
-
-		if (character->GetAnimCount() > 60)
-		{
-			character->SetDirChange(true);
-			character->SetAnim("待機");
-			character->ChangeState(MoveState::GetInstance());
-			return;
-		}
-	}
-	else if (charaAnim == "カンフーキック")
+	if (charaAnim == "カンフーキック")
 	{
 		if (character->GetAnimCount() < 4)
 		{
@@ -171,6 +149,50 @@ void AttackState::Update(AICharacter * character)
 		else
 		{
 			pos.y += 20;
+		}
+	}
+	else if (charaAnim == "蹴り返し")
+	{
+		if (character->GetAnimCount() < 20)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 8;
+			}
+			else
+			{
+				pos.x -= 8;
+			}
+
+			if (character->GetAnimCount() < 10)
+			{
+				pos.y -= 5;
+			}
+			else
+			{
+				pos.y += 5;
+			}
+		}
+		else
+		{
+			// 攻撃が当たったら以下のように戻ってくる処理を入れ、当たらなかったらそのまま地面に落ちてしまうようにする
+			if (dir == DIR_RIGHT)
+			{
+				pos.x -= 8;
+			}
+			else
+			{
+				pos.x += 8;
+			}
+
+			if (character->GetAnimCount() < 33)
+			{
+				pos.y -= 8;
+			}
+			else
+			{
+				pos.y += 8;
+			}
 		}
 	}
 

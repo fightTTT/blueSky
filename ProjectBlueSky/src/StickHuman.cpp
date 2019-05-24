@@ -310,29 +310,29 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[0][DIR_LEFT].resize(3);
 		spAttackCommand[0][DIR_LEFT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
 
-		AddAnim("ソーラン", 0, 0, 13, 4, false, 0, 0);
-		spAttackAnimName[1] = "ソーラン";
-		spAttackAnimFileName[1] = "soran";
-		animAttributeTbl["ソーラン"][0] = ANIM_ATTRIBUTE_STAND;
-		animAttributeTbl["ソーラン"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["ソーラン"][2] = ANIM_ATTRIBUTE_NON;
-
-		spAttackCommand[1][DIR_RIGHT].resize(3);
-		spAttackCommand[1][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_PUNCH };
-		spAttackCommand[1][DIR_LEFT].resize(3);
-		spAttackCommand[1][DIR_LEFT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_PUNCH };
-
 		AddAnim("アクセル", 0, 0, 21, 4, false, 0, 0);
-		spAttackAnimName[2] = "アクセル";
-		spAttackAnimFileName[2] = "accele";
+		spAttackAnimName[1] = "アクセル";
+		spAttackAnimFileName[1] = "accele";
 		animAttributeTbl["アクセル"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["アクセル"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["アクセル"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackCommand[2][DIR_RIGHT].resize(4);
-		spAttackCommand[2][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
-		spAttackCommand[2][DIR_LEFT].resize(4);
-		spAttackCommand[2][DIR_LEFT] = { SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_KICK };
+		spAttackCommand[1][DIR_RIGHT].resize(4);
+		spAttackCommand[1][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
+		spAttackCommand[1][DIR_LEFT].resize(4);
+		spAttackCommand[1][DIR_LEFT] = { SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_KICK };
+
+		AddAnim("蹴り返し", 0, 0, 14, 3, false, 0, 0);
+		spAttackAnimName[2] = "蹴り返し";
+		spAttackAnimFileName[2] = "turn";
+		animAttributeTbl["蹴り返し"][0] = ANIM_ATTRIBUTE_AIR;
+		animAttributeTbl["蹴り返し"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
+		animAttributeTbl["蹴り返し"][2] = ANIM_ATTRIBUTE_NON;
+
+		spAttackCommand[2][DIR_RIGHT].resize(6);
+		spAttackCommand[2][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_RIGHT_DOWN, SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
+		spAttackCommand[2][DIR_LEFT].resize(6);
+		spAttackCommand[2][DIR_LEFT] = { SP_COM_LEFT, SP_COM_LEFT_DOWN, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_KICK };
 		break;
 
 	default:
