@@ -101,15 +101,16 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 		ExtrusionUpdata();
 
-		// shot‚Ìî•ñ‚ğƒZƒbƒg
-		sharedObj shotObj;
+		std::vector<sharedObj> shotObj;
+		std::vector<sharedObj> shotObj2;
 		EnemyState eState;
 
 		for (auto& data : *objList)
 		{
 			if (data->CheckObjType(OBJ_TYPE_SHOT))
 			{
-				shotObj = data;
+				shotObj.push_back(data);
+				shotObj2.push_back(data);
 				ShotData shot(data->GetPos(), data->GetPadID());
 				eState.pushBackShotData(shot);
 			}
@@ -186,6 +187,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 			// “–‚½‚è”»’è‚ğfalse‚É‚·‚é
 			charaObj[i].charaObj->SetHitData(false, COLTYPE_NON);
+			
 		}
 
 		// “–‚½‚è”»’èˆ—
@@ -286,7 +288,33 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					}
 				}
 
+				for (int shot1 = 0; shot1 < shotObj.size(); shot1++)
+				{
+					if (shotObj[shot1]->GetHitFlag())
+					{
+						break;
+					}
+					for (int shot2 = 0; shot2 < shotObj2.size(); shot2++)
+					{
 
+						if (shotObj[shot2]->GetHitFlag())
+						{
+							break;
+						}
+						shotObj[shot1]->SetHitData(false, COLTYPE_NON);
+						shotObj[shot2]->SetHitData(false, COLTYPE_NON);
+
+						if (shotObj[shot1] != shotObj2[shot2])
+						{
+							if (shotObj[shot1]->GetPos().x + (shotObj[shot1]->GetDivSize().x / 2) + 50 >= shotObj[shot2]->GetPos().x + (shotObj[shot2]->GetDivSize().x / 2) - 50
+								&& shotObj[shot1]->GetPos().x + (shotObj[shot1]->GetDivSize().x / 2) - 50 <= shotObj[shot2]->GetPos().x + (shotObj[shot2]->GetDivSize().x / 2) + 50)
+							{
+								shotObj[shot1]->SetHitData(true, COLTYPE_NON);
+								shotObj[shot2]->SetHitData(true, COLTYPE_NON);
+							}
+						}
+					}
+				}
 
 				for (int i = 0; i < 2; i++)
 				{
