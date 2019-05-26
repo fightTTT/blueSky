@@ -69,7 +69,18 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		{
 			if (gameEndFlag)
 			{
-				return std::make_unique<ResultScene>();
+				bool leftWinFlag;
+
+				if (charaObj[0].winCount >= 2)
+				{
+					leftWinFlag = true;
+				}
+				else
+				{
+					leftWinFlag = false;
+				}
+
+				return std::make_unique<ResultScene>(leftWinFlag);
 			}
 			else
 			{

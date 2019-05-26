@@ -4,8 +4,9 @@
 
 #include "DxLib.h"
 
-ResultScene::ResultScene()
+ResultScene::ResultScene(bool leftFlag)
 {
+	victoryFlag = leftFlag;
 	Init();
 }
 
@@ -33,5 +34,13 @@ int ResultScene::Init()
 
 void ResultScene::ResultDraw()
 {
+	if (victoryFlag)
+	{
+		DrawString(500, 300, "1Pの勝ち！", 0xff0000);
+	}
+	else
+	{
+		DrawString(500, 300, "2Pの勝ち！", 0xff0000);
+	}
 	DrawString(500, 350, "STARTボタンでタイトルへ遷移", 0xffffff);
 }
