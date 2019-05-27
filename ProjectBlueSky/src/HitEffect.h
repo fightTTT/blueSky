@@ -7,16 +7,11 @@ class HitEffect :
 	public Obj
 {
 public:
-	HitEffect();
+	HitEffect(VECTOR2 pos);
 	~HitEffect();
 
 	bool CheckDeth();
 	bool CheckObjType(OBJ_TYPE type);
 	void Draw();
-
-private:
-
-	VECTOR2 pos;
-
 };
 

@@ -1,8 +1,9 @@
 #include "HitEffect.h"
 
 
-HitEffect::HitEffect()
+HitEffect::HitEffect(VECTOR2 pos)
 {
+	//Init("image/エフェクト/offsetEffect.png", VECTOR2(240, 240), VECTOR2(4, 1), pos, false);
 }
 
 HitEffect::~HitEffect()
