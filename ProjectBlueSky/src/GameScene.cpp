@@ -372,10 +372,6 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 										break;
 									}
-									else
-									{
-										charaObj[i].charaObj->SetHitData(false, colData[i].hitBox[a].type);
-									}
 								}
 							}
 						}
