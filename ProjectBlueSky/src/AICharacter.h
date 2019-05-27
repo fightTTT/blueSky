@@ -75,6 +75,8 @@ protected:
 	JUMP_TYPE jumpType;				// ジャンプ方向のタイプ
 	int shotCreateCount;			// shotを生成するまでのカウント
 
+	std::map<std::string, int> spAttackDamage;
+
 	std::string characterName;
 	std::string spAttackAnimName[3];
 	std::string spAttackAnimFileName[3];

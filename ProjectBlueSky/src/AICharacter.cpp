@@ -209,13 +209,12 @@ void AICharacter::CheckDamage(ANIM_ATTRIBUTE att)
 		case ANIM_ATTRIBUTE_ATTACK_SMALL:
 			AddPlayerHP(-5);
 			break;
-		case ANIM_ATTRIBUTE_SHOT:
 		case ANIM_ATTRIBUTE_ATTACK_BIG:
+		case ANIM_ATTRIBUTE_SHOT:
 			AddPlayerHP(-10);
 			break;
-		
 		case ANIM_ATTRIBUTE_ATTACK_SP:
-			AddPlayerHP(-10);
+			AddPlayerHP(spAttackDamage[enemyState.enemyAnim]);
 			break;
 		default:
 			// ‰½‚à‚µ‚È‚¢
