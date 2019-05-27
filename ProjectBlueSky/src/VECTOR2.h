@@ -13,6 +13,9 @@ public:
 	// ‘ã“ü‰‰ŽZŽq
 	VECTOR2& operator = (const VECTOR2& vec);
 
+	// ƒLƒƒƒXƒg‰‰ŽZŽq
+	operator bool() { return this->x == 0 && this->y == 0; }
+
 	// “Y‚¦Žš‰‰ŽZŽq
 	int& operator[](int i);
 

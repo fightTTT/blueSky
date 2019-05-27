@@ -1,9 +1,12 @@
 #include "HitEffect.h"
 
 
-HitEffect::HitEffect(VECTOR2 pos)
+HitEffect::HitEffect(VECTOR2 pos, VECTOR2 drawOffset) : Obj(drawOffset)
 {
-	Init("image/エフェクト/offsetEffect.png", VECTOR2(240, 240), VECTOR2(4, 1), pos, false);
+	Init("image/エフェクト/offsetEffect.png", VECTOR2(50, 50), VECTOR2(4, 1), pos, false);
+
+	AddAnim("HIT", 0, 0, (divCut.x * divCut.y), 5, false, 0, 0);
+	SetAnim("HIT");
 }
 
 HitEffect::~HitEffect()

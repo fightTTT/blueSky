@@ -7,7 +7,7 @@ class HitEffect :
 	public Obj
 {
 public:
-	HitEffect(VECTOR2 pos);
+	HitEffect(VECTOR2 pos, VECTOR2 drawOffset);
 	~HitEffect();
 
 	bool CheckDeth();

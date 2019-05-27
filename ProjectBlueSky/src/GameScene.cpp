@@ -10,6 +10,7 @@
 #include "GameCtrl.h"
 #include "CollisionMng.h"
 #include "ResultScene.h"
+#include "HitEffect.h"
 
 #define STICK_HUMAN_IMAGE_SIZE_X (256)
 #define STICK_HUMAN_IMAGE_SIZE_Y (256)
@@ -262,6 +263,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					}
 				}
 
+				VECTOR2 hitRectPos;
+
 				// çUåÇéûÇÃìñÇΩÇËîªíË
 				for (int i = 0; i < 2; i++)
 				{
@@ -293,6 +296,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 										{
 											break;
 										}
+
+										hitRectPos = colData[1 - i].hitBox[b].rect.startPos;
+
 										//break;
 									}
 								}
@@ -306,8 +312,11 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					}
 				}
 
-
-
+				if (!hitRectPos)
+				{
+					AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64)));
+				}
+				
 				for (int shot1 = 0; shot1 < shotObj.size(); shot1++)
 				{
 					if (shotObj[shot1]->GetHitFlag())
@@ -364,6 +373,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 									{
 										charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
 										data->SetHitData(true, colData[i].hitBox[a].type);
+
 										break;
 									}
 									else
