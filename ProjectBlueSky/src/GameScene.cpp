@@ -177,27 +177,19 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		}
 
 		// キャラクターの状態を相手に渡す
-		if (!(charaObj[0].charaType == charaObj[1].charaType))
-		{
-			if (charaObj[0].charaType == OBJ_TYPE_CHARACTER)
-			{
-				eState.enemyPos = charaObj[0].charaObj->GetPos();
-				eState.enemyAnimAttribute[0] = charaObj[0].charaObj->GetAnimAttribute(0);
-				eState.enemyAnimAttribute[1] = charaObj[0].charaObj->GetAnimAttribute(1);
-				eState.enemyAnimAttribute[2] = charaObj[0].charaObj->GetAnimAttribute(2);
-				eState.enemyAnim = charaObj[0].charaObj->GetAnim();
-				charaObj[1].charaObj->SetEnemyState(eState);
-			}
-			else
-			{
-				eState.enemyPos = charaObj[1].charaObj->GetPos();
-				eState.enemyAnimAttribute[0] = charaObj[1].charaObj->GetAnimAttribute(0);
-				eState.enemyAnimAttribute[1] = charaObj[1].charaObj->GetAnimAttribute(1);
-				eState.enemyAnimAttribute[2] = charaObj[1].charaObj->GetAnimAttribute(2);
-				eState.enemyAnim = charaObj[1].charaObj->GetAnim();
-				charaObj[0].charaObj->SetEnemyState(eState);
-			}
-		}
+		eState.enemyPos = charaObj[0].charaObj->GetPos();
+		eState.enemyAnimAttribute[0] = charaObj[0].charaObj->GetAnimAttribute(0);
+		eState.enemyAnimAttribute[1] = charaObj[0].charaObj->GetAnimAttribute(1);
+		eState.enemyAnimAttribute[2] = charaObj[0].charaObj->GetAnimAttribute(2);
+		eState.enemyAnim = charaObj[0].charaObj->GetAnim();
+		charaObj[1].charaObj->SetEnemyState(eState);
+
+		eState.enemyPos = charaObj[1].charaObj->GetPos();
+		eState.enemyAnimAttribute[0] = charaObj[1].charaObj->GetAnimAttribute(0);
+		eState.enemyAnimAttribute[1] = charaObj[1].charaObj->GetAnimAttribute(1);
+		eState.enemyAnimAttribute[2] = charaObj[1].charaObj->GetAnimAttribute(2);
+		eState.enemyAnim = charaObj[1].charaObj->GetAnim();
+		charaObj[0].charaObj->SetEnemyState(eState);
 
 		std::string animName[2];
 
