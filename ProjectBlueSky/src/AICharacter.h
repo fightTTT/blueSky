@@ -50,6 +50,8 @@ public:
 
 	bool isSPLongAttack(std::string spAnimName);
 
+	void CheckDamage(ANIM_ATTRIBUTE att);
+
 private:
 
 	bool InitAnim(void);

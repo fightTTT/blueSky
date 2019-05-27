@@ -25,6 +25,29 @@ Character::~Character()
 {
 }
 
+void Character::CheckDamage(ANIM_ATTRIBUTE att)
+{
+	if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+	{
+		switch (att)
+		{
+		case ANIM_ATTRIBUTE_ATTACK_SMALL:
+			AddPlayerHP(-5);
+			break;
+		case ANIM_ATTRIBUTE_ATTACK_BIG:
+		case ANIM_ATTRIBUTE_SHOT:
+			AddPlayerHP(-10);
+			break;
+		case ANIM_ATTRIBUTE_ATTACK_SP:
+			AddPlayerHP(spAttackDamage[enemyState.enemyAnim]);
+			break;
+		default:
+			// ‰½‚à‚µ‚È‚¢
+			break;
+		}
+	}
+}
+
 bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn, PAD_ID id)
 {
 	Obj::Init(fileName, divSize, divCut, pos, turn);

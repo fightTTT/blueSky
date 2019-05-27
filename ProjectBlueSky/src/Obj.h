@@ -64,6 +64,7 @@ struct EnemyState
 
 	VECTOR2 enemyPos;
 	ANIM_ATTRIBUTE enemyAnimAttribute[3];
+	std::string enemyAnim;
 	std::vector<ShotData> shotData;
 };
 
@@ -124,6 +125,9 @@ public:
 	void SetEnemyState(EnemyState state);
 	// “G‚Ìî•ñæ“¾
 	EnemyState GetEnemyState() const { return enemyState; }
+
+	// ÌßÚ²Ô°‚É—^‚¦‚éÀŞÒ°¼Ş—Ê‚ğÁª¯¸‚·‚é@(ˆø”: “G‚Ì±ÆÒ°¼®İ‚Ì‘®«)
+	virtual void CheckDamage(ANIM_ATTRIBUTE att);
 
 	// ƒvƒŒƒCƒ„[‚ÌHP‚ğ‰ÁZ
 	void AddPlayerHP(int addHP);
