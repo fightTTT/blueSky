@@ -26,7 +26,7 @@ public:
 
 	void Draw();
 
-	void ChangeState(AIState* s);
+	void ChangeState(std::string key);
 
 	void CheckHitFlag();
 
@@ -56,12 +56,17 @@ private:
 
 	std::map<std::string, std::string> animFileName;		// ｱﾆﾒｰｼｮﾝの画像ﾌｧｲﾙ名 (ｷｰ: ｱﾆﾒｰｼｮﾝ名)
 
+	void AddStateObj(std::string key, std::shared_ptr<AIState>&& state);
+
+	// stateクラスを保存
+	std::map<std::string, std::shared_ptr<AIState>> stateObj;
+
+	// 現在のステートのkey
+	std::string currentStateName;
 
 protected:
 
 	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標, 反転ﾌﾗｸﾞ, パッド番号
-
-	AIState* state;
 
 	bool longAttackFlag;			// 遠距離攻撃フラグ
 	bool dirChangeFlag;				// 方向変更フラグ

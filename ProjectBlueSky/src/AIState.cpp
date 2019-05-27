@@ -1,6 +1,5 @@
 #include "AIState.h"
 #include "Collision.h"
-#include "DamageState.h"
 #include "AICharacter.h"
 
 #include "DxLib.h"
@@ -38,6 +37,6 @@ void AIState::CheckHitFlag(AICharacter * character)
 		}
 
 		character->SetAnimStopFlag(false);
-		character->ChangeState(DamageState::GetInstance());
+		character->ChangeState("Damage");
 	}
 }

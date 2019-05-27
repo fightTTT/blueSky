@@ -1,13 +1,7 @@
 #include "MoveState.h"
 #include "AICharacter.h"
 #include "SceneMng.h"
-#include "JumpState.h"
-#include "AttackState.h"
-#include "LongAttackState.h"
-#include "GuardState.h"
 #include "Collision.h"
-#include "DamageState.h"
-#include "WaitState.h"
 
 #include "DxLib.h"
 
@@ -49,7 +43,7 @@ void MoveState::Update(AICharacter * character)
 	if (guardHitCount >= 50)
 	{
 		character->SetJumpType(JUMP_TYPE_FRONT);
-		character->ChangeState(JumpState::GetInstance());
+		character->ChangeState("Jump");
 		guardHitCount = 0;
 		moveDirFlag = true;
 		return;
@@ -57,7 +51,7 @@ void MoveState::Update(AICharacter * character)
 
 	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
 	{
-		character->ChangeState(GuardState::GetInstance());
+		character->ChangeState("Guard");
 		guardHitCount++;
 		moveDirFlag = true;
 		return;
@@ -86,7 +80,7 @@ void MoveState::Update(AICharacter * character)
 	{
 		if (changeWaitStateCount > WAITSTATE_INV)
 		{
-			character->ChangeState(WaitState::GetInstance());
+			character->ChangeState("Wait");
 			changeWaitStateCount = 0;
 			moveDirFlag = true;
 			return;
@@ -98,7 +92,7 @@ void MoveState::Update(AICharacter * character)
 	{
 		if (changeWaitStateCount > WAITSTATE_INV)
 		{
-			character->ChangeState(WaitState::GetInstance());
+			character->ChangeState("Wait");
 			changeWaitStateCount = 0;
 			moveDirFlag = true;
 			return;
@@ -130,7 +124,7 @@ void MoveState::Update(AICharacter * character)
 		if (rand >= 95)
 		{
 			character->SetJumpType(JUMP_TYPE_FRONT);
-			character->ChangeState(JumpState::GetInstance());
+			character->ChangeState("Jump");
 			moveDirFlag = true;
 			return;
 		}
@@ -145,14 +139,14 @@ void MoveState::Update(AICharacter * character)
 					if (rand == 0)
 					{
 						character->SetAnim(character->GetSPAttackName(i));
-						character->ChangeState(AttackState::GetInstance());
+						character->ChangeState("Attack");
 						notAttackCount = 0;
 						return;
 					}
 				}
 			}
 		}
-		character->ChangeState(AttackState::GetInstance());
+		character->ChangeState("Attack");
 		notAttackCount = 0;
 		return;
 	}
@@ -161,7 +155,7 @@ void MoveState::Update(AICharacter * character)
 	if (notAttackCount >= 120)
 	{
 		character->SetJumpType(JUMP_TYPE_FRONT);
-		character->ChangeState(JumpState::GetInstance());
+		character->ChangeState("Jump");
 		notAttackCount = 0;
 		moveDirFlag = true;
 		return;
@@ -184,7 +178,7 @@ void MoveState::Update(AICharacter * character)
 			if (data.pos.x > 0 && abs(distance.x) < 200)
 			{
 				character->SetJumpType(JUMP_TYPE_RAND);
-				character->ChangeState(JumpState::GetInstance());
+				character->ChangeState("Jump");
 				moveDirFlag = true;
 				return;
 			}

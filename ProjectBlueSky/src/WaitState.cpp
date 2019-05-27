@@ -1,10 +1,6 @@
 #include "WaitState.h"
 #include "AICharacter.h"
-#include "LongAttackState.h"
-#include "JumpState.h"
-#include "MoveState.h"
 #include "Collision.h"
-#include "DamageState.h"
 
 #include "DxLib.h"
 
@@ -35,7 +31,7 @@ void WaitState::Update(AICharacter * character)
 	if(distance < 300)
 	{
 		character->SetJumpType(JUMP_TYPE_FRONT);
-		character->ChangeState(JumpState::GetInstance());
+		character->ChangeState("Jump");
 		return;
 	}
 
@@ -51,7 +47,7 @@ void WaitState::Update(AICharacter * character)
 					if (rand == 0)
 					{
 						character->SetAnim(character->GetSPAttackName(i));
-						character->ChangeState(LongAttackState::GetInstance());
+						character->ChangeState("LongAttack");
 						return;
 					}
 				}
@@ -59,12 +55,12 @@ void WaitState::Update(AICharacter * character)
 
 			// 何も選択されなかったらSHOTにセット
 			character->SetAnim(character->GetSPAttackName(0));
-			character->ChangeState(LongAttackState::GetInstance());
+			character->ChangeState("LongAttack");
 			return;
 		}
 		else
 		{
-			character->ChangeState(MoveState::GetInstance());
+			character->ChangeState("Move");
 		}
 	}
 

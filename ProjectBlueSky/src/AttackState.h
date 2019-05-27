@@ -6,24 +6,16 @@ class AttackState :
 {
 public:
 
-	static AttackState *GetInstance()
-	{
-		static AttackState s_Instance;
-		return &s_Instance;
-	}
+	AttackState();
+	~AttackState();
 
 private:
 
-	AttackState();
-	~AttackState();
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
 
 	unsigned int attackCount;
 	bool warpFlag;
-
-	AttackState(const AttackState&);
-	void operator=(const AttackState&) {}
 };
 

@@ -1,6 +1,5 @@
 #include "GuardState.h"
 #include "AICharacter.h"
-#include "MoveState.h"
 #include "Collision.h"
 
 #define KNOCK_BACK_SPEED (10)
@@ -27,7 +26,7 @@ void GuardState::Update(AICharacter * character)
 	 && (character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_ATTACK_SP)
 	 && knockBackSpeed == 0)
 	{
-		character->ChangeState(MoveState::GetInstance());
+		character->ChangeState("Move");
 		character->SetAnim("Œã‚ëˆÚ“®");
 	}
 

@@ -7,16 +7,11 @@ class MoveState :
 {
 public:
 
-	static MoveState *GetInstance()
-	{
-		static MoveState s_Instance;
-		return &s_Instance;
-	}
+	MoveState();
+	~MoveState();
 
 private:
 
-	MoveState();
-	~MoveState();
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
@@ -28,9 +23,5 @@ private:
 	unsigned int notAttackCount;			// 攻撃していない状態のカウント
 	unsigned int moveFrontCount;			// 前移動持続時間のカウント
 	unsigned int guardHitCount;				// ガードを連続でした回数
-
-
-	MoveState(const MoveState&);
-	void operator=(const MoveState&) {}
 };
 
