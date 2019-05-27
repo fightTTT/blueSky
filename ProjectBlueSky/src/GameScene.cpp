@@ -185,6 +185,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				eState.enemyAnimAttribute[0] = charaObj[0].charaObj->GetAnimAttribute(0);
 				eState.enemyAnimAttribute[1] = charaObj[0].charaObj->GetAnimAttribute(1);
 				eState.enemyAnimAttribute[2] = charaObj[0].charaObj->GetAnimAttribute(2);
+				eState.enemyAnim = charaObj[0].charaObj->GetAnim();
 				charaObj[1].charaObj->SetEnemyState(eState);
 			}
 			else
@@ -193,6 +194,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				eState.enemyAnimAttribute[0] = charaObj[1].charaObj->GetAnimAttribute(0);
 				eState.enemyAnimAttribute[1] = charaObj[1].charaObj->GetAnimAttribute(1);
 				eState.enemyAnimAttribute[2] = charaObj[1].charaObj->GetAnimAttribute(2);
+				eState.enemyAnim = charaObj[1].charaObj->GetAnim();
 				charaObj[0].charaObj->SetEnemyState(eState);
 			}
 		}

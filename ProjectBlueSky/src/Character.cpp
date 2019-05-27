@@ -38,7 +38,7 @@ void Character::CheckDamage(ANIM_ATTRIBUTE att)
 			AddPlayerHP(-10);
 			break;
 		case ANIM_ATTRIBUTE_ATTACK_SP:
-			AddPlayerHP(-10);
+			AddPlayerHP(spAttackDamage[enemyState.enemyAnim]);
 			break;
 		default:
 			// ‰½‚à‚µ‚È‚¢

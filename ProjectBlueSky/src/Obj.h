@@ -64,6 +64,7 @@ struct EnemyState
 
 	VECTOR2 enemyPos;
 	ANIM_ATTRIBUTE enemyAnimAttribute[3];
+	std::string enemyAnim;
 	std::vector<ShotData> shotData;
 };
 
