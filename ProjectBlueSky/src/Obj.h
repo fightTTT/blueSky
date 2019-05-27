@@ -149,6 +149,7 @@ public:
 
 	void SetHitData(bool flag, ColType type);
 	bool GetHitFlag() const { return hitData.hitFlag; }
+	ColType GetHitBoxType() const { return hitData.colType; }
 
 	PAD_ID GetPadID() const { return padID; }
 

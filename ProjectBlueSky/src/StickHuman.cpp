@@ -13,6 +13,22 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 	spAttackAnimFileName[2] = "waza_3";
 	shotCreateCnt = 0;
 
+	spAttackDamage["百裂脚"] = -10;
+	spAttackDamage["昇竜"] = -30;
+	spAttackDamage["ウマキック"] = -15;
+	spAttackDamage["ローリングアタック"] = -15;
+	spAttackDamage["旋風脚"] = -15;
+	spAttackDamage["カンフーキック"] = -30;
+	spAttackDamage["ラッシュ"] = -10;
+	spAttackDamage["回し蹴り"] = -20;
+	spAttackDamage["ミサイルアロー"] = -15;
+	spAttackDamage["ランキャク"] = -20;
+	spAttackDamage["地面割"] = -25;
+	spAttackDamage["タックル"] = -15;
+	spAttackDamage["かかと落とし"] = -25;
+	spAttackDamage["アクセル"] = -40;
+	spAttackDamage["蹴り返し"] = -15;
+
 	switch (lpSceneMng.GetCharID(id))
 	{
 	case 0:
@@ -37,7 +53,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["百裂脚"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["百裂脚"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["百裂脚"] = -10;
 		spAttackCommand[1][DIR_RIGHT].resize(8);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_CENTER, SP_COM_KICK, SP_COM_CENTER, SP_COM_KICK, SP_COM_CENTER, SP_COM_KICK, SP_COM_CENTER, SP_COM_KICK };
 		spAttackCommand[1][DIR_LEFT].resize(8);
@@ -50,7 +65,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["昇竜"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["昇竜"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
-		spAttackDamage["昇竜"] = -30;
 		spAttackCommand[2][DIR_RIGHT].resize(4);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_PUNCH };
 		spAttackCommand[2][DIR_LEFT].resize(4);
@@ -79,7 +93,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["ウマキック"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ウマキック"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["ウマキック"] = -15;
 		spAttackCommand[1][DIR_RIGHT].resize(4);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_LEFT_DOWN, SP_COM_DOWN, SP_COM_KICK };
 		spAttackCommand[1][DIR_LEFT].resize(4);
@@ -92,7 +105,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["ローリングアタック"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ローリングアタック"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["ローリングアタック"] = -15;
 		spAttackCommand[2][DIR_RIGHT].resize(5);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_RIGHT, SP_COM_PUNCH };
 		spAttackCommand[2][DIR_LEFT].resize(5);
@@ -121,7 +133,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["旋風脚"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["旋風脚"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["旋風脚"] = -15;
 		spAttackCommand[1][DIR_RIGHT].resize(4);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
 		spAttackCommand[1][DIR_LEFT].resize(4);
@@ -134,7 +145,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["カンフーキック"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["カンフーキック"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
-		spAttackDamage["カンフーキック"] = -30;
 		spAttackCommand[2][DIR_RIGHT].resize(5);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_UP, SP_COM_KICK };
 		spAttackCommand[2][DIR_LEFT].resize(5);
@@ -163,7 +173,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["ラッシュ"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ラッシュ"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["ラッシュ"] = -10;
 		spAttackCommand[1][DIR_RIGHT].resize(8);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_CENTER, SP_COM_PUNCH, SP_COM_CENTER, SP_COM_PUNCH, SP_COM_CENTER, SP_COM_PUNCH, SP_COM_CENTER, SP_COM_PUNCH };
 		spAttackCommand[1][DIR_LEFT].resize(8);
@@ -176,7 +185,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["回し蹴り"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["回し蹴り"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
-		spAttackDamage["回し蹴り"] = -20;
 		spAttackCommand[2][DIR_RIGHT].resize(6);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_LEFT_DOWN, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_KICK };
 		spAttackCommand[2][DIR_LEFT].resize(6);
@@ -205,7 +213,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["ミサイルアロー"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ミサイルアロー"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["ミサイルアロー"] = -15;
 		spAttackCommand[1][DIR_RIGHT].resize(5);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_RIGHT, SP_COM_PUNCH };
 		spAttackCommand[1][DIR_LEFT].resize(5);
@@ -218,7 +225,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["ランキャク"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ランキャク"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
-		spAttackDamage["ランキャク"] = -20;
 		spAttackCommand[2][DIR_RIGHT].resize(5);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_UP, SP_COM_KICK };
 		spAttackCommand[2][DIR_LEFT].resize(5);
@@ -247,7 +253,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["地面割"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["地面割"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["地面割"] = -25;
 		spAttackCommand[1][DIR_RIGHT].resize(3);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_ACCUMULATE, SP_COM_PUNCH };
 		spAttackCommand[1][DIR_LEFT].resize(3);
@@ -260,7 +265,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["タックル"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["タックル"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["タックル"] = -15;
 		spAttackCommand[2][DIR_RIGHT].resize(5);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_RIGHT, SP_COM_PUNCH };
 		spAttackCommand[2][DIR_LEFT].resize(5);
@@ -289,7 +293,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["かかと落とし"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["かかと落とし"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["かかと落とし"] = -25;
 		spAttackCommand[1][DIR_RIGHT].resize(4);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_RIGHT_DOWN, SP_COM_DOWN, SP_COM_KICK };
 		spAttackCommand[1][DIR_LEFT].resize(4);
@@ -330,7 +333,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["アクセル"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["アクセル"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["アクセル"] = -40;
 		spAttackCommand[1][DIR_RIGHT].resize(4);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
 		spAttackCommand[1][DIR_LEFT].resize(4);
@@ -343,7 +345,6 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["蹴り返し"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["蹴り返し"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["蹴り返し"] = -15;
 		spAttackCommand[2][DIR_RIGHT].resize(6);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_RIGHT_DOWN, SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
 		spAttackCommand[2][DIR_LEFT].resize(6);

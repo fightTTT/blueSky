@@ -27,7 +27,7 @@ Character::~Character()
 
 void Character::CheckDamage(ANIM_ATTRIBUTE att)
 {
-	if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+	if ((animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE) && (animName != "ダメージ_立ち"))
 	{
 		switch (att)
 		{
@@ -1137,7 +1137,6 @@ void Character::CheckHitFlag(void)
 
 			if (animName != "ダメージ_立ち")
 			{
-				AddPlayerHP(-10);
 				WaitTimer(65);
 
 				comboCnt++;
