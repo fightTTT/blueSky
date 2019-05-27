@@ -24,6 +24,7 @@ void LongAttackState::Update(AICharacter * character)
 	auto dir = character->GetDir();
 	auto charaAnim = character->GetAnim();
 	auto ssize = lpSceneMng.GetScreenSize();
+	auto hitData = character->GetHitData();
 
 	if (character->GetAnimEndFlag())
 	{
@@ -47,7 +48,7 @@ void LongAttackState::Update(AICharacter * character)
 			}
 		}
 
-		if (character->GetAnimCount() > 60)
+		if (character->GetAnimCount() > 60 || hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK))
 		{
 			character->SetDirChange(true);
 			character->SetAnim("‘Ò‹@");
@@ -117,7 +118,11 @@ void LongAttackState::Update(AICharacter * character)
 		{
 			spEndCnt++;
 
-			if (spEndCnt < 45)
+			if ((spEndCnt >= 45) || (hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
+			{
+				character->SetAnimStopFlag(false);
+			}
+			else
 			{
 				if (spEndCnt > 4)
 				{
@@ -130,10 +135,6 @@ void LongAttackState::Update(AICharacter * character)
 						pos.x -= 20;
 					}
 				}
-			}
-			else
-			{
-				character->SetAnimStopFlag(false);
 			}
 		}
 		else

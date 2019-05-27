@@ -90,6 +90,7 @@ void AttackState::Update(AICharacter * character)
 	auto pos = character->GetPos();
 	auto dir = character->GetDir();
 	auto charaAnim = character->GetAnim();
+	auto hitData = character->GetHitData();
 
 	if (charaAnim == "カンフーキック")
 	{
@@ -172,14 +173,16 @@ void AttackState::Update(AICharacter * character)
 		}
 		else
 		{
-			// 攻撃が当たったら以下のように戻ってくる処理を入れ、当たらなかったらそのまま地面に落ちてしまうようにする
-			if (dir == DIR_RIGHT)
+			if ((hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
 			{
-				pos.x -= 8;
-			}
-			else
-			{
-				pos.x += 8;
+				if (dir == DIR_RIGHT)
+				{
+					pos.x -= 8;
+				}
+				else
+				{
+					pos.x += 8;
+				}
 			}
 
 			if (character->GetAnimCount() < 33)
