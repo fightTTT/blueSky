@@ -310,6 +310,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					}
 				}
 
+
+
 				for (int shot1 = 0; shot1 < shotObj.size(); shot1++)
 				{
 					if (shotObj[shot1]->GetHitFlag())
