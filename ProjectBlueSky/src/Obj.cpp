@@ -196,6 +196,10 @@ void Obj::SetEnemyState(EnemyState state)
 	enemyState = state;
 }
 
+void Obj::CheckDamage(ANIM_ATTRIBUTE att)
+{
+}
+
 void Obj::AddPlayerHP(int addHP)
 {
 	playerHPOld = playerHP;

@@ -125,6 +125,9 @@ public:
 	// “G‚Ìî•ñæ“¾
 	EnemyState GetEnemyState() const { return enemyState; }
 
+	// ÌßÚ²Ô°‚É—^‚¦‚éÀŞÒ°¼Ş—Ê‚ğÁª¯¸‚·‚é@(ˆø”: “G‚Ì±ÆÒ°¼®İ‚Ì‘®«)
+	virtual void CheckDamage(ANIM_ATTRIBUTE att);
+
 	// ƒvƒŒƒCƒ„[‚ÌHP‚ğ‰ÁZ
 	void AddPlayerHP(int addHP);
 	void AddPlayerHPOld(int addHP);
