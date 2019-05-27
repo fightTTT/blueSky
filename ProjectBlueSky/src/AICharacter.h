@@ -50,6 +50,8 @@ public:
 
 	bool isSPLongAttack(std::string spAnimName);
 
+	void CheckDamage(ANIM_ATTRIBUTE att);
+
 private:
 
 	bool InitAnim(void);
@@ -72,6 +74,8 @@ protected:
 	bool dirChangeFlag;				// 方向変更フラグ
 	JUMP_TYPE jumpType;				// ジャンプ方向のタイプ
 	int shotCreateCount;			// shotを生成するまでのカウント
+
+	std::map<std::string, int> spAttackDamage;
 
 	std::string characterName;
 	std::string spAttackAnimName[3];

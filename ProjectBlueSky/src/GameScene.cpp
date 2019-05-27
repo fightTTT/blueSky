@@ -332,7 +332,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 								&& shotObj[shot1]->GetPos().x + (shotObj[shot1]->GetDivSize().x / 2) - 50 <= shotObj[shot2]->GetPos().x + (shotObj[shot2]->GetDivSize().x / 2) + 50)
 							{
 								shotObj[shot1]->SetHitData(true, COLTYPE_NON);
-								shotObj[shot2]->SetHitData(true, COLTYPE_NON);
+								shotObj2[shot2]->SetHitData(true, COLTYPE_NON);
 							}
 						}
 					}
