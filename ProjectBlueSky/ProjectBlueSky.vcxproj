@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\HitEffect.cpp" />
     <ClCompile Include="src\SoundMng.cpp" />
     <ClCompile Include="src\ResultScene.cpp" />
     <ClCompile Include="src\DamageState.cpp" />
@@ -50,6 +51,7 @@
     <ClCompile Include="src\StickHuman.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\HitEffect.h" />
     <ClInclude Include="src\SoundMng.h" />
     <ClInclude Include="src\ResultScene.h" />
     <ClInclude Include="src\DamageState.h" />
