@@ -240,7 +240,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		spAttackCommand[0][DIR_LEFT].resize(3);
 		spAttackCommand[0][DIR_LEFT] = { SP_COM_PUNCH, SP_COM_ACCUMULATE, SP_COM_CENTER };
 
-		AddAnim("地面割", 0, 0, 15, 4, false, 0, 0);
+		AddAnim("地面割", 0, 0, 22, 4, false, 50, 30);
 		spAttackAnimName[1] = "地面割";
 		spAttackAnimFileName[1] = "split";
 		animAttributeTbl["地面割"][0] = ANIM_ATTRIBUTE_AIR;
