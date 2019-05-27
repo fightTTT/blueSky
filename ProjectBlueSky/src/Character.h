@@ -68,12 +68,16 @@ private:
 
 	int spEndCnt;		// 必殺技の終了ﾀｲﾐﾝｸﾞ管理用のｶｳﾝﾄ
 
+	// ﾌﾟﾚｲﾔｰに与えるﾀﾞﾒｰｼﾞ量をﾁｪｯｸする　(引数: 敵のｱﾆﾒｰｼｮﾝの属性)
+	void CheckDamage(ANIM_ATTRIBUTE att);
+
 protected:
 	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn, PAD_ID id);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標, 反転ﾌﾗｸﾞ, パッド番号
 
 	std::string characterName;
 	std::string spAttackAnimName[3];
 	std::string spAttackAnimFileName[3];
+	std::map<std::string, int> spAttackDamage;
 	std::array<std::array<std::vector<SP_COM>, DIR_MAX>, 3> spAttackCommand;		// spAttackCommand[技番号][自分の方向][コマンド]
 
 	int shotCreateCnt;		// ｼｮｯﾄを生成するまでのｶｳﾝﾄ
