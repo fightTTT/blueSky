@@ -234,7 +234,7 @@ bool AICharacter::InitAnim(void)
 	return true;
 }
 
-void AICharacter::AddStateObj(std::string key, std::shared_ptr<AIState>&& state)
+void AICharacter::AddStateObj(std::string key, std::shared_ptr<AIState> state)
 {
 	if (!stateObj.count(key))
 	{

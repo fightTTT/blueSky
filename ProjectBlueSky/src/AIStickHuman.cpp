@@ -20,7 +20,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[0] = "hadou";
 		animAttributeTbl["波動"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["波動"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["波動"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["波動"][2] = ANIM_ATTRIBUTE_SHOT;
 
 		AddAnim("百裂脚", 0, 0, 18, 4, false, 0, 0);
 		spAttackAnimName[1] = "百裂脚";
@@ -47,7 +47,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[0] = "sitotsu";
 		animAttributeTbl["刺突砲"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["刺突砲"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["刺突砲"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["刺突砲"][2] = ANIM_ATTRIBUTE_SHOT;
 
 		AddAnim("ウマキック", 0, 0, 7, 5, false, 0, 0);
 		spAttackAnimName[1] = "ウマキック";
@@ -74,7 +74,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[0] = "kikoh";
 		animAttributeTbl["気功拳"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["気功拳"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["気功拳"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["気功拳"][2] = ANIM_ATTRIBUTE_SHOT;
 
 		AddAnim("旋風脚", 0, 0, 4, 3, true, 0, -16);
 		spAttackAnimName[1] = "旋風脚";
@@ -88,7 +88,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[2] = "kung";
 		animAttributeTbl["カンフーキック"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["カンフーキック"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["カンフーキック"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["カンフーキック"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
 		shotCreateCount = 30;
 
@@ -101,7 +101,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[0] = "kamehame";
 		animAttributeTbl["かめはめ波"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["かめはめ波"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["かめはめ波"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["かめはめ波"][2] = ANIM_ATTRIBUTE_SHOT;
 
 		AddAnim("ラッシュ", 0, 0, 15, 1, true, 0, 0);
 		spAttackAnimName[1] = "ラッシュ";
@@ -115,7 +115,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[2] = "roundKick";
 		animAttributeTbl["回し蹴り"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["回し蹴り"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["回し蹴り"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["回し蹴り"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
 		shotCreateCount = 30;
 
@@ -128,7 +128,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[0] = "sonic";
 		animAttributeTbl["ソニックブーム"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["ソニックブーム"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["ソニックブーム"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["ソニックブーム"][2] = ANIM_ATTRIBUTE_SHOT;
 
 		AddAnim("ミサイルアロー", 0, 0, 6, 4, false, 0, -16);
 		spAttackAnimName[1] = "ミサイルアロー";
@@ -142,7 +142,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[2] = "cutterKick";
 		animAttributeTbl["ランキャク"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["ランキャク"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["ランキャク"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["ランキャク"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
 		shotCreateCount = 22;
 
@@ -155,7 +155,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[0] = "throw";
 		animAttributeTbl["岩投げ"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["岩投げ"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["岩投げ"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["岩投げ"][2] = ANIM_ATTRIBUTE_SHOT;
 
 		AddAnim("地面割", 0, 0, 15, 4, false, 0, 0);
 		spAttackAnimName[1] = "地面割";
@@ -182,7 +182,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[0] = "psycho";
 		animAttributeTbl["サイコカッター"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["サイコカッター"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["サイコカッター"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["サイコカッター"][2] = ANIM_ATTRIBUTE_SHOT;
 
 		AddAnim("かかと落とし", 0, 0, 14, 4, false, 0, 0);
 		spAttackAnimName[1] = "かかと落とし";
@@ -196,7 +196,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[2] = "warp";
 		animAttributeTbl["ワープ"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["ワープ"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["ワープ"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["ワープ"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
 		shotCreateCount = 22;
 
@@ -209,7 +209,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		spAttackAnimFileName[0] = "ibuki";
 		animAttributeTbl["竜の息吹"][0] = ANIM_ATTRIBUTE_STAND;
 		animAttributeTbl["竜の息吹"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
-		animAttributeTbl["竜の息吹"][2] = ANIM_ATTRIBUTE_NON;
+		animAttributeTbl["竜の息吹"][2] = ANIM_ATTRIBUTE_SHOT;
 
 		AddAnim("アクセル", 0, 0, 21, 4, false, 0, 0);
 		spAttackAnimName[1] = "アクセル";

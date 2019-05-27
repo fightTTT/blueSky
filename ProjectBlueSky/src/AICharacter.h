@@ -56,7 +56,7 @@ private:
 
 	std::map<std::string, std::string> animFileName;		// ±ÆÒ°¼®Ý‚Ì‰æ‘œÌ§²Ù–¼ (·°: ±ÆÒ°¼®Ý–¼)
 
-	void AddStateObj(std::string key, std::shared_ptr<AIState>&& state);
+	void AddStateObj(std::string key, std::shared_ptr<AIState> state);
 
 	// stateƒNƒ‰ƒX‚ð•Û‘¶
 	std::map<std::string, std::shared_ptr<AIState>> stateObj;
