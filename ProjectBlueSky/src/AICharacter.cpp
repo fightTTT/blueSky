@@ -202,7 +202,7 @@ bool AICharacter::isSPLongAttack(std::string spAnimName)
 
 void AICharacter::CheckDamage(ANIM_ATTRIBUTE att)
 {
-	if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+	if ((animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE) && (animName != "É_ÉÅÅ[ÉW_óßÇø"))
 	{
 		switch (att)
 		{
