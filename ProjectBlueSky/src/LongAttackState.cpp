@@ -27,9 +27,12 @@ void LongAttackState::Update(AICharacter * character)
 
 	if (character->GetAnimEndFlag())
 	{
-		character->ChangeState("Move");
+		character->SetAnim("待機");
 		character->SetAnimStopFlag(false);
+		character->ChangeState("Move");
+		return;
 	}
+
 	if (charaAnim == "ローリングアタック")
 	{
 		if (character->GetAnimCount() > 20)
