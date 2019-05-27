@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "Dxlib.h"
 #include "ObjList.h"
 #include "Obj.h"
@@ -144,28 +145,34 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		 || (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
 		 || (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
 		{
-			if (charaObj[1].charaObj->GetAnim() == "Œã‚ëˆÚ“®")
+			if (abs(afterPos[0].x - afterPos[1].x) <= (STICK_HUMAN_IMAGE_SIZE_X * 2))
 			{
-				charaObj[1].charaObj->SetAnim("ƒK[ƒh_—§‚¿");
-			}
+				if (charaObj[1].charaObj->GetAnim() == "Œã‚ëˆÚ“®")
+				{
+					charaObj[1].charaObj->SetAnim("ƒK[ƒh_—§‚¿");
+				}
 
-			if (charaObj[1].charaObj->GetAnim() == "‚µ‚á‚ª‚Ý_Œã‚ë")
-			{
-				charaObj[1].charaObj->SetAnim("ƒK[ƒh_‚µ‚á‚ª‚Ý");
+				if (charaObj[1].charaObj->GetAnim() == "‚µ‚á‚ª‚Ý_Œã‚ë")
+				{
+					charaObj[1].charaObj->SetAnim("ƒK[ƒh_‚µ‚á‚ª‚Ý");
+				}
 			}
 		}
 		if ((charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SMALL)
 		 || (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
 		 || (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
 		{
-			if (charaObj[0].charaObj->GetAnim() == "Œã‚ëˆÚ“®")
+			if (abs(afterPos[0].x - afterPos[1].x) <= (STICK_HUMAN_IMAGE_SIZE_X * 2))
 			{
-				charaObj[0].charaObj->SetAnim("ƒK[ƒh_—§‚¿");
-			}
+				if (charaObj[0].charaObj->GetAnim() == "Œã‚ëˆÚ“®")
+				{
+					charaObj[0].charaObj->SetAnim("ƒK[ƒh_—§‚¿");
+				}
 
-			if (charaObj[0].charaObj->GetAnim() == "‚µ‚á‚ª‚Ý_Œã‚ë")
-			{
-				charaObj[0].charaObj->SetAnim("ƒK[ƒh_‚µ‚á‚ª‚Ý");
+				if (charaObj[0].charaObj->GetAnim() == "‚µ‚á‚ª‚Ý_Œã‚ë")
+				{
+					charaObj[0].charaObj->SetAnim("ƒK[ƒh_‚µ‚á‚ª‚Ý");
+				}
 			}
 		}
 
@@ -285,6 +292,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 										&& colData[i].hitBox[a].rect.endPos.y >= colData[(i + 1) % 2].hitBox[b].rect.startPos.y
 										&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
 									{
+										charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
 										charaObj[(i + 1) % 2].charaObj->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
 
 										if (colData[(i + 1) % 2].hitBox[b].type == COLTYPE_GUARD)
