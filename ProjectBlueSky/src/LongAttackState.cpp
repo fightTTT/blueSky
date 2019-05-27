@@ -1,7 +1,5 @@
 #include "LongAttackState.h"
 #include "AICharacter.h"
-#include "MoveState.h"
-#include "DamageState.h"
 #include "Collision.h"
 #include "SceneMng.h"
 
@@ -29,7 +27,7 @@ void LongAttackState::Update(AICharacter * character)
 
 	if (character->GetAnimEndFlag())
 	{
-		character->ChangeState(MoveState::GetInstance());
+		character->ChangeState("Move");
 		character->SetAnimStopFlag(false);
 	}
 	if (charaAnim == "ローリングアタック")
@@ -50,7 +48,7 @@ void LongAttackState::Update(AICharacter * character)
 		{
 			character->SetDirChange(true);
 			character->SetAnim("待機");
-			character->ChangeState(MoveState::GetInstance());
+			character->ChangeState("Move");
 			return;
 		}
 	}
@@ -106,7 +104,7 @@ void LongAttackState::Update(AICharacter * character)
 		{
 			character->SetDirChange(true);
 			character->SetAnim("待機");
-			character->ChangeState(MoveState::GetInstance());
+			character->ChangeState("Move");
 			return;
 		}
 	}

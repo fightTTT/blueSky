@@ -8,24 +8,15 @@ class JumpState :
 {
 public:
 
-	static JumpState *GetInstance()
-	{
-		static JumpState s_Instance;
-		return &s_Instance;
-	}
-
-private:
-
 	JumpState();
 	~JumpState();
+
+private:
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
 
 	bool jumpFlag;
 	VECTOR2 jumpSpeed;
-
-	JumpState(const JumpState&);
-	void operator=(const JumpState&) {}
 };
 

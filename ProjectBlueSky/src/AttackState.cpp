@@ -1,9 +1,6 @@
 #include "AttackState.h"
 #include "AICharacter.h"
-#include "MoveState.h"
 #include "Collision.h"
-#include "DamageState.h"
-#include "JumpState.h"
 #include "SceneMng.h"
 
 #include "DxLib.h"
@@ -33,7 +30,7 @@ void AttackState::Init(AICharacter * character)
 		attackCount = 0;
 		character->SetDirChange(false);
 		character->SetJumpType(JUMP_TYPE_FRONT);
-		character->ChangeState(JumpState::GetInstance());
+		character->ChangeState("Jump");
 		return;
 	}
 	else
@@ -85,7 +82,7 @@ void AttackState::Update(AICharacter * character)
 	{
 		character->SetDirChange(true);
 		character->SetAnim("‘Ò‹@");
-		character->ChangeState(MoveState::GetInstance());
+		character->ChangeState("Move");
 		return;
 	}
 
@@ -114,7 +111,7 @@ void AttackState::Update(AICharacter * character)
 		{
 			character->SetDirChange(true);
 			character->SetAnim("‘Ò‹@");
-			character->ChangeState(MoveState::GetInstance());
+			character->ChangeState("Move");
 			return;
 		}
 	}
