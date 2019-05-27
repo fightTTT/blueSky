@@ -552,21 +552,23 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 	}
 	else if (animName == "ローリングアタック")
 	{
-		if (animCnt > 20)
-		{
-			if (dir == DIR_RIGHT)
-			{
-				pos.x += 20;
-			}
-			else
-			{
-				pos.x -= 20;
-			}
-		}
-
-		if (animCnt > 60 || (enemyState.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_DAMAGE))
+		if ((animCnt > 60) || (hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
 		{
 			SetAnim("待機");
+		}
+		else
+		{
+			if (animCnt > 20)
+			{
+				if (dir == DIR_RIGHT)
+				{
+					pos.x += 20;
+				}
+				else
+				{
+					pos.x -= 20;
+				}
+			}
 		}
 	}
 	else if (animName == "旋風脚")
@@ -617,7 +619,11 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		{
 			spEndCnt++;
 
-			if (spEndCnt < 45)
+			if ((spEndCnt >= 45) || (hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
+			{
+				animStopFlag = false;
+			}
+			else
 			{
 				if (spEndCnt > 4)
 				{
@@ -630,10 +636,6 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 						pos.x -= 20;
 					}
 				}
-			}
-			else
-			{
-				animStopFlag = false;
 			}
 		}
 		else
@@ -716,14 +718,16 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		}
 		else
 		{
-			// 攻撃が当たったら以下のように戻ってくる処理を入れ、当たらなかったらそのまま地面に落ちてしまうようにする
-			if (dir == DIR_RIGHT)
+			if ((hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
 			{
-				pos.x -= 8;
-			}
-			else
-			{
-				pos.x += 8;
+				if (dir == DIR_RIGHT)
+				{
+					pos.x -= 8;
+				}
+				else
+				{
+					pos.x += 8;
+				}
 			}
 
 			if (animCnt < 33)
