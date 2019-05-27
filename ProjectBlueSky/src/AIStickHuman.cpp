@@ -167,7 +167,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		animAttributeTbl["岩投げ"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["岩投げ"][2] = ANIM_ATTRIBUTE_SHOT;
 
-		AddAnim("地面割", 0, 0, 15, 4, false, 0, 0);
+		AddAnim("地面割", 0, 0, 22, 4, false, 50, 30);
 		spAttackAnimName[1] = "地面割";
 		spAttackAnimFileName[1] = "split";
 		animAttributeTbl["地面割"][0] = ANIM_ATTRIBUTE_AIR;
