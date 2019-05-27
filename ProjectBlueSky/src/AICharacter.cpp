@@ -200,6 +200,30 @@ bool AICharacter::isSPLongAttack(std::string spAnimName)
 	return false;
 }
 
+void AICharacter::CheckDamage(ANIM_ATTRIBUTE att)
+{
+	if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+	{
+		switch (att)
+		{
+		case ANIM_ATTRIBUTE_ATTACK_SMALL:
+			AddPlayerHP(-5);
+			break;
+		case ANIM_ATTRIBUTE_SHOT:
+		case ANIM_ATTRIBUTE_ATTACK_BIG:
+			AddPlayerHP(-10);
+			break;
+		
+		case ANIM_ATTRIBUTE_ATTACK_SP:
+			AddPlayerHP(-10);
+			break;
+		default:
+			// ‰½‚à‚µ‚È‚¢
+			break;
+		}
+	}
+}
+
 bool AICharacter::InitAnim(void)
 {
 	AddAnim("‘Ò‹@", 0, 0, 6, 4, true, 0, 0);
