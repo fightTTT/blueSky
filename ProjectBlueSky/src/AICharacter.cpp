@@ -418,16 +418,19 @@ bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VE
 	{
 		animFileName[spAttackAnimName[0]] = spAttackAnimFileName[0];
 		animName.push_back(spAttackAnimName[0]);
+		lpColMng.ColLoad("ñ_êlä‘", spAttackAnimName[0], animTable[spAttackAnimName[0]][ANIM_TBL_FRAME]);
 	}
 	if ((spAttackAnimName[1] != "ãZ2") && (spAttackAnimFileName[1] != "waza_2"))
 	{
 		animFileName[spAttackAnimName[1]] = spAttackAnimFileName[1];
 		animName.push_back(spAttackAnimName[1]);
+		lpColMng.ColLoad("ñ_êlä‘", spAttackAnimName[1], animTable[spAttackAnimName[1]][ANIM_TBL_FRAME]);
 	}
 	if ((spAttackAnimName[2] != "ãZ3") && (spAttackAnimFileName[2] != "waza_3"))
 	{
 		animFileName[spAttackAnimName[2]] = spAttackAnimFileName[2];
 		animName.push_back(spAttackAnimName[2]);
+		lpColMng.ColLoad("ñ_êlä‘", spAttackAnimName[2], animTable[spAttackAnimName[2]][ANIM_TBL_FRAME]);
 	}
 
 	// àÍäáì«Ç›çûÇ›
