@@ -7,16 +7,10 @@ class GuardState :
 {
 public:
 
-	static GuardState *GetInstance()
-	{
-		static GuardState s_Instance;
-		return &s_Instance;
-	}
-
-private:
-
 	GuardState();
 	~GuardState();
+
+private:
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
@@ -24,8 +18,5 @@ private:
 
 	bool guardHitFlag;
 	int knockBackSpeed;
-
-	GuardState(const GuardState&);
-	void operator=(const GuardState&) {}
 };
 

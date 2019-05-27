@@ -1,6 +1,5 @@
 #include "DamageState.h"
 #include "AICharacter.h"
-#include "MoveState.h"
 #include "SceneMng.h"
 
 #include "DxLib.h"
@@ -69,7 +68,7 @@ void DamageState::Update(AICharacter * character)
 	{
 		if (character->GetAnimEndFlag())
 		{
-			character->ChangeState(MoveState::GetInstance());
+			character->ChangeState("Move");
 		}
 
 		pos.x += knockBackSpeed.x;
@@ -127,7 +126,7 @@ void DamageState::Update(AICharacter * character)
 	{
 		if (character->GetAnimEndFlag())
 		{
-			character->ChangeState(MoveState::GetInstance());
+			character->ChangeState("Move");
 		}
 
 	}

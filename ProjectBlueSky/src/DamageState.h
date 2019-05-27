@@ -8,16 +8,10 @@ class DamageState :
 {
 public:
 
-	static DamageState *GetInstance()
-	{
-		static DamageState s_Instance;
-		return &s_Instance;
-	}
-
-private:
-
 	DamageState();
 	~DamageState();
+
+private:
 
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
@@ -25,7 +19,4 @@ private:
 
 	VECTOR2 knockBackSpeed;
 	int comboCnt;
-
-	DamageState(const DamageState&);
-	void operator=(const DamageState&) {}
 };

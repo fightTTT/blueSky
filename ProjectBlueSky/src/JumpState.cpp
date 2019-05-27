@@ -1,9 +1,7 @@
 #include "JumpState.h"
 #include "AICharacter.h"
-#include "MoveState.h"
 #include "SceneMng.h"
 #include "Collision.h"
-#include "DamageState.h"
 
 #include "DxLib.h"
 
@@ -148,7 +146,7 @@ void JumpState::Update(AICharacter * character)
 		pos.y = ssize.y;
 		jumpFlag = false;
 		character->SetDirChange(true);
-		character->ChangeState(MoveState::GetInstance());
+		character->ChangeState("Move");
 	}
 
 	// ƒWƒƒƒ“ƒv’†‚É‰æ–ÊŠO‚É‚¢‚Á‚½‚ç–ß‚·

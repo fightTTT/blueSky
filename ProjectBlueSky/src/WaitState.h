@@ -7,21 +7,12 @@ class WaitState :
 {
 public:
 
-	static WaitState *GetInstance()
-	{
-		static WaitState s_Instance;
-		return &s_Instance;
-	}
-
-private:
-
 	WaitState();
 	~WaitState();
 
+private:
+
 	void Init(AICharacter* character);
 	void Update(AICharacter* character);
-
-	WaitState(const WaitState&);
-	void operator=(const WaitState&) {}
 };
 

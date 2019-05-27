@@ -2,10 +2,16 @@
 #include "ImageMng.h"
 #include "Shot.h"
 #include "CollisionMng.h"
+#include "SceneMng.h"
+
 #include "AIState.h"
+#include "AttackState.h"
 #include "MoveState.h"
 #include "WaitState.h"
-#include "SceneMng.h"
+#include "DamageState.h"
+#include "GuardState.h"
+#include "JumpState.h"
+#include "LongAttackState.h"
 
 #include "DxLib.h"
 
@@ -19,7 +25,15 @@ AICharacter::AICharacter(VECTOR2 offset) : Obj(offset)
 
 	DrawHPCount = 0.0f;
 
-	ChangeState(MoveState::GetInstance());
+	AddStateObj("Attack", std::move(std::make_shared<AttackState>()));
+	AddStateObj("Damage", std::move(std::make_shared<DamageState>()));
+	AddStateObj("Guard", std::move(std::make_shared<GuardState>()));
+	AddStateObj("Jump", std::move(std::make_shared<JumpState>()));
+	AddStateObj("LongAttack", std::move(std::make_shared<LongAttackState>()));
+	AddStateObj("Move", std::move(std::make_shared<MoveState>()));
+	AddStateObj("Wait", std::move(std::make_shared<WaitState>()));
+
+	ChangeState("Move");
 }
 
 AICharacter::~AICharacter()
@@ -39,9 +53,9 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 		dir = tmpDir;
 	}
 
-	if (state)
+	if (stateObj.size())
 	{
-		state->Update(this);
+		stateObj[currentStateName]->Update(this);
 	}
 
 	if (longAttackFlag)
@@ -151,10 +165,10 @@ void AICharacter::Draw()
 	}
 }
 
-void AICharacter::ChangeState(AIState * s)
+void AICharacter::ChangeState(std::string key)
 {
-	state = s;
-	state->Init(this);
+	currentStateName = key;
+	stateObj[currentStateName]->Init(this);
 }
 
 std::string AICharacter::GetSPAttackName(int idx)
@@ -169,7 +183,7 @@ HitData AICharacter::GetHitData() const
 
 void AICharacter::CheckHitFlag()
 {
-	state->CheckHitFlag(this);
+	stateObj[currentStateName]->CheckHitFlag(this);
 }
 
 bool AICharacter::isSPLongAttack(std::string spAnimName)
@@ -218,6 +232,14 @@ bool AICharacter::InitAnim(void)
 	SetAnim("‘Ò‹@");
 
 	return true;
+}
+
+void AICharacter::AddStateObj(std::string key, std::shared_ptr<AIState> state)
+{
+	if (!stateObj.count(key))
+	{
+		stateObj[key] = state;
+	}
 }
 
 bool AICharacter::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn)
