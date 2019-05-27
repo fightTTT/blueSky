@@ -10,11 +10,9 @@ public:
 	HitEffect();
 	~HitEffect();
 
-	void SetMove(const GameCtrl &ctl, weekListObj objList);
-
 	bool CheckDeth();
 	bool CheckObjType(OBJ_TYPE type);
-	void Draw(void);
+	void Draw();
 
 private:
 
