@@ -86,12 +86,13 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 		return std::make_unique<TitleScene>();
 	}
 
-	SelectDraw(controller);
+	SelectDraw();
 	return std::move(own);
 }
 
 int SelectScene::Init()
 {
+	lpSceneMng.SetCharID(PAD_2, -1);		// id‚Ì‰Šú‰»
 	itvCnt = 0;
 	flamCnt = 0;
 	if (!objList)
@@ -125,7 +126,7 @@ int SelectScene::Init()
 	return 0;
 }
 
-void SelectScene::SelectDraw(const GameCtrl & controller)
+void SelectScene::SelectDraw(void)
 {
 	DrawGraph(0, 0, IMAGE_ID("image/ƒLƒƒƒ‰ƒZƒŒ—p/charSelBG.png")[0], true);		// haikei
 
