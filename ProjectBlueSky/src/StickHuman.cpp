@@ -50,7 +50,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["昇竜"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["昇竜"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
-		spAttackDamage["昇竜"] = -10;
+		spAttackDamage["昇竜"] = -30;
 		spAttackCommand[2][DIR_RIGHT].resize(4);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_PUNCH };
 		spAttackCommand[2][DIR_LEFT].resize(4);
@@ -79,7 +79,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["ウマキック"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ウマキック"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["ウマキック"] = -10;
+		spAttackDamage["ウマキック"] = -15;
 		spAttackCommand[1][DIR_RIGHT].resize(4);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_LEFT_DOWN, SP_COM_DOWN, SP_COM_KICK };
 		spAttackCommand[1][DIR_LEFT].resize(4);
@@ -92,7 +92,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["ローリングアタック"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ローリングアタック"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["ローリングアタック"] = -10;
+		spAttackDamage["ローリングアタック"] = -15;
 		spAttackCommand[2][DIR_RIGHT].resize(5);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_RIGHT, SP_COM_PUNCH };
 		spAttackCommand[2][DIR_LEFT].resize(5);
@@ -121,7 +121,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["旋風脚"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["旋風脚"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["旋風脚"] = -10;
+		spAttackDamage["旋風脚"] = -15;
 		spAttackCommand[1][DIR_RIGHT].resize(4);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
 		spAttackCommand[1][DIR_LEFT].resize(4);
@@ -134,7 +134,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["カンフーキック"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["カンフーキック"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
-		spAttackDamage["カンフーキック"] = -10;
+		spAttackDamage["カンフーキック"] = -30;
 		spAttackCommand[2][DIR_RIGHT].resize(5);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_UP, SP_COM_KICK };
 		spAttackCommand[2][DIR_LEFT].resize(5);
@@ -176,7 +176,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["回し蹴り"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["回し蹴り"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
-		spAttackDamage["回し蹴り"] = -10;
+		spAttackDamage["回し蹴り"] = -20;
 		spAttackCommand[2][DIR_RIGHT].resize(6);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_LEFT_DOWN, SP_COM_DOWN, SP_COM_RIGHT_DOWN, SP_COM_RIGHT, SP_COM_KICK };
 		spAttackCommand[2][DIR_LEFT].resize(6);
@@ -205,7 +205,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["ミサイルアロー"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ミサイルアロー"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["ミサイルアロー"] = -10;
+		spAttackDamage["ミサイルアロー"] = -15;
 		spAttackCommand[1][DIR_RIGHT].resize(5);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_RIGHT, SP_COM_PUNCH };
 		spAttackCommand[1][DIR_LEFT].resize(5);
@@ -218,7 +218,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["ランキャク"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ランキャク"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
-		spAttackDamage["ランキャク"] = -10;
+		spAttackDamage["ランキャク"] = -20;
 		spAttackCommand[2][DIR_RIGHT].resize(5);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_UP, SP_COM_KICK };
 		spAttackCommand[2][DIR_LEFT].resize(5);
@@ -247,7 +247,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["地面割"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["地面割"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["地面割"] = -10;
+		spAttackDamage["地面割"] = -25;
 		spAttackCommand[1][DIR_RIGHT].resize(3);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_ACCUMULATE, SP_COM_PUNCH };
 		spAttackCommand[1][DIR_LEFT].resize(3);
@@ -260,7 +260,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["タックル"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["タックル"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["タックル"] = -10;
+		spAttackDamage["タックル"] = -15;
 		spAttackCommand[2][DIR_RIGHT].resize(5);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_LEFT, SP_COM_ACCUMULATE, SP_COM_CENTER, SP_COM_RIGHT, SP_COM_PUNCH };
 		spAttackCommand[2][DIR_LEFT].resize(5);
@@ -289,7 +289,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["かかと落とし"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["かかと落とし"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["かかと落とし"] = -10;
+		spAttackDamage["かかと落とし"] = -25;
 		spAttackCommand[1][DIR_RIGHT].resize(4);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_RIGHT_DOWN, SP_COM_DOWN, SP_COM_KICK };
 		spAttackCommand[1][DIR_LEFT].resize(4);
@@ -330,7 +330,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["アクセル"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["アクセル"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["アクセル"] = -10;
+		spAttackDamage["アクセル"] = -40;
 		spAttackCommand[1][DIR_RIGHT].resize(4);
 		spAttackCommand[1][DIR_RIGHT] = { SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
 		spAttackCommand[1][DIR_LEFT].resize(4);
@@ -343,7 +343,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 		animAttributeTbl["蹴り返し"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["蹴り返し"][2] = ANIM_ATTRIBUTE_NON;
 
-		spAttackDamage["蹴り返し"] = -10;
+		spAttackDamage["蹴り返し"] = -15;
 		spAttackCommand[2][DIR_RIGHT].resize(6);
 		spAttackCommand[2][DIR_RIGHT] = { SP_COM_RIGHT, SP_COM_RIGHT_DOWN, SP_COM_DOWN, SP_COM_LEFT_DOWN, SP_COM_LEFT, SP_COM_KICK };
 		spAttackCommand[2][DIR_LEFT].resize(6);

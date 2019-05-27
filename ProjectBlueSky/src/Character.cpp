@@ -35,6 +35,7 @@ void Character::CheckDamage(ANIM_ATTRIBUTE att)
 			AddPlayerHP(-5);
 			break;
 		case ANIM_ATTRIBUTE_ATTACK_BIG:
+		case ANIM_ATTRIBUTE_SHOT:
 			AddPlayerHP(-10);
 			break;
 		case ANIM_ATTRIBUTE_ATTACK_SP:
