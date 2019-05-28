@@ -777,7 +777,7 @@ bool GameScene::GameDraw(void)
 		DrawString(500, 300, "KO", 0xff0000);
 	}
 
-	DrawFormatString(0, 300, 0xff0000, "chara 0 : winCount %d\nchara 1 : winCount %d\n", charaObj[0].winCount, charaObj[1].winCount);
+	/*DrawFormatString(0, 300, 0xff0000, "chara 0 : winCount %d\nchara 1 : winCount %d\n", charaObj[0].winCount, charaObj[1].winCount);*/
 
 	if (charaObj[0].winCount == 1)
 	{
