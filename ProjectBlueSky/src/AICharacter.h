@@ -65,10 +65,9 @@ private:
 
 protected:
 
-	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn);		// 初期化	引数: ﾌｧｲﾙ名, 分割ｻｲｽﾞ, 分割数, 座標, 反転ﾌﾗｸﾞ, パッド番号
+	bool Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn);
 
 	bool longAttackFlag;			// 遠距離攻撃フラグ
-	bool dirChangeFlag;				// 方向変更フラグ
 	JUMP_TYPE jumpType;				// ジャンプ方向のタイプ
 	int shotCreateCount;			// shotを生成するまでのカウント
 

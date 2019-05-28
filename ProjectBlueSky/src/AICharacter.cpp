@@ -18,7 +18,6 @@
 AICharacter::AICharacter(VECTOR2 offset) : Obj(offset)
 {
 	longAttackFlag = false;
-	dirChangeFlag = true;
 	jumpType = JUMP_TYPE_RAND;
 
 	padID = PAD_AI;
@@ -47,7 +46,7 @@ bool AICharacter::CheckObjType(OBJ_TYPE type)
 
 void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
-	if (dirChangeFlag)
+	if (animAttribute[0] != ANIM_ATTRIBUTE_AIR && ((animTable[animName][ANIM_TBL_LOOP]) || animEndFlag))
 	{
 		// ƒLƒƒƒ‰‚ÌŒü‚«•ÏX
 		dir = tmpDir;
