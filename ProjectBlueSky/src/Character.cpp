@@ -4,6 +4,7 @@
 #include "Shot.h"
 #include "Character.h"
 #include "CollisionMng.h"
+#include "SoundMng.h"
 
 #define DEF_COM_CLEAR_CNT (60)
 
@@ -1180,6 +1181,11 @@ void Character::CheckHitFlag(void)
 					comboCnt = 0;
 
 					SetAnim("ダメージ_ダウン");
+					
+					if (!CheckSoundMem(SOUND_ID("se/battle/critical.mp3")))
+					{
+						PlaySoundMem(SOUND_ID("se/battle/critical.mp3"), DX_PLAYTYPE_BACK);
+					}
 
 					if (dir == DIR_RIGHT)
 					{
@@ -1199,6 +1205,12 @@ void Character::CheckHitFlag(void)
 				else
 				{
 					SetAnim("ダメージ_立ち");
+					
+					if (!CheckSoundMem(SOUND_ID("se/battle/punch.wav")))
+					{
+						PlaySoundMem(SOUND_ID("se/battle/punch.wav"), DX_PLAYTYPE_BACK);
+					}
+
 					if (dir == DIR_RIGHT)
 					{
 						knockBackSpeed = -KNOCK_BACK_SPEED;

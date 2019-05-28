@@ -11,6 +11,7 @@
 #include "CollisionMng.h"
 #include "ResultScene.h"
 #include "HitEffect.h"
+#include "SoundMng.h"
 
 #define STICK_HUMAN_IMAGE_SIZE_X (256)
 #define STICK_HUMAN_IMAGE_SIZE_Y (256)
@@ -84,6 +85,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			{
 				if (gameEndFlag)
 				{
+					StopSoundMem(SOUND_ID("bgm/battle.mp3"));
 					return std::make_unique<ResultScene>(leftWinFlag);
 				}
 				else
@@ -208,7 +210,6 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 			// 当たり判定処理
 			{
-
 
 				if (lpColMng.GetColFlag(charaObj[0].charaObj->GetAnim())
 					&& lpColMng.GetColFlag(charaObj[1].charaObj->GetAnim()))
@@ -339,6 +340,10 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 								{
 									shotObj[shot1]->SetHitData(true, COLTYPE_NON);
 									shotObj2[shot2]->SetHitData(true, COLTYPE_NON);
+									if (!CheckSoundMem(SOUND_ID("se/battle/kick.wav")))
+									{
+										PlaySoundMem(SOUND_ID("se/battle/kick.wav"), DX_PLAYTYPE_BACK);
+									}
 								}
 							}
 						}
@@ -482,6 +487,12 @@ int GameScene::Init(void)
 		AST();
 	}
 	
+	// BGM
+	if (!CheckSoundMem(SOUND_ID("bgm/battle.mp3")))
+	{
+		PlaySoundMem(SOUND_ID("bgm/battle.mp3"), DX_PLAYTYPE_LOOP);
+	}
+
 	maskCnt = 0;
 	smallStarMask = LoadMask("image/ゲームシーン用/winStar_mask1.png");
 

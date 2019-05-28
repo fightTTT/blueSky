@@ -157,7 +157,7 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 		AddAnim("ランキャク", 0, 0, 10, 3, false, 0, -16);
 		spAttackAnimName[2] = "ランキャク";
 		spAttackAnimFileName[2] = "cutterKick";
-		animAttributeTbl["ランキャク"][0] = ANIM_ATTRIBUTE_STAND;
+		animAttributeTbl["ランキャク"][0] = ANIM_ATTRIBUTE_AIR;
 		animAttributeTbl["ランキャク"][1] = ANIM_ATTRIBUTE_ATTACK_SP;
 		animAttributeTbl["ランキャク"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 

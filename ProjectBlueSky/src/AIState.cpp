@@ -26,7 +26,6 @@ void AIState::CheckHitFlag(AICharacter * character)
 
 		WaitTimer(WAIT_TIMER_COUNT);
 
-		character->SetDirChange(true);
 		character->SetAnimStopFlag(false);
 		character->ChangeState("Damage");
 	}

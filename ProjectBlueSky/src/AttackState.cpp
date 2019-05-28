@@ -21,14 +21,12 @@ void AttackState::Init(AICharacter * character)
 	// すでに攻撃アニメーションがセットされていた場合return
 	if (charaAnim != "前移動" && charaAnim != "後ろ移動" && charaAnim != "待機")
 	{
-		character->SetDirChange(false);
 		return;
 	}
 
 	if (attackCount >= static_cast<unsigned int>(GetRand(30) + 4))
 	{
 		attackCount = 0;
-		character->SetDirChange(false);
 		character->SetJumpType(JUMP_TYPE_FRONT);
 		character->ChangeState("Jump");
 		return;
@@ -72,15 +70,12 @@ void AttackState::Init(AICharacter * character)
 	{
 		character->SetAnim("キック_大_しゃがみ");
 	}
-
-	character->SetDirChange(false);
 }
 
 void AttackState::Update(AICharacter * character)
 {
 	if (character->GetAnimEndFlag())
 	{
-		character->SetDirChange(true);
 		character->SetAnim("待機");
 		character->ChangeState("Move");
 		return;
@@ -110,7 +105,6 @@ void AttackState::Update(AICharacter * character)
 	{
 		if (character->GetAnimCount() > 40)
 		{
-			character->SetDirChange(true);
 			character->SetAnim("待機");
 			character->ChangeState("Move");
 			return;
