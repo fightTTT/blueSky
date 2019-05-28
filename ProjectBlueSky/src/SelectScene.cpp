@@ -9,6 +9,7 @@
 #include "CharSelCursor.h"
 #include "ImageMng.h"
 #include "TitleScene.h"
+#include "SoundMng.h"
 
 #define BOX_SIZE_X (100)
 #define BOX_SIZE_Y (100)
@@ -37,6 +38,7 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 		if (itvCnt > 120)
 		{
+			StopSoundMem(SOUND_ID("bgm/select.mp3"));
 			return std::make_unique<GameScene>();
 		}
 	}
@@ -44,6 +46,7 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 	/* ¹Þ°Ñ¼°Ý‚ÖˆÚ“® */
 	if ((controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START)) && !sceneChangeFlag)
 	{				
+		// ‰¹
 		if (lpSceneMng.GetMode() == MODE_1PLAYER)
 		{
 			if (lpSceneMng.GetDecidFlag(PAD_1))
@@ -123,6 +126,12 @@ int SelectScene::Init()
 					"ƒ`ƒƒ" };
 
 	sceneChangeFlag = false;
+
+	if (!CheckSoundMem(SOUND_ID("bgm/select.mp3")))
+	{
+		PlaySoundMem(SOUND_ID("bgm/select.mp3"), DX_PLAYTYPE_BACK);
+	}
+
 	return 0;
 }
 

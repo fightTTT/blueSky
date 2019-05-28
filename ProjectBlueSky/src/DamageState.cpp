@@ -1,7 +1,7 @@
 #include "DamageState.h"
 #include "AICharacter.h"
 #include "SceneMng.h"
-
+#include "SoundMng.h"
 #include "DxLib.h"
 
 #define KNOCK_BACK_SPEED (10)
@@ -30,6 +30,12 @@ void DamageState::Init(AICharacter * character)
 	{
 		character->SetAnim("ダメージ_ダウン");
 
+		if (!CheckSoundMem(SOUND_ID("se/battle/critical.mp3")))
+		{
+			PlaySoundMem(SOUND_ID("se/battle/critical.mp3"), DX_PLAYTYPE_BACK);
+		}
+
+
 		if (dir == DIR_RIGHT)
 		{
 			knockBackSpeed = { -FALL_SPEED_X, -FALL_SPEED_Y };
@@ -46,6 +52,11 @@ void DamageState::Init(AICharacter * character)
 	else
 	{
 		character->SetAnim("ダメージ_立ち");
+
+		if (!CheckSoundMem(SOUND_ID("se/battle/punch.wav")))
+		{
+			PlaySoundMem(SOUND_ID("se/battle/punch.wav"), DX_PLAYTYPE_BACK);
+		}
 
 		if (dir == DIR_RIGHT)
 		{

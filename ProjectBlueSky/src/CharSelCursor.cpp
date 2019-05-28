@@ -5,6 +5,7 @@
 #include "SelectScene.h"
 #include "ImageMng.h"
 #include "TitleScene.h"
+#include "SoundMng.h"
 
 #define BOX_SIZE_X (100)		// ｷｬﾗｱｲｺﾝのX軸ｻｲｽﾞ
 #define BOX_SIZE_Y (100)		// ｷｬﾗｱｲｺﾝのY軸ｻｲｽﾞ
@@ -34,6 +35,8 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			/* BﾎﾞﾀﾝでｳｨﾝﾄﾞｳﾌﾗｸﾞをON */
 			if (ctl.GetPadDataTrg(padID, BUTTON_B))
 			{
+				PlaySoundMem(SOUND_ID("se/ui/cansell.mp3"), DX_PLAYTYPE_BACK);
+
 				lpSceneMng.SetOpenBackWindowPadID(padID);
 				lpSceneMng.SetSceneBackFlag(true);
 			}
@@ -62,6 +65,8 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				if (charID >= 4)
 				{
+					PlaySoundMem(SOUND_ID("se/ui/cursor.mp3"), DX_PLAYTYPE_BACK);
+
 					charID -= 4;
 					if (lpSceneMng.GetMode() == MODE_2PLAYER)
 					{
@@ -77,6 +82,8 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				if ((charID % 4) != 3)
 				{
+					PlaySoundMem(SOUND_ID("se/ui/cursor.mp3"), DX_PLAYTYPE_BACK);
+
 					if (lpSceneMng.GetMode() == MODE_1PLAYER)
 					{
 						charID += 1;
@@ -103,6 +110,8 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				if (charID < 4)
 				{
+					PlaySoundMem(SOUND_ID("se/ui/cursor.mp3"), DX_PLAYTYPE_BACK);
+
 					charID += 4;
 					if (lpSceneMng.GetMode() == MODE_2PLAYER)
 					{
@@ -118,6 +127,8 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				if ((charID % 4) != 0)
 				{
+					PlaySoundMem(SOUND_ID("se/ui/cursor.mp3"), DX_PLAYTYPE_BACK);
+
 					if (lpSceneMng.GetMode() == MODE_1PLAYER)
 					{
 						charID -= 1;
@@ -145,6 +156,8 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			/* ｷｬﾗを決定 */
 			if (ctl.GetPadDataTrg(padID, BUTTON_A) && !lpSceneMng.GetSceneBackFlag())
 			{
+				PlaySoundMem(SOUND_ID("se/ui/check.mp3"), DX_PLAYTYPE_BACK);
+
 				decidFlag = true;
 				lpSceneMng.SetDecidFlag(padID, decidFlag);
 			}
@@ -158,6 +171,8 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				if (backCurID != 1)
 				{
+					PlaySoundMem(SOUND_ID("se/ui/cursor.mp3"), DX_PLAYTYPE_BACK);
+
 					backCurID += 1;
 				}
 			}
@@ -165,6 +180,8 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				if (backCurID != 0)
 				{
+					PlaySoundMem(SOUND_ID("se/ui/cursor.mp3"), DX_PLAYTYPE_BACK);
+
 					backCurID -= 1;
 				}
 			}
@@ -174,10 +191,16 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			{
 				if (backCurID == 0)
 				{
+					PlaySoundMem(SOUND_ID("se/ui/check.mp3"), DX_PLAYTYPE_BACK);
+
+					StopSoundMem(SOUND_ID("bgm/select.mp3"));
+
 					lpSceneMng.SetTitleChangeFlag(true);
 				}
 				else
 				{
+					PlaySoundMem(SOUND_ID("se/ui/cansell.mp3"), DX_PLAYTYPE_BACK);
+
 					lpSceneMng.SetSceneBackFlag(false);
 				}
 			}
@@ -185,6 +208,8 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 			/* Bﾎﾞﾀﾝでｳｨﾝﾄﾞｳを閉じる */
 			if (ctl.GetPadDataTrg(padID, BUTTON_B))
 			{
+				PlaySoundMem(SOUND_ID("se/ui/cansell.mp3"), DX_PLAYTYPE_BACK);
+
 				lpSceneMng.SetSceneBackFlag(false);
 			}
 		}
@@ -196,6 +221,8 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 		// 決定取り消し確認
 		if (ctl.GetPadDataTrg(padID, BUTTON_B))
 		{
+			PlaySoundMem(SOUND_ID("se/ui/cansell.mp3"), DX_PLAYTYPE_BACK);
+
 			decidFlag = false;
 			lpSceneMng.SetDecidFlag(padID, false);
 		}
@@ -243,6 +270,7 @@ int CharSelCursor::Init(void)
 	mCount = 0;
 	charCurMask = LoadMask("image/キャラセレ用/selected_mask.png");
 	sceneCurMask = LoadMask("image/キャラセレ用/back_mask.png");
+
 	return 0;
 }
 
