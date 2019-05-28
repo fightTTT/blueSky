@@ -56,7 +56,9 @@ private:
 	int koDrawCount;			// koを表示する時間のカウント
 	int koImageHandle;			// ko描画時のハンドル
 
-	
+	int maskCnt;				// ｶｰｿﾙの回転用変数
+	int smallStarMask;			// 小さい金星のﾏｽｸ
+	int flashCnt;
 	sharedListObj objList;
 };
 
