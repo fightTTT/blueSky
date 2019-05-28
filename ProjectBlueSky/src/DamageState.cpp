@@ -69,6 +69,7 @@ void DamageState::Update(AICharacter * character)
 		if (character->GetAnimEndFlag())
 		{
 			character->ChangeState("Move");
+			return;
 		}
 
 		pos.x += knockBackSpeed.x;

@@ -73,7 +73,7 @@ void LongAttackState::Update(AICharacter * character)
 			{
 				if (pos.x > ((ssize.x * 3) / 5))
 				{
-					dir = character->GetTmpDir();
+					character->SetDir(character->GetTmpDir());
 					character->SetAnimStopFlag(false);
 				}
 				else
@@ -85,7 +85,7 @@ void LongAttackState::Update(AICharacter * character)
 			{
 				if (pos.x < ((ssize.x * 2) / 5))
 				{
-					dir = character->GetTmpDir();
+					character->SetDir(character->GetTmpDir());
 					character->SetAnimStopFlag(false);
 				}
 				else
