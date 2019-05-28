@@ -58,11 +58,11 @@ void ResultScene::ResultDraw()
 	if (victoryFlag)
 	{
 		imagePass[0] = ("image/" + charName[lpSceneMng.GetCharID(PAD_1)] + "/Ÿ‚¿/"+"win_" + std::to_string(animCnt / 4 % 5) + ".png");
-		imagePass[1] = ("image/" + charName[lpSceneMng.GetCharID(PAD_2)] + "/•‰‚¯/"+"lose_" + std::to_string(animCnt / 8 % 2) + ".png");
+		imagePass[1] = ("image/" + charName[lpSceneMng.GetCharID(PAD_2)] + "/•‰‚¯/"+"lose_" + std::to_string(animCnt / 8 % 9) + ".png");
 	}
 	else
 	{
-		imagePass[0] = ("image/" + charName[lpSceneMng.GetCharID(PAD_1)] + "/•‰‚¯/"+"lose_" + std::to_string(animCnt / 8 % 2) + ".png");
+		imagePass[0] = ("image/" + charName[lpSceneMng.GetCharID(PAD_1)] + "/•‰‚¯/"+"lose_" + std::to_string(animCnt / 8 % 9) + ".png");
 		imagePass[1] = ("image/" + charName[lpSceneMng.GetCharID(PAD_2)] + "/Ÿ‚¿/"+"win_" + std::to_string(animCnt / 4 % 5) + ".png");
 	}
 
