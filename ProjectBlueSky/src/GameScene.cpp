@@ -267,6 +267,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						}
 					}
 
+					// ヒットエフェクト表示矩形
 					VECTOR2 hitRectPos(0, 0);
 
 					// 攻撃時の当たり判定
@@ -297,9 +298,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 												break;
 											}
 
-											hitRectPos = colData[1 - i].hitBox[b].rect.startPos;
-
-											//break;
+											hitRectPos = { colData[1 - i].hitBox[b].rect.startPos.x, colData[i].hitBox[a].rect.startPos.y };
 										}
 									}
 								}
@@ -346,6 +345,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						}
 					}
 
+					hitRectPos = { 0,0 };
+
 					for (int i = 0; i < 2; i++)
 					{
 						for (int a = 0; a < colData[i].hitBox.size(); a++)
@@ -375,6 +376,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 											charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
 											data->SetHitData(true, colData[i].hitBox[a].type);
 
+											hitRectPos = { charaObj[i].charaObj->GetPos().x, data->GetPos().y };
+
 											break;
 										}
 									}
@@ -386,8 +389,13 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 							charaObj[i].charaObj->CheckDamage(ANIM_ATTRIBUTE_SHOT);
 							damageFlag[i] = true;
 						}
-					}
 
+						if (!hitRectPos && !charaObj[i].AttackHitOld && charaObj[i].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+						{
+							// ヒットエフェクト表示
+							AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64)));
+						}
+					}
 				}
 			}
 
