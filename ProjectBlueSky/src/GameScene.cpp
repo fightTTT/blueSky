@@ -266,7 +266,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						}
 					}
 
-					VECTOR2 hitRectPos;
+					VECTOR2 hitRectPos(0, 0);
 
 					// UŒ‚‚Ì“–‚½‚è”»’è
 					for (int i = 0; i < 2; i++)
