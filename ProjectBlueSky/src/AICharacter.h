@@ -35,9 +35,6 @@ public:
 	// 遠距離攻撃フラグセット
 	void SetLongAttackFlag(bool flag) { longAttackFlag = flag; }
 
-	// 方向変更フラグセット
-	void SetDirChange(bool flag) { dirChangeFlag = flag; }
-
 	// ジャンプのタイプ
 	void SetJumpType(JUMP_TYPE type) { jumpType = type; }
 	JUMP_TYPE GetJumpType() { return jumpType; }

@@ -96,7 +96,6 @@ void JumpState::Update(AICharacter * character)
 			// ‰Eã
 			jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
 			jumpFlag = true;
-			character->SetDirChange(false);
 
 			if (charaDir == DIR_LEFT)
 			{
@@ -112,7 +111,6 @@ void JumpState::Update(AICharacter * character)
 			// ¶ã
 			jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
 			jumpFlag = true;
-			character->SetDirChange(false);
 
 			if (charaDir == DIR_LEFT)
 			{
@@ -128,7 +126,6 @@ void JumpState::Update(AICharacter * character)
 			// ã
 			jumpSpeed = { 0, -JUMP_SPEED_Y };
 			jumpFlag = true;
-			character->SetDirChange(false);
 			character->SetAnim("ƒWƒƒƒ“ƒv_ã");
 		}
 	}
@@ -145,7 +142,6 @@ void JumpState::Update(AICharacter * character)
 	{
 		pos.y = ssize.y;
 		jumpFlag = false;
-		character->SetDirChange(true);
 		character->ChangeState("Move");
 	}
 

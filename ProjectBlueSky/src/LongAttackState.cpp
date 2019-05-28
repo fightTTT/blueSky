@@ -15,7 +15,6 @@ void LongAttackState::Init(AICharacter * character)
 {
 	shotCount = 0;
 	spEndCnt = 0;
-	character->SetDirChange(false);
 }
 
 void LongAttackState::Update(AICharacter * character)
@@ -28,7 +27,6 @@ void LongAttackState::Update(AICharacter * character)
 
 	if (character->GetAnimEndFlag())
 	{
-		character->SetDirChange(true);
 		character->SetAnim("‘Ò‹@");
 		character->SetAnimStopFlag(false);
 		character->ChangeState("Move");
@@ -51,7 +49,6 @@ void LongAttackState::Update(AICharacter * character)
 
 		if (character->GetAnimCount() > 60 || hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK))
 		{
-			character->SetDirChange(true);
 			character->SetAnimStopFlag(false);
 			character->SetAnim("‘Ò‹@");
 			character->ChangeState("Move");
@@ -108,7 +105,6 @@ void LongAttackState::Update(AICharacter * character)
 
 		if (character->GetAnimCount() > 60)
 		{
-			character->SetDirChange(true);
 			character->SetAnimStopFlag(false);
 			character->SetAnim("‘Ò‹@");
 			character->ChangeState("Move");

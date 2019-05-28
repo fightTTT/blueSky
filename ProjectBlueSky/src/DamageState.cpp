@@ -24,6 +24,8 @@ void DamageState::Init(AICharacter * character)
 
 	comboCnt++;
 
+	auto tmp = character->GetAnimAttribute(0) == ANIM_ATTRIBUTE_AIR;
+
 	if (comboCnt >= COMBO_BREAK_CNT || (character->GetAnimAttribute(0) == ANIM_ATTRIBUTE_AIR) || character->GetPlayerHP() == 0)
 	{
 		character->SetAnim("ダメージ_ダウン");
