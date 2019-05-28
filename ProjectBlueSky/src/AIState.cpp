@@ -15,7 +15,6 @@ AIState::~AIState()
 
 void AIState::CheckHitFlag(AICharacter * character)
 {
-	auto dir = character->GetDir();
 	auto hitData = character->GetHitData();
 	auto anim = character->GetAnim();
 
@@ -23,10 +22,11 @@ void AIState::CheckHitFlag(AICharacter * character)
 
 	if(hitFlag && character->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
 	{
-		dir = character->GetTmpDir();
+		character->SetDir(character->GetTmpDir());
 
 		WaitTimer(WAIT_TIMER_COUNT);
 
+		character->SetDirChange(true);
 		character->SetAnimStopFlag(false);
 		character->ChangeState("Damage");
 	}

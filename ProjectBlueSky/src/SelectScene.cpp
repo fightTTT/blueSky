@@ -138,13 +138,13 @@ void SelectScene::SelectDraw(void)
 	if (id[0] != -1)
 	{
 		DrawGraph(0, (scSize.y-400), IMAGE_DIV_ID("image/キャラセレ用/charIcon.png", VECTOR2(400, 400), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｷｬﾗのｱｲｺﾝを描画
-		DrawFormatString(10, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[0]]);
+		//DrawFormatString(10, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[0]]);
 	}
 	if (id[1] != -1)
 	{
-		DrawGraph((scSize.x-150), (scSize.y / 4), IMAGE_ID("image/キャラセレ用/2p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(2P)の描画
+		DrawGraph((scSize.x-190), (scSize.y / 4), IMAGE_ID("image/キャラセレ用/2p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(2P)の描画
 		DrawTurnGraph((scSize.x - 400), (scSize.y - 400), IMAGE_DIV_ID("image/キャラセレ用/charIcon.png", VECTOR2(400, 400), VECTOR2(CHAR_CNT_MAX, 1))[id[1]], true);		// ｷｬﾗのｱｲｺﾝを描画
-		DrawFormatString(1200, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[1]]);
+		//DrawFormatString(1200, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[1]]);
 	}
 
 	/* 確認ｳｨﾝﾄﾞｳ */
@@ -168,25 +168,36 @@ void SelectScene::SelectDraw(void)
 	{
 		if (lpSceneMng.GetDecidFlag(PAD_1))
 		{
+			DrawGraph((scSize.x / 2) - 419, (scSize.y / 3), IMAGE_ID("image/キャラセレ用/allGreen.png")[0], true);		// キャラ確定表示
+
 			flamCnt++;
 			if (sceneChangeFlag == false)
 			{
 				if (((flamCnt / 30) % 2) == 0)
 				{
-					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
+					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// 準備完了の描画
 				}
 			}
 			else
 			{
 				if (((flamCnt / 4) % 2) == 0)
 				{
-					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
+					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// 準備完了の描画
 				}
 			}
 		}
 	}
 	else if (lpSceneMng.GetMode() == MODE_2PLAYER)
 	{
+		if (lpSceneMng.GetDecidFlag(PAD_1))
+		{
+			DrawGraph((scSize.x / 2) - 419, (scSize.y / 3), IMAGE_ID("image/キャラセレ用/allGreen.png")[0], true);		// キャラ確定表示
+		}
+		if (lpSceneMng.GetDecidFlag(PAD_2))
+		{
+			DrawGraph((scSize.x / 2) + (BOX_SIZE_X * 2) + 119, (scSize.y / 3), IMAGE_ID("image/キャラセレ用/allGreen.png")[0], true);		// キャラ確定表示
+		}
+
 		if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
 		{
 			flamCnt++;
@@ -194,14 +205,14 @@ void SelectScene::SelectDraw(void)
 			{
 				if (((flamCnt / 30) % 2) == 0)
 				{
-					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
+					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// 準備完了の描画
 				}
 			}
 			else
 			{
 				if (((flamCnt / 4) % 2) == 0)
 				{
-					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// haikei
+					DrawGraph((scSize.x / 2) - 419, (scSize.y / 10), IMAGE_ID("image/キャラセレ用/ready.png")[0], true);		// 準備完了の描画
 				}
 			}
 		}
