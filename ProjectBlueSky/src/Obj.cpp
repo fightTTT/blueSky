@@ -31,6 +31,8 @@ bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, bool turn)
 	playerHPOld = 100;
 	DrawHPCount = 0.0f;
 	animStopFlag = false;
+	hitData.colType = COLTYPE_NON;
+	hitData.hitFlag = false;
 	return true;
 }
 
