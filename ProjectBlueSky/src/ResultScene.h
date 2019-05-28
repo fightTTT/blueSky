@@ -1,6 +1,9 @@
 #pragma once
 
 #include "BaseScene.h"
+#include "ObjList.h"
+#include <map>
+#include <vector>
 
 class ResultScene :
 	public BaseScene
@@ -15,5 +18,7 @@ private:
 	bool victoryFlag;
 	int Init();
 	void ResultDraw();
+	int animCnt;
+	
+	std::vector<std::string> charName;
 };
-
