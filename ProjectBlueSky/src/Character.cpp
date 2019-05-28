@@ -63,6 +63,7 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	knockBackFlag = false;
 	spEndCnt = 0;
 	jumpInterval = 0;
+	invincibleTime = 0;
 
 	// 通常のアクション
 	animFileName["待機"] = "stand";
@@ -485,6 +486,15 @@ bool Character::CheckObjType(OBJ_TYPE type)
 void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
 	CommandUpDate(ctl);
+
+	if (invincibleTime)
+	{
+		invincibleTime++;
+		if (invincibleTime > 15)
+		{
+			invincibleTime = 0;
+		}
+	}
 
 	if ((knockBackFlag) || (animName == "ダメージ_立ち"))
 	{
@@ -1128,7 +1138,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 void Character::CheckHitFlag(void)
 {
-	if (animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE)
+	if ((animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE) && !(invincibleTime))
 	{
 		if (playerHP <= 0)
 		{
@@ -1161,6 +1171,7 @@ void Character::CheckHitFlag(void)
 
 			if (animName != "ダメージ_立ち")
 			{
+				invincibleTime++;
 				WaitTimer(65);
 
 				comboCnt++;
