@@ -23,6 +23,8 @@
 
 #define DEF_CENTER_POS_X (640)
 
+#define PI2 (3.141592654f*6)	// ｶｰｿﾙの回転用
+
 // ﾃﾞﾊﾞｯｸﾒｯｾｰｼﾞ用定義
 #ifdef _DEBUG		// 失敗時の処理
 #define AST() {\
@@ -406,6 +408,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		}
 	}
 	
+	maskCnt++;
 
 	// 描画処理
 	GameDraw();
@@ -422,6 +425,7 @@ int GameScene::Init(void)
 	gameEndFlag = false;
 	loseCharacter = -1;
 	winCharacter = -1;
+	flashCnt = 0;
 	drawflag = false;
 	koDrawCount = 0;
 	charaObj[0].AttackHitOld = false;
@@ -456,6 +460,9 @@ int GameScene::Init(void)
 		AST();
 	}
 	
+	maskCnt = 0;
+	smallStarMask = LoadMask("image/ゲームシーン用/winStar_mask1.png");
+
 	return 0;
 }
 
@@ -794,23 +801,55 @@ bool GameScene::GameDraw(void)
 	}
 
 	/*DrawFormatString(0, 300, 0xff0000, "chara 0 : winCount %d\nchara 1 : winCount %d\n", charaObj[0].winCount, charaObj[1].winCount);*/
-
+	flashCnt++;
 	if (charaObj[0].winCount == 1)
 	{
+		CreateMaskScreen();     // ﾏｽｸ開始
+		DrawMask( ((ssize.x / 2) - 175 + 70 - 15), (69 - 15), smallStarMask, DX_MASKTRANS_BLACK); // 黒色の場所だけ描画
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 255);               // 加算ブレンドに設定
+		DrawRotaGraph2( ((ssize.x / 2) - 175 + 70 + 25), (69 + 25), 0, 9, 1.0, PI2 / 240 * maskCnt, IMAGE_ID("image/ゲームシーン用/starBack1.png")[0], true);			
+		DrawRotaGraph2( ((ssize.x / 2) - 175 + 70 + 25), (69 + 25), 0, 9, 1.0, PI2 / 240 * (maskCnt - 120), IMAGE_ID("image/ゲームシーン用/starBack1.png")[0], true);
+		DrawRotaGraph2(((ssize.x / 2) - 175 + 70 + 25), (69 + 25), 0, 9, 1.0, PI2 / 240 * (maskCnt - 60), IMAGE_ID("image/ゲームシーン用/starBack1.png")[0], true);
+		DrawRotaGraph2(((ssize.x / 2) - 175 + 70 + 25), (69 + 25), 0, 9, 1.0, PI2 / 240 * (maskCnt - 180), IMAGE_ID("image/ゲームシーン用/starBack1.png")[0], true);
+
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);     // ﾌﾞﾚﾝﾄﾞをﾘｾｯﾄ
+		DeleteMaskScreen();		// ﾏｽｸ終了
+
 		DrawGraph((ssize.x / 2) - 175 +70, 69, IMAGE_ID("image/ゲームシーン用/winStar1.png")[0], true);
 	}
 	if (charaObj[0].winCount == 2)
 	{
+		if (((flashCnt / 4) % 2) == 0)
+		{
+			DrawGraph(((ssize.x / 2) - 175 + 70 - 15), (69 - 15), IMAGE_ID("image/ゲームシーン用/winStar_flash1.png")[0], true);		// 強調点滅の描画
+			DrawGraph(((ssize.x / 2) - 175 + 20 - 20), (10 - 20), IMAGE_ID("image/ゲームシーン用/winStar_flash2.png")[0], true);
+		}
 		DrawGraph((ssize.x / 2) - 175 +70, 69, IMAGE_ID("image/ゲームシーン用/winStar1.png")[0], true);
 		DrawGraph((ssize.x / 2) - 175 +20, 10, IMAGE_ID("image/ゲームシーン用/winStar2.png")[0], true);
 	}
 
 	if (charaObj[1].winCount == 1)
 	{
+		CreateMaskScreen();     // ﾏｽｸ開始
+		DrawMask(((ssize.x / 2) - 175 + 232 - 15), (69 - 15), smallStarMask, DX_MASKTRANS_BLACK); // 黒色の場所だけ描画
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 255);               // 加算ブレンドに設定
+		DrawRotaGraph2(((ssize.x / 2) - 175 + 232 + 25), (69 + 25), 0, 9, 1.0, PI2 / 240 * maskCnt, IMAGE_ID("image/ゲームシーン用/starBack1.png")[0], true);
+		DrawRotaGraph2(((ssize.x / 2) - 175 + 232 + 25), (69 + 25), 0, 9, 1.0, PI2 / 240 * (maskCnt - 120), IMAGE_ID("image/ゲームシーン用/starBack1.png")[0], true);
+		DrawRotaGraph2(((ssize.x / 2) - 175 + 232 + 25), (69 + 25), 0, 9, 1.0, PI2 / 240 * (maskCnt - 60), IMAGE_ID("image/ゲームシーン用/starBack1.png")[0], true);
+		DrawRotaGraph2(((ssize.x / 2) - 175 + 232 + 25), (69 + 25), 0, 9, 1.0, PI2 / 240 * (maskCnt - 180), IMAGE_ID("image/ゲームシーン用/starBack1.png")[0], true);
+
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);     // ﾌﾞﾚﾝﾄﾞをﾘｾｯﾄ
+		DeleteMaskScreen();		// ﾏｽｸ終了
+
 		DrawGraph((ssize.x / 2) - 175 + 232, 69, IMAGE_ID("image/ゲームシーン用/winStar1.png")[0], true);
 	}
 	if (charaObj[1].winCount == 2)
 	{
+		if (((flashCnt / 4) % 2) == 0)
+		{
+			DrawGraph(((ssize.x / 2) - 175 + 232 - 15), (69 - 15), IMAGE_ID("image/ゲームシーン用/winStar_flash1.png")[0], true);		// 強調点滅の描画
+			DrawGraph(((ssize.x / 2) - 175 + 262 - 20), (10 - 20), IMAGE_ID("image/ゲームシーン用/winStar_flash2.png")[0], true);
+		}
 		DrawGraph((ssize.x / 2) - 175 + 232, 69, IMAGE_ID("image/ゲームシーン用/winStar1.png")[0], true);
 		DrawGraph((ssize.x / 2) - 175 + 262, 10, IMAGE_ID("image/ゲームシーン用/winStar2.png")[0], true);
 	}
