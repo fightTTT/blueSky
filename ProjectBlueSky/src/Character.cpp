@@ -1128,32 +1128,32 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 void Character::CheckHitFlag(void)
 {
-	if (playerHP <= 0)
-	{
-		dir = tmpDir;
-		animStopFlag = false;
-		comboCnt = 0;
-
-		SetAnim("ダメージ_ダウン");
-
-		if (dir == DIR_RIGHT)
-		{
-			fallSpeed = { -FALL_SPEED_X, -FALL_SPEED_Y };
-		}
-		else
-		{
-			fallSpeed = { FALL_SPEED_X, -FALL_SPEED_Y };
-		}
-
-		pos += fallSpeed;
-		if (pos.y > ssize.y)
-		{
-			pos.y = ssize.y;
-		}
-	}
-
 	if (animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE)
 	{
+		if (playerHP <= 0)
+		{
+			dir = tmpDir;
+			animStopFlag = false;
+			comboCnt = 0;
+
+			SetAnim("ダメージ_ダウン");
+
+			if (dir == DIR_RIGHT)
+			{
+				fallSpeed = { -FALL_SPEED_X, -FALL_SPEED_Y };
+			}
+			else
+			{
+				fallSpeed = { FALL_SPEED_X, -FALL_SPEED_Y };
+			}
+
+			pos += fallSpeed;
+			if (pos.y > ssize.y)
+			{
+				pos.y = ssize.y;
+			}
+		}
+
 		if (hitData.hitFlag && (hitData.colType == COLTYPE_HIT))
 		{
 			dir = tmpDir;
