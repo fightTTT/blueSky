@@ -52,13 +52,15 @@ private:
 	int winCharacter;
 	bool drawflag;
 	bool damageFlag[2];			// ﾀﾞﾒｰｼﾞが重複
+	bool operableFlag;		// 操作を受けつけるﾌﾗｸﾞ　true:操作　false:操作不能
 
 	int koDrawCount;			// koを表示する時間のカウント
 	int koImageHandle;			// ko描画時のハンドル
 
 	int maskCnt;				// ｶｰｿﾙの回転用変数
 	int smallStarMask;			// 小さい金星のﾏｽｸ
-	int flashCnt;
+	int flashCnt;				// 点滅用ｶｳﾝﾄ
+	int opeCnt;					// 操作可能までのｶｳﾝﾄ
 	sharedListObj objList;
 };
 

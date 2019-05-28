@@ -48,366 +48,378 @@ GameScene::~GameScene()
 
 unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
-	if (CheckGameEnd())
+	if (operableFlag)
 	{
-		if (koDrawCount == 0)
+		if (CheckGameEnd())
 		{
-			WaitTimer(650);
-			charaObj[0].charaObj->SetAnimStopFlag(true);
-			charaObj[1].charaObj->SetAnimStopFlag(true);
-
-			if (drawflag)
+			if (koDrawCount == 0)
 			{
-				charaObj[0].winCount++;
-				charaObj[1].winCount++;
+				WaitTimer(650);
+				charaObj[0].charaObj->SetAnimStopFlag(true);
+				charaObj[1].charaObj->SetAnimStopFlag(true);
+
+				if (drawflag)
+				{
+					charaObj[0].winCount++;
+					charaObj[1].winCount++;
+				}
+				else
+				{
+					charaObj[winCharacter].winCount++;
+				}
+			}
+
+			koDrawCount++;
+			bool leftWinFlag;
+			if (charaObj[0].winCount >= 2)
+			{
+				leftWinFlag = true;
 			}
 			else
 			{
-				charaObj[winCharacter].winCount++;
+				leftWinFlag = false;
 			}
-		}
 
-		koDrawCount++;
-		bool leftWinFlag;
-		if (charaObj[0].winCount >= 2)
-		{
-			leftWinFlag = true;
+			if (koDrawCount >= 120)
+			{
+				if (gameEndFlag)
+				{
+					return std::make_unique<ResultScene>(leftWinFlag);
+				}
+				else
+				{
+					Init();
+				}
+			}
 		}
 		else
 		{
-			leftWinFlag = false;
-		}
 
-		if (koDrawCount >= 120)
-		{
-			if (gameEndFlag)
+			for (int i = 0; i < 2; i++)
 			{
-				return std::make_unique<ResultScene>(leftWinFlag);
+				beforPos[i] = charaObj[i].charaObj->GetPos();
+			}
+
+			// 情報更新
+			for (auto& data : *objList)
+			{
+				data->UpDate(controller, objList);
+			}
+
+			auto deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
+			objList->erase(deth_itr, objList->end());
+
+			for (int i = 0; i < 2; i++)
+			{
+				afterPos[i] = charaObj[i].charaObj->GetPos();
+			}
+
+			ExtrusionUpdata();
+
+			std::vector<sharedObj> shotObj;
+			std::vector<sharedObj> shotObj2;
+			EnemyState eState;
+
+			for (auto& data : *objList)
+			{
+				if (data->CheckObjType(OBJ_TYPE_SHOT))
+				{
+					shotObj.push_back(data);
+					shotObj2.push_back(data);
+					ShotData shot(data->GetPos(), data->GetPadID());
+					eState.pushBackShotData(shot);
+				}
+			}
+
+			// キャラクター同士を向い合せる
+			if (charaObj[0].charaObj->GetPos().x > charaObj[1].charaObj->GetPos().x)
+			{
+				charaObj[0].charaObj->SetDir(DIR_LEFT);
+				charaObj[1].charaObj->SetDir(DIR_RIGHT);
 			}
 			else
 			{
-				Init();
+				charaObj[0].charaObj->SetDir(DIR_RIGHT);
+				charaObj[1].charaObj->SetDir(DIR_LEFT);
+			}
+
+			// 一人が後ろ歩きでもう一人が攻撃系のアニメーションの時に、後ろ歩きをしている方をガード状態にする
+			if ((charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SMALL)
+				|| (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
+				|| (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
+			{
+				if (abs(afterPos[0].x - afterPos[1].x) <= (STICK_HUMAN_IMAGE_SIZE_X * 2))
+				{
+					if (charaObj[1].charaObj->GetAnim() == "後ろ移動")
+					{
+						charaObj[1].charaObj->SetAnim("ガード_立ち");
+					}
+
+					if (charaObj[1].charaObj->GetAnim() == "しゃがみ_後ろ")
+					{
+						charaObj[1].charaObj->SetAnim("ガード_しゃがみ");
+					}
+				}
+			}
+			if ((charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SMALL)
+				|| (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
+				|| (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
+			{
+				if (abs(afterPos[0].x - afterPos[1].x) <= (STICK_HUMAN_IMAGE_SIZE_X * 2))
+				{
+					if (charaObj[0].charaObj->GetAnim() == "後ろ移動")
+					{
+						charaObj[0].charaObj->SetAnim("ガード_立ち");
+					}
+
+					if (charaObj[0].charaObj->GetAnim() == "しゃがみ_後ろ")
+					{
+						charaObj[0].charaObj->SetAnim("ガード_しゃがみ");
+					}
+				}
+			}
+
+			// キャラクターの状態を相手に渡す
+			eState.enemyPos = charaObj[0].charaObj->GetPos();
+			eState.enemyAnimAttribute[0] = charaObj[0].charaObj->GetAnimAttribute(0);
+			eState.enemyAnimAttribute[1] = charaObj[0].charaObj->GetAnimAttribute(1);
+			eState.enemyAnimAttribute[2] = charaObj[0].charaObj->GetAnimAttribute(2);
+			eState.enemyAnim = charaObj[0].charaObj->GetAnim();
+			charaObj[1].charaObj->SetEnemyState(eState);
+
+			eState.enemyPos = charaObj[1].charaObj->GetPos();
+			eState.enemyAnimAttribute[0] = charaObj[1].charaObj->GetAnimAttribute(0);
+			eState.enemyAnimAttribute[1] = charaObj[1].charaObj->GetAnimAttribute(1);
+			eState.enemyAnimAttribute[2] = charaObj[1].charaObj->GetAnimAttribute(2);
+			eState.enemyAnim = charaObj[1].charaObj->GetAnim();
+			charaObj[0].charaObj->SetEnemyState(eState);
+
+			std::string animName[2];
+
+			for (int i = 0; i < 2; i++)
+			{
+				animName[i] = charaObj[i].charaObj->GetAnim();
+
+				charaObj[i].AttackHitOld = charaObj[i].charaObj->GetHitFlag();
+				// 当たり判定をfalseにする
+				charaObj[i].charaObj->SetHitData(false, COLTYPE_NON);
+				damageFlag[i] = false;
+			}
+
+			// 当たり判定処理
+			{
+
+
+				if (lpColMng.GetColFlag(charaObj[0].charaObj->GetAnim())
+					&& lpColMng.GetColFlag(charaObj[1].charaObj->GetAnim()))
+				{
+					// 当たり判定の情報を取得
+					for (int i = 0; i < 2; i++)
+					{
+						id[i] = charaObj[i].charaObj->GetFrame();
+						if (id[i] < charaObj[i].charaObj->GetAnimFrame(charaObj[i].charaObj->GetAnim()))
+						{
+							colData[i] = lpColMng.GetCollisionData("棒人間", charaObj[i].charaObj->GetAnim(), id[i]);
+						}
+						else
+						{
+							id[i] = 0;
+						}
+					}
+
+					// 当たり判定のPOSの反転処理
+					for (int i = 0; i < 2; i++)
+					{
+						for (int a = 0; a < colData[i].hitBox.size(); a++)
+						{
+
+							colData[i].hitBox[a].rect.startPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
+							colData[i].hitBox[a].rect.endPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
+							colData[i].hitBox[a].rect.startPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
+							colData[i].hitBox[a].rect.endPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
+
+							int oneTimePos;
+
+							colData[i].hitBox[a].rect.startPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
+							colData[i].hitBox[a].rect.endPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
+
+							// startPosがendPosよりも大きかった場合、座標を交換する
+							if (colData[i].hitBox[a].rect.startPos.x > colData[i].hitBox[a].rect.endPos.x)
+							{
+								oneTimePos = colData[i].hitBox[a].rect.endPos.x;
+								colData[i].hitBox[a].rect.endPos.x = colData[i].hitBox[a].rect.startPos.x;
+								colData[i].hitBox[a].rect.startPos.x = oneTimePos;
+							}
+							if (colData[i].hitBox[a].rect.startPos.y > colData[i].hitBox[a].rect.endPos.y)
+							{
+								oneTimePos = colData[i].hitBox[a].rect.endPos.y;
+								colData[i].hitBox[a].rect.endPos.y = colData[i].hitBox[a].rect.startPos.y;
+								colData[i].hitBox[a].rect.startPos.y = oneTimePos;
+							}
+
+							// 現在のプレイヤーのpos
+							colData[i].hitBox[a].rect.startPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.startPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
+							colData[i].hitBox[a].rect.endPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.endPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
+							colData[i].hitBox[a].rect.startPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.startPos.y) + (charaObj[i].charaObj->GetDivSize().y);
+							colData[i].hitBox[a].rect.endPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.endPos.y) + (charaObj[i].charaObj->GetDivSize().y);
+
+						}
+					}
+
+					VECTOR2 hitRectPos;
+
+					// 攻撃時の当たり判定
+					for (int i = 0; i < 2; i++)
+					{
+						for (int a = 0; a < colData[i].hitBox.size(); a++)
+						{
+
+							for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
+							{
+								if (colData[i].hitBox[a].type == COLTYPE_ATTACK)
+								{
+									if (colData[(i + 1) % 2].hitBox[b].type != COLTYPE_ATTACK)
+									{
+										if (colData[i].hitBox[a].rect.endPos.x >= colData[(i + 1) % 2].hitBox[b].rect.startPos.x
+											&& colData[i].hitBox[a].rect.startPos.x <= colData[(i + 1) % 2].hitBox[b].rect.endPos.x
+											&& colData[i].hitBox[a].rect.endPos.y >= colData[(i + 1) % 2].hitBox[b].rect.startPos.y
+											&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
+										{
+											if (charaObj[i].charaObj->GetHitBoxType() != COLTYPE_HIT)
+											{
+												charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
+											}
+											charaObj[(i + 1) % 2].charaObj->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
+
+											if (colData[(i + 1) % 2].hitBox[b].type == COLTYPE_GUARD)
+											{
+												break;
+											}
+
+											hitRectPos = colData[1 - i].hitBox[b].rect.startPos;
+
+											//break;
+										}
+									}
+								}
+							}
+						}
+						if ((charaObj[(i + 1) % 2].charaObj->GetHitFlag()) && (charaObj[(i + 1) % 2].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[(i + 1) % 2])
+						{
+							charaObj[(i + 1) % 2].charaObj->CheckDamage(charaObj[i].charaObj->GetAnimAttribute(1));
+							damageFlag[(i + 1) % 2] = true;
+						}
+
+						if (!hitRectPos && !charaObj[i].AttackHitOld && charaObj[i].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+						{
+							// ヒットエフェクト表示
+							AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64)));
+						}
+					}
+
+					for (int shot1 = 0; shot1 < shotObj.size(); shot1++)
+					{
+						if (shotObj[shot1]->GetHitFlag())
+						{
+							break;
+						}
+						for (int shot2 = 0; shot2 < shotObj2.size(); shot2++)
+						{
+
+							if (shotObj[shot2]->GetHitFlag())
+							{
+								break;
+							}
+							shotObj[shot1]->SetHitData(false, COLTYPE_NON);
+							shotObj[shot2]->SetHitData(false, COLTYPE_NON);
+
+							if (shotObj[shot1] != shotObj2[shot2])
+							{
+								if (shotObj[shot1]->GetPos().x + (shotObj[shot1]->GetDivSize().x / 2) + 50 >= shotObj[shot2]->GetPos().x + (shotObj[shot2]->GetDivSize().x / 2) - 50
+									&& shotObj[shot1]->GetPos().x + (shotObj[shot1]->GetDivSize().x / 2) - 50 <= shotObj[shot2]->GetPos().x + (shotObj[shot2]->GetDivSize().x / 2) + 50)
+								{
+									shotObj[shot1]->SetHitData(true, COLTYPE_NON);
+									shotObj2[shot2]->SetHitData(true, COLTYPE_NON);
+								}
+							}
+						}
+					}
+
+					for (int i = 0; i < 2; i++)
+					{
+						for (int a = 0; a < colData[i].hitBox.size(); a++)
+						{
+							// 波動拳の当たり判定
+							for (auto& data : *objList)
+							{
+								if (data->CheckObjType(OBJ_TYPE_SHOT))
+								{
+									if (data->GetHitFlag())
+									{
+										break;
+									}
+									VECTOR2 startPos = { 0,0 };
+									VECTOR2 endPos = { 0,0 };
+
+									if (colData[i].hitBox[a].type != COLTYPE_ATTACK)
+									{
+										startPos = { data->GetPos().x + (data->GetDivSize().x / 2) - 50,data->GetPos().y + (data->GetDivSize().y / 2) - 50 };
+										endPos = { data->GetPos().x + (data->GetDivSize().x / 2) + 50,data->GetPos().y + (data->GetDivSize().y / 2) + 50 };
+
+										if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
+											&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
+											&& colData[i].hitBox[a].rect.endPos.y >= startPos.y
+											&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
+										{
+											charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
+											data->SetHitData(true, colData[i].hitBox[a].type);
+
+											break;
+										}
+									}
+								}
+							}
+						}
+						if ((charaObj[i].charaObj->GetHitFlag()) && (charaObj[i].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[i])
+						{
+							charaObj[i].charaObj->CheckDamage(ANIM_ATTRIBUTE_SHOT);
+							damageFlag[i] = true;
+						}
+					}
+
+				}
+			}
+
+			for (auto& data : *objList)
+			{
+				data->CheckHitFlag();
+			}
+
+			deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
+			objList->erase(deth_itr, objList->end());
+
+			// 背景の位置情報更新
+			BgPosUpDate();
+
+			for (auto& data : *objList)
+			{
+				if (data->CheckObjType(OBJ_TYPE_SHOT))
+				{
+					data->AddPos(bgPos - bgPosOld);
+				}
 			}
 		}
 	}
 	else
 	{
-
-		for (int i = 0; i < 2; i++)
-		{
-			beforPos[i] = charaObj[i].charaObj->GetPos();
-		}
-
-		// 情報更新
-		for (auto& data : *objList)
-		{
-			data->UpDate(controller, objList);
-		}
-
-		auto deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
-		objList->erase(deth_itr, objList->end());
-
-		for (int i = 0; i < 2; i++)
-		{
-			afterPos[i] = charaObj[i].charaObj->GetPos();
-		}
-
-		ExtrusionUpdata();
-
-		std::vector<sharedObj> shotObj;
-		std::vector<sharedObj> shotObj2;
-		EnemyState eState;
-
-		for (auto& data : *objList)
-		{
-			if (data->CheckObjType(OBJ_TYPE_SHOT))
-			{
-				shotObj.push_back(data);
-				shotObj2.push_back(data);
-				ShotData shot(data->GetPos(), data->GetPadID());
-				eState.pushBackShotData(shot);
-			}
-		}
-
-		// キャラクター同士を向い合せる
-		if (charaObj[0].charaObj->GetPos().x > charaObj[1].charaObj->GetPos().x)
-		{
-			charaObj[0].charaObj->SetDir(DIR_LEFT);
-			charaObj[1].charaObj->SetDir(DIR_RIGHT);
-		}
-		else
-		{
-			charaObj[0].charaObj->SetDir(DIR_RIGHT);
-			charaObj[1].charaObj->SetDir(DIR_LEFT);
-		}
-
-		// 一人が後ろ歩きでもう一人が攻撃系のアニメーションの時に、後ろ歩きをしている方をガード状態にする
-		if ((charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SMALL)
-		 || (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
-		 || (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
-		{
-			if (abs(afterPos[0].x - afterPos[1].x) <= (STICK_HUMAN_IMAGE_SIZE_X * 2))
-			{
-				if (charaObj[1].charaObj->GetAnim() == "後ろ移動")
-				{
-					charaObj[1].charaObj->SetAnim("ガード_立ち");
-				}
-
-				if (charaObj[1].charaObj->GetAnim() == "しゃがみ_後ろ")
-				{
-					charaObj[1].charaObj->SetAnim("ガード_しゃがみ");
-				}
-			}
-		}
-		if ((charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SMALL)
-		 || (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
-		 || (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
-		{
-			if (abs(afterPos[0].x - afterPos[1].x) <= (STICK_HUMAN_IMAGE_SIZE_X * 2))
-			{
-				if (charaObj[0].charaObj->GetAnim() == "後ろ移動")
-				{
-					charaObj[0].charaObj->SetAnim("ガード_立ち");
-				}
-
-				if (charaObj[0].charaObj->GetAnim() == "しゃがみ_後ろ")
-				{
-					charaObj[0].charaObj->SetAnim("ガード_しゃがみ");
-				}
-			}
-		}
-
-		// キャラクターの状態を相手に渡す
-		eState.enemyPos = charaObj[0].charaObj->GetPos();
-		eState.enemyAnimAttribute[0] = charaObj[0].charaObj->GetAnimAttribute(0);
-		eState.enemyAnimAttribute[1] = charaObj[0].charaObj->GetAnimAttribute(1);
-		eState.enemyAnimAttribute[2] = charaObj[0].charaObj->GetAnimAttribute(2);
-		eState.enemyAnim = charaObj[0].charaObj->GetAnim();
-		charaObj[1].charaObj->SetEnemyState(eState);
-
-		eState.enemyPos = charaObj[1].charaObj->GetPos();
-		eState.enemyAnimAttribute[0] = charaObj[1].charaObj->GetAnimAttribute(0);
-		eState.enemyAnimAttribute[1] = charaObj[1].charaObj->GetAnimAttribute(1);
-		eState.enemyAnimAttribute[2] = charaObj[1].charaObj->GetAnimAttribute(2);
-		eState.enemyAnim = charaObj[1].charaObj->GetAnim();
-		charaObj[0].charaObj->SetEnemyState(eState);
-
-		std::string animName[2];
-
-		for (int i = 0; i < 2; i++)
-		{
-			animName[i] = charaObj[i].charaObj->GetAnim();
-
-			charaObj[i].AttackHitOld = charaObj[i].charaObj->GetHitFlag();
-			// 当たり判定をfalseにする
-			charaObj[i].charaObj->SetHitData(false, COLTYPE_NON);
-			damageFlag[i] = false;
-		}
-
-		// 当たり判定処理
-		{
-			
-
-			if (lpColMng.GetColFlag(charaObj[0].charaObj->GetAnim())
-				&& lpColMng.GetColFlag(charaObj[1].charaObj->GetAnim()))
-			{
-				// 当たり判定の情報を取得
-				for (int i = 0; i < 2; i++)
-				{
-					id[i] = charaObj[i].charaObj->GetFrame();
-					if (id[i] < charaObj[i].charaObj->GetAnimFrame(charaObj[i].charaObj->GetAnim()))
-					{
-						colData[i] = lpColMng.GetCollisionData("棒人間", charaObj[i].charaObj->GetAnim(), id[i]);
-					}
-					else
-					{
-						id[i] = 0;
-					}
-				}
-
-				// 当たり判定のPOSの反転処理
-				for (int i = 0; i < 2; i++)
-				{
-					for (int a = 0; a < colData[i].hitBox.size(); a++)
-					{
-
-						colData[i].hitBox[a].rect.startPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
-						colData[i].hitBox[a].rect.endPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
-						colData[i].hitBox[a].rect.startPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
-						colData[i].hitBox[a].rect.endPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
-
-						int oneTimePos;
-
-						colData[i].hitBox[a].rect.startPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
-						colData[i].hitBox[a].rect.endPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
-
-						// startPosがendPosよりも大きかった場合、座標を交換する
-						if (colData[i].hitBox[a].rect.startPos.x > colData[i].hitBox[a].rect.endPos.x)
-						{
-							oneTimePos = colData[i].hitBox[a].rect.endPos.x;
-							colData[i].hitBox[a].rect.endPos.x = colData[i].hitBox[a].rect.startPos.x;
-							colData[i].hitBox[a].rect.startPos.x = oneTimePos;
-						}
-						if (colData[i].hitBox[a].rect.startPos.y > colData[i].hitBox[a].rect.endPos.y)
-						{
-							oneTimePos = colData[i].hitBox[a].rect.endPos.y;
-							colData[i].hitBox[a].rect.endPos.y = colData[i].hitBox[a].rect.startPos.y;
-							colData[i].hitBox[a].rect.startPos.y = oneTimePos;
-						}
-
-						// 現在のプレイヤーのpos
-						colData[i].hitBox[a].rect.startPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.startPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
-						colData[i].hitBox[a].rect.endPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.endPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
-						colData[i].hitBox[a].rect.startPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.startPos.y) + (charaObj[i].charaObj->GetDivSize().y);
-						colData[i].hitBox[a].rect.endPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.endPos.y) + (charaObj[i].charaObj->GetDivSize().y);
-
-					}
-				}
-
-				VECTOR2 hitRectPos;
-
-				// 攻撃時の当たり判定
-				for (int i = 0; i < 2; i++)
-				{
-					for (int a = 0; a < colData[i].hitBox.size(); a++)
-					{
-						
-						for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
-						{
-							if (colData[i].hitBox[a].type == COLTYPE_ATTACK)
-							{
-								if (colData[(i + 1) % 2].hitBox[b].type != COLTYPE_ATTACK)
-								{
-									if (colData[i].hitBox[a].rect.endPos.x >= colData[(i + 1) % 2].hitBox[b].rect.startPos.x
-										&& colData[i].hitBox[a].rect.startPos.x <= colData[(i + 1) % 2].hitBox[b].rect.endPos.x
-										&& colData[i].hitBox[a].rect.endPos.y >= colData[(i + 1) % 2].hitBox[b].rect.startPos.y
-										&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
-									{
-										if (charaObj[i].charaObj->GetHitBoxType() != COLTYPE_HIT)
-										{
-											charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
-										}
-										charaObj[(i + 1) % 2].charaObj->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
-
-										if (colData[(i + 1) % 2].hitBox[b].type == COLTYPE_GUARD)
-										{
-											break;
-										}
-
-										hitRectPos = colData[1 - i].hitBox[b].rect.startPos;
-
-										//break;
-									}
-								}
-							}
-						}
-					}
-					if ((charaObj[(i + 1) % 2].charaObj->GetHitFlag()) && (charaObj[(i + 1) % 2].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[(i + 1) % 2])
-					{
-						charaObj[(i + 1) % 2].charaObj->CheckDamage(charaObj[i].charaObj->GetAnimAttribute(1));
-						damageFlag[(i + 1) % 2] = true;
-					}
-
-					if (!hitRectPos && !charaObj[i].AttackHitOld && charaObj[i].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
-					{
-						// ヒットエフェクト表示
-						AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64)));
-					}
-				}
-		
-				for (int shot1 = 0; shot1 < shotObj.size(); shot1++)
-				{
-					if (shotObj[shot1]->GetHitFlag())
-					{
-						break;
-					}
-					for (int shot2 = 0; shot2 < shotObj2.size(); shot2++)
-					{
-
-						if (shotObj[shot2]->GetHitFlag())
-						{
-							break;
-						}
-						shotObj[shot1]->SetHitData(false, COLTYPE_NON);
-						shotObj[shot2]->SetHitData(false, COLTYPE_NON);
-
-						if (shotObj[shot1] != shotObj2[shot2])
-						{
-							if (shotObj[shot1]->GetPos().x + (shotObj[shot1]->GetDivSize().x / 2) + 50 >= shotObj[shot2]->GetPos().x + (shotObj[shot2]->GetDivSize().x / 2) - 50
-								&& shotObj[shot1]->GetPos().x + (shotObj[shot1]->GetDivSize().x / 2) - 50 <= shotObj[shot2]->GetPos().x + (shotObj[shot2]->GetDivSize().x / 2) + 50)
-							{
-								shotObj[shot1]->SetHitData(true, COLTYPE_NON);
-								shotObj2[shot2]->SetHitData(true, COLTYPE_NON);
-							}
-						}
-					}
-				}
-
-				for (int i = 0; i < 2; i++)
-				{
-					for (int a = 0; a < colData[i].hitBox.size(); a++)
-					{
-						// 波動拳の当たり判定
-						for (auto& data : *objList)
-						{
-							if (data->CheckObjType(OBJ_TYPE_SHOT))
-							{
-								if (data->GetHitFlag())
-								{
-									break;
-								}
-								VECTOR2 startPos = { 0,0 };
-								VECTOR2 endPos = { 0,0 };
-
-								if (colData[i].hitBox[a].type != COLTYPE_ATTACK)
-								{
-									startPos = { data->GetPos().x + (data->GetDivSize().x / 2) - 50,data->GetPos().y + (data->GetDivSize().y / 2) - 50 };
-									endPos = { data->GetPos().x + (data->GetDivSize().x / 2) + 50,data->GetPos().y + (data->GetDivSize().y / 2) + 50 };
-
-									if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
-										&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
-										&& colData[i].hitBox[a].rect.endPos.y >= startPos.y
-										&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
-									{
-										charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
-										data->SetHitData(true, colData[i].hitBox[a].type);
-
-										break;
-									}
-								}
-							}
-						}
-					}
-					if ((charaObj[i].charaObj->GetHitFlag()) && (charaObj[i].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[i])
-					{
-						charaObj[i].charaObj->CheckDamage(ANIM_ATTRIBUTE_SHOT);
-						damageFlag[i] = true;
-					}
-				}
-
-			}
-		}
-
-		for (auto& data : *objList)
-		{
-			data->CheckHitFlag();
-		}
-
-		deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
-		objList->erase(deth_itr, objList->end());
-
-		// 背景の位置情報更新
-		BgPosUpDate();
-
-		for (auto& data : *objList)
-		{
-			if (data->CheckObjType(OBJ_TYPE_SHOT))
-			{
-				data->AddPos(bgPos - bgPosOld);
-			}
-		}
+		opeCnt++;
 	}
-	
+
+	if (opeCnt >= 240)
+	{
+		operableFlag = true;
+	}
+
 	maskCnt++;
 
 	// 描画処理
@@ -423,9 +435,11 @@ int GameScene::Init(void)
 	bgPos = VECTOR2(DEF_BG_POS_X, DEF_BG_POS_Y);
 	hitStopFlag = false;
 	gameEndFlag = false;
+	operableFlag = false;
 	loseCharacter = -1;
 	winCharacter = -1;
 	flashCnt = 0;
+	opeCnt = 0;
 	drawflag = false;
 	koDrawCount = 0;
 	charaObj[0].AttackHitOld = false;
@@ -441,17 +455,17 @@ int GameScene::Init(void)
 		id[a] = 0;
 	}
 
-	charaObj[0].charaObj = *AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((ssize.x / 4), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_1, DIR_LEFT));
+	charaObj[0].charaObj = *AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2((ssize.x / 4), ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_1, DIR_RIGHT));
 	charaObj[0].charaType = OBJ_TYPE_CHARACTER;
 
 	if (mode == MODE_1PLAYER)
 	{
-		charaObj[1].charaObj = *AddObjList()(objList, std::make_unique<AIStickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), DIR_RIGHT));
+		charaObj[1].charaObj = *AddObjList()(objList, std::make_unique<AIStickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), DIR_LEFT));
 		charaObj[1].charaType = OBJ_TYPE_AICHARACTER;
 	}
 	else if (mode == MODE_2PLAYER)
 	{
-		charaObj[1].charaObj = *AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_2, DIR_RIGHT));
+		charaObj[1].charaObj = *AddObjList()(objList, std::make_unique<StickHuman>(VECTOR2(ssize.x * 3 / 4, ssize.y), VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), PAD_2, DIR_LEFT));
 		charaObj[1].charaType = OBJ_TYPE_CHARACTER;
 	}
 	else
@@ -853,6 +867,38 @@ bool GameScene::GameDraw(void)
 		DrawGraph((ssize.x / 2) - 175 + 232, 69, IMAGE_ID("image/ゲームシーン用/winStar1.png")[0], true);
 		DrawGraph((ssize.x / 2) - 175 + 262, 10, IMAGE_ID("image/ゲームシーン用/winStar2.png")[0], true);
 	}
+
+	/* 開始宣言 */
+	if ((charaObj[0].winCount + charaObj[1].winCount) == 0)
+	{
+		if (opeCnt < 120)
+		{
+			DrawGraph((ssize.x / 2) - 100, 200, IMAGE_ID("image/ゲームシーン用/round1.png")[0], true);
+		}
+	}
+
+	if ((charaObj[0].winCount + charaObj[1].winCount) == 1)
+	{
+		if (opeCnt < 120)
+		{
+			DrawGraph((ssize.x / 2) - 100, 200, IMAGE_ID("image/ゲームシーン用/round2.png")[0], true);
+		}
+	}
+
+	if ((charaObj[0].winCount + charaObj[1].winCount) == 2)
+	{
+		if (opeCnt < 120)
+		{
+			DrawGraph((ssize.x / 2) - 100, 200, IMAGE_ID("image/ゲームシーン用/round3.png")[0], true);
+		}
+	}
+
+	if (!operableFlag && opeCnt > 120)
+	{
+		DrawGraph((ssize.x / 2) - 100, 200, IMAGE_ID("image/ゲームシーン用/fight.png")[0], true);
+	}
+
+
 
 
 
