@@ -66,22 +66,20 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		}
 
 		koDrawCount++;
+		bool leftWinFlag;
+		if (charaObj[0].winCount >= 2)
+		{
+			leftWinFlag = true;
+		}
+		else
+		{
+			leftWinFlag = false;
+		}
 
 		if (koDrawCount >= 120)
 		{
 			if (gameEndFlag)
 			{
-				bool leftWinFlag;
-
-				if (charaObj[0].winCount >= 2)
-				{
-					leftWinFlag = true;
-				}
-				else
-				{
-					leftWinFlag = false;
-				}
-
 				return std::make_unique<ResultScene>(leftWinFlag);
 			}
 			else
@@ -774,7 +772,25 @@ bool GameScene::GameDraw(void)
 	// KOの文字の描画
 	if (koDrawCount)
 	{
-		DrawString(500, 300, "KO", 0xff0000);
+		// ｼﾝｸﾞﾙﾌﾟﾚｲ時
+		if (lpSceneMng.GetMode() == MODE_1PLAYER && winCharacter == 0)
+		{
+			DrawGraph((ssize.x / 2) - 100, 200, IMAGE_DIV_ID("image/ゲームシーン用/singleResult.png", VECTOR2(200, 65), VECTOR2(PLAYER_CNT_MAX, 1))[0], true);		// 勝利画像を描画
+		}
+		if (lpSceneMng.GetMode() == MODE_1PLAYER && winCharacter != 0)
+		{
+			DrawGraph((ssize.x / 2) - 100, 200, IMAGE_DIV_ID("image/ゲームシーン用/singleResult.png", VECTOR2(200, 65), VECTOR2(PLAYER_CNT_MAX, 1))[1], true);		// 勝利画像を描画
+		}
+		// ﾏﾙﾁﾌﾟﾚｲ時
+		if (lpSceneMng.GetMode() == MODE_2PLAYER && winCharacter == 0)
+		{
+			DrawGraph((ssize.x / 2) - 100, 200, IMAGE_DIV_ID("image/ゲームシーン用/multiResult.png", VECTOR2(200, 65), VECTOR2(PLAYER_CNT_MAX, 1))[0], true);		// 勝利画像を描画
+		}
+		if (lpSceneMng.GetMode() == MODE_2PLAYER && winCharacter != 0)
+		{
+			DrawGraph((ssize.x / 2) - 100, 200, IMAGE_DIV_ID("image/ゲームシーン用/multiResult.png", VECTOR2(200, 65), VECTOR2(PLAYER_CNT_MAX, 1))[1], true);		// 勝利画像を描画
+		}
+
 	}
 
 	/*DrawFormatString(0, 300, 0xff0000, "chara 0 : winCount %d\nchara 1 : winCount %d\n", charaObj[0].winCount, charaObj[1].winCount);*/
