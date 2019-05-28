@@ -1359,7 +1359,7 @@ void Character::Draw(void)
 		animCnt++;
 	}
 
-	int i = 0;
+	/*int i = 0;
 	for (auto& data : comList)
 	{
 		switch (data)
@@ -1405,5 +1405,5 @@ void Character::Draw(void)
 		}
 
 		i++;
-	}
+	}*/
 }

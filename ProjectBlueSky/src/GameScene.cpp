@@ -198,6 +198,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		{
 			animName[i] = charaObj[i].charaObj->GetAnim();
 
+			charaObj[i].AttackHitOld = charaObj[i].charaObj->GetHitFlag();
 			// 当たり判定をfalseにする
 			charaObj[i].charaObj->SetHitData(false, COLTYPE_NON);
 			damageFlag[i] = false;
@@ -306,13 +307,14 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						charaObj[(i + 1) % 2].charaObj->CheckDamage(charaObj[i].charaObj->GetAnimAttribute(1));
 						damageFlag[(i + 1) % 2] = true;
 					}
-				}
 
-				if (!hitRectPos)
-				{
-					AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64)));
+					if (!hitRectPos && !charaObj[i].AttackHitOld && charaObj[i].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+					{
+						// ヒットエフェクト表示
+						AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64)));
+					}
 				}
-				
+		
 				for (int shot1 = 0; shot1 < shotObj.size(); shot1++)
 				{
 					if (shotObj[shot1]->GetHitFlag())
@@ -424,6 +426,8 @@ int GameScene::Init(void)
 	winCharacter = -1;
 	drawflag = false;
 	koDrawCount = 0;
+	charaObj[0].AttackHitOld = false;
+	charaObj[1].AttackHitOld = false;
 
 	if (!objList)
 	{
@@ -773,7 +777,7 @@ bool GameScene::GameDraw(void)
 		DrawString(500, 300, "KO", 0xff0000);
 	}
 
-	DrawFormatString(0, 300, 0xff0000, "chara 0 : winCount %d\nchara 1 : winCount %d\n", charaObj[0].winCount, charaObj[1].winCount);
+	/*DrawFormatString(0, 300, 0xff0000, "chara 0 : winCount %d\nchara 1 : winCount %d\n", charaObj[0].winCount, charaObj[1].winCount);*/
 
 	if (charaObj[0].winCount == 1)
 	{
