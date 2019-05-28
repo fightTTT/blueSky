@@ -56,34 +56,34 @@ const VEC_INT & ImageMng::GetID(std::string f_name, VECTOR2 divSize, VECTOR2 div
 
 void ImageMng::LoadImageCharacterAll(std::string characterName, std::vector<std::string> animName, std::map<std::string, std::string> animFileName)
 {
-	bool findFlag;			// ｱﾆﾒｰｼｮﾝの画像が見つかったかどうかのﾌﾗｸﾞ
-	std::string f_name;		// ﾌｧｲﾙ名
+	char f_name[70];		// ﾌｧｲﾙ名
 	int frameNum;			// ｱﾆﾒｰｼｮﾝのｺﾏ番号 (0ｽﾀｰﾄ)
 	int tmpHandle;
 
 	for (unsigned int i = 0; i < animName.size(); i++)		// ｱﾆﾒｰｼｮﾝの種類の数だけﾙｰﾌﾟ
 	{
-		findFlag = true;
 		frameNum = 0;
 
-		do
+		while (true)
 		{
 			// (ｷｬﾗ名、ｱﾆﾒｰｼｮﾝ名、ｱﾆﾒｰｼｮﾝ名に対応したﾌｧｲﾙ名、ｱﾆﾒｰｼｮﾝのｺﾏ番号)をもとにﾊﾟｽ情報を含んだﾌｧｲﾙ名を作成
-			f_name = ("image/" + characterName + "/" + animName[i] + "/" + animFileName[animName[i]] + "_" + std::to_string(frameNum) + ".png");
+			sprintf_s(f_name, "image/%s/%s/%s_%d.png", characterName.c_str(), animName[i].c_str(), animFileName[animName[i]].c_str(), frameNum);
 
-			tmpHandle = LoadGraph(f_name.c_str());		// tmpHandleにﾌｧｲﾙ名f_nameの画像のﾊﾝﾄﾞﾙを代入
-
-			if (tmpHandle == -1)
+			if ((imgMap.find(f_name) == imgMap.end()) || (frameNum < 100))
 			{
-				findFlag = false;		// 見つからなかった
-			}
-			else
-			{
-				imgMap[f_name].resize(1);			// imgMap[f_name]配列をﾘｻｲｽﾞする
-				imgMap[f_name][0] = tmpHandle;		// tmpHandleは見つかったときのものなのでimgMap[f_name][0]に代入
-				frameNum++;							// numを進めて次の画像を読み込む準備
-			}
+				tmpHandle = LoadGraph(f_name);		// tmpHandleにﾌｧｲﾙ名f_nameの画像のﾊﾝﾄﾞﾙを代入
 
-		} while (findFlag);		// findFlagがtrueの時はまだ先があるかもしれないから繰り返す、falseならそれより先はないはずだから抜ける
+				if (tmpHandle == -1)
+				{
+					break;		// 見つからなかった
+				}
+				else
+				{
+					imgMap[f_name].resize(1);			// imgMap[f_name]配列をﾘｻｲｽﾞする
+					imgMap[f_name][0] = tmpHandle;		// tmpHandleは見つかったときのものなのでimgMap[f_name][0]に代入
+					frameNum++;							// numを進めて次の画像を読み込む準備
+				}
+			}
+		}
 	}
 }
