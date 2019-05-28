@@ -11,6 +11,7 @@
 #include "CollisionMng.h"
 #include "ResultScene.h"
 #include "HitEffect.h"
+#include "SoundMng.h"
 
 #define STICK_HUMAN_IMAGE_SIZE_X (256)
 #define STICK_HUMAN_IMAGE_SIZE_Y (256)
