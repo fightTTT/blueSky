@@ -357,6 +357,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 
 	Init("image/" + characterName + "/‘Ò‹@/stand_0.png", VECTOR2(256, 256), VECTOR2(1, 1), VECTOR2(pos.x, pos.y), false, id);
 
+	tmpDir = charaDir;
 	dir = charaDir;
 }
 

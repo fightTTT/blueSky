@@ -1236,10 +1236,6 @@ void Character::CheckHitFlag(void)
 
 void Character::Draw(void)
 {
-	if (imageName.length() == 0)
-	{
-		return;
-	}
 	int id = 0;
 	VECTOR2 animOffset(0, 0);
 	if (animTable.find(animName) != animTable.end())
@@ -1265,8 +1261,15 @@ void Character::Draw(void)
 		}
 	}
 
-	std::string nowAnim = GetAnim();
-	imageName = ("image/" + characterName + "/" + nowAnim + "/" + animFileName[nowAnim] + "_" + std::to_string(id) + ".png");
+	char tmpImageName[70];
+	sprintf_s(tmpImageName, "image/%s/%s/%s_%d.png", characterName.c_str(), animName.c_str(), animFileName[animName].c_str(), id);
+
+	imageName = tmpImageName;
+
+	if (imageName.length() == 0)
+	{
+		return;
+	}
 
 	// DIR‚ªRIGHT‚Ìê‡‰æ‘œ‚ğ”½“]
 	if (dir == DIR_RIGHT)
