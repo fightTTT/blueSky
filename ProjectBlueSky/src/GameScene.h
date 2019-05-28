@@ -28,7 +28,8 @@ private:
 
 		sharedObj charaObj;
 		OBJ_TYPE charaType;
-		int winCount;
+		bool AttackHitOld;	// 前のフレームで攻撃が当たっていたかどうか
+		int winCount;		// 勝利数のカウント
 	};
 
 	VECTOR2 ssize;				// 画面ｻｲｽﾞ
@@ -55,6 +56,7 @@ private:
 	int koDrawCount;			// koを表示する時間のカウント
 	int koImageHandle;			// ko描画時のハンドル
 
+	
 	sharedListObj objList;
 };
 
