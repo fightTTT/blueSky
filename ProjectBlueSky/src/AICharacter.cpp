@@ -59,6 +59,7 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 	if (longAttackFlag)
 	{
+
 		// ‰“‹——£UŒ‚
 		if (dir == DIR_RIGHT)
 		{

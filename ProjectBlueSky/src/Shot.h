@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Obj.h"
+#include <array>
 
 class Shot :
 	public Obj
@@ -19,10 +20,6 @@ private:
 	VECTOR2 ssize;
 	int speed;
 	void CheckHitFlag(void);
-
-	bool deleteFlag;			// 削除フラグ
-
-	PAD_ID padID;				// 発射したキャラクターのPADID
 
 	VECTOR2 hitBoxSize;			// 当たり判定の矩形のｻｲｽﾞ
 
