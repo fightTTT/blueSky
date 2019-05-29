@@ -559,7 +559,7 @@ void GameScene::BgPosUpDate(void)
 
 	
 
-	// ‰¡²‚Ìˆ—
+	// c²‚Ìˆ—
 	int highCharacter;		// ã‚É‚¢‚é•û‚ÌcharacterPos‚Ìindex
 	int lowCharacter;		// ‰º‚É‚¢‚é•û‚ÌcharacterPos‚Ìindex
 	if (characterPos[0].y < characterPos[1].y)
@@ -625,6 +625,8 @@ void GameScene::BgPosUpDate(void)
 		edgePosDown = (ssize.y - DEF_BG_POS_Y);
 	}
 
+	bool rightCharacterExtrusionFlag = false;
+
 	if (characterPos[leftCharacter].x < edgePosLeft)
 	{
 		if ((characterPos[leftCharacter].y > edgePosDown) || (charaObj[leftCharacter].charaObj->GetAnimAttribute(0) != ANIM_ATTRIBUTE_AIR))
@@ -634,6 +636,11 @@ void GameScene::BgPosUpDate(void)
 		else
 		{
 			charaObj[leftCharacter].charaObj->SetPos(VECTOR2(edgePosLeft, characterPos[leftCharacter].y));
+		}
+
+		if (charaObj[leftCharacter].charaObj->GetHitBoxType() == COLTYPE_GUARD)
+		{
+			rightCharacterExtrusionFlag = true;
 		}
 	}
 	else
@@ -658,6 +665,12 @@ void GameScene::BgPosUpDate(void)
 		{
 			charaObj[rightCharacter].charaObj->SetPos(VECTOR2(edgePosRight, characterPos[rightCharacter].y));
 		}
+
+		if (charaObj[rightCharacter].charaObj->GetHitBoxType() == COLTYPE_GUARD)
+		{
+			charaObj[leftCharacter].charaObj->AddPos(VECTOR2(-8, 0));
+			WaitTimer(40);
+		}
 	}
 	else
 	{
@@ -668,6 +681,12 @@ void GameScene::BgPosUpDate(void)
 		else
 		{
 			charaObj[rightCharacter].charaObj->SetPos(VECTOR2(characterPos[rightCharacter].x, characterPos[rightCharacter].y));
+		}
+
+		if (rightCharacterExtrusionFlag)
+		{
+			charaObj[rightCharacter].charaObj->AddPos(VECTOR2(8, 0));
+			WaitTimer(40);
 		}
 	}
 }

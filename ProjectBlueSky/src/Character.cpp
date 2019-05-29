@@ -28,7 +28,7 @@ Character::~Character()
 
 void Character::CheckDamage(ANIM_ATTRIBUTE att)
 {
-	if ((animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE) && (animName != "ダメージ_立ち"))
+	if ((animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE) && (animName != "ダメージ_立ち") && !(invincibleTime))
 	{
 		switch (att)
 		{
@@ -490,8 +490,8 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 	if (invincibleTime)
 	{
-		invincibleTime++;
-		if (invincibleTime > 15)
+		invincibleTime--;
+		if (invincibleTime < 0)
 		{
 			invincibleTime = 0;
 		}
@@ -562,6 +562,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 	{
 		if (animEndFlag)
 		{
+			invincibleTime = 40;
 			SetAnim("待機");
 		}
 	}
@@ -1174,7 +1175,7 @@ void Character::CheckHitFlag(void)
 
 			if (animName != "ダメージ_立ち")
 			{
-				invincibleTime++;
+				invincibleTime = 15;
 				WaitTimer(65);
 
 				comboCnt++;
