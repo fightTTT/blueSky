@@ -275,7 +275,6 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					{
 						for (int a = 0; a < colData[i].hitBox.size(); a++)
 						{
-
 							for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
 							{
 								if (colData[i].hitBox[a].type == COLTYPE_ATTACK)
@@ -291,14 +290,11 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 											{
 												charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
 											}
-											charaObj[(i + 1) % 2].charaObj->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
-
-											if (colData[(i + 1) % 2].hitBox[b].type == COLTYPE_GUARD)
+											if (charaObj[(i + 1) % 2].charaObj->GetHitBoxType() != COLTYPE_GUARD)
 											{
-												break;
-											}
-
-											hitRectPos = { colData[1 - i].hitBox[b].rect.startPos.x, colData[i].hitBox[a].rect.startPos.y };
+												charaObj[(i + 1) % 2].charaObj->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
+												hitRectPos = { colData[1 - i].hitBox[b].rect.startPos.x, colData[i].hitBox[a].rect.startPos.y };
+											}						
 										}
 									}
 								}
