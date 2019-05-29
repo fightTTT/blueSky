@@ -30,10 +30,7 @@ void DamageState::Init(AICharacter * character)
 	{
 		character->SetAnim("ダメージ_ダウン");
 
-		if (!CheckSoundMem(SOUND_ID("se/battle/critical.mp3")))
-		{
-			PlaySoundMem(SOUND_ID("se/battle/critical.mp3"), DX_PLAYTYPE_BACK);
-		}
+		PlaySoundMem(SOUND_ID("se/battle/critical.mp3"), DX_PLAYTYPE_BACK);
 
 
 		if (dir == DIR_RIGHT)
@@ -53,10 +50,7 @@ void DamageState::Init(AICharacter * character)
 	{
 		character->SetAnim("ダメージ_立ち");
 
-		if (!CheckSoundMem(SOUND_ID("se/battle/punch.wav")))
-		{
-			PlaySoundMem(SOUND_ID("se/battle/punch.wav"), DX_PLAYTYPE_BACK);
-		}
+		PlaySoundMem(SOUND_ID("se/battle/punch.wav"), DX_PLAYTYPE_BACK);
 
 		if (dir == DIR_RIGHT)
 		{
