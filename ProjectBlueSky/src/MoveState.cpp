@@ -40,6 +40,7 @@ void MoveState::Update(AICharacter * character)
 	int rand = 0;
 	notAttackCount++;
 
+	// アニメーションがガードだったらガードstateに変更
 	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
 	{
 		character->ChangeState("Guard");
@@ -47,6 +48,7 @@ void MoveState::Update(AICharacter * character)
 		return;
 	}
 
+	// ガードカウントがランダム値より大きくなったら後ろ移動に変更してガード準備
 	if ( static_cast<int>(changeGuardCount) > GetRand(30))
 	{
 		moveDirFlag = false;
