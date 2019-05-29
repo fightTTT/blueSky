@@ -33,6 +33,7 @@ bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, bool turn)
 	animStopFlag = false;
 	hitData.colType = COLTYPE_NON;
 	hitData.hitFlag = false;
+	deleteFlag = false;
 	return true;
 }
 

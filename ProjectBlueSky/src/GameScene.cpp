@@ -108,6 +108,23 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				data->UpDate(controller, objList);
 			}
 
+			// 同じキャラクターのショットが2つ以上あったら削除
+			std::array<bool, PAD_MAX> shotFlag = { false, false, false };
+			for (auto& data : *objList)
+			{
+				if (data->CheckObjType(OBJ_TYPE_SHOT))
+				{
+					if (shotFlag[data->GetPadID()] == true)
+					{
+						data->SetDeleteFlag(true);
+					}
+					else
+					{
+						shotFlag[data->GetPadID()] = true;
+					}
+				}
+			}
+
 			auto deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
 			objList->erase(deth_itr, objList->end());
 

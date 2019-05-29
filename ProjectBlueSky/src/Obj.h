@@ -96,7 +96,7 @@ public:
 
 	virtual void Draw(unsigned int id);		// 描画処理 引数付き
 
-	virtual bool CheckDeth(void) { return false; };		// ｵﾌﾞｼﾞｪｸﾄを削除して良いかのﾁｪｯｸ
+	virtual bool CheckDeth(void) { return deleteFlag; };		// ｵﾌﾞｼﾞｪｸﾄを削除して良いかのﾁｪｯｸ
 
 	virtual bool CheckObjType(OBJ_TYPE type) = 0;		// ｵﾌﾞｼﾞｪｸﾄのﾀｲﾌﾟが引数で指定したﾀｲﾌﾟか確かめる
 
@@ -161,6 +161,9 @@ public:
 	// 当たり判定の情報のﾁｪｯｸと、それに伴い追加で行う処理
 	virtual void CheckHitFlag(void);
 
+	// オブジェクトを削除するフラグをセット
+	void SetDeleteFlag(bool flag) { deleteFlag = flag; }
+
 private:
 	//移動処理
 	virtual void SetMove(const GameCtrl &ctl);
@@ -186,6 +189,7 @@ protected:
 	int playerHPOld;				// プレイヤーHP変更前の値
 	float DrawHPCount;				// HP描画のカウント
 	bool animStopFlag;				// アニメーションをとめるフラグ
+	bool deleteFlag;				// オブジェクトを削除するフラグ
 
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;				// ｱﾆﾒｰｼｮﾝ情報
 	std::string animName;											// 表示ｱﾆﾒｰｼｮﾝ名

@@ -2,7 +2,7 @@
 #include "AICharacter.h"
 #include "SceneMng.h"
 #include "Collision.h"
-
+#include "SoundMng.h"
 #include "DxLib.h"
 
 #define JUMP_SPEED_X (4)
@@ -25,6 +25,8 @@ void JumpState::Init(AICharacter * character)
 
 void JumpState::Update(AICharacter * character)
 {
+	PlaySoundMem(SOUND_ID("se/battle/jump.wav"), DX_PLAYTYPE_BACK);
+
 	auto pos = character->GetPos();
 	auto charaDir = character->GetDir();
 	auto enemy = character->GetEnemyState();

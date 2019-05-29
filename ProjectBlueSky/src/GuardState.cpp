@@ -1,6 +1,9 @@
 #include "GuardState.h"
 #include "AICharacter.h"
 #include "Collision.h"
+#include "SoundMng.h"
+
+#include "DxLib.h"
 
 #define KNOCK_BACK_SPEED (10)
 
@@ -68,6 +71,8 @@ void GuardState::CheckHitFlag(AICharacter * character)
 	// ガード時のノックバック
 	if (guardHitFlag)
 	{
+		PlaySoundMem(SOUND_ID("se/battle/guard.wav"), DX_PLAYTYPE_BACK);
+
 		pos.x += knockBackSpeed;
 
 		if (dir == DIR_RIGHT)
