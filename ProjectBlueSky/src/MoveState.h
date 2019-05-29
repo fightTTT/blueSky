@@ -22,6 +22,5 @@ private:
 	unsigned int changeWaitStateCount;		// 待機状態に入るカウント
 	unsigned int notAttackCount;			// 攻撃していない状態のカウント
 	unsigned int moveFrontCount;			// 前移動持続時間のカウント
-	unsigned int guardHitCount;				// ガードを連続でした回数
 };
 
