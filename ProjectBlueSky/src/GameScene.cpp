@@ -790,24 +790,24 @@ bool GameScene::GameDraw(void)
 		(*data).Draw();
 	}
 	
-	std::string animName[2];
+	//std::string animName[2];
 
-	for (int charNum = 0; charNum < 2; charNum++)
-	{
-		animName[charNum] = charaObj[charNum].charaObj->GetAnim();
-		if (lpColMng.GetColFlag(charaObj[charNum].charaObj->GetAnim()))
-		{
-			int colColor;
-			for (int i = 0; i < colData[charNum].hitBox.size(); i++)
-			{
+	//for (int charNum = 0; charNum < 2; charNum++)
+	//{
+	//	animName[charNum] = charaObj[charNum].charaObj->GetAnim();
+	//	if (lpColMng.GetColFlag(charaObj[charNum].charaObj->GetAnim()))
+	//	{
+	//		int colColor;
+	//		for (int i = 0; i < colData[charNum].hitBox.size(); i++)
+	//		{
 
-				colColor = (colData[charNum].hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData[charNum].hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
+	//			colColor = (colData[charNum].hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData[charNum].hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
 
-				DrawBox(charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.startPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.startPos.y,
-						charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.endPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.endPos.y, colColor, false);
-			}
-		}
-	}
+	//			DrawBox(charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.startPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.startPos.y,
+	//					charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.endPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.endPos.y, colColor, false);
+	//		}
+	//	}
+	//}
 
 	// KO‚Ì•¶Žš‚Ì•`‰æ
 	if (koDrawCount)
