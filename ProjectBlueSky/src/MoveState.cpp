@@ -14,7 +14,7 @@ MoveState::MoveState()
 {
 	// 最初だけ初期化
 	moveDirFlag = true;
-	guardHitCount = 0;
+	notAttackCount = 0;
 }
 
 MoveState::~MoveState()
@@ -40,19 +40,9 @@ void MoveState::Update(AICharacter * character)
 	int rand = 0;
 	notAttackCount++;
 
-	if (guardHitCount >= 50)
-	{
-		character->SetJumpType(JUMP_TYPE_FRONT);
-		character->ChangeState("Jump");
-		guardHitCount = 0;
-		moveDirFlag = true;
-		return;
-	}
-
 	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
 	{
 		character->ChangeState("Guard");
-		guardHitCount++;
 		moveDirFlag = true;
 		return;
 	}
@@ -105,6 +95,7 @@ void MoveState::Update(AICharacter * character)
 		moveDirFlag = !moveDirFlag;
 	}
 
+	// 敵との距離が近い+敵が攻撃してきた場合ガードカウントをインクリメント
 	if (abs(vec.x) < ATTACK_RANGE
 	 && ((enemy.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SMALL)
 	 || (enemy.enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_BIG)
