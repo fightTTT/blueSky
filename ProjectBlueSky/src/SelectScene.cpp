@@ -89,6 +89,27 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 		return std::make_unique<TitleScene>();
 	}
 
+	/* ｺﾏﾝﾄﾞ表を表示 */
+	if (controller.GetPadDataTrg(PAD_1, BUTTON_X))
+	{
+		commandTableFlag1 = true;
+	}
+	if (controller.GetPadDataTrg(PAD_2, BUTTON_X))
+	{
+		commandTableFlag2 = true;
+	}
+
+	/* ｺﾏﾝﾄﾞ表を非表示 */
+	if (commandTableFlag1 && controller.GetPadDataTrg(PAD_1, BUTTON_Y))
+	{
+		commandTableFlag1 = false;
+	}
+	if (commandTableFlag2 && controller.GetPadDataTrg(PAD_2, BUTTON_Y))
+	{
+		commandTableFlag2 = false;
+	}
+
+
 	SelectDraw();
 	return std::move(own);
 }
@@ -126,6 +147,8 @@ int SelectScene::Init()
 					"チャ" };
 
 	sceneChangeFlag = false;
+	commandTableFlag1 = false;
+	commandTableFlag2 = false;
 
 	if (!CheckSoundMem(SOUND_ID("bgm/select.mp3")))
 	{
@@ -143,7 +166,7 @@ void SelectScene::SelectDraw(void)
 			
 	/* PL1のｷｬﾗ名 */
 	const int id[2] = { lpSceneMng.GetCharID(PAD_1) , lpSceneMng.GetCharID(PAD_2) };
-	DrawGraph(150, (scSize.y / 4), IMAGE_ID("image/キャラセレ用/1p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(1P)の描画
+	DrawGraph(100, (scSize.y / 3) + 25, IMAGE_ID("image/キャラセレ用/1p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(1P)の描画
 	if (id[0] != -1)
 	{
 		DrawGraph(0, (scSize.y-400), IMAGE_DIV_ID("image/キャラセレ用/charIcon.png", VECTOR2(400, 400), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｷｬﾗのｱｲｺﾝを描画
@@ -151,7 +174,7 @@ void SelectScene::SelectDraw(void)
 	}
 	if (id[1] != -1)
 	{
-		DrawGraph((scSize.x-190), (scSize.y / 4), IMAGE_ID("image/キャラセレ用/2p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(2P)の描画
+		DrawGraph((scSize.x-190), (scSize.y / 3) + 25, IMAGE_ID("image/キャラセレ用/2p.png")[0], true);		// ﾌﾟﾚｲﾔｰ番号(2P)の描画
 		DrawTurnGraph((scSize.x - 400), (scSize.y - 400), IMAGE_DIV_ID("image/キャラセレ用/charIcon.png", VECTOR2(400, 400), VECTOR2(CHAR_CNT_MAX, 1))[id[1]], true);		// ｷｬﾗのｱｲｺﾝを描画
 		//DrawFormatString(1200, (scSize.y / 2), 0xffffff, "%s", charNameTbl[id[1]]);
 	}
@@ -195,6 +218,10 @@ void SelectScene::SelectDraw(void)
 				}
 			}
 		}
+		if(!lpSceneMng.GetDecidFlag(PAD_1) && commandTableFlag1)
+		{
+			DrawGraph(0, 0, IMAGE_DIV_ID("image/キャラセレ用/コマンド表/command.png", VECTOR2(840, 460), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｺﾏﾝﾄﾞ表を描画
+		}
 	}
 	else if (lpSceneMng.GetMode() == MODE_2PLAYER)
 	{
@@ -202,9 +229,20 @@ void SelectScene::SelectDraw(void)
 		{
 			DrawGraph((scSize.x / 2) - 419, (scSize.y / 3), IMAGE_ID("image/キャラセレ用/allGreen.png")[0], true);		// キャラ確定表示
 		}
+
+		if (!lpSceneMng.GetDecidFlag(PAD_1) && commandTableFlag1)
+		{
+			DrawGraph(0, 0, IMAGE_DIV_ID("image/キャラセレ用/コマンド表/command.png", VECTOR2(840, 460), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｺﾏﾝﾄﾞ表を描画
+		}
+
 		if (lpSceneMng.GetDecidFlag(PAD_2))
 		{
-			DrawGraph((scSize.x / 2) + (BOX_SIZE_X * 2) + 119, (scSize.y / 3), IMAGE_ID("image/キャラセレ用/allGreen.png")[0], true);		// キャラ確定表示
+			DrawGraph((scSize.x / 2) + (BOX_SIZE_X * 2) + 75, (scSize.y / 3), IMAGE_ID("image/キャラセレ用/allGreen.png")[0], true);		// キャラ確定表示
+		}
+
+		if (!lpSceneMng.GetDecidFlag(PAD_2) && commandTableFlag2)
+		{
+			DrawGraph((scSize.x - 640), 0, IMAGE_DIV_ID("image/キャラセレ用/コマンド表/command.png", VECTOR2(840, 460), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｺﾏﾝﾄﾞ表を描画
 		}
 
 		if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
