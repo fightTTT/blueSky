@@ -4,15 +4,7 @@
 #include "ObjList.h"
 #include "GameCtrl.h"
 #include <vector>
-<<<<<<< HEAD
-#include <array>
-#include <string>
 
-//enum PAD_ID;
-
-=======
-#include <string>
->>>>>>> d43b9c39c50989296496f9c7899fb9b27eaa382c
 
 class ResultScene :
 	public BaseScene
