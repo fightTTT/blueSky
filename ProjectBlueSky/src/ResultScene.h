@@ -4,7 +4,8 @@
 #include "ObjList.h"
 #include "GameCtrl.h"
 #include <vector>
-
+#include <array>
+#include <string>
 
 class ResultScene :
 	public BaseScene
