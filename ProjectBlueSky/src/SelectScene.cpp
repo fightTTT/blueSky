@@ -35,9 +35,14 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 	if (itvCnt > 0)
 	{
 		itvCnt++;
+		if (!CheckSoundMem(SOUND_ID("se/ui/sa.wav")))
+		{
+			PlaySoundMem(SOUND_ID("se/ui/sa.wav"), DX_PLAYTYPE_BACK);
+		}
 
 		if (itvCnt > 120)
 		{
+			StopSoundMem(SOUND_ID("se/ui/sa.wav"));
 			StopSoundMem(SOUND_ID("bgm/select.mp3"));
 			return std::make_unique<GameScene>();
 		}
@@ -65,6 +70,7 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 				itvCnt = 1;
 				flamCnt = 0;
 				sceneChangeFlag = true;
+
 
 			}
 		}
