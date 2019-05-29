@@ -20,8 +20,6 @@ private:
 	int itvCnt;				// ｲﾝﾀｰﾊﾞﾙ用ｶｳﾝﾄ
 	int flamCnt;			// 点滅用
 	bool sceneChangeFlag;	// ｼｰﾝを変更するﾌﾗｸﾞ
-	bool commandTableFlag1;	// 1Pのｺﾏﾝﾄﾞ表を表示するﾌﾗｸﾞ
-	bool commandTableFlag2;	// 1Pのｺﾏﾝﾄﾞ表を表示するﾌﾗｸﾞ
 
 	int Init(void);
 	void SelectDraw(void);
