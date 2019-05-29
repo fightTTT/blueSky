@@ -128,10 +128,7 @@ int SelectScene::Init()
 
 	sceneChangeFlag = false;
 
-	if (!CheckSoundMem(SOUND_ID("bgm/select.mp3")))
-	{
-		PlaySoundMem(SOUND_ID("bgm/select.mp3"), DX_PLAYTYPE_BACK);
-	}
+	PlaySoundMem(SOUND_ID("bgm/select.mp3"), DX_PLAYTYPE_LOOP);
 
 	return 0;
 }
