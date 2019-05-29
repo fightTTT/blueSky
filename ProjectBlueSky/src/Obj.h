@@ -74,7 +74,6 @@ struct HitData
 	ColType colType;
 };
 
-class GameCtrl;
 
 class Obj
 {

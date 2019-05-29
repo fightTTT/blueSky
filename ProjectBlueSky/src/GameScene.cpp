@@ -71,22 +71,13 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			}
 
 			koDrawCount++;
-			bool leftWinFlag;
-			if (charaObj[0].winCount >= 2)
-			{
-				leftWinFlag = true;
-			}
-			else
-			{
-				leftWinFlag = false;
-			}
 
 			if (koDrawCount >= 120)
 			{
 				if (gameEndFlag)
 				{
 					StopSoundMem(SOUND_ID("bgm/battle.mp3"));
-					return std::make_unique<ResultScene>(leftWinFlag);
+					return std::make_unique<ResultScene>(charaObj[winCharacter].charaObj->GetPadID());
 				}
 				else
 				{
@@ -422,7 +413,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 			for (auto& data : *objList)
 			{
-				data->CheckHitFlag();
+				data->
+					CheckHitFlag();
 			}
 
 			deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
