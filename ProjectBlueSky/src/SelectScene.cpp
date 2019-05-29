@@ -43,6 +43,7 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 		}
 	}
 
+
 	/* ｹﾞｰﾑｼｰﾝへ移動 */
 	if ((controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START)) && !sceneChangeFlag)
 	{				
@@ -100,15 +101,14 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 	}
 
 	/* ｺﾏﾝﾄﾞ表を非表示 */
-	if (commandTableFlag1 && controller.GetPadDataTrg(PAD_1, BUTTON_Y))
+	if (commandTableFlag1 && controller.GetPadDataTrg(PAD_1, BUTTON_B))
 	{
 		commandTableFlag1 = false;
 	}
-	if (commandTableFlag2 && controller.GetPadDataTrg(PAD_2, BUTTON_Y))
+	if (commandTableFlag2 && controller.GetPadDataTrg(PAD_2, BUTTON_B))
 	{
 		commandTableFlag2 = false;
 	}
-
 
 	SelectDraw();
 	return std::move(own);
@@ -220,7 +220,7 @@ void SelectScene::SelectDraw(void)
 		}
 		if(!lpSceneMng.GetDecidFlag(PAD_1) && commandTableFlag1)
 		{
-			DrawGraph(0, 0, IMAGE_DIV_ID("image/キャラセレ用/コマンド表/command.png", VECTOR2(840, 460), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｺﾏﾝﾄﾞ表を描画
+			DrawGraph(0, 0, IMAGE_DIV_ID("image/キャラセレ用/コマンド表/command.png", VECTOR2(630, 270), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｺﾏﾝﾄﾞ表を描画
 		}
 	}
 	else if (lpSceneMng.GetMode() == MODE_2PLAYER)
@@ -232,7 +232,7 @@ void SelectScene::SelectDraw(void)
 
 		if (!lpSceneMng.GetDecidFlag(PAD_1) && commandTableFlag1)
 		{
-			DrawGraph(0, 0, IMAGE_DIV_ID("image/キャラセレ用/コマンド表/command.png", VECTOR2(840, 460), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｺﾏﾝﾄﾞ表を描画
+			DrawGraph(0, 0, IMAGE_DIV_ID("image/キャラセレ用/コマンド表/command.png", VECTOR2(630, 270), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｺﾏﾝﾄﾞ表を描画
 		}
 
 		if (lpSceneMng.GetDecidFlag(PAD_2))
@@ -242,7 +242,7 @@ void SelectScene::SelectDraw(void)
 
 		if (!lpSceneMng.GetDecidFlag(PAD_2) && commandTableFlag2)
 		{
-			DrawGraph((scSize.x - 640), 0, IMAGE_DIV_ID("image/キャラセレ用/コマンド表/command.png", VECTOR2(840, 460), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｺﾏﾝﾄﾞ表を描画
+			DrawGraph((scSize.x - 630), 0, IMAGE_DIV_ID("image/キャラセレ用/コマンド表/command.png", VECTOR2(630, 270), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｺﾏﾝﾄﾞ表を描画
 		}
 
 		if (lpSceneMng.GetDecidFlag(PAD_1) && lpSceneMng.GetDecidFlag(PAD_2))
