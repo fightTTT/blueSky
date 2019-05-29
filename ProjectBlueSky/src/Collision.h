@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <map>
+#include <string>
 #include "VECTOR2.h"
 
 enum ColType

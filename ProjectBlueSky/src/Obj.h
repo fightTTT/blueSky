@@ -116,6 +116,7 @@ public:
 	VECTOR2 GetDivSize() const { return divSize; }
 
 	// Œü‚¢‚Ä‚¢‚é•ûŒüƒZƒbƒg
+	void SetTmpDir(DIR d);
 	void SetDir(DIR d);
 	DIR GetTmpDir() const { return tmpDir; }
 	// Œü‚¢‚Ä‚¢‚é•ûŒüŽæ“¾

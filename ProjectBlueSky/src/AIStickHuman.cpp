@@ -27,7 +27,6 @@ AIStickHuman::AIStickHuman(VECTOR2 pos, VECTOR2 offset, DIR charaDir) : AICharac
 	spAttackDamage["ÉAÉNÉZÉã"] = -40;
 	spAttackDamage["èRÇËï‘Çµ"] = -15;
 
-
 	switch (lpSceneMng.GetCharID(PAD_AI))
 	{
 	case 0:

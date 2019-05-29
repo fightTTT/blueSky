@@ -161,11 +161,11 @@ void JumpState::Update(AICharacter * character)
 	{
 		if (distance.x < 0)
 		{
-			character->SetDir(DIR_LEFT);
+			character->SetTmpDir(DIR_LEFT);
 		}
 		else
 		{
-			character->SetDir(DIR_RIGHT);
+			character->SetTmpDir(DIR_RIGHT);
 		}
 		character->SetAnim("ƒLƒbƒN_‘å_‹ó’†");
 	}

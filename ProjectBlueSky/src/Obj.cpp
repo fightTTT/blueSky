@@ -189,9 +189,14 @@ const ANIM_ATTRIBUTE Obj::GetAnimAttribute(int index)
 	return animAttribute[index];
 }
 
-void Obj::SetDir(DIR d)
+void Obj::SetTmpDir(DIR d)
 {
 	tmpDir = d;
+}
+
+void Obj::SetDir(DIR d)
+{
+	dir = d;
 }
 
 void Obj::SetEnemyState(EnemyState state)

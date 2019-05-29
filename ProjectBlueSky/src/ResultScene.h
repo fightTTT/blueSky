@@ -4,6 +4,7 @@
 #include "ObjList.h"
 #include <map>
 #include <vector>
+#include <string>
 
 class ResultScene :
 	public BaseScene

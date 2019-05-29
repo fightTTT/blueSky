@@ -153,13 +153,13 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			// キャラクター同士を向い合せる
 			if (charaObj[0].charaObj->GetPos().x > charaObj[1].charaObj->GetPos().x)
 			{
-				charaObj[0].charaObj->SetDir(DIR_LEFT);
-				charaObj[1].charaObj->SetDir(DIR_RIGHT);
+				charaObj[0].charaObj->SetTmpDir(DIR_LEFT);
+				charaObj[1].charaObj->SetTmpDir(DIR_RIGHT);
 			}
 			else
 			{
-				charaObj[0].charaObj->SetDir(DIR_RIGHT);
-				charaObj[1].charaObj->SetDir(DIR_LEFT);
+				charaObj[0].charaObj->SetTmpDir(DIR_RIGHT);
+				charaObj[1].charaObj->SetTmpDir(DIR_LEFT);
 			}
 
 			// 一人が後ろ歩きでもう一人が攻撃系のアニメーションの時に、後ろ歩きをしている方をガード状態にする
