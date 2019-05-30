@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <time.h>
 #include "Dxlib.h"
 #include "ObjList.h"
 #include "Obj.h"
@@ -581,6 +582,8 @@ int GameScene::Init(void)
 		// MODE_MAXが来ている(エラー)
 		AST();
 	}
+
+	sprintf_s(stageImgName, "image/ゲームシーン用/backGround%d.png", GetRand(2));
 	
 	// BGM
 	//if (!CheckSoundMem(SOUND_ID("bgm/battle.mp3")))
@@ -894,7 +897,7 @@ bool GameScene::CheckGameEnd()
 
 bool GameScene::GameDraw(void)
 {
-	DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/backGround2.png")[0], true);
+	DrawGraph(bgPos.x, bgPos.y, IMAGE_ID(stageImgName)[0], true);
 
 	DrawGraph((ssize.x/2)-175, 0, IMAGE_ID("image/ゲームシーン用/centerBer.png")[0], true);
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseScene.h"
-
+#include <array>
 #include "VECTOR2.h"
 #include "ObjList.h"
 #include "Obj.h"
@@ -62,6 +62,8 @@ private:
 	int flashCnt;				// 点滅用ｶｳﾝﾄ
 	int opeCnt;					// 操作可能までのｶｳﾝﾄ
 	int finishCnt;				// 終了宣言までのｶｳﾝﾄ
+
+	char stageImgName[40];
 	sharedListObj objList;
 };
 
