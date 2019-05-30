@@ -1336,24 +1336,6 @@ void Character::Draw(void)
 		DrawRotaGraph(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2), drawOffset.y + animOffset.y + pos.y + (divSize.y / 2), 1.0, 0.0, IMAGE_ID(imageName)[0], true, turnFlag);
 	}
 
-	/*if (lpColMng.GetColFlag(animName))
-	{
-		ColInfo colData = lpColMng.GetCollisionData("棒人間", animName, id);
-
-		int colColor;
-
-		for (int i = 0; i < colData.hitBox.size(); i++)
-		{
-			colData.hitBox[i].rect.startPos.x *= static_cast<int>(dir) * -2 + 1;
-			colData.hitBox[i].rect.endPos.x *= static_cast<int>(dir) * -2 + 1;
-
-			colColor = (colData.hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData.hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
-
-			DrawBox(drawOffset.x + animOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.startPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.startPos.y, ]
-				drawOffset.x + animOffset.x + pos.x + (divSize.x / 2) + colData.hitBox[i].rect.endPos.x, drawOffset.y + animOffset.y + pos.y + divSize.y + colData.hitBox[i].rect.endPos.y, colColor, false);
-		}
-	}*/
-
 	int hpColor = 0;
 
 	if (playerHP != playerHPOld)
@@ -1384,17 +1366,15 @@ void Character::Draw(void)
 
 	if (padID == PAD_1)
 	{
-		DrawFormatString(110, 25, 0xffffff, "playerの残りHP %d \n", playerHP);
 		DrawBox(100, 65, 100 + 300, 85, 0x000000, true);
-		DrawBox(100 + (300 - playerHPOld * 3), 65, 100 + 300 /*+ (playerHPOld * 3)*/, 85, 0xff0000, true);
-		DrawBox(100 + (300 - playerHP * 3), 65, 100 + 300 /*+ (playerHP * 3)*/, 85, hpColor, true);
+		DrawBox(100 + (300 - playerHPOld * 3), 65, 100 + 300, 85, 0xff0000, true);
+		DrawBox(100 + (300 - playerHP * 3), 65, 100 + 300, 85, hpColor, true);
 		DrawGraph(70, 55, IMAGE_ID("image/ゲームシーン用/hpGage.png")[0], true);
 		DrawGraph(0, 0, IMAGE_ID("image/ゲームシーン用/iconFrame1.png")[0], true);
 		DrawGraph(25, 10, IMAGE_DIV_ID("image/キャラセレ用/charIcon_small.png", VECTOR2(100, 100), VECTOR2(8, 1))[lpSceneMng.GetCharID(padID)], true);
 	}
 	else if (padID == PAD_2)
 	{
-		DrawFormatString(ssize.x - 410, 25, 0xffffff, "AIの残りHP %d \n", playerHP);
 		DrawBox(ssize.x - 410, 65, ssize.x - 410 + 300, 85, 0x000000, true);
 		DrawBox(ssize.x - 410, 65, ssize.x - 410 + (playerHPOld * 3), 85, 0xff0000, true);
 		DrawBox(ssize.x - 410, 65, ssize.x - 410 + (playerHP * 3), 85, hpColor, true);
