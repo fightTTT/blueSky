@@ -198,6 +198,7 @@ void AICharacter::CheckHitFlag()
 	{
 		if (playerHP <= 0)
 		{
+			dir = tmpDir;
 			SetAnim("ダメージ_ダウン");
 
 			ChangeState("Damage");
