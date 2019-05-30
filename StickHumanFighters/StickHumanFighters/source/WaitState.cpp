@@ -4,6 +4,9 @@
 
 #include "DxLib.h"
 
+#define JUMP_DISTANCE (300)
+#define ATTACK_TIME (15)
+
 WaitState::WaitState()
 {
 }
@@ -28,14 +31,15 @@ void WaitState::Update(AICharacter * character)
 	character->SetAnim("待機");
 	int rand = 0;
 
-	if(distance < 300)
+	// 敵との距離が近づいてきたら前へジャンプ
+	if(distance < JUMP_DISTANCE)
 	{
 		character->SetJumpType(JUMP_TYPE_FRONT);
 		character->ChangeState("Jump");
 		return;
 	}
 
-	if (stateTime == 15)
+	if (stateTime >= ATTACK_TIME)
 	{
 		if (distance > 10)
 		{

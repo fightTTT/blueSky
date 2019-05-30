@@ -16,6 +16,5 @@ private:
 	void Update(AICharacter* character);
 
 	unsigned int attackCount;
-	bool warpFlag;
 };
 
