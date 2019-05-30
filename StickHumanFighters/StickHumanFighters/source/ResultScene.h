@@ -12,7 +12,7 @@ class ResultScene :
 {
 public:
 	ResultScene();
-	ResultScene(PAD_ID padData);
+	ResultScene(PAD_ID padData,bool drawFlag);
 	~ResultScene();
 
 	unique_Base UpDate(unique_Base own, const GameCtrl &controller);
@@ -22,6 +22,7 @@ private:
 	PAD_ID defeatPad;
 	int victoryCharID;
 	int defeatCharID;
+	bool drawflag;
 	int Init();
 	void ResultDraw();
 	int animCnt;

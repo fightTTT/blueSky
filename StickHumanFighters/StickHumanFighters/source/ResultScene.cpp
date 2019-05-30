@@ -10,9 +10,10 @@ ResultScene::ResultScene()
 {
 }
 
-ResultScene::ResultScene(PAD_ID padData)
+ResultScene::ResultScene(PAD_ID padData,bool DrawFlag)
 {
 	victoryPad = padData;
+	drawflag = DrawFlag;
 	
 	switch (victoryPad)
 	{
@@ -71,20 +72,6 @@ int ResultScene::Init()
 				"棒人間_ピンク",
 				"棒人間_水色" };
 
-	imagePass[0].resize(5);
-
-	// player(キャラ)のpass
-	for (unsigned int i = 0; i < imagePass[0].size(); i++)
-	{
-		sprintf_s(tmpImagePass, "image/%s/勝ち/win_%d.png", charName[lpSceneMng.GetCharID(victoryPad)].c_str(), i);
-		imagePass[0][i] = tmpImagePass;
-	}
-	imagePass[1].resize(9);
-	for (unsigned int i = 0; i < imagePass[1].size(); i++)
-	{
-		sprintf_s(tmpImagePass, "image/%s/負け/lose_%d.png", charName[lpSceneMng.GetCharID(defeatPad)].c_str(), i);
-		imagePass[1][i] = tmpImagePass;
-	}
 
 	// player(文字)のpass
 	if (victoryPad == PAD_AI || defeatPad == PAD_AI)
@@ -104,13 +91,50 @@ int ResultScene::Init()
 		}
 	}
 
-	// 勝敗の文字のpass
-	for(unsigned int i = 0; i < victoryPass.size(); i++)
+	if (!drawflag)
 	{
-		sprintf_s(tmpImagePass, "image/リザルトシーン用/victory_%d.png",i);
-		victoryPass[i] = tmpImagePass;
-	}
+		imagePass[0].resize(5);
+		// player(キャラ)のpass
+		for (unsigned int i = 0; i < imagePass[0].size(); i++)
+		{
+			sprintf_s(tmpImagePass, "image/%s/勝ち/win_%d.png", charName[lpSceneMng.GetCharID(victoryPad)].c_str(), i);
+			imagePass[0][i] = tmpImagePass;
+		}
+		imagePass[1].resize(9);
+		for (unsigned int i = 0; i < imagePass[1].size(); i++)
+		{
+			sprintf_s(tmpImagePass, "image/%s/負け/lose_%d.png", charName[lpSceneMng.GetCharID(defeatPad)].c_str(), i);
+			imagePass[1][i] = tmpImagePass;
+		}
 
+		// 勝敗の文字のpass
+		for (unsigned int i = 0; i < victoryPass.size(); i++)
+		{
+			sprintf_s(tmpImagePass, "image/リザルトシーン用/victory_%d.png", i);
+			victoryPass[i] = tmpImagePass;
+		}
+	}
+	else
+	{
+		// 引き分けの時
+		for (int a = 0; a < 2; a++)
+		{
+			imagePass[a].resize(5);
+			// player(キャラ)のpass
+			for (unsigned int i = 0; i < imagePass[a].size(); i++)
+			{
+				sprintf_s(tmpImagePass, "image/%s/勝ち/win_%d.png", charName[lpSceneMng.GetCharID(PAD_ID(a))].c_str(), i);
+				imagePass[a][i] = tmpImagePass;
+			}
+
+			// 勝敗の文字のpass
+			for (unsigned int i = 0; i < victoryPass.size(); i++)
+			{
+				sprintf_s(tmpImagePass, "image/リザルトシーン用/victory_0.png");
+				victoryPass[i] = tmpImagePass;
+			}
+		}
+	}
 	animCnt = 0;
 
 	return 0;
@@ -145,15 +169,26 @@ void ResultScene::ResultDraw()
 			DrawRotaGraph(1280 / 4 * 3, 720 / 4 * 2, 1.0, 0.0, lpImageMng.GetID(playerfontPass[1])[0], true, false);
 		}
 
-		if(victoryPad != PAD_1)
+		if (!drawflag)
 		{
-			charDrawPos_x = 1280 / 4 * (1 + ((1 - num) * 2));
-			turnFlag = 1 - num;
-		}
+			if (victoryPad != PAD_1)
+			{
+				charDrawPos_x = 1280 / 4 * (1 + ((1 - num) * 2));
+				turnFlag = 1 - num;
+			}
 
-		// 勝ち負けの描画
-		DrawRotaGraph(charDrawPos_x, 720 / 4, 1.0, 0.0, lpImageMng.GetID(victoryPass[num])[0], true, false);
-		// キャラの描画
-		DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[num]])[0], true, turnFlag);
+			// 勝ち負けの描画
+			DrawRotaGraph(charDrawPos_x, 720 / 4, 1.0, 0.0, lpImageMng.GetID(victoryPass[num])[0], true, false);
+			// キャラの描画
+			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[num]])[0], true, turnFlag);
+		}
+		else
+		{
+			// 引き分けの時
+			// 勝ち負けの描画
+			DrawRotaGraph(charDrawPos_x, 720 / 4, 1.0, 0.0, lpImageMng.GetID(victoryPass[num])[0], true, false);
+			// キャラの描画
+			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[0]])[0], true, turnFlag);
+		}
 	}
 }

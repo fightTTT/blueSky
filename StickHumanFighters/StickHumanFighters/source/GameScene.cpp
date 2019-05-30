@@ -80,7 +80,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				if (gameEndFlag)
 				{
 					StopSoundMem(SOUND_ID("bgm/battle.mp3"));
-					return std::make_unique<ResultScene>(charaObj[winCharacter].charaObj->GetPadID());
+					return std::make_unique<ResultScene>(charaObj[winCharacter].charaObj->GetPadID(),drawflag);
 				}
 				else
 				{
@@ -130,7 +130,6 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			ExtrusionUpdata();
 
 			std::vector<sharedObj> shotObj;
-			std::vector<sharedObj> shotObj2;
 			EnemyState eState;
 
 			for (auto& data : *objList)
@@ -138,7 +137,6 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				if (data->CheckObjType(OBJ_TYPE_SHOT))
 				{
 					shotObj.push_back(data);
-					shotObj2.push_back(data);
 					ShotData shot(data->GetPos(), data->GetPadID());
 					eState.pushBackShotData(shot);
 				}
@@ -221,204 +219,207 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 			// 当たり判定処理
 			{
-
-				if (lpColMng.GetColFlag(charaObj[0].charaObj->GetAnim())
-					&& lpColMng.GetColFlag(charaObj[1].charaObj->GetAnim()))
+				colJudgment(shotObj,animName);
+				// いらない部分,万が一のために残しておきます
 				{
-					// 当たり判定の情報を取得
-					for (int i = 0; i < 2; i++)
-					{
-						id[i] = charaObj[i].charaObj->GetFrame();
-						if (id[i] < charaObj[i].charaObj->GetAnimFrame(charaObj[i].charaObj->GetAnim()))
-						{
-							colData[i] = lpColMng.GetCollisionData("棒人間", charaObj[i].charaObj->GetAnim(), id[i]);
-						}
-						else
-						{
-							id[i] = 0;
-						}
-					}
+					//if (lpColMng.GetColFlag(charaObj[0].charaObj->GetAnim())
+					//	&& lpColMng.GetColFlag(charaObj[1].charaObj->GetAnim()))
+					//{
+					//	// 当たり判定の情報を取得
+					//	for (int i = 0; i < 2; i++)
+					//	{
+					//		id[i] = charaObj[i].charaObj->GetFrame();
+					//		if (id[i] < charaObj[i].charaObj->GetAnimFrame(charaObj[i].charaObj->GetAnim()))
+					//		{
+					//			colData[i] = lpColMng.GetCollisionData("棒人間", charaObj[i].charaObj->GetAnim(), id[i]);
+					//		}
+					//		else
+					//		{
+					//			id[i] = 0;
+					//		}
+					//	}
 
-					// 当たり判定のPOSの反転処理
-					for (int i = 0; i < 2; i++)
-					{
-						for (int a = 0; a < colData[i].hitBox.size(); a++)
-						{
+					//	// 当たり判定のPOSの反転処理
+					//	for (int i = 0; i < 2; i++)
+					//	{
+					//		for (int a = 0; a < colData[i].hitBox.size(); a++)
+					//		{
 
-							colData[i].hitBox[a].rect.startPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
-							colData[i].hitBox[a].rect.endPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
-							colData[i].hitBox[a].rect.startPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
-							colData[i].hitBox[a].rect.endPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
+					//			colData[i].hitBox[a].rect.startPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
+					//			colData[i].hitBox[a].rect.endPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
+					//			colData[i].hitBox[a].rect.startPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
+					//			colData[i].hitBox[a].rect.endPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
 
-							int oneTimePos;
+					//			int oneTimePos;
 
-							colData[i].hitBox[a].rect.startPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
-							colData[i].hitBox[a].rect.endPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
+					//			colData[i].hitBox[a].rect.startPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
+					//			colData[i].hitBox[a].rect.endPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
 
-							// startPosがendPosよりも大きかった場合、座標を交換する
-							if (colData[i].hitBox[a].rect.startPos.x > colData[i].hitBox[a].rect.endPos.x)
-							{
-								oneTimePos = colData[i].hitBox[a].rect.endPos.x;
-								colData[i].hitBox[a].rect.endPos.x = colData[i].hitBox[a].rect.startPos.x;
-								colData[i].hitBox[a].rect.startPos.x = oneTimePos;
-							}
-							if (colData[i].hitBox[a].rect.startPos.y > colData[i].hitBox[a].rect.endPos.y)
-							{
-								oneTimePos = colData[i].hitBox[a].rect.endPos.y;
-								colData[i].hitBox[a].rect.endPos.y = colData[i].hitBox[a].rect.startPos.y;
-								colData[i].hitBox[a].rect.startPos.y = oneTimePos;
-							}
+					//			// startPosがendPosよりも大きかった場合、座標を交換する
+					//			if (colData[i].hitBox[a].rect.startPos.x > colData[i].hitBox[a].rect.endPos.x)
+					//			{
+					//				oneTimePos = colData[i].hitBox[a].rect.endPos.x;
+					//				colData[i].hitBox[a].rect.endPos.x = colData[i].hitBox[a].rect.startPos.x;
+					//				colData[i].hitBox[a].rect.startPos.x = oneTimePos;
+					//			}
+					//			if (colData[i].hitBox[a].rect.startPos.y > colData[i].hitBox[a].rect.endPos.y)
+					//			{
+					//				oneTimePos = colData[i].hitBox[a].rect.endPos.y;
+					//				colData[i].hitBox[a].rect.endPos.y = colData[i].hitBox[a].rect.startPos.y;
+					//				colData[i].hitBox[a].rect.startPos.y = oneTimePos;
+					//			}
 
-							// 現在のプレイヤーのpos
-							colData[i].hitBox[a].rect.startPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.startPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
-							colData[i].hitBox[a].rect.endPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.endPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
-							colData[i].hitBox[a].rect.startPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.startPos.y) + (charaObj[i].charaObj->GetDivSize().y);
-							colData[i].hitBox[a].rect.endPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.endPos.y) + (charaObj[i].charaObj->GetDivSize().y);
+					//			// 現在のプレイヤーのpos
+					//			colData[i].hitBox[a].rect.startPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.startPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
+					//			colData[i].hitBox[a].rect.endPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.endPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
+					//			colData[i].hitBox[a].rect.startPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.startPos.y) + (charaObj[i].charaObj->GetDivSize().y);
+					//			colData[i].hitBox[a].rect.endPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.endPos.y) + (charaObj[i].charaObj->GetDivSize().y);
 
-						}
-					}
+					//		}
+					//	}
 
-					// ヒットエフェクト表示矩形
-					VECTOR2 hitRectPos(0, 0);
+					//	// ヒットエフェクト表示矩形
+					//	VECTOR2 hitRectPos(0, 0);
 
-					// 攻撃時の当たり判定
-					for (int i = 0; i < 2; i++)
-					{
-						for (int a = 0; a < colData[i].hitBox.size(); a++)
-						{
-							for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
-							{
-								if (colData[i].hitBox[a].type == COLTYPE_ATTACK)
-								{
-									if (colData[(i + 1) % 2].hitBox[b].type != COLTYPE_ATTACK)
-									{
-										if (colData[i].hitBox[a].rect.endPos.x >= colData[(i + 1) % 2].hitBox[b].rect.startPos.x
-											&& colData[i].hitBox[a].rect.startPos.x <= colData[(i + 1) % 2].hitBox[b].rect.endPos.x
-											&& colData[i].hitBox[a].rect.endPos.y >= colData[(i + 1) % 2].hitBox[b].rect.startPos.y
-											&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
-										{
-											if (charaObj[i].charaObj->GetHitBoxType() != COLTYPE_HIT)
-											{
-												charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
-											}
-											if (charaObj[(i + 1) % 2].charaObj->GetHitBoxType() != COLTYPE_GUARD)
-											{
-												charaObj[(i + 1) % 2].charaObj->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
-												hitRectPos = { colData[(i + 1) % 2].hitBox[b].rect.startPos.x, colData[i].hitBox[a].rect.startPos.y };
-											}						
-										}
-									}
-								}
-							}
-						}
-						if ((charaObj[(i + 1) % 2].charaObj->GetHitFlag()) && (charaObj[(i + 1) % 2].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[(i + 1) % 2])
-						{
-							charaObj[(i + 1) % 2].charaObj->CheckDamage(charaObj[i].charaObj->GetAnimAttribute(1));
-							damageFlag[(i + 1) % 2] = true;
-						}
+					//	// 攻撃時の当たり判定
+					//	for (int i = 0; i < 2; i++)
+					//	{
+					//		for (int a = 0; a < colData[i].hitBox.size(); a++)
+					//		{
+					//			for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
+					//			{
+					//				if (colData[i].hitBox[a].type == COLTYPE_ATTACK)
+					//				{
+					//					if (colData[(i + 1) % 2].hitBox[b].type != COLTYPE_ATTACK)
+					//					{
+					//						if (colData[i].hitBox[a].rect.endPos.x >= colData[(i + 1) % 2].hitBox[b].rect.startPos.x
+					//							&& colData[i].hitBox[a].rect.startPos.x <= colData[(i + 1) % 2].hitBox[b].rect.endPos.x
+					//							&& colData[i].hitBox[a].rect.endPos.y >= colData[(i + 1) % 2].hitBox[b].rect.startPos.y
+					//							&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
+					//						{
+					//							if (charaObj[i].charaObj->GetHitBoxType() != COLTYPE_HIT)
+					//							{
+					//								charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
+					//							}
+					//							if (charaObj[(i + 1) % 2].charaObj->GetHitBoxType() != COLTYPE_GUARD)
+					//							{
+					//								charaObj[(i + 1) % 2].charaObj->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
+					//								hitRectPos = { colData[(i + 1) % 2].hitBox[b].rect.startPos.x, colData[i].hitBox[a].rect.startPos.y };
+					//							}						
+					//						}
+					//					}
+					//				}
+					//			}
+					//		}
+					//		if ((charaObj[(i + 1) % 2].charaObj->GetHitFlag()) && (charaObj[(i + 1) % 2].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[(i + 1) % 2])
+					//		{
+					//			charaObj[(i + 1) % 2].charaObj->CheckDamage(charaObj[i].charaObj->GetAnimAttribute(1));
+					//			damageFlag[(i + 1) % 2] = true;
+					//		}
 
-						if (!(hitRectPos) && !(charaObj[(i + 1) % 2].AttackHitOld)
-							&& (charaObj[(i + 1) % 2].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
-							&& (charaObj[(i + 1) % 2].charaObj->GetInvincibleTime() == 0))
-						{
-							bool colorChange = charaObj[(i + 1) % 2].charaObj->GetHitBoxType() == COLTYPE_GUARD;
-							// ヒットエフェクト表示
-							AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), colorChange));
-							hitRectPos = { 0,0 };
-						}
-					}
+					//		if (!(hitRectPos) && !(charaObj[(i + 1) % 2].AttackHitOld)
+					//			&& (charaObj[(i + 1) % 2].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+					//			&& (charaObj[(i + 1) % 2].charaObj->GetInvincibleTime() == 0))
+					//		{
+					//			bool colorChange = charaObj[(i + 1) % 2].charaObj->GetHitBoxType() == COLTYPE_GUARD;
+					//			// ヒットエフェクト表示
+					//			AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), colorChange));
+					//			hitRectPos = { 0,0 };
+					//		}
+					//	}
 
-					for (int shot1 = 0; shot1 < shotObj.size(); shot1++)
-					{
-						if (shotObj[shot1]->GetHitFlag())
-						{
-							break;
-						}
-						for (int shot2 = 0; shot2 < shotObj2.size(); shot2++)
-						{
+					//	for (int shot1 = 0; shot1 < shotObj.size(); shot1++)
+					//	{
+					//		if (shotObj[shot1]->GetHitFlag())
+					//		{
+					//			break;
+					//		}
+					//		for (int shot2 = 0; shot2 < shotObj2.size(); shot2++)
+					//		{
 
-							if (shotObj[shot2]->GetHitFlag())
-							{
-								break;
-							}
-							shotObj[shot1]->SetHitData(false, COLTYPE_NON);
-							shotObj[shot2]->SetHitData(false, COLTYPE_NON);
+					//			if (shotObj[shot2]->GetHitFlag())
+					//			{
+					//				break;
+					//			}
+					//			shotObj[shot1]->SetHitData(false, COLTYPE_NON);
+					//			shotObj[shot2]->SetHitData(false, COLTYPE_NON);
 
-							if (shotObj[shot1] != shotObj2[shot2])
-							{
-								if (shotObj[shot1]->GetPos().x + (shotObj[shot1]->GetDivSize().x / 2) + 50 >= shotObj[shot2]->GetPos().x + (shotObj[shot2]->GetDivSize().x / 2) - 50
-									&& shotObj[shot1]->GetPos().x + (shotObj[shot1]->GetDivSize().x / 2) - 50 <= shotObj[shot2]->GetPos().x + (shotObj[shot2]->GetDivSize().x / 2) + 50)
-								{
-									shotObj[shot1]->SetHitData(true, COLTYPE_NON);
-									shotObj2[shot2]->SetHitData(true, COLTYPE_NON);
-									if (!CheckSoundMem(SOUND_ID("se/battle/kick.wav")))
-									{
-										PlaySoundMem(SOUND_ID("se/battle/kick.wav"), DX_PLAYTYPE_BACK);
-									}
-								}
-							}
-						}
-					}
+					//			if (shotObj[shot1] != shotObj2[shot2])
+					//			{
+					//				if (shotObj[shot1]->GetPos().x + (shotObj[shot1]->GetDivSize().x / 2) + 50 >= shotObj[shot2]->GetPos().x + (shotObj[shot2]->GetDivSize().x / 2) - 50
+					//					&& shotObj[shot1]->GetPos().x + (shotObj[shot1]->GetDivSize().x / 2) - 50 <= shotObj[shot2]->GetPos().x + (shotObj[shot2]->GetDivSize().x / 2) + 50)
+					//				{
+					//					shotObj[shot1]->SetHitData(true, COLTYPE_NON);
+					//					shotObj2[shot2]->SetHitData(true, COLTYPE_NON);
+					//					if (!CheckSoundMem(SOUND_ID("se/battle/kick.wav")))
+					//					{
+					//						PlaySoundMem(SOUND_ID("se/battle/kick.wav"), DX_PLAYTYPE_BACK);
+					//					}
+					//				}
+					//			}
+					//		}
+					//	}
 
-					hitRectPos = { 0,0 };
+					//	hitRectPos = { 0,0 };
 
-					for (int i = 0; i < 2; i++)
-					{
-						for (int a = 0; a < colData[i].hitBox.size(); a++)
-						{
-							// 波動拳の当たり判定
-							for (auto& data : *objList)
-							{
-								if (data->CheckObjType(OBJ_TYPE_SHOT))
-								{
-									if (data->GetHitFlag())
-									{
-										break;
-									}
-									VECTOR2 startPos = { 0,0 };
-									VECTOR2 endPos = { 0,0 };
+					//	for (int i = 0; i < 2; i++)
+					//	{
+					//		for (int a = 0; a < colData[i].hitBox.size(); a++)
+					//		{
+					//			// 波動拳の当たり判定
+					//			for (auto& data : *objList)
+					//			{
+					//				if (data->CheckObjType(OBJ_TYPE_SHOT))
+					//				{
+					//					if (data->GetHitFlag())
+					//					{
+					//						break;
+					//					}
+					//					VECTOR2 startPos = { 0,0 };
+					//					VECTOR2 endPos = { 0,0 };
 
-									if (colData[i].hitBox[a].type != COLTYPE_ATTACK)
-									{
-										startPos = { data->GetPos().x + (data->GetDivSize().x / 2) - 50,data->GetPos().y + (data->GetDivSize().y / 2) - 50 };
-										endPos = { data->GetPos().x + (data->GetDivSize().x / 2) + 50,data->GetPos().y + (data->GetDivSize().y / 2) + 50 };
+					//					if (colData[i].hitBox[a].type != COLTYPE_ATTACK)
+					//					{
+					//						startPos = { data->GetPos().x + (data->GetDivSize().x / 2) - 50,data->GetPos().y + (data->GetDivSize().y / 2) - 50 };
+					//						endPos = { data->GetPos().x + (data->GetDivSize().x / 2) + 50,data->GetPos().y + (data->GetDivSize().y / 2) + 50 };
 
-										if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
-											&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
-											&& colData[i].hitBox[a].rect.endPos.y >= startPos.y
-											&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
-										{
-											charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
-											data->SetHitData(true, colData[i].hitBox[a].type);
+					//						if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
+					//							&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
+					//							&& colData[i].hitBox[a].rect.endPos.y >= startPos.y
+					//							&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
+					//						{
+					//							charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
+					//							data->SetHitData(true, colData[i].hitBox[a].type);
 
-											auto hitBoxRect = colData[i].hitBox[a].rect;
+					//							auto hitBoxRect = colData[i].hitBox[a].rect;
 
-											hitRectPos = { hitBoxRect.startPos.x + ((hitBoxRect.endPos.x - hitBoxRect.startPos.x) / 4),
-												data->GetPos().y + data->GetDivSize().y / 2 };
+					//							hitRectPos = { hitBoxRect.startPos.x + ((hitBoxRect.endPos.x - hitBoxRect.startPos.x) / 4),
+					//								data->GetPos().y + data->GetDivSize().y / 2 };
 
-											break;
-										}
-									}
-								}
-							}
-						}
-						if ((charaObj[i].charaObj->GetHitFlag()) && (charaObj[i].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[i])
-						{
-							charaObj[i].charaObj->CheckDamage(ANIM_ATTRIBUTE_SHOT);
-							damageFlag[i] = true;
-						}
+					//							break;
+					//						}
+					//					}
+					//				}
+					//			}
+					//		}
+					//		if ((charaObj[i].charaObj->GetHitFlag()) && (charaObj[i].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[i])
+					//		{
+					//			charaObj[i].charaObj->CheckDamage(ANIM_ATTRIBUTE_SHOT);
+					//			damageFlag[i] = true;
+					//		}
 
-						if (!(hitRectPos) && !(charaObj[i].AttackHitOld)
-							&& (charaObj[i].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
-							&& (charaObj[i].charaObj->GetInvincibleTime() == 0))
-						{
-							bool colorChange = charaObj[i].charaObj->GetHitBoxType() == COLTYPE_GUARD;
+					//		if (!(hitRectPos) && !(charaObj[i].AttackHitOld)
+					//			&& (charaObj[i].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+					//			&& (charaObj[i].charaObj->GetInvincibleTime() == 0))
+					//		{
+					//			bool colorChange = charaObj[i].charaObj->GetHitBoxType() == COLTYPE_GUARD;
 
-							// ヒットエフェクト表示
-							AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), colorChange));
-							hitRectPos = { 0,0 };
-						}
-					}
+					//			// ヒットエフェクト表示
+					//			AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), colorChange));
+					//			hitRectPos = { 0,0 };
+					//		}
+					//	}
+					//}
 				}
 			}
 
@@ -837,6 +838,209 @@ void GameScene::ExtrusionUpdata()
 
 				charaObj[rightCharacter].charaObj->AddPos({ addPosX, 0 });
 				charaObj[leftCharacter].charaObj->AddPos({ -addPosX, 0 });
+			}
+		}
+	}
+}
+
+void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animName)[2])
+{
+
+	if (lpColMng.GetColFlag(charaObj[0].charaObj->GetAnim())
+		&& lpColMng.GetColFlag(charaObj[1].charaObj->GetAnim()))
+	{
+		// 当たり判定の情報を取得
+		for (int i = 0; i < 2; i++)
+		{
+			id[i] = charaObj[i].charaObj->GetFrame();
+			if (id[i] < charaObj[i].charaObj->GetAnimFrame(charaObj[i].charaObj->GetAnim()))
+			{
+				colData[i] = lpColMng.GetCollisionData("棒人間", charaObj[i].charaObj->GetAnim(), id[i]);
+			}
+			else
+			{
+				id[i] = 0;
+			}
+		}
+
+		// 当たり判定のPOSの反転処理
+		for (int i = 0; i < 2; i++)
+		{
+			for (int a = 0; a < colData[i].hitBox.size(); a++)
+			{
+
+				colData[i].hitBox[a].rect.startPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
+				colData[i].hitBox[a].rect.endPos.x += charaObj[i].charaObj->GetAnimOffSet(animName[i]).x;
+				colData[i].hitBox[a].rect.startPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
+				colData[i].hitBox[a].rect.endPos.y += charaObj[i].charaObj->GetAnimOffSet(animName[i]).y;
+
+				int oneTimePos;
+
+				colData[i].hitBox[a].rect.startPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
+				colData[i].hitBox[a].rect.endPos.x *= static_cast<int>(charaObj[i].charaObj->GetDir()) * -2 + 1;
+
+				// startPosがendPosよりも大きかった場合、座標を交換する
+				if (colData[i].hitBox[a].rect.startPos.x > colData[i].hitBox[a].rect.endPos.x)
+				{
+					oneTimePos = colData[i].hitBox[a].rect.endPos.x;
+					colData[i].hitBox[a].rect.endPos.x = colData[i].hitBox[a].rect.startPos.x;
+					colData[i].hitBox[a].rect.startPos.x = oneTimePos;
+				}
+				if (colData[i].hitBox[a].rect.startPos.y > colData[i].hitBox[a].rect.endPos.y)
+				{
+					oneTimePos = colData[i].hitBox[a].rect.endPos.y;
+					colData[i].hitBox[a].rect.endPos.y = colData[i].hitBox[a].rect.startPos.y;
+					colData[i].hitBox[a].rect.startPos.y = oneTimePos;
+				}
+
+				// 現在のプレイヤーのpos
+				colData[i].hitBox[a].rect.startPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.startPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
+				colData[i].hitBox[a].rect.endPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.endPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
+				colData[i].hitBox[a].rect.startPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.startPos.y) + (charaObj[i].charaObj->GetDivSize().y);
+				colData[i].hitBox[a].rect.endPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.endPos.y) + (charaObj[i].charaObj->GetDivSize().y);
+
+			}
+		}
+
+		// ヒットエフェクト表示矩形
+		VECTOR2 hitRectPos(0, 0);
+
+		// 攻撃時の当たり判定
+		for (int i = 0; i < 2; i++)
+		{
+			for (int a = 0; a < colData[i].hitBox.size(); a++)
+			{
+				for (int b = 0; b < colData[(i + 1) % 2].hitBox.size(); b++)
+				{
+					if (colData[i].hitBox[a].type == COLTYPE_ATTACK)
+					{
+						if (colData[(i + 1) % 2].hitBox[b].type != COLTYPE_ATTACK)
+						{
+							if (colData[i].hitBox[a].rect.endPos.x >= colData[(i + 1) % 2].hitBox[b].rect.startPos.x
+								&& colData[i].hitBox[a].rect.startPos.x <= colData[(i + 1) % 2].hitBox[b].rect.endPos.x
+								&& colData[i].hitBox[a].rect.endPos.y >= colData[(i + 1) % 2].hitBox[b].rect.startPos.y
+								&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
+							{
+								if (charaObj[i].charaObj->GetHitBoxType() != COLTYPE_HIT)
+								{
+									charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
+								}
+								if (charaObj[(i + 1) % 2].charaObj->GetHitBoxType() != COLTYPE_GUARD)
+								{
+									charaObj[(i + 1) % 2].charaObj->SetHitData(true, colData[(i + 1) % 2].hitBox[b].type);
+									hitRectPos = { colData[(i + 1) % 2].hitBox[b].rect.startPos.x, colData[i].hitBox[a].rect.startPos.y };
+								}
+							}
+						}
+					}
+				}
+			}
+			if ((charaObj[(i + 1) % 2].charaObj->GetHitFlag()) && (charaObj[(i + 1) % 2].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[(i + 1) % 2])
+			{
+				charaObj[(i + 1) % 2].charaObj->CheckDamage(charaObj[i].charaObj->GetAnimAttribute(1));
+				damageFlag[(i + 1) % 2] = true;
+			}
+
+			if (!(hitRectPos) && !(charaObj[(i + 1) % 2].AttackHitOld)
+				&& (charaObj[(i + 1) % 2].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+				&& (charaObj[(i + 1) % 2].charaObj->GetInvincibleTime() == 0))
+			{
+				bool colorChange = charaObj[(i + 1) % 2].charaObj->GetHitBoxType() == COLTYPE_GUARD;
+				// ヒットエフェクト表示
+				AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), colorChange));
+				hitRectPos = { 0,0 };
+			}
+		}
+
+		for (auto &shot1 : shotObj)
+		{
+			if (shot1->GetHitFlag())
+			{
+				break;
+			}
+			for (auto &shot2 : shotObj)
+			{
+
+				if (shot2->GetHitFlag())
+				{
+					break;
+				}
+				shot1->SetHitData(false, COLTYPE_NON);
+				shot2->SetHitData(false, COLTYPE_NON);
+
+				if (shot1 != shot2)
+				{
+					if (shot1->GetPos().x + (shot1->GetDivSize().x / 2) + 50 >= shot2->GetPos().x + (shot2->GetDivSize().x / 2) - 50
+						&& shot1->GetPos().x + (shot1->GetDivSize().x / 2) - 50 <= shot2->GetPos().x + (shot2->GetDivSize().x / 2) + 50)
+					{
+						shot1->SetHitData(true, COLTYPE_NON);
+						shot2->SetHitData(true, COLTYPE_NON);
+						if (!CheckSoundMem(SOUND_ID("se/battle/kick.wav")))
+						{
+							PlaySoundMem(SOUND_ID("se/battle/kick.wav"), DX_PLAYTYPE_BACK);
+						}
+					}
+				}
+			}
+		}
+
+		hitRectPos = { 0,0 };
+
+		for (int i = 0; i < 2; i++)
+		{
+			for (int a = 0; a < colData[i].hitBox.size(); a++)
+			{
+				// 波動拳の当たり判定
+				for (auto& data : *objList)
+				{
+					if (data->CheckObjType(OBJ_TYPE_SHOT))
+					{
+						if (data->GetHitFlag())
+						{
+							break;
+						}
+						VECTOR2 startPos = { 0,0 };
+						VECTOR2 endPos = { 0,0 };
+
+						if (colData[i].hitBox[a].type != COLTYPE_ATTACK)
+						{
+							startPos = { data->GetPos().x + (data->GetDivSize().x / 2) - 50,data->GetPos().y + (data->GetDivSize().y / 2) - 50 };
+							endPos = { data->GetPos().x + (data->GetDivSize().x / 2) + 50,data->GetPos().y + (data->GetDivSize().y / 2) + 50 };
+
+							if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
+								&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
+								&& colData[i].hitBox[a].rect.endPos.y >= startPos.y
+								&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
+							{
+								charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
+								data->SetHitData(true, colData[i].hitBox[a].type);
+
+								auto hitBoxRect = colData[i].hitBox[a].rect;
+
+								hitRectPos = { hitBoxRect.startPos.x + ((hitBoxRect.endPos.x - hitBoxRect.startPos.x) / 4),
+									data->GetPos().y + data->GetDivSize().y / 2 };
+
+								break;
+							}
+						}
+					}
+				}
+			}
+			if ((charaObj[i].charaObj->GetHitFlag()) && (charaObj[i].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[i])
+			{
+				charaObj[i].charaObj->CheckDamage(ANIM_ATTRIBUTE_SHOT);
+				damageFlag[i] = true;
+			}
+
+			if (!(hitRectPos) && !(charaObj[i].AttackHitOld)
+				&& (charaObj[i].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+				&& (charaObj[i].charaObj->GetInvincibleTime() == 0))
+			{
+				bool colorChange = charaObj[i].charaObj->GetHitBoxType() == COLTYPE_GUARD;
+
+				// ヒットエフェクト表示
+				AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), colorChange));
+				hitRectPos = { 0,0 };
 			}
 		}
 	}

@@ -19,6 +19,7 @@ private:
 	void BgPosUpDate(void);		// 背景の位置座標の更新と、それに伴うｷｬﾗｸﾗｰの再配置
 	bool CheckGameEnd();		// 勝敗をチェック		
 	void ExtrusionUpdata();				// 押し出しの当たり判定
+	void colJudgment(std::vector<sharedObj>& shotObj,std::string (&animName)[2]);
 
 	// キャラクターのObj情報
 	struct CharacterObj
