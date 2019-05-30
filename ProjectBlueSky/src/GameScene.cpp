@@ -314,7 +314,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 							damageFlag[(i + 1) % 2] = true;
 						}
 
-						if (!hitRectPos && !charaObj[(i + 1) % 2].AttackHitOld && charaObj[(i + 1) % 2].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+						if (!(hitRectPos) && !(charaObj[(i + 1) % 2].AttackHitOld)
+							&& (charaObj[(i + 1) % 2].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+							&& (charaObj[(i + 1) % 2].charaObj->GetInvincibleTime() == 0))
 						{
 							bool colorChange = charaObj[(i + 1) % 2].charaObj->GetHitBoxType() == COLTYPE_GUARD;
 							// ヒットエフェクト表示
@@ -403,8 +405,12 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 							damageFlag[i] = true;
 						}
 
-						if (!hitRectPos && !charaObj[i].AttackHitOld && charaObj[i].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+						if (!(hitRectPos) && !(charaObj[i].AttackHitOld)
+							&& (charaObj[i].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+							&& (charaObj[i].charaObj->GetInvincibleTime() == 0))
 						{
+							//bool colorChange = charaObj[i].charaObj->GetHitBoxType() == COLTYPE_GUARD;
+
 							// ヒットエフェクト表示
 							AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), false));
 							hitRectPos = { 0,0 };
