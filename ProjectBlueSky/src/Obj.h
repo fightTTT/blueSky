@@ -136,6 +136,10 @@ public:
 	// プレイヤーのHPを取得
 	int GetPlayerHP();
 
+	// 無敵時間のｹﾞｯﾀｰ
+	int GetInvincibleTime();
+	void SetInvincibleTime(int num);
+
 	// アニメーションを止めるフラグをセット
 	void SetAnimStopFlag(bool flag) { animStopFlag = flag; }
 	bool GetAnimStopFlag() const { return animStopFlag; }
@@ -188,6 +192,7 @@ protected:
 	int playerHP;					// プレイヤーのHP
 	int playerHPOld;				// プレイヤーHP変更前の値
 	float DrawHPCount;				// HP描画のカウント
+	int invincibleTime;				// 無敵時間
 	bool animStopFlag;				// アニメーションをとめるフラグ
 	bool deleteFlag;				// オブジェクトを削除するフラグ
 

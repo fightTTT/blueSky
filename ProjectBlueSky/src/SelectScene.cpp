@@ -209,7 +209,7 @@ void SelectScene::SelectDraw(void)
 	}
 	else if (lpSceneMng.GetMode() == MODE_2PLAYER)
 	{
-		if (lpSceneMng.GetDecidFlag(PAD_1))
+		if (lpSceneMng.GetDecidFlag(PAD_1) && !lpSceneMng.GetSceneBackFlag())
 		{
 			DrawGraph((scSize.x / 2) - 419, (scSize.y / 3), IMAGE_ID("image/キャラセレ用/allGreen.png")[0], true);		// キャラ確定表示
 		}
@@ -219,7 +219,7 @@ void SelectScene::SelectDraw(void)
 			DrawGraph(0, 75, IMAGE_DIV_ID("image/キャラセレ用/コマンド表/command.png", VECTOR2(630, 195), VECTOR2(CHAR_CNT_MAX, 1))[id[0]], true);		// ｺﾏﾝﾄﾞ表を描画
 		}
 
-		if (lpSceneMng.GetDecidFlag(PAD_2))
+		if (lpSceneMng.GetDecidFlag(PAD_2) && !lpSceneMng.GetSceneBackFlag())
 		{
 			DrawGraph((scSize.x / 2) + (BOX_SIZE_X * 2) + 75, (scSize.y / 3), IMAGE_ID("image/キャラセレ用/allGreen.png")[0], true);		// キャラ確定表示
 		}

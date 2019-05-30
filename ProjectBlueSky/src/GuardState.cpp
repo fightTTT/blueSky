@@ -31,6 +31,7 @@ void GuardState::Update(AICharacter * character)
 	{
 		character->ChangeState("Move");
 		character->SetAnim("後ろ移動");
+		return;
 	}
 
 	auto enemy = character->GetEnemyState();
@@ -49,7 +50,7 @@ void GuardState::CheckHitFlag(AICharacter * character)
 	auto dir = character->GetDir();
 	auto hitData = character->GetHitData();
 
-	auto hitFlag = hitData.hitFlag && hitData.colType == COLTYPE_GUARD;
+	auto hitFlag = hitData.hitFlag && (hitData.colType == COLTYPE_GUARD);
 
 	// 攻撃を受けた時のノックバック
 	if (!guardHitFlag && hitFlag)
@@ -94,4 +95,6 @@ void GuardState::CheckHitFlag(AICharacter * character)
 	}
 
 	character->SetPos(pos);
+
+	AIState::CheckHitFlag(character);
 }

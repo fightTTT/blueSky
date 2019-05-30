@@ -34,6 +34,7 @@ bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, bool turn)
 	hitData.colType = COLTYPE_NON;
 	hitData.hitFlag = false;
 	deleteFlag = false;
+	invincibleTime = 0;
 	return true;
 }
 
@@ -232,6 +233,16 @@ void Obj::AddPlayerHPOld(int addHP)
 int Obj::GetPlayerHP()
 {
 	return playerHP;
+}
+
+int Obj::GetInvincibleTime()
+{
+	return invincibleTime;
+}
+
+void Obj::SetInvincibleTime(int num)
+{
+	invincibleTime = num;
 }
 
 void Obj::SetPos(VECTOR2 pos)

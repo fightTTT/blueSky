@@ -24,9 +24,25 @@ void DamageState::Init(AICharacter * character)
 
 	comboCnt++;
 
-	auto tmp = character->GetAnimAttribute(0) == ANIM_ATTRIBUTE_AIR;
+	if (character->GetAnim() == "ダメージ_ダウン")
+	{
+		PlaySoundMem(SOUND_ID("se/battle/critical.mp3"), DX_PLAYTYPE_BACK);
 
-	if (comboCnt >= COMBO_BREAK_CNT || (character->GetAnimAttribute(0) == ANIM_ATTRIBUTE_AIR) || character->GetPlayerHP() == 0)
+
+		if (dir == DIR_RIGHT)
+		{
+			knockBackSpeed = { -FALL_SPEED_X, -FALL_SPEED_Y };
+		}
+		else
+		{
+			knockBackSpeed = { FALL_SPEED_X, -FALL_SPEED_Y };
+		}
+
+		WaitTimer(WAIT_TIMER_COUNT);
+
+		comboCnt = 0;
+	}
+	else if (comboCnt >= COMBO_BREAK_CNT || (character->GetAnimAttribute(0) == ANIM_ATTRIBUTE_AIR))
 	{
 		character->SetAnim("ダメージ_ダウン");
 
@@ -63,6 +79,8 @@ void DamageState::Init(AICharacter * character)
 
 		WaitTimer(WAIT_TIMER_COUNT);
 	}
+
+	character->SetInvincibleTime(10);
 }
 
 void DamageState::Update(AICharacter * character)
@@ -135,6 +153,7 @@ void DamageState::Update(AICharacter * character)
 		if (character->GetAnimEndFlag())
 		{
 			character->ChangeState("Move");
+			character->SetInvincibleTime(20);
 		}
 
 	}

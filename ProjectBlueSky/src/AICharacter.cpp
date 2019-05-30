@@ -46,10 +46,19 @@ bool AICharacter::CheckObjType(OBJ_TYPE type)
 
 void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
-	if (animAttribute[0] != ANIM_ATTRIBUTE_AIR && ((animTable[animName][ANIM_TBL_LOOP]) || animEndFlag))
+	if (animAttribute[0] != ANIM_ATTRIBUTE_AIR && ((animTable[animName][ANIM_TBL_LOOP]) || animEndFlag) && !(isSPLongAttack(animName)))
 	{
 		// キャラの向き変更
 		dir = tmpDir;
+	}
+
+	if (invincibleTime)
+	{
+		invincibleTime--;
+		if (invincibleTime < 0)
+		{
+			invincibleTime = 0;
+		}
 	}
 
 	if (stateObj.size())
@@ -59,7 +68,6 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 	if (longAttackFlag)
 	{
-
 		// 遠距離攻撃
 		if (dir == DIR_RIGHT)
 		{
@@ -186,6 +194,16 @@ HitData AICharacter::GetHitData() const
 
 void AICharacter::CheckHitFlag()
 {
+	if (animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE && !(invincibleTime))
+	{
+		if (playerHP <= 0)
+		{
+			SetAnim("ダメージ_ダウン");
+
+			ChangeState("Damage");
+		}
+	}
+
 	stateObj[currentStateName]->CheckHitFlag(this);
 }
 
@@ -205,7 +223,7 @@ bool AICharacter::isSPLongAttack(std::string spAnimName)
 
 void AICharacter::CheckDamage(ANIM_ATTRIBUTE att)
 {
-	if ((animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE) && (animName != "ダメージ_立ち"))
+	if ((animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE) && (animName != "ダメージ_立ち") && !(invincibleTime))
 	{
 		switch (att)
 		{

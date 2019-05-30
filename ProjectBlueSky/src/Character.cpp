@@ -562,8 +562,47 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 	{
 		if (animEndFlag)
 		{
-			invincibleTime = 40;
-			SetAnim("待機");
+			invincibleTime = 30;
+			if (ctl.GetPadData(padID, THUMB_L_UP))		// ジャンプ
+			{
+				PlaySoundMem(SOUND_ID("se/battle/jump.wav"), DX_PLAYTYPE_BACK);
+
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
+
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("ジャンプ_後ろ");
+					}
+					else
+					{
+						SetAnim("ジャンプ_前");
+					}
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
+
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("ジャンプ_前");
+					}
+					else
+					{
+						SetAnim("ジャンプ_後ろ");
+					}
+				}
+				else
+				{
+					jumpSpeed = { 0, -JUMP_SPEED_Y };
+					SetAnim("ジャンプ_上");
+				}
+			}
+			else
+			{
+				SetAnim("待機");
+			}
 		}
 	}
 	else if (animAttribute[2] == ANIM_ATTRIBUTE_SHOT)
