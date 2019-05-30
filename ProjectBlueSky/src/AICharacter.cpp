@@ -195,6 +195,16 @@ HitData AICharacter::GetHitData() const
 
 void AICharacter::CheckHitFlag()
 {
+	if (animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE && !(invincibleTime))
+	{
+		if (playerHP <= 0)
+		{
+			SetAnim("ダメージ_ダウン");
+
+			ChangeState("Damage");
+		}
+	}
+
 	stateObj[currentStateName]->CheckHitFlag(this);
 }
 
