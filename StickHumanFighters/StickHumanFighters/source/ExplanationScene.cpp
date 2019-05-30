@@ -3,6 +3,11 @@
 #include "GameScene.h"
 #include "ExplanationScene.h"
 
+#define SCENE_CHANGE_TIME  (120)
+#define SCENE_CHANGE_FRAME (5)
+
+#define FLASHING_SPEED	   (30)
+
 ExplanationScene::ExplanationScene()
 {
 	Init();
@@ -35,9 +40,9 @@ unique_Base ExplanationScene::UpDate(unique_Base own, const GameCtrl & controlle
 		{
 			page++;
 
-			if (page > (imageHandle.size() - 1))
+			if (page > (int(imageHandle.size()) - 1))
 			{
-				page = (imageHandle.size() - 1);
+				page = (int(imageHandle.size()) - 1);
 			}
 		}
 	}
@@ -45,13 +50,13 @@ unique_Base ExplanationScene::UpDate(unique_Base own, const GameCtrl & controlle
 	{
 		sceneChangeTime--;
 
-		if ((sceneChangeTime < 0) && (((frame - 5) / 30) % 2))
+		if ((sceneChangeTime < 0) && (((frame - SCENE_CHANGE_FRAME) / FLASHING_SPEED) % 2))
 		{
 			WaitTimer(750);
 			return std::make_unique<GameScene>();
 		}
 
-		frame += 4;
+		frame += (SCENE_CHANGE_FRAME - 1);
 	}
 
 	ExplanationDraw();
@@ -73,10 +78,10 @@ int ExplanationScene::Init()
 		imageHandle[i] = IMAGE_ID(tmpPass)[0];
 	}
 
-	frame = 0;
+	frame = FLASHING_SPEED;
 	page = 0;
 	sceneChangeFlag = false;
-	sceneChangeTime = 120;
+	sceneChangeTime = SCENE_CHANGE_TIME;
 
 	return 0;
 }
@@ -85,7 +90,7 @@ void ExplanationScene::ExplanationDraw()
 {
 	DrawGraph(0, 0, imageHandle[page], true);
 
-	if ((frame / 30) % 2)
+	if ((frame / FLASHING_SPEED) % 2)
 	{
 		DrawGraph(290, 640, IMAGE_ID("image/説明用/スタートボタンでゲーム開始.png")[0], true);
 	}
