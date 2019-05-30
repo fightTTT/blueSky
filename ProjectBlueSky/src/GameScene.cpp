@@ -894,7 +894,7 @@ bool GameScene::CheckGameEnd()
 
 bool GameScene::GameDraw(void)
 {
-	DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/bluesky_背景.png")[0], true);
+	DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/backGround2.png")[0], true);
 
 	DrawGraph((ssize.x/2)-175, 0, IMAGE_ID("image/ゲームシーン用/centerBer.png")[0], true);
 
