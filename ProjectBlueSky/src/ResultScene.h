@@ -25,8 +25,10 @@ private:
 	int Init();
 	void ResultDraw();
 	int animCnt;
+	char tmpImagePass[50];
 	std::array<std::vector<std::string>, 2> imagePass;
 	std::array <std::string,2> playerfontPass;
+	std::array<std::string, 2> victoryPass;
 	std::vector<std::string> charName;
 	std::array<int, 2> animFrame;
 };
