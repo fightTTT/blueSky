@@ -26,6 +26,7 @@
 #define DEF_CENTER_POS_X (640)
 
 #define PI2 (3.141592654f*6)	// ｶｰｿﾙの回転用
+#define TOTAL_BACK_GROUND (2)
 
 // ﾃﾞﾊﾞｯｸﾒｯｾｰｼﾞ用定義
 #ifdef _DEBUG		// 失敗時の処理
@@ -40,6 +41,7 @@
 
 GameScene::GameScene()
 {
+	sprintf_s(stageImgName, "image/ゲームシーン用/backGround%d.png", GetRand(TOTAL_BACK_GROUND));
 	Init();
 }
 
@@ -583,7 +585,6 @@ int GameScene::Init(void)
 		AST();
 	}
 
-	sprintf_s(stageImgName, "image/ゲームシーン用/backGround%d.png", GetRand(2));
 	
 	// BGM
 	//if (!CheckSoundMem(SOUND_ID("bgm/battle.mp3")))
