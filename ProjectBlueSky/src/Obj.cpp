@@ -234,6 +234,11 @@ int Obj::GetPlayerHP()
 	return playerHP;
 }
 
+int Obj::GetInvincibleTime()
+{
+	return invincibleTime;
+}
+
 void Obj::SetPos(VECTOR2 pos)
 {
 	this->pos = pos;
