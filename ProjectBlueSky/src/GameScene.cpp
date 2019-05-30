@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <time.h>
 #include "Dxlib.h"
 #include "ObjList.h"
 #include "Obj.h"
@@ -25,6 +26,7 @@
 #define DEF_CENTER_POS_X (640)
 
 #define PI2 (3.141592654f*6)	// ｶｰｿﾙの回転用
+#define TOTAL_BACK_GROUND (2)
 
 // ﾃﾞﾊﾞｯｸﾒｯｾｰｼﾞ用定義
 #ifdef _DEBUG		// 失敗時の処理
@@ -39,6 +41,7 @@
 
 GameScene::GameScene()
 {
+	sprintf_s(stageImgName, "image/ゲームシーン用/backGround%d.png", GetRand(TOTAL_BACK_GROUND));
 	Init();
 }
 
@@ -444,10 +447,11 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		opeCnt++;
 	}
 
-	/* 開始宣言 */
+	/* 宣言効果音 */
 	if ((charaObj[0].winCount + charaObj[1].winCount) == 0)
 	{
-		if (opeCnt < 120)
+		/* 開始宣言 */
+		if (opeCnt < 75)
 		{
 			if (!CheckSoundMem(SOUND_ID("se/battle/round1.mp3")))
 			{
@@ -455,6 +459,70 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 			}
 		}
 	}
+	if ((charaObj[0].winCount + charaObj[1].winCount) == 1)
+	{
+		if (opeCnt < 75)
+		{
+			if (!CheckSoundMem(SOUND_ID("se/battle/round2.mp3")))
+			{
+				PlaySoundMem(SOUND_ID("se/battle/round2.mp3"), DX_PLAYTYPE_BACK);
+			}
+		}
+	}
+	if ((charaObj[0].winCount + charaObj[1].winCount) == 2)
+	{
+		if (opeCnt < 75)
+		{
+			if (!CheckSoundMem(SOUND_ID("se/battle/final.wav")))
+			{
+				PlaySoundMem(SOUND_ID("se/battle/final.wav"), DX_PLAYTYPE_BACK);
+			}
+		}
+	}
+	if (!operableFlag &&  (opeCnt > 120 && opeCnt < 195))
+	{
+		if (!CheckSoundMem(SOUND_ID("se/battle/fight.mp3")))
+		{
+			PlaySoundMem(SOUND_ID("se/battle/fight.mp3"), DX_PLAYTYPE_BACK);
+		}
+	}
+
+	if (koDrawCount)
+	{
+		finishCnt++;
+		// ｼﾝｸﾞﾙﾌﾟﾚｲ時
+		if (lpSceneMng.GetMode() == MODE_1PLAYER && winCharacter == 0)
+		{
+			if (!CheckSoundMem(SOUND_ID("se/battle/win.mp3")) && finishCnt < 90)
+			{
+				PlaySoundMem(SOUND_ID("se/battle/win.mp3"), DX_PLAYTYPE_BACK);
+			}
+		}
+		if (lpSceneMng.GetMode() == MODE_1PLAYER && winCharacter != 0)
+		{
+			if (!CheckSoundMem(SOUND_ID("se/battle/lose.mp3")) && finishCnt < 90)
+			{
+				PlaySoundMem(SOUND_ID("se/battle/lose.mp3"), DX_PLAYTYPE_BACK);
+			}
+		}
+		// ﾏﾙﾁﾌﾟﾚｲ時
+		if (lpSceneMng.GetMode() == MODE_2PLAYER && winCharacter == 0)
+		{
+			if (!CheckSoundMem(SOUND_ID("se/battle/foo.mp3")) && finishCnt < 90)
+			{
+				PlaySoundMem(SOUND_ID("se/battle/foo.mp3"), DX_PLAYTYPE_BACK);
+			}
+		}
+		if (lpSceneMng.GetMode() == MODE_2PLAYER && winCharacter != 0)
+		{
+			if (!CheckSoundMem(SOUND_ID("se/battle/foo.mp3")) && finishCnt < 90)
+			{
+				PlaySoundMem(SOUND_ID("se/battle/foo.mp3"), DX_PLAYTYPE_BACK);
+			}
+		}
+	}
+
+
 
 
 	if (opeCnt >= 240)
@@ -484,6 +552,7 @@ int GameScene::Init(void)
 	opeCnt = 0;
 	drawflag = false;
 	koDrawCount = 0;
+	finishCnt = 0;
 	charaObj[0].AttackHitOld = false;
 	charaObj[1].AttackHitOld = false;
 
@@ -515,12 +584,13 @@ int GameScene::Init(void)
 		// MODE_MAXが来ている(エラー)
 		AST();
 	}
+
 	
 	// BGM
-	if (!CheckSoundMem(SOUND_ID("bgm/battle.mp3")))
-	{
-		PlaySoundMem(SOUND_ID("bgm/battle.mp3"), DX_PLAYTYPE_LOOP);
-	}
+	//if (!CheckSoundMem(SOUND_ID("bgm/battle.mp3")))
+	//{
+	//	PlaySoundMem(SOUND_ID("bgm/battle.mp3"), DX_PLAYTYPE_LOOP);
+	//}
 
 	maskCnt = 0;
 	smallStarMask = LoadMask("image/ゲームシーン用/winStar_mask1.png");
@@ -828,7 +898,7 @@ bool GameScene::CheckGameEnd()
 
 bool GameScene::GameDraw(void)
 {
-	DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/bluesky_背景.png")[0], true);
+	DrawGraph(bgPos.x, bgPos.y, IMAGE_ID(stageImgName)[0], true);
 
 	DrawGraph((ssize.x/2)-175, 0, IMAGE_ID("image/ゲームシーン用/centerBer.png")[0], true);
 

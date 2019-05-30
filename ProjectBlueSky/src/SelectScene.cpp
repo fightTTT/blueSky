@@ -10,6 +10,7 @@
 #include "ImageMng.h"
 #include "TitleScene.h"
 #include "SoundMng.h"
+#include "ExplanationScene.h"
 
 #define BOX_SIZE_X (100)
 #define BOX_SIZE_Y (100)
@@ -47,7 +48,7 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 		{
 			StopSoundMem(SOUND_ID("se/ui/sceneChange.wav"));
 			StopSoundMem(SOUND_ID("bgm/select.mp3"));
-			return std::make_unique<GameScene>();
+			return std::make_unique<ExplanationScene>();
 		}
 	}
 
