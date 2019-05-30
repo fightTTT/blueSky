@@ -95,20 +95,6 @@ bool Shot::CheckObjType(OBJ_TYPE type)
 void Shot::Draw(void)
 {
 	Obj::Draw();
-
-	// ¼®¯Ä‚Ì“–‚½‚è”»’è‚Ì•\Ž¦
-	if (!hitData.hitFlag)
-	{
-		VECTOR2 centerPos = (pos + (divSize / 2));
-		VECTOR2 halfHitBoxSize = (hitBoxSize / 2);
-
-		DrawBox(drawOffset.x + centerPos.x - halfHitBoxSize.x,
-				drawOffset.y + centerPos.y - halfHitBoxSize.y,
-				drawOffset.x + centerPos.x + halfHitBoxSize.x,
-				drawOffset.y + centerPos.y + halfHitBoxSize.y,
-				0x0000ff,
-				false);
-	}
 }
 
 void Shot::CheckHitFlag(void)

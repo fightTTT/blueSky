@@ -5,6 +5,9 @@
 
 #include "DxLib.h"
 
+#define JUMP_RAND (10)
+#define JUMP_RAND_OFFSET (5)
+
 AttackState::AttackState()
 {
 	attackCount = 0;
@@ -24,16 +27,13 @@ void AttackState::Init(AICharacter * character)
 		return;
 	}
 
-	if (attackCount >= static_cast<unsigned int>(GetRand(30) + 4))
+	// 攻撃を行った回数が多くなったらジャンプに切り替える
+	if (attackCount >= static_cast<unsigned int>(GetRand(JUMP_RAND) + JUMP_RAND_OFFSET))
 	{
 		attackCount = 0;
 		character->SetJumpType(JUMP_TYPE_FRONT);
 		character->ChangeState("Jump");
 		return;
-	}
-	else
-	{
-		attackCount++;
 	}
 
 	int rand = GetRand(7);
@@ -76,6 +76,7 @@ void AttackState::Update(AICharacter * character)
 {
 	if (character->GetAnimEndFlag())
 	{
+		attackCount++;
 		character->SetAnim("待機");
 		character->ChangeState("Move");
 		return;
@@ -105,6 +106,7 @@ void AttackState::Update(AICharacter * character)
 	{
 		if (character->GetAnimCount() > 40)
 		{
+			attackCount++;
 			character->SetAnim("待機");
 			character->ChangeState("Move");
 			return;

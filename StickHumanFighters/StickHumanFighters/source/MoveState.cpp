@@ -23,7 +23,6 @@ MoveState::~MoveState()
 
 void MoveState::Init(AICharacter * character)
 {
-	changeGuardStateCount = 0;
 	stateTime = 0;
 	moveFrontCount = 0;
 	changeWaitStateCount = 0;
