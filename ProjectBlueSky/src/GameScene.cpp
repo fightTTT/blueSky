@@ -319,6 +319,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 							bool colorChange = charaObj[(i + 1) % 2].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD;
 							// ヒットエフェクト表示
 							AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), colorChange));
+							hitRectPos = { 0,0 };
 						}
 					}
 
@@ -406,6 +407,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 						{
 							// ヒットエフェクト表示
 							AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), false));
+							hitRectPos = { 0,0 };
 						}
 					}
 				}
@@ -413,8 +415,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 			for (auto& data : *objList)
 			{
-				data->
-					CheckHitFlag();
+				data->CheckHitFlag();
 			}
 
 			deth_itr = std::remove_if(objList->begin(), objList->end(), [](std::shared_ptr<Obj> obj) {return obj->CheckDeth(); });
