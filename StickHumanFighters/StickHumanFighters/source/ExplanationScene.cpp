@@ -1,7 +1,7 @@
-#include "ExplanationScene.h"
-#include "GameScene.h"
-
 #include "DxLib.h"
+#include "ImageMng.h"
+#include "GameScene.h"
+#include "ExplanationScene.h"
 
 ExplanationScene::ExplanationScene()
 {
@@ -14,43 +14,79 @@ ExplanationScene::~ExplanationScene()
 
 unique_Base ExplanationScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
-	if (imageHandle.size() == imageIdx)
+	if (!sceneChangeFlag)
 	{
 		if (controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_START))
 		{
+			sceneChangeFlag = true;
+		}
+
+		if (controller.GetPadDataTrg(PAD_1, BUTTON_B) || controller.GetPadDataTrg(PAD_2, BUTTON_B))
+		{
+			page--;
+
+			if (page < 0)
+			{
+				page = 0;
+			}
+		}
+
+		if (controller.GetPadDataTrg(PAD_1, BUTTON_A) || controller.GetPadDataTrg(PAD_2, BUTTON_A))
+		{
+			page++;
+
+			if (page > (imageHandle.size() - 1))
+			{
+				page = (imageHandle.size() - 1);
+			}
+		}
+	}
+	else
+	{
+		sceneChangeTime--;
+
+		if ((sceneChangeTime < 0) && (((frame - 5) / 30) % 2))
+		{
+			WaitTimer(750);
 			return std::make_unique<GameScene>();
 		}
-	}
 
-	if (controller.GetPadDataTrg(PAD_1, BUTTON_B) || controller.GetPadDataTrg(PAD_2, BUTTON_B))
-	{
-		if (imageIdx > 0)
-		{
-			imageIdx--;
-		}
-	}
-	else if (controller.GetPadDataTrg(PAD_1, BUTTON_A) || controller.GetPadDataTrg(PAD_2, BUTTON_A))
-	{
-		if (imageIdx < imageHandle.size())
-		{
-			imageIdx++;
-		}
+		frame += 4;
 	}
 
 	ExplanationDraw();
+
+	frame++;
 
 	return std::move(own);
 }
 
 int ExplanationScene::Init()
 {
-	imageIdx = 0;
+	char tmpPass[30];
+
 	imageHandle.resize(3);
+	for (unsigned int i = 0; i < imageHandle.size(); i++)
+	{
+		sprintf_s(tmpPass, "image/説明用/説明_%d.png", i);
+
+		imageHandle[i] = IMAGE_ID(tmpPass)[0];
+	}
+
+	frame = 0;
+	page = 0;
+	sceneChangeFlag = false;
+	sceneChangeTime = 120;
 
 	return 0;
 }
 
 void ExplanationScene::ExplanationDraw()
 {
-	DrawFormatString(500, 500, 0xffffff, "idx : %d", imageIdx);
+	DrawGraph(0, 0, imageHandle[page], true);
+
+	if ((frame / 30) % 2)
+	{
+		DrawGraph(290, 640, IMAGE_ID("image/説明用/スタートボタンでゲーム開始.png")[0], true);
+	}
 }
