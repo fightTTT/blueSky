@@ -43,10 +43,10 @@ bool GameCtrl::UpDate(void)
 
 	for (int i = 0; i < PAD_MAX; ++i)
 	{
-		padData[i][THUMB_L_UP] = pad[i].ThumbLY > 20000 || keyData[KEY_INPUT_W];
-		padData[i][THUMB_L_DOWN] = pad[i].ThumbLY < -20000 || keyData[KEY_INPUT_S];
-		padData[i][THUMB_L_RIGHT] = pad[i].ThumbLX > 20000 || keyData[KEY_INPUT_D];
-		padData[i][THUMB_L_LEFT] = pad[i].ThumbLX < -20000 || keyData[KEY_INPUT_A];
+		padData[i][THUMB_L_UP] = pad[i].ThumbLY > 15000 || keyData[KEY_INPUT_W];
+		padData[i][THUMB_L_DOWN] = pad[i].ThumbLY < -15000 || keyData[KEY_INPUT_S];
+		padData[i][THUMB_L_RIGHT] = pad[i].ThumbLX > 15000 || keyData[KEY_INPUT_D];
+		padData[i][THUMB_L_LEFT] = pad[i].ThumbLX < -15000 || keyData[KEY_INPUT_A];
 		padData[i][BUTTON_A] = pad[i].Buttons[XINPUT_BUTTON_A] > 0;
 		padData[i][BUTTON_B] = pad[i].Buttons[XINPUT_BUTTON_B] > 0;
 		padData[i][BUTTON_X] = pad[i].Buttons[XINPUT_BUTTON_X] > 0;
