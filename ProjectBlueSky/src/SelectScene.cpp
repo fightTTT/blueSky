@@ -27,9 +27,12 @@ SelectScene::~SelectScene()
 
 unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
-	for (auto& data : *objList)
+	if (!sceneChangeFlag)
 	{
-		data->UpDate(controller, objList);
+		for (auto& data : *objList)
+		{
+			data->UpDate(controller, objList);
+		}
 	}
 
 	if (itvCnt > 0)
