@@ -68,8 +68,6 @@ private:
 
 	int spEndCnt;		// 必殺技の終了ﾀｲﾐﾝｸﾞ管理用のｶｳﾝﾄ
 
-	int invincibleTime;
-
 	// ﾌﾟﾚｲﾔｰに与えるﾀﾞﾒｰｼﾞ量をﾁｪｯｸする　(引数: 敵のｱﾆﾒｰｼｮﾝの属性)
 	void CheckDamage(ANIM_ATTRIBUTE att);
 
