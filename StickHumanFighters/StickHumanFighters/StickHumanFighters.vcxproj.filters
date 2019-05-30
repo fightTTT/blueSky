@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\character">
+      <UniqueIdentifier>{c974868d-54ce-4f25-aade-ec44cdf2fb33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\character">
+      <UniqueIdentifier>{c203f18d-37b6-461e-9faf-728dca85d58a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\character\AIState">
+      <UniqueIdentifier>{11e987c8-bf2a-4736-8ef7-30f0b3642439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\character\AIState">
+      <UniqueIdentifier>{2114fb57-e4fa-4621-92d6-c0f53859c386}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\manager">
+      <UniqueIdentifier>{de4659e6-2638-45dc-8d8e-15e7bd4ffdaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\manager">
+      <UniqueIdentifier>{722a6206-bae1-4b47-940d-2f7bf0baa198}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene">
+      <UniqueIdentifier>{69bec5cb-9788-4a91-96a0-49117f276cf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene">
+      <UniqueIdentifier>{8e4f1be9-9983-4e5a-b472-2f5a77ce6681}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\CharSelCursor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameCtrl.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\HitEffect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Obj.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\VECTOR2.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AICharacter.cpp">
+      <Filter>ソース ファイル\character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AIStickHuman.cpp">
+      <Filter>ソース ファイル\character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character.cpp">
+      <Filter>ソース ファイル\character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StickHuman.cpp">
+      <Filter>ソース ファイル\character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AIState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AttackState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DamageState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuardState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\JumpState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WaitState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MoveState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LongAttackState.cpp">
+      <Filter>ソース ファイル\character\AIState</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionMng.cpp">
+      <Filter>ソース ファイル\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FrameMng.cpp">
+      <Filter>ソース ファイル\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImageMng.cpp">
+      <Filter>ソース ファイル\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneMng.cpp">
+      <Filter>ソース ファイル\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoundMng.cpp">
+      <Filter>ソース ファイル\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Shot.cpp">
+      <Filter>ソース ファイル\character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BaseScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ExplanationScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ResultScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SelectScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TitleScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\CharSelCursor.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameCtrl.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HitEffect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Obj.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ObjList.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\VECTOR2.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AICharacter.h">
+      <Filter>ヘッダー ファイル\character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AIStickHuman.h">
+      <Filter>ヘッダー ファイル\character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character.h">
+      <Filter>ヘッダー ファイル\character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StickHuman.h">
+      <Filter>ヘッダー ファイル\character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AIState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AttackState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DamageState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\JumpState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LongAttackState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MoveState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WaitState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuardState.h">
+      <Filter>ヘッダー ファイル\character\AIState</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collision.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionMng.h">
+      <Filter>ヘッダー ファイル\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImageMng.h">
+      <Filter>ヘッダー ファイル\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneMng.h">
+      <Filter>ヘッダー ファイル\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundMng.h">
+      <Filter>ヘッダー ファイル\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FrameMng.h">
+      <Filter>ヘッダー ファイル\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ExplanationScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BaseScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ResultScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SelectScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shot.h">
+      <Filter>ヘッダー ファイル\character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TitleScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
