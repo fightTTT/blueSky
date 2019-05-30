@@ -565,6 +565,8 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 			invincibleTime = 30;
 			if (ctl.GetPadData(padID, THUMB_L_UP))		// ƒWƒƒƒ“ƒv
 			{
+				PlaySoundMem(SOUND_ID("se/battle/jump.wav"), DX_PLAYTYPE_BACK);
+
 				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
 				{
 					jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
