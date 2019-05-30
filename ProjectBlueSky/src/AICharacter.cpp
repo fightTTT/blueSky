@@ -52,6 +52,15 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 		dir = tmpDir;
 	}
 
+	if (invincibleTime)
+	{
+		invincibleTime--;
+		if (invincibleTime < 0)
+		{
+			invincibleTime = 0;
+		}
+	}
+
 	if (stateObj.size())
 	{
 		stateObj[currentStateName]->Update(this);
