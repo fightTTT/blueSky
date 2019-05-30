@@ -162,7 +162,7 @@ void AICharacter::Draw()
 	{
 		hpColor = 0x00ff00;
 	}
-	DrawFormatString(ssize.x - 410, 25, 0xffffff, "AI‚ÌŽc‚èHP %d \n", playerHP);
+
 	DrawBox(ssize.x - 410, 65, ssize.x - 410 + 300, 85, 0x000000, true);
 	DrawBox(ssize.x - 410, 65, ssize.x - 410 + (playerHPOld * 3), 85, 0xff0000, true);
 	DrawBox(ssize.x - 410, 65, ssize.x - 410 + (playerHP * 3), 85, hpColor, true);
