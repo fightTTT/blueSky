@@ -46,7 +46,7 @@ bool AICharacter::CheckObjType(OBJ_TYPE type)
 
 void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 {
-	if (animAttribute[0] != ANIM_ATTRIBUTE_AIR && ((animTable[animName][ANIM_TBL_LOOP]) || animEndFlag))
+	if (animAttribute[0] != ANIM_ATTRIBUTE_AIR && ((animTable[animName][ANIM_TBL_LOOP]) || animEndFlag) && !(isSPLongAttack(animName)))
 	{
 		// キャラの向き変更
 		dir = tmpDir;
@@ -224,7 +224,7 @@ bool AICharacter::isSPLongAttack(std::string spAnimName)
 
 void AICharacter::CheckDamage(ANIM_ATTRIBUTE att)
 {
-	if ((animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE) && (animName != "ダメージ_立ち"))
+	if ((animAttribute[2] != ANIM_ATTRIBUTE_INVINCIBLE) && (animName != "ダメージ_立ち") && !(invincibleTime))
 	{
 		switch (att)
 		{
