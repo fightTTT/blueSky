@@ -409,10 +409,10 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 							&& (charaObj[i].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
 							&& (charaObj[i].charaObj->GetInvincibleTime() == 0))
 						{
-							//bool colorChange = charaObj[i].charaObj->GetHitBoxType() == COLTYPE_GUARD;
+							bool colorChange = charaObj[i].charaObj->GetHitBoxType() == COLTYPE_GUARD;
 
 							// ヒットエフェクト表示
-							AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), false));
+							AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), colorChange));
 							hitRectPos = { 0,0 };
 						}
 					}
