@@ -121,7 +121,7 @@ void MoveState::Update(AICharacter * character)
 			moveDirFlag = true;
 			return;
 		}
-		else if (rand <= 10)
+		else if (rand <= 5)
 		{
 			// ‹ß‹——£‚Ì•KŽE‹Z‚Ì‚ÝŽÀs
 			for (int i = 1; i < 3; ++i)
