@@ -20,7 +20,7 @@ void AIState::CheckHitFlag(AICharacter * character)
 
 	auto hitFlag = hitData.hitFlag && hitData.colType == COLTYPE_HIT;
 
-	if(hitFlag && character->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+	if(hitFlag && character->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE && !(character->GetInvincibleTime()))
 	{
 		character->SetDir(character->GetTmpDir());
 

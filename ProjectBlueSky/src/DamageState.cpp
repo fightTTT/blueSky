@@ -75,6 +75,7 @@ void DamageState::Update(AICharacter * character)
 	{
 		if (character->GetAnimEndFlag())
 		{
+			character->SetInvincibleTime(10);
 			character->ChangeState("Move");
 			return;
 		}
@@ -135,6 +136,7 @@ void DamageState::Update(AICharacter * character)
 		if (character->GetAnimEndFlag())
 		{
 			character->ChangeState("Move");
+			character->SetInvincibleTime(20);
 		}
 
 	}
