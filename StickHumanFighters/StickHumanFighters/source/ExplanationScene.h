@@ -13,11 +13,15 @@ public:
 	unique_Base UpDate(unique_Base own, const GameCtrl &controller);
 
 private:
-
 	int Init();
 	void ExplanationDraw();
 
-	int imageIdx;
+	int frame;
+
+	int page;
+
+	bool sceneChangeFlag;
+	int sceneChangeTime;
 
 	std::vector<int> imageHandle;
 };
