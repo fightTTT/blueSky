@@ -920,7 +920,7 @@ bool GameScene::GameDraw(void)
 	{
 		if (opeCnt < 120)
 		{
-			DrawGraph((ssize.x / 2) - 100, 200, IMAGE_ID("image/ゲームシーン用/round1.png")[0], true);
+			DrawGraph((ssize.x / 2) - 125, 200, IMAGE_ID("image/ゲームシーン用/round1.png")[0], true);
 		}
 	}
 
@@ -928,7 +928,7 @@ bool GameScene::GameDraw(void)
 	{
 		if (opeCnt < 120)
 		{
-			DrawGraph((ssize.x / 2) - 100, 200, IMAGE_ID("image/ゲームシーン用/round2.png")[0], true);
+			DrawGraph((ssize.x / 2) - 125, 200, IMAGE_ID("image/ゲームシーン用/round2.png")[0], true);
 		}
 	}
 
@@ -936,13 +936,13 @@ bool GameScene::GameDraw(void)
 	{
 		if (opeCnt < 120)
 		{
-			DrawGraph((ssize.x / 2) - 100, 200, IMAGE_ID("image/ゲームシーン用/round3.png")[0], true);
+			DrawGraph((ssize.x / 2) - 125, 200, IMAGE_ID("image/ゲームシーン用/round3.png")[0], true);
 		}
 	}
 
 	if (!operableFlag && opeCnt > 120)
 	{
-		DrawGraph((ssize.x / 2) - 100, 200, IMAGE_ID("image/ゲームシーン用/fight.png")[0], true);
+		DrawGraph((ssize.x / 2) - 125, 200, IMAGE_ID("image/ゲームシーン用/fight.png")[0], true);
 	}
 
 
