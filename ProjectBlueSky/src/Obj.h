@@ -138,6 +138,7 @@ public:
 
 	// 無敵時間のｹﾞｯﾀｰ
 	int GetInvincibleTime();
+	void SetInvincibleTime(int num);
 
 	// アニメーションを止めるフラグをセット
 	void SetAnimStopFlag(bool flag) { animStopFlag = flag; }

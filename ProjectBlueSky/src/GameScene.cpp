@@ -437,6 +437,19 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		opeCnt++;
 	}
 
+	/* ŠJnéŒ¾ */
+	if ((charaObj[0].winCount + charaObj[1].winCount) == 0)
+	{
+		if (opeCnt < 120)
+		{
+			if (!CheckSoundMem(SOUND_ID("se/battle/round1.mp3")))
+			{
+				PlaySoundMem(SOUND_ID("se/battle/round1.mp3"), DX_PLAYTYPE_BACK);
+			}
+		}
+	}
+
+
 	if (opeCnt >= 240)
 	{
 		operableFlag = true;
