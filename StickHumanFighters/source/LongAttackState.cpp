@@ -27,6 +27,11 @@ void LongAttackState::Update(AICharacter * character)
 
 	if (character->GetAnimEndFlag())
 	{
+		if (charaAnim == "ƒ[ƒv")
+		{
+			character->SetInvincibleTime(10);
+		}
+
 		character->SetAnim("‘Ò‹@");
 		character->SetAnimStopFlag(false);
 		character->ChangeState("Move");
