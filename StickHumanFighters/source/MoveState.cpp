@@ -174,7 +174,7 @@ void MoveState::Update(AICharacter * character, const int level)
 		{
 			if (data.pos.x > 0 && abs(distance.x) < 200)
 			{
-				character->SetJumpType(JUMP_TYPE_RAND);
+				character->SetJumpType(JUMP_TYPE_FRONT);
 				character->ChangeState("Jump");
 				moveDirFlag = true;
 				return;
