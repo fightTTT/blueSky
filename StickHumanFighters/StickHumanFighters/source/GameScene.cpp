@@ -454,9 +454,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		/* 開始宣言 */
 		if (opeCnt < 75)
 		{
-			if (!CheckSoundMem(SOUND_ID("se/battle/round1.mp3")))
+			if (!CheckSoundMem(SOUND_ID("se/battle/round1.wav")))
 			{
-				PlaySoundMem(SOUND_ID("se/battle/round1.mp3"), DX_PLAYTYPE_BACK);
+				PlaySoundMem(SOUND_ID("se/battle/round1.wav"), DX_PLAYTYPE_BACK);
 			}
 		}
 	}
@@ -464,9 +464,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 	{
 		if (opeCnt < 75)
 		{
-			if (!CheckSoundMem(SOUND_ID("se/battle/round2.mp3")))
+			if (!CheckSoundMem(SOUND_ID("se/battle/round2.wav")))
 			{
-				PlaySoundMem(SOUND_ID("se/battle/round2.mp3"), DX_PLAYTYPE_BACK);
+				PlaySoundMem(SOUND_ID("se/battle/round2.wav"), DX_PLAYTYPE_BACK);
 			}
 		}
 	}
@@ -482,9 +482,9 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 	}
 	if (!operableFlag &&  (opeCnt > 120 && opeCnt < 195))
 	{
-		if (!CheckSoundMem(SOUND_ID("se/battle/fight.mp3")))
+		if (!CheckSoundMem(SOUND_ID("se/battle/fight.wav")))
 		{
-			PlaySoundMem(SOUND_ID("se/battle/fight.mp3"), DX_PLAYTYPE_BACK);
+			PlaySoundMem(SOUND_ID("se/battle/fight.wav"), DX_PLAYTYPE_BACK);
 		}
 	}
 
@@ -494,16 +494,16 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		// ｼﾝｸﾞﾙﾌﾟﾚｲ時
 		if (lpSceneMng.GetMode() == MODE_1PLAYER && winCharacter == 0)
 		{
-			if (!CheckSoundMem(SOUND_ID("se/battle/win.mp3")) && finishCnt < 90)
+			if (!CheckSoundMem(SOUND_ID("se/battle/win.wav")) && finishCnt < 90)
 			{
-				PlaySoundMem(SOUND_ID("se/battle/win.mp3"), DX_PLAYTYPE_BACK);
+				PlaySoundMem(SOUND_ID("se/battle/win.wav"), DX_PLAYTYPE_BACK);
 			}
 		}
 		if (lpSceneMng.GetMode() == MODE_1PLAYER && winCharacter != 0)
 		{
-			if (!CheckSoundMem(SOUND_ID("se/battle/lose.mp3")) && finishCnt < 90)
+			if (!CheckSoundMem(SOUND_ID("se/battle/lose.wav")) && finishCnt < 90)
 			{
-				PlaySoundMem(SOUND_ID("se/battle/lose.mp3"), DX_PLAYTYPE_BACK);
+				PlaySoundMem(SOUND_ID("se/battle/lose.wav"), DX_PLAYTYPE_BACK);
 			}
 		}
 		// ﾏﾙﾁﾌﾟﾚｲ時
@@ -588,10 +588,10 @@ int GameScene::Init(void)
 
 	
 	// BGM
-	//if (!CheckSoundMem(SOUND_ID("bgm/battle.mp3")))
-	//{
-	//	PlaySoundMem(SOUND_ID("bgm/battle.mp3"), DX_PLAYTYPE_LOOP);
-	//}
+	if (!CheckSoundMem(SOUND_ID("bgm/battle.mp3")))
+	{
+		PlaySoundMem(SOUND_ID("bgm/battle.mp3"), DX_PLAYTYPE_LOOP);
+	}
 
 	maskCnt = 0;
 	smallStarMask = LoadMask("image/ゲームシーン用/winStar_mask1.png");
