@@ -141,7 +141,7 @@ bool SceneMng::SysInit(void)
 	sceneBackFlag = false;
 	titleChangeFlag = false;
 	openBackWindowPadID = PAD_1;
-	AILevel = 0;
+	AILevel = 3;
 
 	return true;
 }
