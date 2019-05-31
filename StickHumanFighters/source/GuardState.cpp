@@ -24,24 +24,32 @@ void GuardState::Init(AICharacter * character)
 
 void GuardState::Update(AICharacter * character, const int level)
 {
-	if ((character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_ATTACK_SMALL)
-	 && (character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_ATTACK_BIG)
-	 && (character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_ATTACK_SP)
-	 && knockBackSpeed == 0)
+	auto enemy = character->GetEnemyState();
+
+	if (stateTime >= 20 && knockBackSpeed == 0)
 	{
 		character->ChangeState("Move");
 		character->SetAnim("後ろ移動");
 		return;
 	}
 
-	auto enemy = character->GetEnemyState();
-
 	if (enemy.enemyAnimAttribute[0] == ANIM_ATTRIBUTE_SQUAT)
 	{
 		character->SetAnim("しゃがみ_後ろ");
 	}
 
-	stateTime++;
+	if (enemy.enemyAnimAttribute[0] == ANIM_ATTRIBUTE_AIR)
+	{
+		character->SetAnim("しゃがみ_後ろ");
+	}
+
+	if ((enemy.enemyAnimAttribute[1] != ANIM_ATTRIBUTE_ATTACK_SMALL)
+		&& (enemy.enemyAnimAttribute[1] != ANIM_ATTRIBUTE_ATTACK_BIG)
+		&& (enemy.enemyAnimAttribute[1] != ANIM_ATTRIBUTE_ATTACK_SP))
+	{
+		stateTime++;
+	}
+
 }
 
 void GuardState::CheckHitFlag(AICharacter * character)
@@ -55,8 +63,6 @@ void GuardState::CheckHitFlag(AICharacter * character)
 	// 攻撃を受けた時のノックバック
 	if (!guardHitFlag && hitFlag)
 	{
-		stateTime = 0;
-
 		if (dir == DIR_RIGHT)
 		{
 			knockBackSpeed = -KNOCK_BACK_SPEED;
