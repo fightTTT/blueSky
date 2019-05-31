@@ -41,13 +41,12 @@ void MoveState::Update(AICharacter * character, const int level)
 
 	if (level == 3)
 	{
-		if ((character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_BIG
-			|| character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SMALL
-			|| character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SP)
-			&& abs(vec.x) < 200)
+		if (character->GetEnemyState().enemyAnimAttribute[0] == ANIM_ATTRIBUTE_AIR
+			&& (character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SMALL
+			|| character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_BIG))
 		{
-			character->SetAnim("Œã‚ëˆÚ“®");
-			character->ChangeState("Guard");
+			character->SetJumpType(JUMP_TYPE_BACK);
+			character->ChangeState("Jump");
 			moveDirFlag = true;
 			return;
 		}
