@@ -3,7 +3,6 @@
 #include "TitleScene.h"
 #include "ImageMng.h"
 #include "SceneMng.h"
-#include "VECTOR2.h"
 #include <string>
 
 ResultScene::ResultScene()
@@ -81,6 +80,8 @@ int ResultScene::Init()
 				"–_lŠÔ_ƒsƒ“ƒN",
 				"–_lŠÔ_…F" };
 
+	
+	animOffSet = { VECTOR2(0,15),VECTOR2(0,0) };
 
 	// player(•¶š)‚Ìpass
 	if (victoryPad == PAD_AI || defeatPad == PAD_AI)
@@ -214,9 +215,16 @@ void ResultScene::ResultDraw()
 			DrawRotaGraph(charDrawPos_x, 720 / 4, 1.0, 0.0, lpImageMng.GetID(victoryPass[num])[0], true, false);
 			// ‰e‚Ì•`‰æ
 			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 140, 1.0, 0.0, lpImageMng.GetID(shadowPass[num])[0], true, 1 - num);
-			// ƒLƒƒƒ‰‚Ì•`‰æ
-			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[num]])[0], true, turnFlag);
 			
+			// ƒLƒƒƒ‰‚Ì•`‰æ
+			if (victoryPad != PAD_1)
+			{
+				DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30 + animOffSet[num].y, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[num]])[0], true, turnFlag);
+			}
+			else
+			{
+				DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30 + animOffSet[1-num].y, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[num]])[0], true, turnFlag);
+			}
 		}
 		else
 		{
@@ -226,7 +234,7 @@ void ResultScene::ResultDraw()
 			// ‰e‚Ì•`‰æ
 			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 140, 1.0, 0.0, lpImageMng.GetID(shadowPass[num])[0], true, 1 - num);
 			// ƒLƒƒƒ‰‚Ì•`‰æ
-			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[0]])[0], true, turnFlag);
+			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30 + animOffSet[0].y, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[0]])[0], true, turnFlag);
 		}
 	}
 }

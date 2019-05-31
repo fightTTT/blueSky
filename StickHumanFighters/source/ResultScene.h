@@ -3,6 +3,7 @@
 #include "BaseScene.h"
 #include "ObjList.h"
 #include "GameCtrl.h"
+#include "VECTOR2.h"
 #include <vector>
 #include <array>
 #include <string>
@@ -35,4 +36,5 @@ private:
 	std::array<std::string, 2> shadowPass;
 	std::vector<std::string> charName;
 	std::array<int, 2> animFrame;
+	std::array<VECTOR2, 2> animOffSet;
 };
