@@ -51,6 +51,9 @@ public:
 	// AI‚ÌƒŒƒxƒ‹‚ðŽæ“¾
 	const int GetAILevel() const { return AILevel; }
 
+	// AI‚ÌƒŒƒxƒ‹‚Ì¾¯À°
+	void SetAILevel(int setLevel);
+
 private:
 	SceneMng();
 	~SceneMng();
