@@ -41,7 +41,6 @@
 
 GameScene::GameScene()
 {
-	sprintf_s(stageImgName, "image/ゲームシーン用/backGround%d.png", GetRand(TOTAL_BACK_GROUND));
 	Init();
 }
 
@@ -385,6 +384,13 @@ int GameScene::Init(void)
 		AST();
 	}
 
+	// BG
+	bgNum = GetRand(TOTAL_BACK_GROUND);
+
+	if (bgNum != 2)
+	{
+		sprintf_s(stageImgName, "image/ゲームシーン用/backGround%d.png", bgNum);
+	}
 	
 	// BGM
 	if (!CheckSoundMem(SOUND_ID("bgm/battle.mp3")))
@@ -901,7 +907,15 @@ bool GameScene::CheckGameEnd()
 
 bool GameScene::GameDraw(void)
 {
-	DrawGraph(bgPos.x, bgPos.y, IMAGE_ID(stageImgName)[0], true);
+	if (bgNum != 2)
+	{
+		DrawGraph(bgPos.x, bgPos.y, IMAGE_ID(stageImgName)[0], true);
+	}
+	else
+	{
+		DrawGraph(DEF_BG_POS_X + ((bgPos.x - DEF_BG_POS_X) / 5) - 20, DEF_BG_POS_Y + ((bgPos.y - DEF_BG_POS_Y) / 5) - 20, IMAGE_ID("image/ゲームシーン用/chikyu.png")[0], true);
+		DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/moon.png")[0], true);
+	}
 
 	DrawGraph((ssize.x/2)-175, 0, IMAGE_ID("image/ゲームシーン用/centerBer.png")[0], true);
 
