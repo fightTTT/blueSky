@@ -44,6 +44,21 @@ GameScene::GameScene()
 	// BG
 	bgNum = GetRand(TOTAL_BACK_GROUND);
 
+	switch (bgNum)
+	{
+	case 0:
+		shadowAlpha = 200;
+		break;
+	case 1:
+		shadowAlpha = 150;
+		break;
+	case 2:
+		shadowAlpha = 180;
+		break;
+	default:
+		break;
+	}
+
 	Init();
 }
 
@@ -345,6 +360,7 @@ int GameScene::Init(void)
 	MODE mode = lpSceneMng.GetMode();
 	ssize = lpSceneMng.GetScreenSize();
 	bgPos = VECTOR2(DEF_BG_POS_X, DEF_BG_POS_Y);
+	shadowPos_y = ssize.y;
 	hitStopFlag = false;
 	gameEndFlag = false;
 	operableFlag = false;
@@ -507,6 +523,8 @@ void GameScene::BgPosUpDate(void)
 	{
 		edgePosDown = (ssize.y - DEF_BG_POS_Y);
 	}
+
+	shadowPos_y = edgePosDown;
 
 	bool rightCharacterExtrusionFlag = false;
 
@@ -920,6 +938,17 @@ bool GameScene::GameDraw(void)
 	}
 
 	DrawGraph((ssize.x/2)-175, 0, IMAGE_ID("image/ƒQ[ƒ€ƒV[ƒ“—p/centerBer.png")[0], true);
+
+	//objList‚É“o˜^‚³‚ê‚Ä‚¢‚é¸×½‚Ì‰e‚Ì•`‰æˆ—‚ğs‚¤
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, shadowAlpha);
+	for (auto &data : (*objList))
+	{
+		if (!(*data).CheckObjType(OBJ_TYPE_EFFECT))
+		{
+			DrawOvalAA(float((*data).GetPos().x), float(shadowPos_y - 80), 70.f, 15.f, 12, 0x000000, true);
+		}
+	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 	//objList‚É“o˜^‚³‚ê‚Ä‚¢‚é¸×½‚Ì•`‰æˆ—‚ğs‚¤
 	for (auto &data : (*objList))

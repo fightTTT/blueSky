@@ -30,7 +30,7 @@ bool HitEffect::CheckDeth()
 
 bool HitEffect::CheckObjType(OBJ_TYPE type)
 {
-	return false;
+	return (type == OBJ_TYPE_EFFECT);
 }
 
 void HitEffect::Draw()

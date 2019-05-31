@@ -38,6 +38,9 @@ private:
 	VECTOR2 bgPosOld;			// 1ﾌﾚｰﾑ前の背景の位置座標
 	int bgNum;					// 背景(ステージ)の番号
 
+	int shadowPos_y;
+	int shadowAlpha;
+
 	VECTOR2 beforPos[2];
 	VECTOR2 afterPos[2];
 	bool GameDraw(void);		// 描画処理
