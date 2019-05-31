@@ -20,7 +20,7 @@ void WaitState::Init(AICharacter * character)
 	stateTime = 0;
 }
 
-void WaitState::Update(AICharacter * character)
+void WaitState::Update(AICharacter * character, const int level)
 {
 	auto pos = character->GetPos();
 	auto enemyPos = character->GetEnemyState().enemyPos;

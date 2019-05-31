@@ -12,7 +12,7 @@ public:
 	virtual ~AIState();
 
 	virtual void Init(AICharacter* chara) = 0;
-	virtual void Update(AICharacter* chara) = 0;
+	virtual void Update(AICharacter* chara, const int level) = 0;
 	virtual void CheckHitFlag(AICharacter* character);
 
 protected:

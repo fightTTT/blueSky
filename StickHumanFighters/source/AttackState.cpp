@@ -72,7 +72,7 @@ void AttackState::Init(AICharacter * character)
 	}
 }
 
-void AttackState::Update(AICharacter * character)
+void AttackState::Update(AICharacter * character, const int level)
 {
 	if (character->GetAnimEndFlag())
 	{

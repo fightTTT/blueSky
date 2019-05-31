@@ -48,6 +48,9 @@ public:
 	MODE GetMode(void);
 	void SetMode(MODE setMode);
 
+	// AIのレベルを取得
+	const int GetAILevel() const { return AILevel; }
+
 private:
 	SceneMng();
 	~SceneMng();
@@ -67,7 +70,9 @@ private:
 	bool sceneBackFlag;								// 前のｼｰﾝに戻れるかのﾌﾗｸﾞ
 	bool titleChangeFlag;							// ﾀｲﾄﾙｼｰﾝに戻るﾌﾗｸﾞ
 	MODE mode;										// ｹﾞｰﾑﾓｰﾄﾞ格納用変数
-	PAD_ID openBackWindowPadID;							// 確認ｳｨﾝﾄﾞｳを開いたﾊﾟｯﾄﾞのID
+	PAD_ID openBackWindowPadID;						// 確認ｳｨﾝﾄﾞｳを開いたﾊﾟｯﾄﾞのID
+
+	int AILevel;									// AIの強さのレベル
 
 	bool SysInit(void);			// ｼｽﾃﾑ的な変数の初期化を行う
 };

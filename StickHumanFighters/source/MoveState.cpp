@@ -28,7 +28,7 @@ void MoveState::Init(AICharacter * character)
 	changeWaitStateCount = 0;
 }
 
-void MoveState::Update(AICharacter * character)
+void MoveState::Update(AICharacter * character, const int level)
 {
 	auto enemy = character->GetEnemyState();
 	auto pos = character->GetPos();
@@ -48,7 +48,7 @@ void MoveState::Update(AICharacter * character)
 	}
 
 	// ガードカウントがランダム値より大きくなったら後ろ移動に変更してガード準備
-	if ( static_cast<int>(changeGuardCount) > GetRand(30))
+	if ( static_cast<int>(changeGuardCount) > GetRand(0))
 	{
 		moveDirFlag = false;
 		changeGuardCount = 0;
