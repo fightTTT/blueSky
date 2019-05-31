@@ -41,6 +41,13 @@
 
 GameScene::GameScene()
 {
+	// BG
+	bgNum = GetRand(TOTAL_BACK_GROUND);
+
+	if (bgNum != 2)
+	{
+		sprintf_s(stageImgName, "image/ゲームシーン用/backGround%d.png", bgNum);
+	}
 	Init();
 }
 
@@ -382,14 +389,6 @@ int GameScene::Init(void)
 	{
 		// MODE_MAXが来ている(エラー)
 		AST();
-	}
-
-	// BG
-	bgNum = GetRand(TOTAL_BACK_GROUND);
-
-	if (bgNum != 2)
-	{
-		sprintf_s(stageImgName, "image/ゲームシーン用/backGround%d.png", bgNum);
 	}
 	
 	// BGM

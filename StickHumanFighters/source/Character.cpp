@@ -1174,6 +1174,11 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 					{
 						// ‰½‚à‚µ‚È‚¢
 					}
+
+					if (animEndFlag)
+					{
+						SetAnim("‘Ò‹@");
+					}
 				}
 			}
 		}
