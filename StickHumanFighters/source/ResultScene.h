@@ -18,14 +18,16 @@ public:
 	unique_Base UpDate(unique_Base own, const GameCtrl &controller);
 
 private:
+	int Init();
+	void ResultDraw();
 	PAD_ID victoryPad;
 	PAD_ID defeatPad;
 	int victoryCharID;
 	int defeatCharID;
 	bool drawflag;
-	int Init();
-	void ResultDraw();
 	int animCnt;
+	int itvCnt;
+	bool returnTitle;
 	char tmpImagePass[50];
 	std::array<std::vector<std::string>, 2> imagePass;
 	std::array <std::string,2> playerfontPass;
