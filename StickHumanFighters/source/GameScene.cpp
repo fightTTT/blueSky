@@ -723,6 +723,8 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 		// ヒットエフェクト表示矩形
 		VECTOR2 hitRectPos(0, 0);
 
+		
+
 		// 攻撃時の当たり判定
 		for (int i = 0; i < 2; i++)
 		{
