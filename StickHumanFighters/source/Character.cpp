@@ -765,6 +765,7 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 		if (animEndFlag)
 		{
+			invincibleTime = 10;
 			SetAnim("‘Ò‹@");
 		}
 	}
