@@ -213,7 +213,7 @@ void ResultScene::ResultDraw()
 			// Ÿ‚¿•‰‚¯‚Ì•`‰æ
 			DrawRotaGraph(charDrawPos_x, 720 / 4, 1.0, 0.0, lpImageMng.GetID(victoryPass[num])[0], true, false);
 			// ‰e‚Ì•`‰æ
-			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 150, 1.0, 0.0, lpImageMng.GetID(shadowPass[num])[0], true, 1 - num);
+			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 140, 1.0, 0.0, lpImageMng.GetID(shadowPass[num])[0], true, 1 - num);
 			// ƒLƒƒƒ‰‚Ì•`‰æ
 			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[num]])[0], true, turnFlag);
 			
@@ -224,7 +224,7 @@ void ResultScene::ResultDraw()
 			// Ÿ‚¿•‰‚¯‚Ì•`‰æ
 			DrawRotaGraph(1280 / 2, 720 / 4, 1.0, 0.0, lpImageMng.GetID(victoryPass[0])[0], true, false);
 			// ‰e‚Ì•`‰æ
-			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 150, 1.0, 0.0, lpImageMng.GetID(shadowPass[num])[0], true, 1 - num);
+			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 140, 1.0, 0.0, lpImageMng.GetID(shadowPass[num])[0], true, 1 - num);
 			// ƒLƒƒƒ‰‚Ì•`‰æ
 			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[0]])[0], true, turnFlag);
 		}
