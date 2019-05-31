@@ -17,7 +17,7 @@ void LongAttackState::Init(AICharacter * character)
 	spEndCnt = 0;
 }
 
-void LongAttackState::Update(AICharacter * character)
+void LongAttackState::Update(AICharacter * character, const int level)
 {
 	auto pos = character->GetPos();
 	auto dir = character->GetDir();

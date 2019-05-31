@@ -14,7 +14,7 @@ private:
 
 
 	void Init(AICharacter* character);
-	void Update(AICharacter* character);
+	void Update(AICharacter* character, const int level);
 
 	bool moveDirFlag;						// true : 前移動 false : 後ろ移動
 	unsigned int changeGuardCount;			// ステートをガードに変更するカウント

@@ -23,7 +23,7 @@ void JumpState::Init(AICharacter * character)
 	jumpFlag = false;
 }
 
-void JumpState::Update(AICharacter * character)
+void JumpState::Update(AICharacter * character, const int level)
 {
 	PlaySoundMem(SOUND_ID("se/battle/jump.wav"), DX_PLAYTYPE_BACK);
 

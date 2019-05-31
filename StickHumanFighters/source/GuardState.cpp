@@ -22,7 +22,7 @@ void GuardState::Init(AICharacter * character)
 	knockBackSpeed = 0;
 }
 
-void GuardState::Update(AICharacter * character)
+void GuardState::Update(AICharacter * character, const int level)
 {
 	if ((character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_ATTACK_SMALL)
 	 && (character->GetAnimAttribute(1) != ANIM_ATTRIBUTE_ATTACK_BIG)

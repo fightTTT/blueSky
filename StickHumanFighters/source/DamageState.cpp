@@ -83,7 +83,7 @@ void DamageState::Init(AICharacter * character)
 	character->SetInvincibleTime(10);
 }
 
-void DamageState::Update(AICharacter * character)
+void DamageState::Update(AICharacter * character, const int level)
 {
 	auto dir = character->GetDir();
 	auto pos = character->GetPos();
