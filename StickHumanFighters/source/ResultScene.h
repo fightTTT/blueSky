@@ -32,6 +32,7 @@ private:
 	std::array<std::vector<std::string>, 2> imagePass;
 	std::array <std::string,2> playerfontPass;
 	std::array<std::string, 2> victoryPass;
+	std::array<std::string, 2> shadowPass;
 	std::vector<std::string> charName;
 	std::array<int, 2> animFrame;
 };
