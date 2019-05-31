@@ -947,7 +947,14 @@ bool GameScene::GameDraw(void)
 	{
 		if (!(*data).CheckObjType(OBJ_TYPE_EFFECT))
 		{
-			DrawOvalAA(float((*data).GetPos().x), float(shadowPos_y - 80), 70.f, 15.f, 12, 0x000000, true);
+			if ((*data).CheckObjType(OBJ_TYPE_SHOT))
+			{
+				DrawOvalAA(float((*data).GetPos().x - 64), float(shadowPos_y - 80), 70.f, 15.f, 12, 0x000000, true);
+			}
+			else
+			{
+				DrawOvalAA(float((*data).GetPos().x), float(shadowPos_y - 80), 70.f, 15.f, 12, 0x000000, true);
+			}
 		}
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
