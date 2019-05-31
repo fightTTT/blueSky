@@ -49,11 +49,20 @@ unique_Base ResultScene::UpDate(unique_Base own, const GameCtrl & controller)
 	if (controller.GetPadDataTrg(PAD_1, BUTTON_START) || controller.GetPadDataTrg(PAD_1, BUTTON_A)
 		|| controller.GetPadDataTrg(PAD_2, BUTTON_START) || controller.GetPadDataTrg(PAD_2, BUTTON_A))
 	{
-		return std::make_unique<TitleScene>();
+		//return std::make_unique<TitleScene>();
+		returnTitle = true;
 	}
 
+	if (itvCnt > 120)
+	{
+		return std::make_unique<TitleScene>();
+	}
 	ResultDraw();
 	animCnt++;
+	if (returnTitle)
+	{
+		itvCnt++;
+	}
 	return std::move(own);
 }
 
@@ -128,14 +137,13 @@ int ResultScene::Init()
 			}
 
 			// 勝敗の文字のpass
-			for (unsigned int i = 0; i < victoryPass.size(); i++)
-			{
-				sprintf_s(tmpImagePass, "image/リザルトシーン用/victory_0.png");
-				victoryPass[i] = tmpImagePass;
-			}
+			sprintf_s(tmpImagePass, "image/リザルトシーン用/draw.png");
+			victoryPass[0] = tmpImagePass;
 		}
 	}
 	animCnt = 0;
+	itvCnt = 0;
+	returnTitle = false;
 
 	return 0;
 }
@@ -145,8 +153,25 @@ void ResultScene::ResultDraw()
 	// 背景の描画処理
 	sprintf_s(tmpImagePass, "image/リザルトシーン用/背景.png");
 	DrawRotaGraph(1280 / 2, 720 / 2, 1.0, 0.0, lpImageMng.GetID(tmpImagePass)[0], true, false);
+	
+	sprintf_s(tmpImagePass, "image/リザルトシーン用/startボタン.png");
 
-	DrawString(500, 350, "STARTボタンでタイトルへ遷移", 0xffffff);
+	if (returnTitle)
+	{
+		if ((animCnt / 4) % 2)
+		{
+			DrawRotaGraph(1280 / 2, 300, 1.0, 0.0, lpImageMng.GetID(tmpImagePass)[0], true, false);
+		}
+	}
+	else
+	{
+		if ((animCnt / 30) % 2)
+		{
+			DrawRotaGraph(1280 / 2, 300, 1.0, 0.0, lpImageMng.GetID(tmpImagePass)[0], true, false);
+		}
+	}
+	
+	
 
 	animFrame = {4 - abs(((animCnt / 4) % 9) - 4)  ,animCnt / 8 % 9 };
 
@@ -186,7 +211,7 @@ void ResultScene::ResultDraw()
 		{
 			// 引き分けの時
 			// 勝ち負けの描画
-			DrawRotaGraph(charDrawPos_x, 720 / 4, 1.0, 0.0, lpImageMng.GetID(victoryPass[num])[0], true, false);
+			DrawRotaGraph(1280 / 2, 720 / 4, 1.0, 0.0, lpImageMng.GetID(victoryPass[0])[0], true, false);
 			// キャラの描画
 			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[0]])[0], true, turnFlag);
 		}
