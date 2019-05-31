@@ -37,7 +37,7 @@ public:
 
 	// ジャンプのタイプ
 	void SetJumpType(JUMP_TYPE type) { jumpType = type; }
-	JUMP_TYPE GetJumpType() { return jumpType; }
+	const JUMP_TYPE GetJumpType() const { return jumpType; }
 
 	// 当たり判定情報を取得
 	HitData GetHitData() const;
@@ -62,6 +62,9 @@ private:
 
 	// 現在のステートのkey
 	std::string currentStateName;
+
+	// AIの強さのレベル
+	const int AILevel;
 
 protected:
 

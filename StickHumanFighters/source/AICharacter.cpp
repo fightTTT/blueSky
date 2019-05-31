@@ -15,7 +15,7 @@
 
 #include "DxLib.h"
 
-AICharacter::AICharacter(VECTOR2 offset) : Obj(offset)
+AICharacter::AICharacter(VECTOR2 offset) : Obj(offset), AILevel(lpSceneMng.GetAILevel())
 {
 	longAttackFlag = false;
 	jumpType = JUMP_TYPE_RAND;
@@ -63,7 +63,7 @@ void AICharacter::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 	if (stateObj.size())
 	{
-		stateObj[currentStateName]->Update(this);
+		stateObj[currentStateName]->Update(this, AILevel);
 	}
 
 	if (longAttackFlag)

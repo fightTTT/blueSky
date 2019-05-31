@@ -13,6 +13,6 @@ public:
 private:
 
 	void Init(AICharacter* character);
-	void Update(AICharacter* character);
+	void Update(AICharacter* character, const int level);
 };
 

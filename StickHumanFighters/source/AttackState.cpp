@@ -24,6 +24,12 @@ void AttackState::Init(AICharacter * character)
 	// すでに攻撃アニメーションがセットされていた場合return
 	if (charaAnim != "前移動" && charaAnim != "後ろ移動" && charaAnim != "待機")
 	{
+		// セットされたアニメーションが前回の攻撃と同じだったらInitでランダムに設定しなおす
+		if (attackAnimOld == charaAnim)
+		{
+			character->SetAnim("前移動");
+			Init(character);
+		}
 		return;
 	}
 
@@ -72,11 +78,12 @@ void AttackState::Init(AICharacter * character)
 	}
 }
 
-void AttackState::Update(AICharacter * character)
+void AttackState::Update(AICharacter * character, const int level)
 {
 	if (character->GetAnimEndFlag())
 	{
 		attackCount++;
+		attackAnimOld = character->GetAnim();
 		character->SetAnim("待機");
 		character->ChangeState("Move");
 		return;
@@ -107,6 +114,7 @@ void AttackState::Update(AICharacter * character)
 		if (character->GetAnimCount() > 40)
 		{
 			attackCount++;
+			attackAnimOld = character->GetAnim();
 			character->SetAnim("待機");
 			character->ChangeState("Move");
 			return;

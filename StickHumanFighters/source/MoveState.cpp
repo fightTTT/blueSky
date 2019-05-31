@@ -28,7 +28,7 @@ void MoveState::Init(AICharacter * character)
 	changeWaitStateCount = 0;
 }
 
-void MoveState::Update(AICharacter * character)
+void MoveState::Update(AICharacter * character, const int level)
 {
 	auto enemy = character->GetEnemyState();
 	auto pos = character->GetPos();
@@ -48,7 +48,7 @@ void MoveState::Update(AICharacter * character)
 	}
 
 	// ガードカウントがランダム値より大きくなったら後ろ移動に変更してガード準備
-	if ( static_cast<int>(changeGuardCount) > GetRand(30))
+	if ( static_cast<int>(changeGuardCount) > GetRand(40 - (level * 10)) )
 	{
 		moveDirFlag = false;
 		changeGuardCount = 0;
@@ -79,7 +79,7 @@ void MoveState::Update(AICharacter * character)
 	}
 
 	// 後ろ移動で距離がはなれすぎていたら状態を変更
-	if (!moveDirFlag && (abs(vec.x) > 300))
+	if (!moveDirFlag && (abs(vec.x) > 300 - level * 50))
 	{
 		if (changeWaitStateCount > WAITSTATE_INV)
 		{
@@ -88,12 +88,6 @@ void MoveState::Update(AICharacter * character)
 			moveDirFlag = true;
 			return;
 		}
-	}
-
-	// ランダムで方向を逆方向に切り替え
-	if (!(abs(vec.x) < ATTACK_RANGE - GetRand(200)) && GetRand(50) == 0)
-	{
-		moveDirFlag = !moveDirFlag;
 	}
 
 	// 敵との距離が近い+敵が攻撃してきた場合ガードカウントをインクリメント
@@ -109,8 +103,19 @@ void MoveState::Update(AICharacter * character)
 		changeGuardCount = 0;
 	}
 
+	int attackDistance = 0;
+	if (level == 3)
+	{
+		// 攻撃があたる距離で攻撃
+		attackDistance = ATTACK_RANGE - 50;
+	}
+	else
+	{
+		attackDistance = ATTACK_RANGE - GetRand(120);
+	}
+
 	// 近距離攻撃が当たる距離の場合攻撃
-	if (abs(vec.x) < ATTACK_RANGE - GetRand(120))
+	if (abs(vec.x) < attackDistance)
 	{
 		rand = GetRand(100);
 		if (rand >= 95)
@@ -120,7 +125,7 @@ void MoveState::Update(AICharacter * character)
 			moveDirFlag = true;
 			return;
 		}
-		else if (rand <= 5)
+		else if (rand <= 5 + ((level - 1) * 5))
 		{
 			// 近距離の必殺技のみ実行
 			for (int i = 1; i < 3; ++i)
