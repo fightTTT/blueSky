@@ -1,6 +1,8 @@
 #pragma once
 #include "AIState.h"
 
+#include <string>
+
 class AttackState :
 	public AIState
 {
@@ -16,5 +18,6 @@ private:
 	void Update(AICharacter* character, const int level);
 
 	unsigned int attackCount;
+	std::string attackAnimOld;		// 1回前の攻撃のアニメーション情報
 };
 
