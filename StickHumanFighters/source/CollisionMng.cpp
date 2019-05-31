@@ -80,6 +80,11 @@ const bool CollisionMng::GetColFlag(std::string animName)
 	return colFlag[animName];
 }
 
+bool CollisionMng::collisionCheck(VECTOR2 startPos, VECTOR2 endPos,VECTOR2 startPos2,VECTOR2 endPos2)
+{
+	return false;
+}
+
 CollisionMng::CollisionMng()
 {
 }

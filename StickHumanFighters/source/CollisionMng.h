@@ -24,6 +24,8 @@ public:
 	ColInfo GetCollisionData(std::string charName, std::string animName, int animIdx) { return colMap[charName].GetColData(animName, animIdx); }
 
 	const bool GetColFlag(std::string animName);
+	
+	bool collisionCheck(VECTOR2 startPos, VECTOR2 endPos,  VECTOR2 startPos2, VECTOR2 endPos2);
 
 private:
 
