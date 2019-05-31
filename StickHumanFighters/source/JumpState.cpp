@@ -156,8 +156,14 @@ void JumpState::Update(AICharacter * character, const int level)
 	character->SetPos(pos);
 
 	auto distance = enemy.enemyPos - pos;
+	int kickDistance = 200;
 
-	if (abs(distance.x) < 200 && jumpSpeed.y > -10)
+	if (level != 1)
+	{
+		kickDistance = 300;
+	}
+
+	if (abs(distance.x) < kickDistance && jumpSpeed.y > -10)
 	{
 		if (distance.x < 0)
 		{
