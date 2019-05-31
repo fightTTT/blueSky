@@ -66,7 +66,6 @@ private:
 	int opeCnt;					// ‘€ì‰Â”\‚Ü‚Å‚Ì¶³İÄ
 	int finishCnt;				// I—¹éŒ¾‚Ü‚Å‚Ì¶³İÄ
 
-	char stageImgName[40];
 	sharedListObj objList;
 };
 
