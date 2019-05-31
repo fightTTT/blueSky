@@ -39,6 +39,20 @@ void MoveState::Update(AICharacter * character, const int level)
 	int rand = 0;
 	notAttackCount++;
 
+	if (level == 3)
+	{
+		if ((character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_BIG
+			|| character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SMALL
+			|| character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SP)
+			&& abs(vec.x) < 200)
+		{
+			character->SetAnim("後ろ移動");
+			character->ChangeState("Guard");
+			moveDirFlag = true;
+			return;
+		}
+	}
+
 	// アニメーションがガードだったらガードstateに変更
 	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
 	{
