@@ -36,6 +36,8 @@ private:
 	VECTOR2 ssize;				// 画面ｻｲｽﾞ
 	VECTOR2 bgPos;				// 背景の位置座標
 	VECTOR2 bgPosOld;			// 1ﾌﾚｰﾑ前の背景の位置座標
+	int bgNum;					// 背景(ステージ)の番号
+
 	VECTOR2 beforPos[2];
 	VECTOR2 afterPos[2];
 	bool GameDraw(void);		// 描画処理
@@ -64,7 +66,6 @@ private:
 	int opeCnt;					// 操作可能までのｶｳﾝﾄ
 	int finishCnt;				// 終了宣言までのｶｳﾝﾄ
 
-	char stageImgName[40];
 	sharedListObj objList;
 };
 

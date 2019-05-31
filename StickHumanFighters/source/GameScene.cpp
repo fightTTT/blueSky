@@ -41,7 +41,9 @@
 
 GameScene::GameScene()
 {
-	sprintf_s(stageImgName, "image/ゲームシーン用/backGround%d.png", GetRand(TOTAL_BACK_GROUND));
+	// BG
+	bgNum = GetRand(TOTAL_BACK_GROUND);
+
 	Init();
 }
 
@@ -384,7 +386,6 @@ int GameScene::Init(void)
 		// MODE_MAXが来ている(エラー)
 		AST();
 	}
-
 	
 	// BGM
 	if (!CheckSoundMem(SOUND_ID("bgm/battle.mp3")))
@@ -903,7 +904,22 @@ bool GameScene::CheckGameEnd()
 
 bool GameScene::GameDraw(void)
 {
-	DrawGraph(bgPos.x, bgPos.y, IMAGE_ID(stageImgName)[0], true);
+	switch (bgNum)
+	{
+	case 0:
+		DrawGraph(DEF_BG_POS_X + ((bgPos.x - DEF_BG_POS_X) / 5), DEF_BG_POS_Y + ((bgPos.y - DEF_BG_POS_Y) / 5), IMAGE_ID("image/ゲームシーン用/cityBack.png")[0], true);
+		DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/city.png")[0], true);
+		break;
+	case 1:
+		DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/backGround1.png")[0], true);
+		break;
+	case 2:
+		DrawGraph(DEF_BG_POS_X + ((bgPos.x - DEF_BG_POS_X) / 5) - 20, DEF_BG_POS_Y + ((bgPos.y - DEF_BG_POS_Y) / 5) - 20, IMAGE_ID("image/ゲームシーン用/chikyu.png")[0], true);
+		DrawGraph(bgPos.x, bgPos.y, IMAGE_ID("image/ゲームシーン用/moon.png")[0], true);
+		break;
+	default:
+		break;
+	}
 
 	DrawGraph((ssize.x/2)-175, 0, IMAGE_ID("image/ゲームシーン用/centerBer.png")[0], true);
 
@@ -1039,10 +1055,6 @@ bool GameScene::GameDraw(void)
 	{
 		DrawGraph((ssize.x / 2) - 125, 200, IMAGE_ID("image/ゲームシーン用/fight.png")[0], true);
 	}
-
-
-
-
 
 	return true;
 }

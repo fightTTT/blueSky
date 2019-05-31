@@ -17,7 +17,7 @@ StickHuman::StickHuman(VECTOR2 pos, VECTOR2 offset, PAD_ID id, DIR charaDir) : C
 	spAttackDamage["昇竜"] = -30;
 	spAttackDamage["ウマキック"] = -15;
 	spAttackDamage["ローリングアタック"] = -15;
-	spAttackDamage["旋風脚"] = -15;
+	spAttackDamage["旋風脚"] = -10;
 	spAttackDamage["カンフーキック"] = -30;
 	spAttackDamage["ラッシュ"] = -10;
 	spAttackDamage["回し蹴り"] = -20;
