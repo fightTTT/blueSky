@@ -6,7 +6,7 @@
 #include "CollisionMng.h"
 #include "SoundMng.h"
 
-#define DEF_COM_CLEAR_CNT (60)
+#define DEF_COM_CLEAR_CNT (45)
 
 #define JUMP_SPEED_X (4)
 #define JUMP_SPEED_Y (30)
