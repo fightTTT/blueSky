@@ -39,7 +39,7 @@ void MoveState::Update(AICharacter * character, const int level)
 	int rand = 0;
 	notAttackCount++;
 
-	/*if (level == 3)
+	if (level == 3)
 	{
 		if (character->GetEnemyState().enemyAnimAttribute[0] == ANIM_ATTRIBUTE_AIR
 			&& (character->GetEnemyState().enemyAnimAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SMALL
@@ -50,7 +50,7 @@ void MoveState::Update(AICharacter * character, const int level)
 			moveDirFlag = true;
 			return;
 		}
-	}*/
+	}
 
 	// アニメーションがガードだったらガードstateに変更
 	if (character->GetAnimAttribute(1) == ANIM_ATTRIBUTE_GUARD)
