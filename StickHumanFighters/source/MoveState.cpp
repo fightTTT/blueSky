@@ -117,15 +117,21 @@ void MoveState::Update(AICharacter * character, const int level)
 	// ‹ß‹——£UŒ‚‚ª“–‚½‚é‹——£‚Ìê‡UŒ‚
 	if (abs(vec.x) < attackDistance)
 	{
+		int attackRand = -1;
+		if (level != 1)
+		{
+			attackRand = level * 10;
+		}
+
 		rand = GetRand(100);
-		if (rand >= 95)
+		if (rand >= 95 + level)
 		{
 			character->SetJumpType(JUMP_TYPE_FRONT);
 			character->ChangeState("Jump");
 			moveDirFlag = true;
 			return;
 		}
-		else if (rand <= 5 + ((level - 1) * 5))
+		else if (rand <= attackRand)
 		{
 			// ‹ß‹——£‚Ì•KE‹Z‚Ì‚İÀs
 			for (int i = 1; i < 3; ++i)
