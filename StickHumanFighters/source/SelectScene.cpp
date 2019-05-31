@@ -36,6 +36,11 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 		}
 	}
 
+	if (aiLevel != lpSceneMng.GetAILevel())
+	{
+		aiLevel = lpSceneMng.GetAILevel();
+	}
+
 	if (itvCnt > 0)
 	{
 		itvCnt++;
@@ -140,6 +145,9 @@ int SelectScene::Init()
 
 	PlaySoundMem(SOUND_ID("bgm/select.mp3"), DX_PLAYTYPE_LOOP);
 
+	aiLevel = 1;
+	lpSceneMng.SetAILevel(aiLevel);
+
 	return 0;
 }
 
@@ -183,6 +191,12 @@ void SelectScene::SelectDraw(void)
 
 	if (lpSceneMng.GetMode() == MODE_1PLAYER)
 	{
+		if (lpSceneMng.GetDecidFlag(PAD_1) && !sceneChangeFlag)
+		{
+			// CPUレベル選択の画像を描画
+			DrawGraph((scSize.x - 350), (scSize.y / 3) + 45, IMAGE_DIV_ID("image/キャラセレ用/CPUレベル選択.png", VECTOR2(340, 425), VECTOR2(3, 1))[(aiLevel - 1)], true);
+		}
+
 		if (lpSceneMng.GetDecidFlag(PAD_1))
 		{
 			DrawGraph((scSize.x / 2) - 419, (scSize.y / 3), IMAGE_ID("image/キャラセレ用/allGreen.png")[0], true);		// キャラ確定表示

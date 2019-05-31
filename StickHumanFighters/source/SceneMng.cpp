@@ -7,6 +7,11 @@
 #define SCREEN_SIZE_X (1280)
 #define SCREEN_SIZE_Y (720)
 
+void SceneMng::SetAILevel(int setLevel)
+{
+	AILevel = setLevel;
+}
+
 SceneMng::SceneMng()
 {
 	SysInit();
@@ -141,7 +146,7 @@ bool SceneMng::SysInit(void)
 	sceneBackFlag = false;
 	titleChangeFlag = false;
 	openBackWindowPadID = PAD_1;
-	AILevel = 3;
+	AILevel = 0;
 
 	return true;
 }

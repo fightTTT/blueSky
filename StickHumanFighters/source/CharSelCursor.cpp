@@ -218,6 +218,14 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 	/* ｷｬﾗを選択してるとき */
 	else
 	{
+		// CPUレベル決定確認
+		if (ctl.GetPadDataTrg(padID, BUTTON_A))
+		{
+			PlaySoundMem(SOUND_ID("se/ui/check.mp3"), DX_PLAYTYPE_BACK);
+
+			selectAiLevelFlag = true;
+		}
+
 		// 決定取り消し確認
 		if (ctl.GetPadDataTrg(padID, BUTTON_B))
 		{
@@ -225,6 +233,24 @@ void CharSelCursor::SetMove(const GameCtrl & ctl, weekListObj objList)
 
 			decidFlag = false;
 			lpSceneMng.SetDecidFlag(padID, false);
+		}
+
+		if (ctl.GetPadDataTrg(padID, THUMB_L_UP) || ctl.GetPadDataTrg(padID, BUTTON_UP))
+		{
+			int tmpAiLevel = lpSceneMng.GetAILevel();
+			if (tmpAiLevel > 1)
+			{
+				lpSceneMng.SetAILevel(tmpAiLevel - 1);
+			}
+		}
+
+		if (ctl.GetPadDataTrg(padID, THUMB_L_DOWN) || ctl.GetPadDataTrg(padID, BUTTON_DOWN))
+		{
+			int tmpAiLevel = lpSceneMng.GetAILevel();
+			if (tmpAiLevel < 3)
+			{
+				lpSceneMng.SetAILevel(tmpAiLevel + 1);
+			}
 		}
 	}
 
@@ -270,6 +296,8 @@ int CharSelCursor::Init(void)
 	mCount = 0;
 	charCurMask = LoadMask("image/キャラセレ用/selected_mask.png");
 	sceneCurMask = LoadMask("image/キャラセレ用/back_mask.png");
+
+	selectAiLevelFlag = false;
 
 	return 0;
 }

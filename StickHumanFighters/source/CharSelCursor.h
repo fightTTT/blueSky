@@ -31,5 +31,7 @@ private:
 	int mCount;		// ｶｰｿﾙの回転用変数
 	int charCurMask;		// ｷｬﾗｾﾚｶｰｿﾙのﾏｽｸ
 	int sceneCurMask;		// ｼｰﾝﾊﾞｯｸｶｰｿﾙのﾏｽｸ
-	bool padIdFlag;			// どのﾊﾟｯﾄﾞが使用されたかのﾌﾗｸﾞ(2P対戦時推奨)　true = 1P, false = 2P
+	bool padIdFlag;			// どのﾊﾟｯﾄﾞが使用されたかのﾌﾗｸﾞ(2P対戦時推奨)　true = 1P, false = 2P]
+
+	bool selectAiLevelFlag;
 };

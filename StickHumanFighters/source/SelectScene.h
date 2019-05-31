@@ -25,5 +25,7 @@ private:
 	void SelectDraw(void);
 	sharedListObj objList;
 
+	int aiLevel;
+
 	std::array<std::array<char, 12>, CHAR_CNT_MAX> charNameTbl;				// ·¬×ID‚É‘Î‰ž‚µ‚½–¼‘O‚ÌÃ°ÌÞÙ
 };
