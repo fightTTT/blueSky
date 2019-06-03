@@ -82,6 +82,14 @@ const bool CollisionMng::GetColFlag(std::string animName)
 
 bool CollisionMng::collisionCheck(VECTOR2 startPos, VECTOR2 endPos,VECTOR2 startPos2,VECTOR2 endPos2)
 {
+	if (endPos.x >= startPos2.x
+		&& startPos.x <= endPos2.x
+		&& endPos.y >= startPos2.y
+		&& startPos.y <= endPos2.y)
+	{
+		return true;
+	}
+
 	return false;
 }
 

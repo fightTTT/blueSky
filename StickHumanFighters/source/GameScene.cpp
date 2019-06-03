@@ -736,10 +736,13 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 					{
 						if (colData[(i + 1) % 2].hitBox[b].type != COLTYPE_ATTACK)
 						{
-							if (colData[i].hitBox[a].rect.endPos.x >= colData[(i + 1) % 2].hitBox[b].rect.startPos.x
+							/*if (colData[i].hitBox[a].rect.endPos.x >= colData[(i + 1) % 2].hitBox[b].rect.startPos.x
 								&& colData[i].hitBox[a].rect.startPos.x <= colData[(i + 1) % 2].hitBox[b].rect.endPos.x
 								&& colData[i].hitBox[a].rect.endPos.y >= colData[(i + 1) % 2].hitBox[b].rect.startPos.y
 								&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
+							{*/
+							if(lpColMng.collisionCheck(colData[i].hitBox[a].rect.startPos, colData[i].hitBox[a].rect.endPos, 
+								colData[(i + 1) % 2].hitBox[b].rect.startPos, colData[(i + 1) % 2].hitBox[b].rect.endPos))
 							{
 								if (charaObj[i].charaObj->GetHitBoxType() != COLTYPE_HIT)
 								{
@@ -790,8 +793,11 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 
 				if (shot1 != shot2)
 				{
-					if (shot1->GetPos().x + (shot1->GetDivSize().x / 2) + 50 >= shot2->GetPos().x + (shot2->GetDivSize().x / 2) - 50
+					/*if (shot1->GetPos().x + (shot1->GetDivSize().x / 2) + 50 >= shot2->GetPos().x + (shot2->GetDivSize().x / 2) - 50
 						&& shot1->GetPos().x + (shot1->GetDivSize().x / 2) - 50 <= shot2->GetPos().x + (shot2->GetDivSize().x / 2) + 50)
+					{*/
+					if(lpColMng.collisionCheck(VECTOR2(shot1->GetPos().x + (shot1->GetDivSize().x / 2) - 50,0),VECTOR2(shot1->GetPos().x + (shot1->GetDivSize().x / 2) + 50,0),
+						VECTOR2(shot2->GetPos().x + (shot2->GetDivSize().x / 2) - 50,0),VECTOR2(shot2->GetPos().x + (shot2->GetDivSize().x / 2) + 50,0)))
 					{
 						shot1->SetHitData(true, COLTYPE_NON);
 						shot2->SetHitData(true, COLTYPE_NON);
@@ -827,10 +833,12 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 							startPos = { data->GetPos().x + (data->GetDivSize().x / 2) - 50,data->GetPos().y + (data->GetDivSize().y / 2) - 50 };
 							endPos = { data->GetPos().x + (data->GetDivSize().x / 2) + 50,data->GetPos().y + (data->GetDivSize().y / 2) + 50 };
 
-							if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
+							/*if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
 								&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
 								&& colData[i].hitBox[a].rect.endPos.y >= startPos.y
 								&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
+							{*/
+							if(lpColMng.collisionCheck(colData[i].hitBox[a].rect.startPos, colData[i].hitBox[a].rect.endPos, startPos, endPos))
 							{
 								charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);
 								data->SetHitData(true, colData[i].hitBox[a].type);
@@ -965,24 +973,28 @@ bool GameScene::GameDraw(void)
 		(*data).Draw();
 	}
 	
-	//std::string animName[2];
 
-	//for (int charNum = 0; charNum < 2; charNum++)
-	//{
-	//	animName[charNum] = charaObj[charNum].charaObj->GetAnim();
-	//	if (lpColMng.GetColFlag(charaObj[charNum].charaObj->GetAnim()))
-	//	{
-	//		int colColor;
-	//		for (int i = 0; i < colData[charNum].hitBox.size(); i++)
-	//		{
+	// “–‚½‚è”»’è‚Ìƒ{ƒbƒNƒX‚Ì•`‰æ
+	{
+		//std::string animName[2];
 
-	//			colColor = (colData[charNum].hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData[charNum].hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
+		//for (int charNum = 0; charNum < 2; charNum++)
+		//{
+		//	animName[charNum] = charaObj[charNum].charaObj->GetAnim();
+		//	if (lpColMng.GetColFlag(charaObj[charNum].charaObj->GetAnim()))
+		//	{
+		//		int colColor;
+		//		for (int i = 0; i < colData[charNum].hitBox.size(); i++)
+		//		{
 
-	//			DrawBox(charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.startPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.startPos.y,
-	//					charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.endPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.endPos.y, colColor, false);
-	//		}
-	//	}
-	//}
+		//			colColor = (colData[charNum].hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData[charNum].hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
+
+		//			DrawBox(charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.startPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.startPos.y,
+		//					charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.endPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.endPos.y, colColor, false);
+		//		}
+		//	}
+		//}
+	}
 
 	// KO‚Ì•¶Žš‚Ì•`‰æ
 	if (koDrawCount)

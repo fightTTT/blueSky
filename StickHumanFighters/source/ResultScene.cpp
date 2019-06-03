@@ -179,13 +179,12 @@ void ResultScene::ResultDraw()
 			DrawRotaGraph(1280 / 2, 300, 1.0, 0.0, lpImageMng.GetID(tmpImagePass)[0], true, false);
 		}
 	}
-	
-	
 
 	animFrame = {4 - abs(((animCnt / 4) % 9) - 4)  ,animCnt / 8 % 9 };
 
 	int charDrawPos_x;
 	bool turnFlag;
+
 
 	for (int num = 0; num < 2; num++)
 	{
@@ -203,6 +202,8 @@ void ResultScene::ResultDraw()
 			DrawRotaGraph(1280 / 4 * 3, 720 / 4 * 2, 1.0, 0.0, lpImageMng.GetID(playerfontPass[1])[0], true, false);
 		}
 
+		
+
 		if (!drawflag)
 		{
 			if (victoryPad != PAD_1)
@@ -210,31 +211,29 @@ void ResultScene::ResultDraw()
 				charDrawPos_x = 1280 / 4 * (1 + ((1 - num) * 2));
 				turnFlag = 1 - num;
 			}
+			// ‰e‚Ì•`‰æ
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+			DrawOvalAA(float(charDrawPos_x), float(720 / 4 * 3 + 140), 70.f, 15.f, 12, 0x000000, true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 			// Ÿ‚¿•‰‚¯‚Ì•`‰æ
 			DrawRotaGraph(charDrawPos_x, 720 / 4, 1.0, 0.0, lpImageMng.GetID(victoryPass[num])[0], true, false);
-			// ‰e‚Ì•`‰æ
-			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 140, 1.0, 0.0, lpImageMng.GetID(shadowPass[num])[0], true, 1 - num);
-			
 			// ƒLƒƒƒ‰‚Ì•`‰æ
-			if (victoryPad != PAD_1)
-			{
-				DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30 + animOffSet[num].y, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[num]])[0], true, turnFlag);
-			}
-			else
-			{
-				DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30 + animOffSet[1-num].y, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[num]])[0], true, turnFlag);
-			}
+			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30 + animOffSet[num].y, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[num]])[0], true, turnFlag);
 		}
 		else
 		{
 			// ˆø‚«•ª‚¯‚ÌŽž
+			// ‰e‚Ì•`‰æ
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+			DrawOvalAA(float(charDrawPos_x), float(720 / 4 * 3 + 140), 70.f, 15.f, 12, 0x000000, true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 			// Ÿ‚¿•‰‚¯‚Ì•`‰æ
 			DrawRotaGraph(1280 / 2, 720 / 4, 1.0, 0.0, lpImageMng.GetID(victoryPass[0])[0], true, false);
-			// ‰e‚Ì•`‰æ
-			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 140, 1.0, 0.0, lpImageMng.GetID(shadowPass[num])[0], true, 1 - num);
 			// ƒLƒƒƒ‰‚Ì•`‰æ
 			DrawRotaGraph(charDrawPos_x, 720 / 4 * 3 + 30 + animOffSet[0].y, 1.0, 0.0, lpImageMng.GetID(imagePass[num][animFrame[0]])[0], true, turnFlag);
 		}
+		
 	}
 }
