@@ -775,6 +775,76 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 			}
 		}
 
+		//for (int a = 0; a < colData[0].hitBox.size(); a++)
+		//{
+		//	for (int b = 0; b < colData[1].hitBox.size(); b++)
+		//	{
+		//		if (colData[0].hitBox[a].type == COLTYPE_ATTACK
+		//			|| colData[1].hitBox[b].type == COLTYPE_ATTACK)
+		//		{
+		//			if (lpColMng.collisionCheck(colData[0].hitBox[a].rect.startPos, colData[0].hitBox[a].rect.endPos,
+		//				colData[1].hitBox[b].rect.startPos, colData[1].hitBox[b].rect.endPos))
+		//			{
+		//				if (colData[0].hitBox[a].type == COLTYPE_ATTACK)
+		//				{
+		//					if (charaObj[0].charaObj->GetHitBoxType() != COLTYPE_HIT)
+		//					{
+		//						charaObj[0].charaObj->SetHitData(true, colData[0].hitBox[a].type);
+		//					}
+		//					if (charaObj[1].charaObj->GetHitBoxType() != COLTYPE_GUARD)
+		//					{
+		//						charaObj[1].charaObj->SetHitData(true, colData[1].hitBox[b].type);
+		//						hitRectPos = { colData[1].hitBox[b].rect.startPos.x, colData[0].hitBox[a].rect.startPos.y };
+		//					}
+		//				}				
+		//				else if (colData[1].hitBox[a].type == COLTYPE_ATTACK)
+		//				{
+		//					if (charaObj[1].charaObj->GetHitBoxType() != COLTYPE_HIT)
+		//					{
+		//						charaObj[1].charaObj->SetHitData(true, colData[1].hitBox[b].type);
+		//					}
+		//					if (charaObj[0].charaObj->GetHitBoxType() != COLTYPE_GUARD)
+		//					{
+		//						charaObj[0].charaObj->SetHitData(true, colData[0].hitBox[a].type);
+		//						hitRectPos = { colData[0].hitBox[a].rect.startPos.x, colData[1].hitBox[b].rect.startPos.y };
+		//					}
+		//				}			
+		//			}
+		//		}
+		//	}
+		//}
+		//	
+		//if ((charaObj[0].charaObj->GetHitFlag()) && (charaObj[0].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[0])
+		//{
+		//	charaObj[0].charaObj->CheckDamage(charaObj[1].charaObj->GetAnimAttribute(1));
+		//	damageFlag[0] = true;
+		//}
+		//else if ((charaObj[1].charaObj->GetHitFlag()) && (charaObj[1].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[1])
+		//{
+		//	charaObj[1].charaObj->CheckDamage(charaObj[0].charaObj->GetAnimAttribute(1));
+		//	damageFlag[1] = true;
+		//}
+
+
+		//if (!(hitRectPos) && !(charaObj[0].AttackHitOld)
+		//	&& (charaObj[0].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+		//	&& (charaObj[0].charaObj->GetInvincibleTime() == 0))
+		//{
+		//	bool colorChange = charaObj[0].charaObj->GetHitBoxType() == COLTYPE_GUARD;
+		//	// ヒットエフェクト表示
+		//	AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), colorChange));
+		//	hitRectPos = { 0,0 };
+		//}
+		//if (!(hitRectPos) && !(charaObj[1].AttackHitOld)
+		//	&& (charaObj[1].charaObj->GetAnimAttribute(2) != ANIM_ATTRIBUTE_INVINCIBLE)
+		//	&& (charaObj[1].charaObj->GetInvincibleTime() == 0))
+		//{
+		//	bool colorChange = charaObj[1].charaObj->GetHitBoxType() == COLTYPE_GUARD;
+		//	// ヒットエフェクト表示
+		//	AddObjList()(objList, std::make_shared<HitEffect>(hitRectPos, VECTOR2(-(STICK_HUMAN_IMAGE_SIZE_X / 2), -STICK_HUMAN_IMAGE_SIZE_Y - 64), colorChange));
+		//	hitRectPos = { 0,0 };
+		//}
+
 		for (auto &shot1 : shotObj)
 		{
 			if (shot1->GetHitFlag())
