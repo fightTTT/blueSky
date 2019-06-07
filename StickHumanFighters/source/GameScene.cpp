@@ -716,14 +716,11 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 				colData[i].hitBox[a].rect.endPos.x = (charaObj[i].charaObj->GetPos().x + colData[i].hitBox[a].rect.endPos.x) + (charaObj[i].charaObj->GetDivSize().x / 2);
 				colData[i].hitBox[a].rect.startPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.startPos.y) + (charaObj[i].charaObj->GetDivSize().y);
 				colData[i].hitBox[a].rect.endPos.y = (charaObj[i].charaObj->GetPos().y + colData[i].hitBox[a].rect.endPos.y) + (charaObj[i].charaObj->GetDivSize().y);
-
 			}
 		}
 
 		// ヒットエフェクト表示矩形
 		VECTOR2 hitRectPos(0, 0);
-
-		
 
 		// 攻撃時の当たり判定
 		for (int i = 0; i < 2; i++)
@@ -736,11 +733,6 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 					{
 						if (colData[(i + 1) % 2].hitBox[b].type != COLTYPE_ATTACK)
 						{
-							/*if (colData[i].hitBox[a].rect.endPos.x >= colData[(i + 1) % 2].hitBox[b].rect.startPos.x
-								&& colData[i].hitBox[a].rect.startPos.x <= colData[(i + 1) % 2].hitBox[b].rect.endPos.x
-								&& colData[i].hitBox[a].rect.endPos.y >= colData[(i + 1) % 2].hitBox[b].rect.startPos.y
-								&& colData[i].hitBox[a].rect.startPos.y <= colData[(i + 1) % 2].hitBox[b].rect.endPos.y)
-							{*/
 							if(lpColMng.collisionCheck(colData[i].hitBox[a].rect.startPos, colData[i].hitBox[a].rect.endPos, 
 								colData[(i + 1) % 2].hitBox[b].rect.startPos, colData[(i + 1) % 2].hitBox[b].rect.endPos))
 							{
@@ -793,9 +785,6 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 
 				if (shot1 != shot2)
 				{
-					/*if (shot1->GetPos().x + (shot1->GetDivSize().x / 2) + 50 >= shot2->GetPos().x + (shot2->GetDivSize().x / 2) - 50
-						&& shot1->GetPos().x + (shot1->GetDivSize().x / 2) - 50 <= shot2->GetPos().x + (shot2->GetDivSize().x / 2) + 50)
-					{*/
 					if(lpColMng.collisionCheck(VECTOR2(shot1->GetPos().x + (shot1->GetDivSize().x / 2) - 50,0),VECTOR2(shot1->GetPos().x + (shot1->GetDivSize().x / 2) + 50,0),
 						VECTOR2(shot2->GetPos().x + (shot2->GetDivSize().x / 2) - 50,0),VECTOR2(shot2->GetPos().x + (shot2->GetDivSize().x / 2) + 50,0)))
 					{
@@ -833,11 +822,6 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 							startPos = { data->GetPos().x + (data->GetDivSize().x / 2) - 50,data->GetPos().y + (data->GetDivSize().y / 2) - 50 };
 							endPos = { data->GetPos().x + (data->GetDivSize().x / 2) + 50,data->GetPos().y + (data->GetDivSize().y / 2) + 50 };
 
-							/*if (colData[i].hitBox[a].rect.endPos.x >= startPos.x
-								&& colData[i].hitBox[a].rect.startPos.x <= endPos.x
-								&& colData[i].hitBox[a].rect.endPos.y >= startPos.y
-								&& colData[i].hitBox[a].rect.startPos.y <= endPos.y)
-							{*/
 							if(lpColMng.collisionCheck(colData[i].hitBox[a].rect.startPos, colData[i].hitBox[a].rect.endPos, startPos, endPos))
 							{
 								charaObj[i].charaObj->SetHitData(true, colData[i].hitBox[a].type);

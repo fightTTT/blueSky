@@ -3,21 +3,15 @@
 #include "CollisionMng.h"
 
 
-
 bool CollisionMng::ColLoad(std::string pasName, std::string animName)
 {
-	
-
 	// ファイルパス作成
 	std::string loadPass = pasName + "\\" + animName + ".map";		//読み込み先のファイルパスを作成
 	
 	// hitBoxNumをanimNumでresize
 	header.hitBoxNum.resize(header.animNum);
 	
-	//data.resize(header.animNum);
-
 	HitBox oneTimeData;
-
 	FILE* file;
 
 	fopen_s(&file, loadPass.c_str(), "rb");
@@ -27,14 +21,8 @@ bool CollisionMng::ColLoad(std::string pasName, std::string animName)
 		return false;
 	}
 
-	
-
 	fread(&header.animNum, sizeof(int), 1, file);
-
 	fread(&header.hitBoxNum[0], sizeof(int)*header.hitBoxNum.size(), 1, file);
-
-
-
 
 	for (int i = 0; i < data.size(); ++i)
 	{
@@ -42,21 +30,13 @@ bool CollisionMng::ColLoad(std::string pasName, std::string animName)
 
 		for (int a = 0; a < data[i].hitBox.size(); a++)
 		{
-		
-
 			fread(&oneTimeData, sizeof(oneTimeData), 1, file);
 
 			data[i].hitBox[a] = oneTimeData;
 		}
 	}
-
-
-	
-
 	fclose(file);
-
 	loadFlag = false;
-
 
 	return true;
 }
@@ -74,20 +54,10 @@ void CollisionMng::Update(void)
 			colData.rect.startPos = inputData.MousePos();
 		}
 
-
 		if (inputData.MouseStateUp(MOUSE_INPUT_LEFT))
 		{
 			colData.rect.endPos = inputData.MousePos();
 		}	
-
-		
-		
-
-	/*	if (!(colData.rect.startPos.x == -1 && colData.rect.startPos.y == -1))
-		{
-			
-			DrawBox(colData.rect.startPos.x, colData.rect.startPos.y, mousePos.x, mousePos.y, 0xffffff, false);
-		}*/
 	}
 	
 	if ((!loadFlag)&&(!saveFlag))
@@ -95,20 +65,13 @@ void CollisionMng::Update(void)
 		if (GetDragFileNum() > 0)
 		{
 			char filePath[MAX_PATH];
-
 			GetDragFilePath(filePath);
-
 			std::string f_name;
-
 			frameNum = 0;
-
-
-
 			bool findFlag = true;
 
 			do
 			{
-
 				f_name = std::string(filePath) + "\\" + std::to_string(frameNum) + ".png";
 
 				animFram[frameNum] = LoadGraph(f_name.c_str());		// tmpHandleにﾌｧｲﾙ名f_nameの画像のﾊﾝﾄﾞﾙを代入
@@ -119,7 +82,6 @@ void CollisionMng::Update(void)
 				}
 				else
 				{
-
 					frameNum++;							// numを進めて次の画像を読み込む準備
 				}
 
@@ -134,36 +96,27 @@ void CollisionMng::Update(void)
 			// 以下の処理でパスからキャラ名とアニメーション名を抽出
 
 			animName = filePath;
-
 			auto findNum = animName.rfind("\\");
-
 			animName = animName.substr(findNum + 1);
 
 			//charName = charName.substr(findNum - 6, 6);
 
 			// 当たり判定読み込み
 			//ColLoad(charName, animName);
-
-
-
 			//auto i = imagePath.find("\\");
 			//std::string replace = "/";
-			//imagePath.replace(i, 1, replace);.
-
+			//imagePath.replace(i, 1, replace);
 			inputFlag = true;
-
 			//DrawString(100, 100, charName.c_str(), 0xffffff);
 		}
 	}
 
-	
-
+	// 画像切り替え
 	if (inputData.KeyStateDown(KEY_INPUT_RIGHT))
 	{
 		if (header.animNum - 1 > frameNum)
 		{
 			frameNum++;
-			
 		}
 	}
 	else if(inputData.KeyStateDown(KEY_INPUT_LEFT))
@@ -171,7 +124,6 @@ void CollisionMng::Update(void)
 		if (0 < frameNum)
 		{
 			frameNum--;
-			
 		}
 	}
 	else
@@ -211,22 +163,17 @@ void CollisionMng::Update(void)
 	{
 	}
 
-
 	// Aキーで一つの当たり判定保存
 	if (inputData.KeyStateDown(KEY_INPUT_A))
 	{
 		colData.rect.endPos = mousePos;
-
 		colData.rect.startPos -= VECTOR2(IMAGE_OFFSET_X+ (256 / 2), IMAGE_OFFSET_Y + 256);
 		colData.rect.endPos -= VECTOR2(IMAGE_OFFSET_X + (256 / 2), IMAGE_OFFSET_Y + 256);
-
 		data[frameNum].hitBox.push_back(colData);
 	}
 
 	if (inputData.KeyStateDown(KEY_INPUT_F6))
 	{
-		//ColSave();
-
 		int tmp = MessageBox(
 			NULL,								// オーナーウィンドウのハンドル
 			"現在の登録データを保存しますか？",     // メッセージボックス内のテキスト
@@ -243,7 +190,6 @@ void CollisionMng::Update(void)
 	if (saveFlag)
 	{
 		char filePath[MAX_PATH];
-
 		std::string f_name;
 
 		if (GetDragFileNum() > 0)
@@ -257,7 +203,6 @@ void CollisionMng::Update(void)
 		else
 		{
 			DrawString(200, IMAGE_OFFSET_Y, "colファイルをドラッグ&ドロップしてください", 0xffffff);
-
 		}
 	}
 
@@ -279,34 +224,26 @@ void CollisionMng::Update(void)
 	if (loadFlag)
 	{
 		char filePath[MAX_PATH];
-
 		std::string f_name;
-
 
 		if (GetDragFileNum() > 0)
 		{
 			GetDragFilePath(filePath);
-
 			f_name = std::string(filePath);
-
 			ColLoad(f_name, animName);
 		}
 		else
 		{
 			DrawString(200, IMAGE_OFFSET_Y, "colファイルをドラッグ&ドロップしてください", 0xffffff);
-
 		}
 	}
-
 }
 
 void CollisionMng::Draw(void)
 {
 	VECTOR2 offset = VECTOR2(IMAGE_OFFSET_X + (256 / 2), IMAGE_OFFSET_Y + 256);
-
-	int colColor = (colData.type == COLTYPE_ATTACK ? 0xff0000 : (colData.type == COLTYPE_HIT ? 0x87CEEB:0x00ff00));
-
-	auto mousePos = inputData.MousePos();
+	int colColor   = (colData.type == COLTYPE_ATTACK ? 0xff0000 : (colData.type == COLTYPE_HIT ? 0x87CEEB:0x00ff00));
+	auto mousePos  = inputData.MousePos();
 
 	if (inputFlag)
 	{
@@ -334,15 +271,10 @@ void CollisionMng::Draw(void)
 			{
 				break;
 			}
-
 			int tmpColor = ((*col).type == COLTYPE_ATTACK ? 0xff0000 : ((*col).type == COLTYPE_HIT ? 0x87CEEB : 0x00ff00));
-
 			DrawBox((*col).rect.startPos.x + offset.x, (*col).rect.startPos.y + offset.y, (*col).rect.endPos.x + offset.x, (*col).rect.endPos.y + offset.y, tmpColor, false);
 		}
 	}
-	
-
-	
 }
 
 CollisionMng::CollisionMng()
@@ -357,8 +289,6 @@ CollisionMng::~CollisionMng()
 
 void CollisionMng::ColSave(std::string pathName, std::string animName)
 {
-
-
 	if (!data.size())
 	{
 		return;
@@ -368,12 +298,9 @@ void CollisionMng::ColSave(std::string pathName, std::string animName)
 		static_cast<int>(data.size()),
 	};
 
-	
-
 	std::string SavePass = pathName + "\\" + animName + ".map";		//保存先のファイルパスを作成
 
 	HitBox oneTimeData;
-
 	FILE* file;
 
 	fopen_s(&file, SavePass.c_str(), "wb");		// ﾌｧｲﾙｵｰﾌﾟﾝ　開いて書き込んで閉じる
@@ -384,14 +311,9 @@ void CollisionMng::ColSave(std::string pathName, std::string animName)
 		expData.hitBoxNum[i] = data[i].hitBox.size();
 	}
 	
-
-	//fwrite(&expData, sizeof(expData), 1, file);
 	fwrite(&expData.animNum, sizeof(int), 1, file);
-
 	fwrite(&expData.hitBoxNum[0], sizeof(int)*expData.hitBoxNum.size(), 1, file);
 
-	
-	//fwrite(&data[0], sizeof(ColInfo), data.size(), file);	
 	for (int i = 0; i < data.size(); ++i)
 	{
 		for (int a = 0; a < data[i].hitBox.size(); a++)
@@ -401,11 +323,9 @@ void CollisionMng::ColSave(std::string pathName, std::string animName)
 			fwrite(&oneTimeData, sizeof(oneTimeData),1, file);
 		}
 	}
-
 	fclose(file);
 
 	saveFlag = false;
-
 }
 
 void CollisionMng::Init(void)
@@ -414,9 +334,8 @@ void CollisionMng::Init(void)
 	colData.rect.startPos = { -1,-1 };
 	colData.rect.endPos   = { -1,-1 };
 	inputFlag = false;
-	loadFlag = false;
-	saveFlag = false;
-	//texHandle = -1;
+	loadFlag  = false;
+	saveFlag  = false;
 	colTypeCnt = 0;
 
 	for (int i = 0; i < 20; i++)
@@ -424,17 +343,3 @@ void CollisionMng::Init(void)
 		animFram[i] = 0;
 	}
 }
-
-//void CollisionMng::ColListInit(void)
-//{
-//	collist.clear();
-//
-//
-//	if (data[frameNum].hitBox.size())
-//	{
-//		for (int i = 0; i < data[frameNum].hitBox.size(); i++)
-//		{
-//			collist.push_back(data[frameNum].hitBox[i]);
-//		}
-//	}
-//}
