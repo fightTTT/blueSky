@@ -1,6 +1,6 @@
 #pragma once
 #include<list>
-#include "Collision.h"
+#include <vector>
 #include "InputManager.h"
 
 #define WINDOW_WIDTH 800
@@ -13,6 +13,28 @@ struct DataHeader
 {
 	int animNum;				// アニメーション画像の枚数
 	std::vector<int> hitBoxNum;	// 画像1枚のHitBoxの数
+};
+
+enum ColType
+{
+	COLTYPE_ATTACK,		// 攻撃用の当たり判定
+	COLTYPE_HIT,		// ダメージ受ける用の当たり判定
+	COLTYPE_GUARD,		// ガード用の当たり判定
+	COLTYPE_MAX
+};
+
+struct HitBox
+{
+	ColType type;
+
+	bool rectFlag;	// 当たり判定が矩形か円か
+
+	Rect rect;
+};
+
+struct ColInfo
+{
+	std::vector<HitBox> hitBox;
 };
 
 #define lpColMng  CollisionMng::GetInstance()
@@ -36,7 +58,6 @@ private:
 	~CollisionMng();
 
 	std::vector<ColInfo> data;		// その画像の当たり判定をまとめたvector
-	//std::list<HitBox> collist;		// その画像の当たり判定をまとめたlist
 	HitBox colData;					
 
 	
@@ -44,7 +65,6 @@ private:
 	std::string animName;
 	int frameNum;
 	bool inputFlag;
-	//int texHandle;
 	InputManager inputData;
 	DataHeader header;
 	int animFram[20];

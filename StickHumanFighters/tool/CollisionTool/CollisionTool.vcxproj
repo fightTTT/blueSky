@@ -122,14 +122,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Collision.cpp" />
     <ClCompile Include="src\CollisionMng.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\VECTOR2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Collision.h" />
     <ClInclude Include="src\CollisionMng.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\VECTOR2.h" />
