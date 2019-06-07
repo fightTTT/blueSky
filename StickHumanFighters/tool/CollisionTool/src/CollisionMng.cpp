@@ -148,7 +148,7 @@ void CollisionMng::Update(void)
 
 			//auto i = imagePath.find("\\");
 			//std::string replace = "/";
-			//imagePath.replace(i, 1, replace);.
+			//imagePath.replace(i, 1, replace);
 
 			inputFlag = true;
 
@@ -385,13 +385,10 @@ void CollisionMng::ColSave(std::string pathName, std::string animName)
 	}
 	
 
-	//fwrite(&expData, sizeof(expData), 1, file);
 	fwrite(&expData.animNum, sizeof(int), 1, file);
 
 	fwrite(&expData.hitBoxNum[0], sizeof(int)*expData.hitBoxNum.size(), 1, file);
 
-	
-	//fwrite(&data[0], sizeof(ColInfo), data.size(), file);	
 	for (int i = 0; i < data.size(); ++i)
 	{
 		for (int a = 0; a < data[i].hitBox.size(); a++)
@@ -416,7 +413,6 @@ void CollisionMng::Init(void)
 	inputFlag = false;
 	loadFlag = false;
 	saveFlag = false;
-	//texHandle = -1;
 	colTypeCnt = 0;
 
 	for (int i = 0; i < 20; i++)
@@ -424,17 +420,3 @@ void CollisionMng::Init(void)
 		animFram[i] = 0;
 	}
 }
-
-//void CollisionMng::ColListInit(void)
-//{
-//	collist.clear();
-//
-//
-//	if (data[frameNum].hitBox.size())
-//	{
-//		for (int i = 0; i < data[frameNum].hitBox.size(); i++)
-//		{
-//			collist.push_back(data[frameNum].hitBox[i]);
-//		}
-//	}
-//}
