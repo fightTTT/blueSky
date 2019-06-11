@@ -87,6 +87,7 @@ unique_Base TitleScene::UpDate(unique_Base own, const GameCtrl & controller)
 				redManPos = { DEF_RED_POS_X , DEF_RED_POS_Y };
 				blueManPos = { DEF_BLUE_POS_X , DEF_BLUE_POS_Y };
 				frame = FLASHING_SPEED;
+				flashFlag = false;
 			}
 
 			switch (cutInFlag)

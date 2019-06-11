@@ -65,8 +65,24 @@ private:
 	// ±ÆÒ°¼®İ‚Ì‰Šú‰»ŠÖ”
 	bool InitAnim(void);
 
+	// ·¬×¸À°‚Ì‘€ì‚ÌÒİÊŞŠÖ”Îß²İÀ
+	void (Character::*act)(const GameCtrl &, weekListObj);
+
+	// ·¬×¸À°‚Ì‘€ì (Šî–{)
+	void NeutralState(const GameCtrl & ctl, weekListObj objList);
+
+	// ·¬×¸À°‚Ì‘€ì (‹ó’†)
+	void AirState(const GameCtrl & ctl, weekListObj objList);
+
+	// ·¬×¸À°‚Ì‘€ì (ƒ_ƒ[ƒW)
+	void DamageState(const GameCtrl & ctl, weekListObj objList);
+
+	// ·¬×¸À°‚Ì‘€ì (•KE‹Z)
+	void SpAttackState(const GameCtrl & ctl, weekListObj objList);
+
 	// Êß¯ÄŞ‚Ì“ü—Íî•ñ‚ğŒ³‚ÉºÏİÄŞ‚Æ‚µ‚ÄØ½Ä‚ÉŠi”[‚·‚é (ˆø”: ¹Ş°ÑºİÄÛ°Ù¸×½‚ÌÎß²İÀ)
 	void CommandUpDate(const GameCtrl & ctl);
+
 	// ºÏİÄŞØ½Ä‚Æˆø”‚Å“n‚³‚ê‚½”Ô†‚ÌºÏİÄŞ‚ğ”äŠr‚µAˆê’v‚µ‚½‚çtrueA•sˆê’v‚È‚çfalse‚ğ•Ô‚·
 	bool CheckCommand(int skillNum);
 

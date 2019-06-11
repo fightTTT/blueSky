@@ -201,7 +201,7 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	animAttributeTbl["ダメージ_ダウン"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
 	animAttributeTbl["起き上がり"][0] = ANIM_ATTRIBUTE_STAND;
-	animAttributeTbl["起き上がり"][1] = ANIM_ATTRIBUTE_NON;
+	animAttributeTbl["起き上がり"][1] = ANIM_ATTRIBUTE_DAMAGE;
 	animAttributeTbl["起き上がり"][2] = ANIM_ATTRIBUTE_INVINCIBLE;
 
 	std::vector<std::string> animName = { "待機",
@@ -269,6 +269,8 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	spComOld = SP_COM_CENTER;
 	comClearCnt = DEF_COM_CLEAR_CNT;
 
+	act = &Character::NeutralState;
+
 	return true;
 }
 
@@ -303,6 +305,706 @@ bool Character::InitAnim(void)
 	AddAnim("起き上がり", 0, 0, 10, 4, false, 0, 0);
 	SetAnim("待機");
 	return true;
+}
+
+void Character::NeutralState(const GameCtrl & ctl, weekListObj objList)
+{
+	if ((animTable[animName][ANIM_TBL_LOOP]) || animEndFlag)
+	{
+		dir = tmpDir;
+
+		if (CheckCommand(2))
+		{
+			SetAnim(spAttackAnimName[2]);
+		}
+		else if (CheckCommand(1))
+		{
+			SetAnim(spAttackAnimName[1]);
+		}
+		else if (CheckCommand(0))
+		{
+			SetAnim(spAttackAnimName[0]);
+		}
+		else
+		{
+			if (ctl.GetPadData(padID, THUMB_L_UP))		// ジャンプ
+			{
+				if (jumpInterval == 0)
+				{
+					if (ctl.GetPadDataTrg(padID, THUMB_L_UP))
+					{
+						jumpInterval++;
+					}
+				}
+				else
+				{
+					jumpInterval++;
+
+					if (jumpInterval > 4)
+					{
+						PlaySoundMem(SOUND_ID("se/battle/jump.wav"), DX_PLAYTYPE_BACK);
+
+						jumpInterval = 0;
+
+						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+						{
+							jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
+
+							if (dir == DIR_LEFT)
+							{
+								SetAnim("ジャンプ_後ろ");
+							}
+							else
+							{
+								SetAnim("ジャンプ_前");
+							}
+						}
+						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+						{
+							jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
+
+							if (dir == DIR_LEFT)
+							{
+								SetAnim("ジャンプ_前");
+							}
+							else
+							{
+								SetAnim("ジャンプ_後ろ");
+							}
+						}
+						else
+						{
+							jumpSpeed = { 0, -JUMP_SPEED_Y };
+							SetAnim("ジャンプ_上");
+						}
+					}
+				}
+			}
+			else if (ctl.GetPadData(padID, THUMB_L_DOWN))		// しゃがみ
+			{
+				jumpInterval = 0;
+
+				if (animAttribute[0] == ANIM_ATTRIBUTE_SQUAT)
+				{
+					if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+					{
+						if (dir == DIR_LEFT)
+						{
+							SetAnim("しゃがみ_後ろ");
+						}
+						else
+						{
+							SetAnim("しゃがみ");
+						}
+					}
+					else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+					{
+						if (dir == DIR_LEFT)
+						{
+							SetAnim("しゃがみ");
+						}
+						else
+						{
+							SetAnim("しゃがみ_後ろ");
+						}
+					}
+					else
+					{
+						SetAnim("しゃがみ");
+					}
+				}
+				else
+				{
+					SetAnim("しゃがみ始め");
+				}
+			}
+			else
+			{
+				jumpInterval = 0;
+
+				// 移動
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+					{
+						pos.x += 4;
+					}
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("後ろ移動");
+					}
+					else
+					{
+						SetAnim("前移動");
+					}
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
+					{
+						pos.x -= 4;
+					}
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("前移動");
+					}
+					else
+					{
+						SetAnim("後ろ移動");
+					}
+
+				}
+				else
+				{
+					SetAnim("待機");
+				}
+			}
+
+			// 攻撃
+			if (ctl.GetPadDataTrg(padID, BUTTON_A))
+			{
+				if (ctl.GetPadData(padID, THUMB_L_DOWN))
+				{
+					SetAnim("パンチ_小_しゃがみ");
+				}
+				else
+				{
+					SetAnim("パンチ_小");
+				}
+			}
+			else if (ctl.GetPadDataTrg(padID, BUTTON_B))
+			{
+				if (ctl.GetPadData(padID, THUMB_L_DOWN))
+				{
+					SetAnim("パンチ_大_しゃがみ");
+				}
+				else
+				{
+					SetAnim("パンチ_大");
+				}
+			}
+			else if (ctl.GetPadDataTrg(padID, BUTTON_X))
+			{
+				if (ctl.GetPadData(padID, THUMB_L_DOWN))
+				{
+					SetAnim("キック_小_しゃがみ");
+				}
+				else
+				{
+					SetAnim("キック_小");
+				}
+			}
+			else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
+			{
+				if (ctl.GetPadData(padID, THUMB_L_DOWN))
+				{
+					SetAnim("キック_大_しゃがみ");
+				}
+				else
+				{
+					SetAnim("キック_大");
+				}
+			}
+			else
+			{
+				// 何もしない
+			}
+
+			if (animEndFlag)
+			{
+				SetAnim("待機");
+			}
+		}
+	}
+}
+
+void Character::AirState(const GameCtrl & ctl, weekListObj objList)
+{
+		if (animTable[animName][ANIM_TBL_LOOP])
+		{
+			if (ctl.GetPadDataTrg(padID, BUTTON_A))
+			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// そのままの方向
+				}
+				SetAnim("パンチ_小_空中");
+			}
+			else if (ctl.GetPadDataTrg(padID, BUTTON_B))
+			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// そのままの方向
+				}
+				SetAnim("パンチ_大_空中");
+			}
+			else if (ctl.GetPadDataTrg(padID, BUTTON_X))
+			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// そのままの方向
+				}
+				SetAnim("キック_小_空中");
+			}
+			else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
+			{
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					dir = DIR_RIGHT;
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					dir = DIR_LEFT;
+				}
+				else
+				{
+					// そのままの方向
+				}
+				SetAnim("キック_大_空中");
+			}
+			else
+			{
+				// 何もしない
+			}
+		}
+
+		// ジャンプ中
+		jumpSpeed.y += 1;
+		pos += jumpSpeed;
+
+		if (jumpSpeed.y == JUMP_SPEED_Y)
+		{
+			SetAnim("待機");
+		}
+}
+
+void Character::DamageState(const GameCtrl & ctl, weekListObj objList)
+{
+	if ((knockBackFlag) || (animName == "ダメージ_立ち"))
+	{
+		if (dir == DIR_RIGHT)
+		{
+			knockBackSpeed++;
+			if (knockBackSpeed > 0)
+			{
+				knockBackSpeed = 0;
+			}
+		}
+		else
+		{
+			knockBackSpeed--;
+			if (knockBackSpeed < 0)
+			{
+				knockBackSpeed = 0;
+			}
+		}
+		pos.x += knockBackSpeed;
+
+		if (knockBackSpeed == 0)
+		{
+			knockBackFlag = false;
+			if (animEndFlag)
+			{
+				SetAnim("待機");
+			}
+		}
+	}
+	else if (animName == "ダメージ_ダウン")
+	{
+		fallSpeed.y++;
+		pos.y += fallSpeed.y;
+
+		if (pos.y > ssize.y)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				fallSpeed.x++;
+				if (fallSpeed.x > 0)
+				{
+					fallSpeed.x = 0;
+				}
+			}
+			else
+			{
+				fallSpeed.x--;
+				if (fallSpeed.x < 0)
+				{
+					fallSpeed.x = 0;
+				}
+			}
+		}
+
+		pos.x += fallSpeed.x;
+
+		if (animEndFlag && playerHP != 0)
+		{
+			SetAnim("起き上がり");
+		}
+	}
+	else if (animName == "起き上がり")
+	{
+		if (animEndFlag)
+		{
+			invincibleTime = 30;
+			if (ctl.GetPadData(padID, THUMB_L_UP))		// ジャンプ
+			{
+				PlaySoundMem(SOUND_ID("se/battle/jump.wav"), DX_PLAYTYPE_BACK);
+
+				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
+				{
+					jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
+
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("ジャンプ_後ろ");
+					}
+					else
+					{
+						SetAnim("ジャンプ_前");
+					}
+				}
+				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
+				{
+					jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
+
+					if (dir == DIR_LEFT)
+					{
+						SetAnim("ジャンプ_前");
+					}
+					else
+					{
+						SetAnim("ジャンプ_後ろ");
+					}
+				}
+				else
+				{
+					jumpSpeed = { 0, -JUMP_SPEED_Y };
+					SetAnim("ジャンプ_上");
+				}
+			}
+			else
+			{
+				SetAnim("待機");
+			}
+		}
+	}
+	else
+	{
+		// 何もしない
+	}
+}
+
+void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
+{
+	if (animAttribute[2] == ANIM_ATTRIBUTE_SHOT)
+	{
+		if (animCnt == shotCreateCnt)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(256 - 30, 64), drawOffset, dir, padID));
+			}
+			else
+			{
+				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(-128 + 30, 64), drawOffset, dir, padID));
+			}
+		}
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
+	else if (animName == "ローリングアタック")
+	{
+		if ((animCnt > 60) || (hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
+		{
+			SetAnim("待機");
+		}
+		else
+		{
+			if (animCnt > 20)
+			{
+				if (dir == DIR_RIGHT)
+				{
+					pos.x += 20;
+				}
+				else
+				{
+					pos.x -= 20;
+				}
+			}
+		}
+	}
+	else if (animName == "旋風脚")
+	{
+		if (dir == DIR_RIGHT)
+		{
+			pos.x += 6;
+		}
+		else
+		{
+			pos.x -= 6;
+		}
+
+		if (animCnt > 60)
+		{
+			SetAnim("待機");
+		}
+	}
+	else if (animName == "カンフーキック")
+	{
+		if (animCnt < 4)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 6;
+			}
+			else
+			{
+				pos.x -= 6;
+			}
+		}
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
+	else if (animName == "ラッシュ")
+	{
+		if (animCnt > 40)
+		{
+			SetAnim("待機");
+		}
+	}
+	else if ((animName == "ミサイルアロー") || (animName == "タックル"))
+	{
+		if (animStopFlag)
+		{
+			spEndCnt++;
+
+			if ((spEndCnt >= 45) || (hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
+			{
+				animStopFlag = false;
+			}
+			else
+			{
+				if (spEndCnt > 4)
+				{
+					if (dir == DIR_RIGHT)
+					{
+						pos.x += 20;
+					}
+					else
+					{
+						pos.x -= 20;
+					}
+				}
+			}
+		}
+		else
+		{
+			if (animCnt == 9)
+			{
+				animStopFlag = true;
+				spEndCnt = 0;
+			}
+		}
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
+	else if (animName == "ランキャク")
+	{
+	if (dir == DIR_RIGHT)
+	{
+		pos.x++;
+	}
+	else
+	{
+		pos.x--;
+	}
+
+	pos.y--;
+
+	if (animEndFlag)
+	{
+		SetAnim("待機");
+	}
+	}
+	else if ((animName == "地面割") || (animName == "かかと落とし"))
+	{
+	if (animCnt < 30)
+	{
+		if (dir == DIR_RIGHT)
+		{
+			pos.x++;
+		}
+		else
+		{
+			pos.x--;
+		}
+
+		pos.y -= 8;
+	}
+	else
+	{
+		pos.y += 20;
+	}
+
+	if (animEndFlag)
+	{
+		SetAnim("待機");
+	}
+	}
+	else if (animName == "ワープ")
+	{
+		if (animCnt == 31)
+		{
+			animStopFlag = true;
+		}
+
+		if (animStopFlag)
+		{
+			pos.y = (ssize.y * 2);
+
+			if (dir == DIR_RIGHT)
+			{
+				if (pos.x > ((ssize.x * 3) / 5))
+				{
+					dir = tmpDir;
+					animStopFlag = false;
+				}
+				else
+				{
+					pos.x += 30;
+				}
+			}
+			else
+			{
+				if (pos.x < ((ssize.x * 2) / 5))
+				{
+					dir = tmpDir;
+					animStopFlag = false;
+				}
+				else
+				{
+					pos.x -= 30;
+				}
+			}
+		}
+
+		if (animEndFlag)
+		{
+			invincibleTime = 10;
+			SetAnim("待機");
+		}
+	}
+	else if (animName == "蹴り返し")
+	{
+		if (animCnt < 20)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 8;
+			}
+			else
+			{
+				pos.x -= 8;
+			}
+
+			if (animCnt < 10)
+			{
+				pos.y -= 5;
+			}
+			else
+			{
+				pos.y += 5;
+			}
+		}
+		else
+		{
+			if ((hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
+			{
+				if (dir == DIR_RIGHT)
+				{
+					pos.x -= 8;
+				}
+				else
+				{
+					pos.x += 8;
+				}
+			}
+
+			if (animCnt < 33)
+			{
+				pos.y -= 8;
+			}
+			else
+			{
+				pos.y += 8;
+			}
+		}
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
+	else if (animName == "アクセル")
+	{
+		if (animCnt < 60)
+		{
+			if (dir == DIR_RIGHT)
+			{
+				pos.x += 5;
+			}
+			else
+			{
+				pos.x -= 5;
+			}
+		}
+
+
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	}
+	else
+	{
+		if (animEndFlag)
+		{
+			SetAnim("待機");
+		}
+	 }
 }
 
 void Character::CommandUpDate(const GameCtrl & ctl)
@@ -497,692 +1199,24 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		}
 	}
 
-	if ((knockBackFlag) || (animName == "ダメージ_立ち"))
+	if (animAttribute[1] == ANIM_ATTRIBUTE_DAMAGE)
 	{
-		if (dir == DIR_RIGHT)
-		{
-			knockBackSpeed++;
-			if (knockBackSpeed > 0)
-			{
-				knockBackSpeed = 0;
-			}
-		}
-		else
-		{
-			knockBackSpeed--;
-			if (knockBackSpeed < 0)
-			{
-				knockBackSpeed = 0;
-			}
-		}
-		pos.x += knockBackSpeed;
-
-		if (knockBackSpeed == 0)
-		{
-			knockBackFlag = false;
-			if (animEndFlag)
-			{
-				SetAnim("待機");
-			}
-		}
+		act = &Character::DamageState;
 	}
-	else if (animName == "ダメージ_ダウン")
+	else if (animAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SP)
 	{
-		fallSpeed.y++;
-		pos.y += fallSpeed.y;
-
-		if (pos.y > ssize.y)
-		{
-			if (dir == DIR_RIGHT)
-			{
-				fallSpeed.x++;
-				if (fallSpeed.x > 0)
-				{
-					fallSpeed.x = 0;
-				}
-			}
-			else
-			{
-				fallSpeed.x--;
-				if (fallSpeed.x < 0)
-				{
-					fallSpeed.x = 0;
-				}
-			}
-		}
-
-		pos.x += fallSpeed.x;
-
-		if (animEndFlag && playerHP != 0)
-		{
-			SetAnim("起き上がり");
-		}
+		act = &Character::SpAttackState;
 	}
-	else if (animName == "起き上がり")
+	else if (animAttribute[0] == ANIM_ATTRIBUTE_AIR)
 	{
-		if (animEndFlag)
-		{
-			invincibleTime = 30;
-			if (ctl.GetPadData(padID, THUMB_L_UP))		// ジャンプ
-			{
-				PlaySoundMem(SOUND_ID("se/battle/jump.wav"), DX_PLAYTYPE_BACK);
-
-				if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-				{
-					jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
-
-					if (dir == DIR_LEFT)
-					{
-						SetAnim("ジャンプ_後ろ");
-					}
-					else
-					{
-						SetAnim("ジャンプ_前");
-					}
-				}
-				else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-				{
-					jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
-
-					if (dir == DIR_LEFT)
-					{
-						SetAnim("ジャンプ_前");
-					}
-					else
-					{
-						SetAnim("ジャンプ_後ろ");
-					}
-				}
-				else
-				{
-					jumpSpeed = { 0, -JUMP_SPEED_Y };
-					SetAnim("ジャンプ_上");
-				}
-			}
-			else
-			{
-				SetAnim("待機");
-			}
-		}
-	}
-	else if (animAttribute[2] == ANIM_ATTRIBUTE_SHOT)
-	{
-		if (animCnt == shotCreateCnt)
-		{
-			if (dir == DIR_RIGHT)
-			{
-				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(256 - 30,64), drawOffset, dir, padID));
-			}
-			else
-			{
-				AddObjList()(objList, std::make_unique<Shot>(pos + VECTOR2(-128 + 30, 64), drawOffset, dir, padID));
-			}
-		}
-
-		if (animEndFlag)
-		{
-			SetAnim("待機");
-		}
-	}
-	else if (animName == "ローリングアタック")
-	{
-		if ((animCnt > 60) || (hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
-		{
-			SetAnim("待機");
-		}
-		else
-		{
-			if (animCnt > 20)
-			{
-				if (dir == DIR_RIGHT)
-				{
-					pos.x += 20;
-				}
-				else
-				{
-					pos.x -= 20;
-				}
-			}
-		}
-	}
-	else if (animName == "旋風脚")
-	{
-		if (dir == DIR_RIGHT)
-		{
-			pos.x += 6;
-		}
-		else
-		{
-			pos.x -= 6;
-		}
-
-		if (animCnt > 60)
-		{
-			SetAnim("待機");
-		}
-	}
-	else if (animName == "カンフーキック")
-	{
-		if (animCnt < 4)
-		{
-			if (dir == DIR_RIGHT)
-			{
-				pos.x += 6;
-			}
-			else
-			{
-				pos.x -= 6;
-			}
-		}
-
-		if (animEndFlag)
-		{
-			SetAnim("待機");
-		}
-	}
-	else if (animName == "ラッシュ")
-	{
-		if (animCnt > 40)
-		{
-			SetAnim("待機");
-		}
-	}
-	else if ((animName == "ミサイルアロー") || (animName == "タックル"))
-	{
-		if (animStopFlag)
-		{
-			spEndCnt++;
-
-			if ((spEndCnt >= 45) || (hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
-			{
-				animStopFlag = false;
-			}
-			else
-			{
-				if (spEndCnt > 4)
-				{
-					if (dir == DIR_RIGHT)
-					{
-						pos.x += 20;
-					}
-					else
-					{
-						pos.x -= 20;
-					}
-				}
-			}
-		}
-		else
-		{
-			if (animCnt == 9)
-			{
-				animStopFlag = true;
-				spEndCnt = 0;
-			}
-		}
-
-		if (animEndFlag)
-		{
-			SetAnim("待機");
-		}
-	}
-	else if (animName == "ワープ")
-	{
-		if (animCnt == 31)
-		{
-			animStopFlag = true;
-		}
-
-		if (animStopFlag)
-		{
-			pos.y = (ssize.y * 2);
-
-			if (dir == DIR_RIGHT)
-			{
-				if (pos.x > ((ssize.x * 3) / 5))
-				{
-					dir = tmpDir;
-					animStopFlag = false;
-				}
-				else
-				{
-					pos.x += 30;
-				}
-			}
-			else
-			{
-				if (pos.x < ((ssize.x * 2) / 5))
-				{
-					dir = tmpDir;
-					animStopFlag = false;
-				}
-				else
-				{
-					pos.x -= 30;
-				}
-			}
-		}
-
-		if (animEndFlag)
-		{
-			invincibleTime = 10;
-			SetAnim("待機");
-		}
-	}
-	else if (animName == "蹴り返し")
-	{
-		if (animCnt < 20)
-		{
-			if (dir == DIR_RIGHT)
-			{
-				pos.x += 8;
-			}
-			else
-			{
-				pos.x -= 8;
-			}
-
-			if (animCnt < 10)
-			{
-				pos.y -= 5;
-			}
-			else
-			{
-				pos.y += 5;
-			}
-		}
-		else
-		{
-			if ((hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
-			{
-				if (dir == DIR_RIGHT)
-				{
-					pos.x -= 8;
-				}
-				else
-				{
-					pos.x += 8;
-				}
-			}
-
-			if (animCnt < 33)
-			{
-				pos.y -= 8;
-			}
-			else
-			{
-				pos.y += 8;
-			}
-		}
-
-		if (animEndFlag)
-		{
-			SetAnim("待機");
-		}
-	}
-	else if (animName == "アクセル")
-	{
-		if (animCnt < 60)
-		{
-			if (dir == DIR_RIGHT)
-			{
-				pos.x += 5;
-			}
-			else
-			{
-				pos.x -= 5;
-			}
-		}
-		
-
-		if (animEndFlag)
-		{
-			SetAnim("待機");
-		}
+		act = &Character::AirState;
 	}
 	else
 	{
-		// キャラクター操作
-		if (animAttribute[0] == ANIM_ATTRIBUTE_AIR)
-		{
-			if (animName == "ランキャク")
-			{
-				if (dir == DIR_RIGHT)
-				{
-					pos.x++;
-				}
-				else
-				{
-					pos.x--;
-				}
-
-				pos.y--;
-
-				if (animEndFlag)
-				{
-					SetAnim("待機");
-				}
-			}
-			else if ((animName == "地面割") || (animName == "かかと落とし"))		// 地面割はｴﾌｪｸﾄが付いた状態の画像を用意してそれに当たり判定を付ける必要あり
-			{
-				if (animCnt < 30)
-				{
-					if (dir == DIR_RIGHT)
-					{
-						pos.x++;
-					}
-					else
-					{
-						pos.x--;
-					}
-
-					pos.y -= 8;
-				}
-				else
-				{
-					pos.y += 20;
-				}
-
-				if (animEndFlag)
-				{
-					SetAnim("待機");
-				}
-			}
-			else
-			{
-				if (animTable[animName][ANIM_TBL_LOOP])
-				{
-					if (ctl.GetPadDataTrg(padID, BUTTON_A))
-					{
-						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-						{
-							dir = DIR_RIGHT;
-						}
-						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-						{
-							dir = DIR_LEFT;
-						}
-						else
-						{
-							// そのままの方向
-						}
-						SetAnim("パンチ_小_空中");
-					}
-					else if (ctl.GetPadDataTrg(padID, BUTTON_B))
-					{
-						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-						{
-							dir = DIR_RIGHT;
-						}
-						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-						{
-							dir = DIR_LEFT;
-						}
-						else
-						{
-							// そのままの方向
-						}
-						SetAnim("パンチ_大_空中");
-					}
-					else if (ctl.GetPadDataTrg(padID, BUTTON_X))
-					{
-						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-						{
-							dir = DIR_RIGHT;
-						}
-						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-						{
-							dir = DIR_LEFT;
-						}
-						else
-						{
-							// そのままの方向
-						}
-						SetAnim("キック_小_空中");
-					}
-					else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
-					{
-						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-						{
-							dir = DIR_RIGHT;
-						}
-						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-						{
-							dir = DIR_LEFT;
-						}
-						else
-						{
-							// そのままの方向
-						}
-						SetAnim("キック_大_空中");
-					}
-					else
-					{
-						// 何もしない
-					}
-				}
-
-				// ジャンプ中
-				jumpSpeed.y += 1;
-				pos += jumpSpeed;
-
-				if (jumpSpeed.y == JUMP_SPEED_Y)
-				{
-					SetAnim("待機");
-				}
-			}
-		}
-		else
-		{
-			if ((animTable[animName][ANIM_TBL_LOOP]) || animEndFlag)
-			{
-				dir = tmpDir;
-
-				if (CheckCommand(2))
-				{
-					SetAnim(spAttackAnimName[2]);
-				}
-				else if (CheckCommand(1))
-				{
-					SetAnim(spAttackAnimName[1]);
-				}
-				else if (CheckCommand(0))
-				{
-					SetAnim(spAttackAnimName[0]);
-				}
-				else
-				{
-					if (ctl.GetPadData(padID, THUMB_L_UP))		// ジャンプ
-					{
-						if (jumpInterval == 0)
-						{
-							if (ctl.GetPadDataTrg(padID, THUMB_L_UP))
-							{
-								jumpInterval++;
-							}
-						}
-						else
-						{
-							jumpInterval++;
-
-							if (jumpInterval > 4)
-							{
-								PlaySoundMem(SOUND_ID("se/battle/jump.wav"), DX_PLAYTYPE_BACK);
-
-								jumpInterval = 0;
-
-								if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-								{
-									jumpSpeed = { JUMP_SPEED_X, -JUMP_SPEED_Y };
-
-									if (dir == DIR_LEFT)
-									{
-										SetAnim("ジャンプ_後ろ");
-									}
-									else
-									{
-										SetAnim("ジャンプ_前");
-									}
-								}
-								else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-								{
-									jumpSpeed = { -JUMP_SPEED_X, -JUMP_SPEED_Y };
-
-									if (dir == DIR_LEFT)
-									{
-										SetAnim("ジャンプ_前");
-									}
-									else
-									{
-										SetAnim("ジャンプ_後ろ");
-									}
-								}
-								else
-								{
-									jumpSpeed = { 0, -JUMP_SPEED_Y };
-									SetAnim("ジャンプ_上");
-								}
-							}
-						}
-					}
-					else if (ctl.GetPadData(padID, THUMB_L_DOWN))		// しゃがみ
-					{
-						jumpInterval = 0;
-
-						if (animAttribute[0] == ANIM_ATTRIBUTE_SQUAT)
-						{
-							if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-							{
-								if (dir == DIR_LEFT)
-								{
-									SetAnim("しゃがみ_後ろ");
-								}
-								else
-								{
-									SetAnim("しゃがみ");
-								}
-							}
-							else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-							{
-								if (dir == DIR_LEFT)
-								{
-									SetAnim("しゃがみ");
-								}
-								else
-								{
-									SetAnim("しゃがみ_後ろ");
-								}
-							}
-							else
-							{
-								SetAnim("しゃがみ");
-							}
-						}
-						else
-						{
-							SetAnim("しゃがみ始め");
-						}
-					}
-					else
-					{
-						jumpInterval = 0;
-
-						// 移動
-						if (ctl.GetPadData(padID, THUMB_L_RIGHT))
-						{
-							if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
-							{
-								pos.x += 4;
-							}
-							if (dir == DIR_LEFT)
-							{
-								SetAnim("後ろ移動");
-							}
-							else
-							{
-								SetAnim("前移動");
-							}
-						}
-						else if (ctl.GetPadData(padID, THUMB_L_LEFT))
-						{
-							if (animAttribute[1] != ANIM_ATTRIBUTE_GUARD)
-							{
-								pos.x -= 4;
-							}
-							if (dir == DIR_LEFT)
-							{
-								SetAnim("前移動");
-							}
-							else
-							{
-								SetAnim("後ろ移動");
-							}
-
-						}
-						else
-						{
-							SetAnim("待機");
-						}
-					}
-
-					// 攻撃
-					if (ctl.GetPadDataTrg(padID, BUTTON_A))
-					{
-						if (ctl.GetPadData(padID, THUMB_L_DOWN))
-						{
-							SetAnim("パンチ_小_しゃがみ");
-						}
-						else
-						{
-							SetAnim("パンチ_小");
-						}
-					}
-					else if (ctl.GetPadDataTrg(padID, BUTTON_B))
-					{
-						if (ctl.GetPadData(padID, THUMB_L_DOWN))
-						{
-							SetAnim("パンチ_大_しゃがみ");
-						}
-						else
-						{
-							SetAnim("パンチ_大");
-						}
-					}
-					else if (ctl.GetPadDataTrg(padID, BUTTON_X))
-					{
-						if (ctl.GetPadData(padID, THUMB_L_DOWN))
-						{
-							SetAnim("キック_小_しゃがみ");
-						}
-						else
-						{
-							SetAnim("キック_小");
-						}
-					}
-					else if (ctl.GetPadDataTrg(padID, BUTTON_Y))
-					{
-						if (ctl.GetPadData(padID, THUMB_L_DOWN))
-						{
-							SetAnim("キック_大_しゃがみ");
-						}
-						else
-						{
-							SetAnim("キック_大");
-						}
-					}
-					else
-					{
-						// 何もしない
-					}
-
-					if (animEndFlag)
-					{
-						SetAnim("待機");
-					}
-				}
-			}
-		}
+		act = &Character::NeutralState;
 	}
+
+	(this->*act)(ctl, objList);
 }
 
 void Character::CheckHitFlag(void)
@@ -1196,6 +1230,7 @@ void Character::CheckHitFlag(void)
 			comboCnt = 0;
 
 			SetAnim("ダメージ_ダウン");
+			act = &Character::DamageState;
 
 			if (dir == DIR_RIGHT)
 			{
@@ -1229,6 +1264,7 @@ void Character::CheckHitFlag(void)
 					comboCnt = 0;
 
 					SetAnim("ダメージ_ダウン");
+					act = &Character::DamageState;
 					
 					PlaySoundMem(SOUND_ID("se/battle/critical.mp3"), DX_PLAYTYPE_BACK);
 
@@ -1250,6 +1286,7 @@ void Character::CheckHitFlag(void)
 				else
 				{
 					SetAnim("ダメージ_立ち");
+					act = &Character::DamageState;
 					
 					PlaySoundMem(SOUND_ID("se/battle/punch.wav"), DX_PLAYTYPE_BACK);
 
@@ -1397,52 +1434,4 @@ void Character::Draw(void)
 	{
 		animCnt++;
 	}
-
-	/*int i = 0;
-	for (auto& data : comList)
-	{
-		switch (data)
-		{
-		case SP_COM_CENTER:
-			DrawString((i * 40) + 15, 200, "中", 0xffffff);
-			break;
-		case SP_COM_UP:
-			DrawString((i * 40) + 15, 200, "上", 0xffffff);
-			break;
-		case SP_COM_RIGHT_UP:
-			DrawString((i * 40) + 15, 200, "右上", 0xffffff);
-			break;
-		case SP_COM_RIGHT:
-			DrawString((i * 40) + 15, 200, "右", 0xffffff);
-			break;
-		case SP_COM_RIGHT_DOWN:
-			DrawString((i * 40) + 15, 200, "右下", 0xffffff);
-			break;
-		case SP_COM_DOWN:
-			DrawString((i * 40) + 15, 200, "下", 0xffffff);
-			break;
-		case SP_COM_LEFT_DOWN:
-			DrawString((i * 40) + 15, 200, "左下", 0xffffff);
-			break;
-		case SP_COM_LEFT:
-			DrawString((i * 40) + 15, 200, "左", 0xffffff);
-			break;
-		case SP_COM_LEFT_UP:
-			DrawString((i * 40) + 15, 200, "左上", 0xffffff);
-			break;
-		case SP_COM_ACCUMULATE:
-			DrawString((i * 40) + 15, 200, "タメ", 0xffffff);
-			break;
-		case SP_COM_PUNCH:
-			DrawString((i * 40) + 15, 200, "P", 0xffffff);
-			break;
-		case SP_COM_KICK:
-			DrawString((i * 40) + 15, 200, "K", 0xffffff);
-			break;
-		default:
-			break;
-		}
-
-		i++;
-	}*/
 }
