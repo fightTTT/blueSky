@@ -316,14 +316,20 @@ void Character::NeutralState(const GameCtrl & ctl, weekListObj objList)
 		if (CheckCommand(2))
 		{
 			SetAnim(spAttackAnimName[2]);
+			act = &Character::SpAttackState;
+			return;
 		}
 		else if (CheckCommand(1))
 		{
 			SetAnim(spAttackAnimName[1]);
+			act = &Character::SpAttackState;
+			return;
 		}
 		else if (CheckCommand(0))
 		{
 			SetAnim(spAttackAnimName[0]);
+			act = &Character::SpAttackState;
+			return;
 		}
 		else
 		{
@@ -377,6 +383,9 @@ void Character::NeutralState(const GameCtrl & ctl, weekListObj objList)
 							jumpSpeed = { 0, -JUMP_SPEED_Y };
 							SetAnim("ジャンプ_上");
 						}
+
+						act = &Character::AirState;
+						return;
 					}
 				}
 			}
@@ -599,6 +608,8 @@ void Character::AirState(const GameCtrl & ctl, weekListObj objList)
 		if (jumpSpeed.y == JUMP_SPEED_Y)
 		{
 			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
 		}
 }
 
@@ -630,6 +641,8 @@ void Character::DamageState(const GameCtrl & ctl, weekListObj objList)
 			if (animEndFlag)
 			{
 				SetAnim("待機");
+				act = &Character::NeutralState;
+				return;
 			}
 		}
 	}
@@ -705,10 +718,15 @@ void Character::DamageState(const GameCtrl & ctl, weekListObj objList)
 					jumpSpeed = { 0, -JUMP_SPEED_Y };
 					SetAnim("ジャンプ_上");
 				}
+
+				act = &Character::AirState;
+				return;
 			}
 			else
 			{
 				SetAnim("待機");
+				act = &Character::NeutralState;
+				return;
 			}
 		}
 	}
@@ -737,6 +755,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 		if (animEndFlag)
 		{
 			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
 		}
 	}
 	else if (animName == "ローリングアタック")
@@ -744,6 +764,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 		if ((animCnt > 60) || (hitData.hitFlag && (hitData.colType == COLTYPE_ATTACK)))
 		{
 			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
 		}
 		else
 		{
@@ -774,6 +796,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 		if (animCnt > 60)
 		{
 			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
 		}
 	}
 	else if (animName == "カンフーキック")
@@ -793,6 +817,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 		if (animEndFlag)
 		{
 			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
 		}
 	}
 	else if (animName == "ラッシュ")
@@ -800,6 +826,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 		if (animCnt > 40)
 		{
 			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
 		}
 	}
 	else if ((animName == "ミサイルアロー") || (animName == "タックル"))
@@ -839,6 +867,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 		if (animEndFlag)
 		{
 			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
 		}
 	}
 	else if (animName == "ランキャク")
@@ -857,6 +887,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 	if (animEndFlag)
 	{
 		SetAnim("待機");
+		act = &Character::NeutralState;
+		return;
 	}
 	}
 	else if ((animName == "地面割") || (animName == "かかと落とし"))
@@ -882,6 +914,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 	if (animEndFlag)
 	{
 		SetAnim("待機");
+		act = &Character::NeutralState;
+		return;
 	}
 	}
 	else if (animName == "ワープ")
@@ -925,6 +959,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 		{
 			invincibleTime = 10;
 			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
 		}
 	}
 	else if (animName == "蹴り返し")
@@ -976,6 +1012,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 		if (animEndFlag)
 		{
 			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
 		}
 	}
 	else if (animName == "アクセル")
@@ -996,6 +1034,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 		if (animEndFlag)
 		{
 			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
 		}
 	}
 	else
@@ -1003,6 +1043,8 @@ void Character::SpAttackState(const GameCtrl & ctl, weekListObj objList)
 		if (animEndFlag)
 		{
 			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
 		}
 	 }
 }
@@ -1199,23 +1241,6 @@ void Character::SetMove(const GameCtrl & ctl, weekListObj objList)
 		}
 	}
 
-	if (animAttribute[1] == ANIM_ATTRIBUTE_DAMAGE)
-	{
-		act = &Character::DamageState;
-	}
-	else if (animAttribute[1] == ANIM_ATTRIBUTE_ATTACK_SP)
-	{
-		act = &Character::SpAttackState;
-	}
-	else if (animAttribute[0] == ANIM_ATTRIBUTE_AIR)
-	{
-		act = &Character::AirState;
-	}
-	else
-	{
-		act = &Character::NeutralState;
-	}
-
 	(this->*act)(ctl, objList);
 }
 
@@ -1230,7 +1255,6 @@ void Character::CheckHitFlag(void)
 			comboCnt = 0;
 
 			SetAnim("ダメージ_ダウン");
-			act = &Character::DamageState;
 
 			if (dir == DIR_RIGHT)
 			{
@@ -1246,6 +1270,8 @@ void Character::CheckHitFlag(void)
 			{
 				pos.y = ssize.y;
 			}
+			act = &Character::DamageState;
+			return;
 		}
 
 		if (hitData.hitFlag && (hitData.colType == COLTYPE_HIT))
@@ -1264,7 +1290,6 @@ void Character::CheckHitFlag(void)
 					comboCnt = 0;
 
 					SetAnim("ダメージ_ダウン");
-					act = &Character::DamageState;
 					
 					PlaySoundMem(SOUND_ID("se/battle/critical.mp3"), DX_PLAYTYPE_BACK);
 
@@ -1282,11 +1307,12 @@ void Character::CheckHitFlag(void)
 					{
 						pos.y = ssize.y;
 					}
+					act = &Character::DamageState;
+					return;
 				}
 				else
 				{
 					SetAnim("ダメージ_立ち");
-					act = &Character::DamageState;
 					
 					PlaySoundMem(SOUND_ID("se/battle/punch.wav"), DX_PLAYTYPE_BACK);
 
@@ -1299,6 +1325,8 @@ void Character::CheckHitFlag(void)
 						knockBackSpeed = KNOCK_BACK_SPEED;
 					}
 					pos.x += knockBackSpeed;
+					act = &Character::DamageState;
+					return;
 				}
 			}
 		}
