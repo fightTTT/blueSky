@@ -171,42 +171,6 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				charaObj[1].charaObj->SetTmpDir(DIR_LEFT);
 			}
 
-			//// 一人が後ろ歩きでもう一人が攻撃系のアニメーションの時に、後ろ歩きをしている方をガード状態にする
-			//if ((charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SMALL)
-			//	|| (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
-			//	|| (charaObj[0].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
-			//{
-			//	if (abs(afterPos[0].x - afterPos[1].x) <= (STICK_HUMAN_IMAGE_SIZE_X * 2))
-			//	{
-			//		if (charaObj[1].charaObj->GetAnim() == "後ろ移動")
-			//		{
-			//			charaObj[1].charaObj->SetAnim("ガード_立ち");
-			//		}
-
-			//		if (charaObj[1].charaObj->GetAnim() == "しゃがみ_後ろ")
-			//		{
-			//			charaObj[1].charaObj->SetAnim("ガード_しゃがみ");
-			//		}
-			//	}
-			//}
-			if ((charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SMALL)
-				|| (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_BIG)
-				|| (charaObj[1].charaObj->GetAnimAttribute(1) == ANIM_ATTRIBUTE_ATTACK_SP))
-			{
-				if (abs(afterPos[0].x - afterPos[1].x) <= (STICK_HUMAN_IMAGE_SIZE_X * 2))
-				{
-					if (charaObj[0].charaObj->GetAnim() == "後ろ移動")
-					{
-						charaObj[0].charaObj->SetAnim("ガード_立ち");
-					}
-
-					if (charaObj[0].charaObj->GetAnim() == "しゃがみ_後ろ")
-					{
-						charaObj[0].charaObj->SetAnim("ガード_しゃがみ");
-					}
-				}
-			}
-
 			// キャラクターの状態を相手に渡す
 			eState.enemyPos = charaObj[0].charaObj->GetPos();
 			eState.enemyAnimAttribute[0] = charaObj[0].charaObj->GetAnimAttribute(0);
@@ -752,14 +716,21 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 			}
 			if ((charaObj[(i + 1) % 2].charaObj->GetHitFlag()) && (charaObj[(i + 1) % 2].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[(i + 1) % 2])
 			{
-				if (charaObj[(i + 1) % 2].charaObj->GetAnim() == "後ろ移動")
+				if (charaObj[(i + 1) % 2].charaObj->GetAnim() == "後ろ移動" && charaObj[(i + 1) % 2].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_GUARD)
 				{
 					charaObj[(i + 1) % 2].charaObj->SetAnim("ガード_立ち");
+					charaObj[(i + 1) % 2].charaObj->GuardEndCnt(30);
 					charaObj[(i + 1) % 2].charaObj->SetHitData(false, COLTYPE_NON);
+					charaObj[i].charaObj->SetHitData(false, COLTYPE_NON);
+					hitRectPos = { 0,0 };
 				}
-				else if (charaObj[0].charaObj->GetAnim() == "しゃがみ_後ろ")
+				else if (charaObj[(i + 1) % 2].charaObj->GetAnim() == "しゃがみ_後ろ" && charaObj[(i + 1) % 2].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_GUARD)
 				{
-					charaObj[0].charaObj->SetAnim("ガード_しゃがみ");
+					charaObj[(i + 1) % 2].charaObj->SetAnim("ガード_しゃがみ");
+					charaObj[(i + 1) % 2].charaObj->GuardEndCnt(30);
+					charaObj[(i + 1) % 2].charaObj->SetHitData(false, COLTYPE_NON);
+					charaObj[i].charaObj->SetHitData(false, COLTYPE_NON);
+					hitRectPos = { 0,0 };
 				}
 				else
 				{
@@ -852,8 +823,25 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 			}
 			if ((charaObj[i].charaObj->GetHitFlag()) && (charaObj[i].charaObj->GetHitBoxType() == COLTYPE_HIT) && !damageFlag[i])
 			{
-				charaObj[i].charaObj->CheckDamage(ANIM_ATTRIBUTE_SHOT);
-				damageFlag[i] = true;
+				if (charaObj[i].charaObj->GetAnim() == "後ろ移動" && charaObj[i].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_GUARD)
+				{
+					charaObj[i].charaObj->SetAnim("ガード_立ち");
+					charaObj[i].charaObj->GuardEndCnt(30);
+					charaObj[i].charaObj->SetHitData(false, COLTYPE_NON);
+					hitRectPos = { 0,0 };
+				}
+				else if (charaObj[i].charaObj->GetAnim() == "しゃがみ_後ろ" && charaObj[i].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_GUARD)
+				{
+					charaObj[i].charaObj->SetAnim("ガード_しゃがみ");
+					charaObj[i].charaObj->GuardEndCnt(30);
+					charaObj[i].charaObj->SetHitData(false, COLTYPE_NON);
+					hitRectPos = { 0,0 };
+				}
+				else
+				{
+					charaObj[i].charaObj->CheckDamage(ANIM_ATTRIBUTE_SHOT);
+					damageFlag[i] = true;
+				}
 			}
 
 			if (!(hitRectPos) && !(charaObj[i].AttackHitOld)

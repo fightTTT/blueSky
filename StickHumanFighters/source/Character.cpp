@@ -49,6 +49,11 @@ void Character::CheckDamage(ANIM_ATTRIBUTE att)
 	}
 }
 
+void Character::GuardEndCnt(int cnt)
+{
+	guardEndCnt = cnt;
+}
+
 bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECTOR2 pos, bool turn, PAD_ID id)
 {
 	Obj::Init(fileName, divSize, divCut, pos, turn);
@@ -63,6 +68,7 @@ bool Character::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCut, VECT
 	knockBackSpeed = 0;
 	knockBackFlag = false;
 	spEndCnt = 0;
+	guardEndCnt = 0;
 	jumpInterval = 0;
 	invincibleTime = 0;
 
@@ -615,29 +621,45 @@ void Character::AirState(const GameCtrl & ctl, weekListObj objList)
 
 void Character::DamageState(const GameCtrl & ctl, weekListObj objList)
 {
-	if ((knockBackFlag) || (animName == "ダメージ_立ち"))
+	if (dir == DIR_RIGHT)
 	{
-		if (dir == DIR_RIGHT)
+		knockBackSpeed++;
+		if (knockBackSpeed > 0)
 		{
-			knockBackSpeed++;
-			if (knockBackSpeed > 0)
-			{
-				knockBackSpeed = 0;
-			}
+			knockBackSpeed = 0;
+			knockBackFlag = false;
 		}
-		else
+	}
+	else
+	{
+		knockBackSpeed--;
+		if (knockBackSpeed < 0)
 		{
-			knockBackSpeed--;
-			if (knockBackSpeed < 0)
-			{
-				knockBackSpeed = 0;
-			}
+			knockBackSpeed = 0;
+			knockBackFlag = false;
 		}
-		pos.x += knockBackSpeed;
+	}
+	pos.x += knockBackSpeed;
 
+	if (animAttribute[1] == ANIM_ATTRIBUTE_GUARD)
+	{
+		guardEndCnt--;
+		if (guardEndCnt < 0)
+		{
+			guardEndCnt = 0;
+		}
+
+		if ((knockBackFlag && knockBackSpeed == 0) || (!knockBackFlag && !guardEndCnt))
+		{
+			SetAnim("待機");
+			act = &Character::NeutralState;
+			return;
+		}
+	}
+	else if (animName == "ダメージ_立ち")
+	{
 		if (knockBackSpeed == 0)
 		{
-			knockBackFlag = false;
 			if (animEndFlag)
 			{
 				SetAnim("待機");
@@ -1352,6 +1374,8 @@ void Character::CheckHitFlag(void)
 				knockBackFlag = true;
 			}
 		}
+		act = &Character::DamageState;
+		return;
 	}
 }
 

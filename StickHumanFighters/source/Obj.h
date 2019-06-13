@@ -169,6 +169,9 @@ public:
 	// オブジェクトを削除するフラグをセット
 	void SetDeleteFlag(bool flag) { deleteFlag = flag; }
 
+	// ｶﾞｰﾄﾞのｱﾆﾒｰｼｮﾝの最低表示時間をｾｯﾄ
+	virtual void GuardEndCnt(int cnt) {}
+
 private:
 	//移動処理
 	virtual void SetMove(const GameCtrl &ctl);

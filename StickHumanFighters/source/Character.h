@@ -61,6 +61,7 @@ private:
 	bool knockBackFlag;
 
 	int spEndCnt;		// 必殺技の終了ﾀｲﾐﾝｸﾞ管理用のｶｳﾝﾄ
+	int guardEndCnt;
 
 	// ｱﾆﾒｰｼｮﾝの初期化関数
 	bool InitAnim(void);
@@ -88,6 +89,9 @@ private:
 
 	// ﾌﾟﾚｲﾔｰに与えるﾀﾞﾒｰｼﾞ量をﾁｪｯｸする　(引数: 敵のｱﾆﾒｰｼｮﾝの属性)
 	void CheckDamage(ANIM_ATTRIBUTE att);
+
+	// ｶﾞｰﾄﾞのｱﾆﾒｰｼｮﾝの最低表示時間をｾｯﾄ
+	void GuardEndCnt(int cnt);
 
 	// 描画処理
 	void Draw(void);
