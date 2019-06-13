@@ -827,15 +827,13 @@ void GameScene::colJudgment(std::vector<sharedObj>& shotObj,std::string (&animNa
 				{
 					charaObj[i].charaObj->SetAnim("ƒK[ƒh_—§‚¿");
 					charaObj[i].charaObj->GuardEndCnt(30);
-					charaObj[i].charaObj->SetHitData(false, COLTYPE_NON);
-					hitRectPos = { 0,0 };
+					charaObj[i].charaObj->SetHitData(false, COLTYPE_GUARD);
 				}
 				else if (charaObj[i].charaObj->GetAnim() == "‚µ‚á‚ª‚Ý_Œã‚ë" && charaObj[i].charaObj->GetAnimAttribute(1) != ANIM_ATTRIBUTE_GUARD)
 				{
 					charaObj[i].charaObj->SetAnim("ƒK[ƒh_‚µ‚á‚ª‚Ý");
 					charaObj[i].charaObj->GuardEndCnt(30);
-					charaObj[i].charaObj->SetHitData(false, COLTYPE_NON);
-					hitRectPos = { 0,0 };
+					charaObj[i].charaObj->SetHitData(false, COLTYPE_GUARD);
 				}
 				else
 				{
