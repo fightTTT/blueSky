@@ -1,9 +1,11 @@
+#include <string>
 #include "DxLib.h"
 #include "ResultScene.h"
 #include "TitleScene.h"
 #include "ImageMng.h"
 #include "SceneMng.h"
-#include <string>
+#include "SoundMng.h"
+
 
 ResultScene::ResultScene()
 {
@@ -54,6 +56,7 @@ unique_Base ResultScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 	if (itvCnt > 120)
 	{
+		StopSoundMem(SOUND_ID("se/battle/jingle2.mp3"));
 		return std::make_unique<TitleScene>();
 	}
 	ResultDraw();
@@ -62,6 +65,12 @@ unique_Base ResultScene::UpDate(unique_Base own, const GameCtrl & controller)
 	{
 		itvCnt++;
 	}
+
+	if (!CheckSoundMem(SOUND_ID("se/battle/jingle2.mp3")))
+	{
+		PlaySoundMem(SOUND_ID("se/battle/jingle2.mp3"), DX_PLAYTYPE_BACK);
+	}
+
 	return std::move(own);
 }
 
@@ -236,4 +245,13 @@ void ResultScene::ResultDraw()
 		}
 		
 	}
+	int blend = 255;
+	blend -= (animCnt / 3) * 3;
+	if (blend < 0)
+	{
+		blend = 0;
+	}
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, blend);
+	DrawBox(0, 0, lpSceneMng.GetScreenSize().x, lpSceneMng.GetScreenSize().y, 0x070707, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

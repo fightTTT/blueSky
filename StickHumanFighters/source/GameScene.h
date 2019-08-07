@@ -53,6 +53,8 @@ private:
 
 	bool hitStopFlag;			// ヒットストップ用のﾌﾗｸﾞ
 	bool gameEndFlag;			// ゲームの終了フラグ
+	bool gameEndFadeOutFlag;		// ゲーム終了のフェードアウトのフラグ
+
 
 	int loseCharacter;
 	int winCharacter;
@@ -68,6 +70,7 @@ private:
 	int flashCnt;				// 点滅用ｶｳﾝﾄ
 	int opeCnt;					// 操作可能までのｶｳﾝﾄ
 	int finishCnt;				// 終了宣言までのｶｳﾝﾄ
+	int EndFadeOutCnt;
 
 	sharedListObj objList;
 };

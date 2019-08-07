@@ -64,8 +64,8 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 		// ‰¹
 		if (lpSceneMng.GetMode() == MODE_1PLAYER)
 		{
-			if (lpSceneMng.GetDecidFlag(PAD_1))
-			{
+			/*if (lpSceneMng.GetDecidFlag(PAD_1))
+			{*/
 				int setEnemyIdFlag = false;
 				// NPC‚ÌŽg—p·¬×‚ðŒˆ’è
 				do
@@ -81,7 +81,7 @@ unique_Base SelectScene::UpDate(unique_Base own, const GameCtrl & controller)
 				sceneChangeFlag = true;
 
 
-			}
+			//}
 		}
 		else if (lpSceneMng.GetMode() == MODE_2PLAYER)
 		{

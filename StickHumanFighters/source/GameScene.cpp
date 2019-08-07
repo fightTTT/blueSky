@@ -94,10 +94,14 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 			if (koDrawCount >= 120)
 			{
-				if (gameEndFlag)
+				if (gameEndFadeOutFlag)
 				{
-					StopSoundMem(SOUND_ID("bgm/battle.mp3"));
-					return std::make_unique<ResultScene>(charaObj[winCharacter].charaObj->GetPadID(),drawflag);
+					if (gameEndFlag)
+					{
+						StopSoundMem(SOUND_ID("bgm/battle.mp3"));
+						return std::make_unique<ResultScene>(charaObj[winCharacter].charaObj->GetPadID(), drawflag);
+					}
+					
 				}
 				else
 				{
@@ -327,11 +331,13 @@ int GameScene::Init(void)
 	shadowPos_y = ssize.y;
 	hitStopFlag = false;
 	gameEndFlag = false;
+	gameEndFadeOutFlag = false;
 	operableFlag = false;
 	loseCharacter = -1;
 	winCharacter = -1;
 	flashCnt = 0;
 	opeCnt = 0;
+	EndFadeOutCnt = 0;
 	drawflag = false;
 	koDrawCount = 0;
 	finishCnt = 0;
@@ -860,7 +866,8 @@ bool GameScene::CheckGameEnd()
 {
 	if (charaObj[0].winCount >= 2 || charaObj[1].winCount >= 2)
 	{
-		gameEndFlag = true;
+	
+		gameEndFadeOutFlag = true;
 		return true;
 	}
 	else
@@ -958,24 +965,24 @@ bool GameScene::GameDraw(void)
 
 	// 当たり判定のボックスの描画
 	{
-		//std::string animName[2];
+		std::string animName[2];
 
-		//for (int charNum = 0; charNum < 2; charNum++)
-		//{
-		//	animName[charNum] = charaObj[charNum].charaObj->GetAnim();
-		//	if (lpColMng.GetColFlag(charaObj[charNum].charaObj->GetAnim()))
-		//	{
-		//		int colColor;
-		//		for (int i = 0; i < colData[charNum].hitBox.size(); i++)
-		//		{
+		for (int charNum = 0; charNum < 2; charNum++)
+		{
+			animName[charNum] = charaObj[charNum].charaObj->GetAnim();
+			if (lpColMng.GetColFlag(charaObj[charNum].charaObj->GetAnim()))
+			{
+				int colColor;
+				for (int i = 0; i < colData[charNum].hitBox.size(); i++)
+				{
 
-		//			colColor = (colData[charNum].hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData[charNum].hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
+					colColor = (colData[charNum].hitBox[i].type == COLTYPE_ATTACK ? 0xff0000 : (colData[charNum].hitBox[i].type == COLTYPE_HIT ? 0x0000ff : 0x00ff00));
 
-		//			DrawBox(charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.startPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.startPos.y,
-		//					charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.endPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.endPos.y, colColor, false);
-		//		}
-		//	}
-		//}
+					DrawBox(charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.startPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.startPos.y,
+							charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.endPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.endPos.y, colColor, false);
+				}
+			}
+		}
 	}
 
 	// KOの文字の描画
@@ -1085,6 +1092,22 @@ bool GameScene::GameDraw(void)
 	{
 		DrawGraph((ssize.x / 2) - 125, 200, IMAGE_ID("image/ゲームシーン用/fight.png")[0], true);
 	}
+
+	if (gameEndFadeOutFlag)
+	{
+ 		int blend = (EndFadeOutCnt/2) * 2;
+		if (blend  > 255)
+		{
+			blend = 255;
+			gameEndFlag = true;
+		}
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, blend);
+		DrawBox(0, 0, lpSceneMng.GetScreenSize().x, lpSceneMng.GetScreenSize().y, 0x070707, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		EndFadeOutCnt++;
+	}
+
+
 
 	return true;
 }
