@@ -71,6 +71,22 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 {
 	if (operableFlag)
 	{
+		// ﾏﾙﾁﾌﾟﾚｲ時
+		if (lpSceneMng.GetMode() == MODE_2PLAYER && winCharacter == 0)
+		{
+			if (!CheckSoundMem(SOUND_ID("se/battle/foo.mp3")) && finishCnt < 90)
+			{
+				PlaySoundMem(SOUND_ID("se/battle/foo.mp3"), DX_PLAYTYPE_BACK);
+			}
+		}
+		if (lpSceneMng.GetMode() == MODE_2PLAYER && winCharacter != 0)
+		{
+			if (!CheckSoundMem(SOUND_ID("se/battle/foo.mp3")) && finishCnt < 90)
+			{
+				PlaySoundMem(SOUND_ID("se/battle/foo.mp3"), DX_PLAYTYPE_BACK);
+			}
+		}
+
 		if (CheckGameEnd())
 		{
 			if (koDrawCount == 0)
@@ -92,6 +108,8 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 
 			koDrawCount++;
 
+			
+
 			if (koDrawCount >= 120)
 			{
 				if (gameEndFadeOutFlag)
@@ -99,6 +117,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 					if (gameEndFlag)
 					{
 						StopSoundMem(SOUND_ID("bgm/battle.mp3"));
+						StopSoundMem(SOUND_ID("se/battle/foo.mp3"));
 						return std::make_unique<ResultScene>(charaObj[winCharacter].charaObj->GetPadID(), drawflag);
 					}
 					
@@ -290,21 +309,7 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 				PlaySoundMem(SOUND_ID("se/battle/lose.wav"), DX_PLAYTYPE_BACK);
 			}
 		}
-		// ﾏﾙﾁﾌﾟﾚｲ時
-		if (lpSceneMng.GetMode() == MODE_2PLAYER && winCharacter == 0)
-		{
-			if (!CheckSoundMem(SOUND_ID("se/battle/foo.mp3")) && finishCnt < 90)
-			{
-				PlaySoundMem(SOUND_ID("se/battle/foo.mp3"), DX_PLAYTYPE_BACK);
-			}
-		}
-		if (lpSceneMng.GetMode() == MODE_2PLAYER && winCharacter != 0)
-		{
-			if (!CheckSoundMem(SOUND_ID("se/battle/foo.mp3")) && finishCnt < 90)
-			{
-				PlaySoundMem(SOUND_ID("se/battle/foo.mp3"), DX_PLAYTYPE_BACK);
-			}
-		}
+
 	}
 
 
@@ -965,7 +970,7 @@ bool GameScene::GameDraw(void)
 
 	// 当たり判定のボックスの描画
 	{
-		std::string animName[2];
+		/*std::string animName[2];
 
 		for (int charNum = 0; charNum < 2; charNum++)
 		{
@@ -982,7 +987,7 @@ bool GameScene::GameDraw(void)
 							charaObj[charNum].charaObj->GetDrawOffSet().x + colData[charNum].hitBox[i].rect.endPos.x, charaObj[charNum].charaObj->GetDrawOffSet().y + colData[charNum].hitBox[i].rect.endPos.y, colColor, false);
 				}
 			}
-		}
+		}*/
 	}
 
 	// KOの文字の描画
